@@ -203,8 +203,14 @@ public class HelperTableDAOImpl implements HelperTableDAO {
     @Override
     public List<HelperTableRecord> getAllRecords(HelperTable helperTable) {
 
+        //return this.getAllRecords(helperTable);
+        List<String> showableColumnsNames = helperTable.getShowableColumnsNames();
+        Collection<HelperTableColumn> systemColumns = HelperTable.getSystemColumns();
+        for (HelperTableColumn systemColumn : systemColumns) {
+            showableColumnsNames.add(systemColumn.getColumnName());
+        }
 
-        return this.getAllRecords(helperTable);
+        return this.getAllRecords(helperTable, showableColumnsNames);
     }
 
     @Override
