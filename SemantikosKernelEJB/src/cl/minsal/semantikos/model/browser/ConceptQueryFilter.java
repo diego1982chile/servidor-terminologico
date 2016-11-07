@@ -91,8 +91,9 @@ public class ConceptQueryFilter {
 
         if(definition.getTargetDefinition().isHelperTable()){
             for (Target target : targets) {
-                HelperTableRecord helperTableRecord = (HelperTableRecord) target;
-                helperTableValues.add(helperTableRecord.getHelperTable().getId());
+                //HelperTableRecord helperTableRecord = (HelperTableRecord) target;
+                //helperTableValues.add(helperTableRecord.getHelperTable().getId());
+                helperTableValues.add(definition.getTargetDefinition().getId());
             }
         }
 

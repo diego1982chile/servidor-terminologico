@@ -21,6 +21,10 @@ form.consult div.ui-selectonemenu.ui-state-disabled {
     /*border-bottom: 0px !important;*/
 }
 
+form.consult .ui-autocomplete-dropdown.ui-state-disabled {
+    display: none !important;
+}
+
 form.consult .ui-selectonemenu.ui-state-disabled .ui-selectonemenu-trigger {
     display: none !important;
 }

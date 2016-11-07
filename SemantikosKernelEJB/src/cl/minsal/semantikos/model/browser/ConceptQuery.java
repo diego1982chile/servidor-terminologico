@@ -284,6 +284,7 @@ public class ConceptQuery {
         conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getToBeConsulted(), false));
         conceptQueryParameters.add(new ConceptQueryParameter(Tag.class, getTag(), false));
         conceptQueryParameters.add(new ConceptQueryParameter(String.class, getBasicTypeValues(), true));
+        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getHelperTableValues(), true));
         conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getHelperTableRecordValues(), true));
         conceptQueryParameters.add(new ConceptQueryParameter(Timestamp.class, getCreationDateSince(), false));
         conceptQueryParameters.add(new ConceptQueryParameter(Timestamp.class, getCreationDateTo(), false));
