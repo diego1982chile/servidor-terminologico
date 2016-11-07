@@ -24,7 +24,7 @@
             </h2>
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-2">
-            <p:button outcome="conceptEdit" value="Editar Concepto" styleClass="RaisedButton" style="float: right">
+            <p:button outcome="conceptEdit" value="Editar Concepto" styleClass="CyanButton" style="float: right" rendered="#{ not conceptBean.editable}">
                 <f:param name="editMode" value="#{true}" />
                 <f:param name="idConcept" value="#{cc.attrs.concept.id}" />
             </p:button>
