@@ -1,14 +1,10 @@
 package cl.minsal.semantikos.model.browser;
 
 import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Tag;
 import cl.minsal.semantikos.model.User;
-import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
-import cl.minsal.semantikos.model.relationships.Target;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Type;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -18,7 +14,7 @@ import java.util.*;
 public class ConceptQuery {
 
     /**
-     * Filtros estáticos
+     * Static filters
      */
     private List<Category> categories;
 
@@ -206,6 +202,22 @@ public class ConceptQuery {
         }
     }
 
+    public Long[] getConceptValues(){
+
+        List<Long> conceptValues = new ArrayList<>();
+
+        for (ConceptQueryFilter filter : filters)
+            conceptValues.addAll(filter.getConceptValues());
+
+        if(conceptValues.isEmpty())
+            return null;
+
+        else {
+            Long[] array = new Long[conceptValues.size()];
+            return conceptValues.toArray(array);
+        }
+    }
+
     public Long[] getHelperTableValues(){
 
         List<Long> helperTableValues = new ArrayList<>();
@@ -219,6 +231,22 @@ public class ConceptQuery {
         else {
             Long[] array = new Long[helperTableValues.size()];
             return helperTableValues.toArray(array);
+        }
+    }
+
+    public Long[] getHelperTableRecordValues(){
+
+        List<Long> helperTableRecordValues = new ArrayList<>();
+
+        for (ConceptQueryFilter filter : filters)
+            helperTableRecordValues.addAll(filter.getHelperTableRecordValues());
+
+        if(helperTableRecordValues.isEmpty())
+            return null;
+
+        else {
+            Long[] array = new Long[helperTableRecordValues.size()];
+            return helperTableRecordValues.toArray(array);
         }
     }
 
@@ -256,7 +284,7 @@ public class ConceptQuery {
         conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getToBeConsulted(), false));
         conceptQueryParameters.add(new ConceptQueryParameter(Tag.class, getTag(), false));
         conceptQueryParameters.add(new ConceptQueryParameter(String.class, getBasicTypeValues(), true));
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getHelperTableValues(), true));
+        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getHelperTableRecordValues(), true));
         conceptQueryParameters.add(new ConceptQueryParameter(Timestamp.class, getCreationDateSince(), false));
         conceptQueryParameters.add(new ConceptQueryParameter(Timestamp.class, getCreationDateTo(), false));
         conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getUserValue(), false));

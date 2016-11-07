@@ -101,7 +101,7 @@ public class ConceptBean implements Serializable {
      */
     private Category category;
 
-    private List<DescriptionType> descriptionTypes = new ArrayList<DescriptionType>();
+    private List<DescriptionType> descriptionTypes = new ArrayList<>();
 
     private List<DescriptionType> descriptionTypesEdit = new ArrayList<DescriptionType>();
 
@@ -299,12 +299,12 @@ public class ConceptBean implements Serializable {
         ConceptSMTKWeb conceptWeb = new ConceptSMTKWeb(concept);
 
         DescriptionWeb fsnDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFSN());
-        fsnDescription.setCaseSensitive(false);
+        fsnDescription.setCaseSensitive(true);
         fsnDescription.setModeled(false);
         fsnDescription.setDescriptionId(descriptionManager.generateDescriptionId());
 
         DescriptionWeb favouriteDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFavorite());
-        favouriteDescription.setCaseSensitive(false);
+        favouriteDescription.setCaseSensitive(true);
         fsnDescription.setModeled(false);
         favouriteDescription.setDescriptionId(descriptionManager.generateDescriptionId());
 
