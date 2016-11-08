@@ -20,7 +20,7 @@ import java.util.List;
  * Este manager es responsable de proveer acceso a las distintas tablas auxiliares.
  * <p>
  * Las tablas auxiliares se han implementado de manera estática, es decir, se maneja una lista estática de las tablas
- * axiliares.
+ * auxiliares.
  * </p>
  *
  * @author Andrés Farías
@@ -42,20 +42,28 @@ public class HelperTableManagerImpl implements HelperTableManager {
     }
 
     @Override
-    public List<HelperTableRecord> getAllRecords(HelperTable helperTable) {
-        return helperTableDAO.getAllRecords(helperTable);
-    }
-
-    @Override
     public List<HelperTableRecord> getAllRecords(HelperTable helperTable, List<String> columnNames) {
 
         logger.debug("Se solicitan los registros de la tabla " + helperTable);
 
-        List<HelperTableRecord> allRecords = helperTableDAO.getAllRecords(helperTable);
+        List<HelperTableRecord> allRecords = helperTableDAO.getAllRecords(helperTable, columnNames);
         Collections.sort(allRecords);
         logger.debug("Se recuperan " + allRecords.size() + " registros de la tabla " + helperTable);
 
         return allRecords;
+    }
+
+    @Override
+    public List<HelperTableRecord> getAllRecords(HelperTable helperTable) {
+
+        /* Como no se especifican las columnas a recuperar, se retornan todas las visibles y las de sistema */
+        List<String> returnableColumns = helperTable.getShowableColumnsNames();
+        for (HelperTableColumn systemColumn : HelperTable.getSystemColumns()) {
+            returnableColumns.add(systemColumn.getColumnName());
+        }
+
+        /* Se delega en el método único para recuperar registros desde las tablas auxiliares */
+        return getAllRecords(helperTable, returnableColumns);
     }
 
     @Override
@@ -70,11 +78,7 @@ public class HelperTableManagerImpl implements HelperTableManager {
         logger.debug("Se solicitan los registros vigentes de la tabla " + helperTable);
 
         throw new NotImplementedException();
-
-
     }
-
-
 
     @Override
     public HelperTableRecord getRecord( long recordId) {
