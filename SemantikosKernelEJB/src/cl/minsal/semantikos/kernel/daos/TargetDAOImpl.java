@@ -123,7 +123,7 @@ public class TargetDAOImpl implements TargetDAO {
          *   8: ID SCT
          *   9: Concept SMTK
          */
-        String sql = "{call semantikos.create_target(?,?,?,?,?,?,?,?,?,?,?)}";
+        String sql = "{call semantikos.create_target(?,?,?,?,?,?,?,?,?,?)}";
         long idTarget;
 
         try (Connection connection = connect.getConnection();

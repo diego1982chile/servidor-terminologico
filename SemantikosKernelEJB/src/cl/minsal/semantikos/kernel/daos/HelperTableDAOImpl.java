@@ -203,14 +203,14 @@ public class HelperTableDAOImpl implements HelperTableDAO {
     @Override
     public List<HelperTableRecord> getAllRecords(HelperTable helperTable) {
 
-        //return this.getAllRecords(helperTable);
-        List<String> showableColumnsNames = helperTable.getShowableColumnsNames();
-        Collection<HelperTableColumn> systemColumns = HelperTable.getSystemColumns();
-        for (HelperTableColumn systemColumn : systemColumns) {
-            showableColumnsNames.add(systemColumn.getColumnName());
+        /* Como no se especifican las columnas a recuperar, se retornan todas las visibles y las de sistema */
+        List<String> returnableColumns = helperTable.getShowableColumnsNames();
+        for (HelperTableColumn systemColumn : HelperTable.getSystemColumns()) {
+            returnableColumns.add(systemColumn.getColumnName());
         }
 
-        return this.getAllRecords(helperTable, showableColumnsNames);
+        /* Luego se delega al método que recibe las columnas a retornar */
+        return this.getAllRecords(helperTable, returnableColumns);
     }
 
     @Override
