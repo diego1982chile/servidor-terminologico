@@ -155,8 +155,8 @@ public class TargetDAOImpl implements TargetDAO {
                 call.setLong(8, target.getId());
                 call.setLong(10, SnomedCT.getIdTargetType());
             }
-            call.setLong(11,targetDefinition.getId());
 
+            call.setLong(11,targetDefinition.getId());
 
             call.execute();
             ResultSet rs = call.getResultSet();
