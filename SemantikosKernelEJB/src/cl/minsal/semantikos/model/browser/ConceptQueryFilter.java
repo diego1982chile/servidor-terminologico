@@ -114,6 +114,18 @@ public class ConceptQueryFilter {
         return helperTableRecordValues;
     }
 
+    public List<Long> getBasicTypeDefinitionValues(){
+
+        List<Long> basicTypeDefinitionValues = new ArrayList<>();
+
+        if(definition.getTargetDefinition().isBasicType()){
+            for (Target target : targets)
+                basicTypeDefinitionValues.add(definition.getTargetDefinition().getId());
+        }
+
+        return basicTypeDefinitionValues;
+    }
+
     public List<String> getBasicTypeValues(){
 
         List<String> basicTypeValues = new ArrayList<>();
