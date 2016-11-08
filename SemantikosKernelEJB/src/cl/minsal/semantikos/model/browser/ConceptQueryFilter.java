@@ -71,6 +71,18 @@ public class ConceptQueryFilter {
         this.checked = checked;
     }
 
+    public List<Long> getCategoryValues(){
+
+        List<Long> categoryValues = new ArrayList<>();
+
+        if(definition.getTargetDefinition().isSMTKType()){
+            for (Target target : targets)
+                categoryValues.add(definition.getTargetDefinition().getId());
+        }
+
+        return categoryValues;
+    }
+
     public List<Long> getConceptValues(){
 
         List<Long> conceptValues = new ArrayList<>();

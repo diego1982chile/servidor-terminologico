@@ -97,7 +97,6 @@ public class RelationshipAttributeDefinitionFactory {
         for (RelationshipAttributeDefinitionDTO attributeDTO : relationshipAttributeDefinitionDTOs) {
             /* Se recuperan las entidades relacionadas */
             TargetDefinition targetDefinition = targetDefinitionDAO.getTargetDefinitionById(attributeDTO.getIdTargetDefinition());
-            targetDefinition.setId(attributeDTO.getIdTargetDefinition());
             Multiplicity multiplicity = new Multiplicity(attributeDTO.getLowerBoundary(), attributeDTO.getUpperBoundary());
             RelationshipAttributeDefinition attribute = new RelationshipAttributeDefinition(attributeDTO.getId(), targetDefinition, attributeDTO.getName(), multiplicity);
 
