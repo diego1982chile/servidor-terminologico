@@ -83,10 +83,10 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public List<ConceptSMTK> findConceptBy(Category category, int pageNumber, int pageSize) {
+    public List<ConceptSMTK> findConceptBy(Category category) {
 
-        //Búsqueda por categoría y patron o concept ID
-        return conceptDAO.getConceptBy(category, pageSize, pageNumber);
+        //Búsqueda por categoría
+        return conceptDAO.getConceptBy(category);
     }
 
     @Override

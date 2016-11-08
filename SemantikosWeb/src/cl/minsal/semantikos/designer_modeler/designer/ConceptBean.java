@@ -288,6 +288,11 @@ public class ConceptBean implements Serializable {
         }
         // Una vez que se ha inicializado el concepto, inicializar los placeholders para las relaciones
         for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
+            RelationshipDefinitionWeb relationshipDefinitionWeb = viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition);
+
+            if(!concept.isPersistent() && relationshipDefinitionWeb.hasDefaultValue())
+                concept.initRelationship(relationshipDefinitionWeb);
+
             if (!relationshipDefinition.getRelationshipAttributeDefinitions().isEmpty())
                 relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>()));
         }
@@ -1326,8 +1331,6 @@ public class ConceptBean implements Serializable {
             for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
                 RelationshipDefinitionWeb relationshipDefinitionWeb = viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition);
                 orderedRelationshipDefinitionsList.add(relationshipDefinitionWeb);
-                if(relationshipDefinitionWeb.hasDefaultValue())
-                    concept.initRelationship(relationshipDefinitionWeb);
             }
             Collections.sort(orderedRelationshipDefinitionsList);
         }

@@ -74,6 +74,11 @@
                         targets="#{filter.targets}"
                         multiple="#{filter.multiple}"
                         rendered="#{filter.definition.targetDefinition.helperTable}" />
+                <smtk:smtkTypeFilter relationshipDefinition="#{filter.definition}"
+                                     targetDefinition="#{filter.definition.targetDefinition}"
+                                     targets="#{filter.targets}"
+                                     multiple="#{filter.multiple}"
+                                     rendered="#{filter.definition.targetDefinition.SMTKType}" />
             </p:repeat>
             <smtk:DateTypeFilter date="#{cc.attrs.conceptQuery.creationDateSince}"
                                  dateSince="#{true}"

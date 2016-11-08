@@ -130,7 +130,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> getConceptBy(Category category, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> getConceptBy(Category category) {
 
         List<ConceptSMTK> concepts = new ArrayList<>();
         ConnectionBD connect = new ConnectionBD();
@@ -138,11 +138,9 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         try (Connection connection = connect.getConnection();) {
 
-            call = connection.prepareCall("{call semantikos.find_concept_by_category(?,?,?)}");
+            call = connection.prepareCall("{call semantikos.find_concept_by_category(?)}");
 
             call.setLong(1, category.getId());
-            call.setInt(2, pageNumber);
-            call.setInt(3, pageSize);
 
             call.execute();
 

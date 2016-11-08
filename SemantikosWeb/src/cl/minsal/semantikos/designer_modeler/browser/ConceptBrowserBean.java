@@ -92,6 +92,8 @@ public class ConceptBrowserBean implements Serializable {
 
     private HelperTableRecord helperTableRecord = new HelperTableRecord();
 
+    private ConceptSMTK conceptSMTK = null;
+
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
@@ -150,10 +152,6 @@ public class ConceptBrowserBean implements Serializable {
 
         };
 
-    }
-
-    public int getIdCategory() {
-        return idCategory;
     }
 
     /**
@@ -248,6 +246,27 @@ public class ConceptBrowserBean implements Serializable {
     public void setHelperTableRecord(HelperTableRecord helperTableRecord) {
         this.helperTableRecord = helperTableRecord;
     }
+
+    public int getIdCategory() {
+        return idCategory;
+    }
+
+    public ConceptSMTK getConceptSMTK() {
+        return conceptSMTK;
+    }
+
+    public void setConceptSMTK(ConceptSMTK conceptSMTK) {
+        this.conceptSMTK = conceptSMTK;
+    }
+
+    public ConceptManager getConceptManager() {
+        return conceptManager;
+    }
+
+    public void setConceptManager(ConceptManager conceptManager) {
+        this.conceptManager = conceptManager;
+    }
+
 
     public AuthenticationBean getAuthenticationBean() {
         return authenticationBean;
