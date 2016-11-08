@@ -247,9 +247,13 @@ public class ConceptSMTKWeb extends ConceptSMTK {
     }
 
     public void initRelationship(RelationshipDefinitionWeb relationshipDefinitionWeb){
+        /*
         for (RelationshipWeb relationshipWeb : getValidRelationshipsWebByRelationDefinition(relationshipDefinitionWeb)) {
             relationshipWeb.setTarget(relationshipDefinitionWeb.getDefaultValue());
         }
+        */
+        Relationship r = new Relationship(this, relationshipDefinitionWeb.getDefaultValue(), relationshipDefinitionWeb, new ArrayList<RelationshipAttribute>());
+        addRelationshipWeb(new RelationshipWeb(this, r.getId(), r, r.getRelationshipAttributes()));
     }
 
     public boolean isEditable() {

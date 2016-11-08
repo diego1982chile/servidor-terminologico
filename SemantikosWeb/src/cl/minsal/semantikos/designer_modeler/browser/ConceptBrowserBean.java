@@ -262,6 +262,9 @@ public class ConceptBrowserBean implements Serializable {
      */
     public void setSimpleSelection(RelationshipDefinition relationshipDefinition, Target target) {
 
+        if(target.toString().equals(""))
+            target = null;
+
         // Se busca el filtro
         for (ConceptQueryFilter conceptQueryFilter : conceptQuery.getFilters()) {
             if (conceptQueryFilter.getDefinition().equals(relationshipDefinition)) {
