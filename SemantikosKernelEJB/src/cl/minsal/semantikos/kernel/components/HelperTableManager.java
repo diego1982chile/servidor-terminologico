@@ -20,7 +20,8 @@ public interface HelperTableManager {
     public Collection<HelperTable> getHelperTables();
 
     /**
-     * Este método es responsable de recuperar los registros de una cierta tabla.
+     * Este método es responsable de recuperar los registros (limitado a una cierta cantidad de columnas) de una cierta
+     * tabla.
      *
      * @param helperTable La tabla cuyos registros se desea recuperar.
      * @param columnNames El nombre de las columnas que se desea recuperar.
@@ -29,6 +30,15 @@ public interface HelperTableManager {
      * indicadas.
      */
     public List<HelperTableRecord> getAllRecords(@NotNull HelperTable helperTable, List<String> columnNames);
+
+    /**
+     * Este método es responsable de recuperar los registros de una cierta tabla.
+     *
+     * @param helperTable La tabla cuyos registros se desea recuperar.
+     *
+     * @return La lista de todos los registros de la tabla solicitada.
+     */
+    public List<HelperTableRecord> getAllRecords(HelperTable helperTable);
 
     /**
      * Este método es responsable de recuperar todos los registros de una tabla auxiliar que se encuentran vigentes.
@@ -41,12 +51,7 @@ public interface HelperTableManager {
      */
     public List<HelperTableRecord> getValidRecords(@NotNull HelperTable helperTable, List<String> columnNames);
 
-    List<HelperTableRecord> searchValidRecords(@NotNull HelperTable helperTable, List<String> columnNames, String query);
-
-    /**
-     * @return
-     */
-    public List<HelperTableRecord> getAllRecords(HelperTable helperTable);
+    public List<HelperTableRecord> searchValidRecords(@NotNull HelperTable helperTable, List<String> columnNames, String query);
 
     HelperTableRecord getRecord(long recordId);
 
