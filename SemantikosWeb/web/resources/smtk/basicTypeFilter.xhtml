@@ -49,6 +49,7 @@
                     update="@(.conceptFilters)"
                     process="@this" />
 
+            <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
 
             <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}"
                           itemValue="#{ null }"
@@ -80,6 +81,8 @@
                         listener="#{conceptBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, target)}"
                         update="@(.conceptFilters)"
                         process="@this" />
+
+                <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
 
                 <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}"
                               itemValue="#{ null }"

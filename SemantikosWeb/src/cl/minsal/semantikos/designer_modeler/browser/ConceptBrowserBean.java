@@ -274,6 +274,7 @@ public class ConceptBrowserBean implements Serializable {
         }
         // Se resetean los placeholder para los target de las relaciones
         basicTypeValue = new BasicTypeValue(null);
+        helperTableRecord = new HelperTableRecord();
 
         //Ajax.update("@(.conceptBrowserTable)");
     }
