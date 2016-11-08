@@ -86,7 +86,7 @@
             <div class="ui-g-12 ui-md-6 ui-lg-2">
                 <p:button outcome="conceptEdit" icon="fa fa-plus" styleClass="ui-priority-primary" value="Crear Nuevo">
                     <f:param name="editMode" value="#{true}" />
-                    <f:param name="idCategory" value="#{cc.attrs.conceptQuery.categories.get(0).id}" />
+                    <f:param name="idCategory" value="#{conceptBrowserBean.idCategory}" />
                     <f:param name="idConcept" value="#{0}" />
                 </p:button>
             </div>
