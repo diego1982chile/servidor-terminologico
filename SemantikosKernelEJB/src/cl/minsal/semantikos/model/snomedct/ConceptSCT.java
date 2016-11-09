@@ -10,6 +10,7 @@ import java.util.List;
 
 import static cl.minsal.semantikos.model.snomedct.DescriptionSCTType.FSN;
 import static cl.minsal.semantikos.model.snomedct.DescriptionSCTType.SYNONYM;
+import static java.util.Collections.emptyList;
 
 
 /**
@@ -128,6 +129,7 @@ public class ConceptSCT extends PersistentEntity implements Target {
 
     /**
      * Este método es encargado de obtener la descripción favorita del concepto SCT
+     *
      * @return
      */
     public DescriptionSCT getDescriptionFavouriteSynonymous() {
@@ -142,6 +144,11 @@ public class ConceptSCT extends PersistentEntity implements Target {
     }
 
     private List<DescriptionSCT> getDescriptionSynonymous() {
+
+        if (descriptions == null) {
+            return emptyList();
+        }
+
         List<DescriptionSCT> synonyms = new ArrayList<>();
         for (DescriptionSCT description : descriptions) {
             if (description.getDescriptionType().equals(SYNONYM)) {
@@ -159,6 +166,10 @@ public class ConceptSCT extends PersistentEntity implements Target {
      * @return La descripción del concepto.
      */
     public DescriptionSCT getDescriptionFSN() {
+
+        if (descriptions == null) {
+            return null;
+        }
 
         for (DescriptionSCT description : descriptions) {
             if (description.getDescriptionType().equals(FSN)) {

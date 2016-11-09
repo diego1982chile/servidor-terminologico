@@ -2,7 +2,6 @@ package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.kernel.components.HelperTableManager;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
-import cl.minsal.semantikos.kernel.daos.ConceptSCTDAO;
 import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
 import cl.minsal.semantikos.kernel.daos.SnomedCTDAO;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
@@ -12,7 +11,6 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -135,7 +133,7 @@ public class TargetFactory {
         if (definition.isHelperTable()) {
             return new HelperTableRecord((HelperTable)definition,-1);
         } else {
-            throw new NotImplementedException();
+            throw new EJBException("No implementado!");
         }
 
 

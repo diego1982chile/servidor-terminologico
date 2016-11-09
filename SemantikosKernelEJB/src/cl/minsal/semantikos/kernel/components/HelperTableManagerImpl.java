@@ -4,9 +4,9 @@ import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
 import cl.minsal.semantikos.model.helpertables.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -45,9 +45,9 @@ public class HelperTableManagerImpl implements HelperTableManager {
     public List<HelperTableRecord> getAllRecords(HelperTable helperTable, List<String> columnNames) {
 
         List<HelperTableRecord> allRecords = helperTableDAO.getAllRecords(helperTable);
-        logger.debug("Elemenos en orden original: " + allRecords);
+        logger.info("Elementos en orden original: " + allRecords);
         Collections.sort(allRecords);
-        logger.debug("Elemenos en orden final: " + allRecords);
+        logger.info("Elementos en orden final: " + allRecords);
         logger.debug("Se recuperan " + allRecords.size() + " registros de la tabla " + helperTable);
 
         return allRecords;
@@ -70,14 +70,14 @@ public class HelperTableManagerImpl implements HelperTableManager {
     public List<HelperTableRecord> getValidRecords(@NotNull HelperTable helperTable, List<String> columnNames) {
         logger.debug("Se solicitan los registros vigentes de la tabla " + helperTable);
 
-        throw new NotImplementedException();
+        throw new EJBException("No implementado");
     }
 
     @Override
     public List<HelperTableRecord> searchValidRecords(@NotNull HelperTable helperTable, List<String> columnNames, String query) {
         logger.debug("Se solicitan los registros vigentes de la tabla " + helperTable);
 
-        throw new NotImplementedException();
+        throw new EJBException("No implementado");
     }
 
     @Override

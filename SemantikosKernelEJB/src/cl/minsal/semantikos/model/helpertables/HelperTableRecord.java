@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import javax.validation.constraints.NotNull;
 import java.util.Map;
 
+import static cl.minsal.semantikos.model.helpertables.HelperTable.SYSTEM_COLUMN_DESCRIPTION;
+
 
 /**
  * @author Andrés Farías
@@ -139,9 +141,10 @@ public class HelperTableRecord implements Target, Comparable<HelperTableRecord> 
 
     @Override
     public int compareTo(@NotNull HelperTableRecord helperTableRecord) {
-        if(this.getFields()==null)
-            return 0;
 
-        return (int)(this.getId() - helperTableRecord.getId());
+        String thisDescription = this.getValueColumn(SYSTEM_COLUMN_DESCRIPTION.getColumnName());
+        String theOtherDescription = helperTableRecord.getValueColumn(SYSTEM_COLUMN_DESCRIPTION.getColumnName());
+
+        return thisDescription.compareTo(theOtherDescription);
     }
 }
