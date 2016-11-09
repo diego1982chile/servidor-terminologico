@@ -300,10 +300,10 @@ public class ConceptQuery {
         conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getToBeReviewed(), false)); /** para revisar? **/
         conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getToBeConsulted(), false)); /** para consultar? **/
         conceptQueryParameters.add(new ConceptQueryParameter(Tag.class, getTag(), false)); /** etiquetas **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getBasicTypeDefinitionValues(), true)); /** ids basicTypeDefinitions **/
+        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getBasicTypeDefinitionValues(), true)); /** ids basicTypeDefinitionValues **/
         conceptQueryParameters.add(new ConceptQueryParameter(String.class, getBasicTypeValues(), true)); /** ids basicTypeValues **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getHelperTableValues(), true)); /** ids helperTables **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getHelperTableRecordValues(), true)); /** ids helperTableRecords **/
+        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getHelperTableValues(), true)); /** ids helperTableValues **/
+        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getHelperTableRecordValues(), true)); /** ids helperTableRecordValues **/
         conceptQueryParameters.add(new ConceptQueryParameter(Timestamp.class, getCreationDateSince(), false));
         conceptQueryParameters.add(new ConceptQueryParameter(Timestamp.class, getCreationDateTo(), false));
         conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getUserValue(), false));
