@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import static cl.minsal.semantikos.model.helpertables.HelperTable.SYSTEM_COLUMN_DESCRIPTION;
@@ -34,6 +36,8 @@ public class HelperTableRecord implements Target, Comparable<HelperTableRecord> 
      * Este constructor vacío se provee para JSON.
      */
     public HelperTableRecord() {
+        this.fields = new HashMap<>();
+        this.helperTable = new HelperTable("Dummy Helper Table", "Dummy Helper Table", "helper_table", new ArrayList<HelperTableColumn>());
     }
 
     /**
