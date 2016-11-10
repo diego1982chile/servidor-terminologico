@@ -202,6 +202,22 @@ public class ConceptQuery {
         }
     }
 
+    public Long[] getConceptCategoryValues(){
+
+        List<Long> conceptCategoryValues = new ArrayList<>();
+
+        for (ConceptQueryFilter filter : filters)
+            conceptCategoryValues.addAll(filter.getCategoryValues());
+
+        if(conceptCategoryValues.isEmpty())
+            return null;
+
+        else {
+            Long[] array = new Long[conceptCategoryValues.size()];
+            return conceptCategoryValues.toArray(array);
+        }
+    }
+
     public Long[] getConceptValues(){
 
         List<Long> conceptValues = new ArrayList<>();
@@ -300,6 +316,8 @@ public class ConceptQuery {
         conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getToBeReviewed(), false)); /** para revisar? **/
         conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getToBeConsulted(), false)); /** para consultar? **/
         conceptQueryParameters.add(new ConceptQueryParameter(Tag.class, getTag(), false)); /** etiquetas **/
+        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getConceptCategoryValues(), true));
+        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getConceptValues(), true));
         conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getBasicTypeDefinitionValues(), true)); /** ids basicTypeDefinitionValues **/
         conceptQueryParameters.add(new ConceptQueryParameter(String.class, getBasicTypeValues(), true)); /** ids basicTypeValues **/
         conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getHelperTableValues(), true)); /** ids helperTableValues **/

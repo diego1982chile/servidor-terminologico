@@ -132,7 +132,7 @@ public class ConceptQueryFilter {
 
         if(definition.getTargetDefinition().isBasicType()){
             for (Target target : targets)
-                basicTypeDefinitionValues.add(definition.getTargetDefinition().getId());
+                basicTypeDefinitionValues.add(definition.getId());
         }
 
         return basicTypeDefinitionValues;

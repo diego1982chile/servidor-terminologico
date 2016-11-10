@@ -90,7 +90,7 @@ public class ConceptBrowserBean implements Serializable {
     // Placeholders para los targets de los filtros, dados como elementos seleccionables
     private BasicTypeValue basicTypeValue = new BasicTypeValue(null);
 
-    private HelperTableRecord helperTableRecord = new HelperTableRecord();
+    private HelperTableRecord helperTableRecord = null;
 
     private ConceptSMTK conceptSMTK = null;
 
@@ -237,9 +237,6 @@ public class ConceptBrowserBean implements Serializable {
     }
 
     public HelperTableRecord getHelperTableRecord() {
-        if (helperTableRecord == null)
-            helperTableRecord = new HelperTableRecord();
-
         return helperTableRecord;
     }
 
@@ -281,8 +278,8 @@ public class ConceptBrowserBean implements Serializable {
      */
     public void setSimpleSelection(RelationshipDefinition relationshipDefinition, Target target) {
 
-        if(target.toString().equals(""))
-            target = null;
+        if(target == null)
+            return;
 
         // Se busca el filtro
         for (ConceptQueryFilter conceptQueryFilter : conceptQuery.getFilters()) {
@@ -296,9 +293,22 @@ public class ConceptBrowserBean implements Serializable {
         }
         // Se resetean los placeholder para los target de las relaciones
         basicTypeValue = new BasicTypeValue(null);
-        helperTableRecord = new HelperTableRecord();
-
+        helperTableRecord = null;
+        conceptSMTK = null;
         //Ajax.update("@(.conceptBrowserTable)");
+    }
+
+    public void removeTarget(RelationshipDefinition relationshipDefinition, Target target){
+        if(target == null)
+            return;
+
+        // Se busca el filtro
+        for (ConceptQueryFilter conceptQueryFilter : conceptQuery.getFilters()) {
+            if (conceptQueryFilter.getDefinition().equals(relationshipDefinition)) {
+                conceptQueryFilter.getTargets().remove(target);
+                break;
+            }
+        }
     }
 
 

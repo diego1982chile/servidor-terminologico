@@ -123,7 +123,7 @@ public class ConceptBean implements Serializable {
     // Placeholders para los target de las relaciones
     private BasicTypeValue basicTypeValue = new BasicTypeValue(null);
 
-    private HelperTableRecord selectedHelperTableRecord = new HelperTableRecord();
+    private HelperTableRecord selectedHelperTableRecord = null;
 
     private ConceptSMTK conceptSMTK;
 
@@ -470,7 +470,7 @@ public class ConceptBean implements Serializable {
 
     public void resetPlaceHolders(){
         basicTypeValue = new BasicTypeValue(null);
-        selectedHelperTableRecord = new HelperTableRecord();
+        selectedHelperTableRecord = null;
         conceptSelected = null;
         conceptSCTSelected = null;
     }
@@ -585,9 +585,7 @@ public class ConceptBean implements Serializable {
         }
 
         // Se resetean los placeholder para los target de las relaciones
-        basicTypeValue = new BasicTypeValue(null);
-        conceptSelected = null;
-        selectedHelperTableRecord = new HelperTableRecord();
+        resetPlaceHolders();
     }
 
     public void setTarget(RelationshipDefinition relationshipDefinition, Target target) {
@@ -617,9 +615,7 @@ public class ConceptBean implements Serializable {
             relationship.getRelationshipAttributes().add(new RelationshipAttribute(relationshipAttributeDefinition, relationship, target));
         }
         // Se resetean los placeholder para los target de las relaciones
-        basicTypeValue = new BasicTypeValue(null);
-        conceptSelected = null;
-        selectedHelperTableRecord = new HelperTableRecord();
+        resetPlaceHolders();
     }
 
     /**
