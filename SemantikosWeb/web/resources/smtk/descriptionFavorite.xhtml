@@ -29,7 +29,9 @@
                          validator="#{validatorBean.validateRequiredInput}"
                          value="#{cc.attrs.description.term}"
                          style="width:90%"
-                         disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}">
+                         disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
+                         autocomplete="off"
+            >
                 <p:ajax event="change" update="@this" process="@this" delay="100" />
             </p:inputText>
         </div>
