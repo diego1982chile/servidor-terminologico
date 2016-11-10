@@ -25,4 +25,6 @@ public interface ConceptQueryDAO {
 
     boolean getCustomFilteringValue(Category category);
 
+    boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition);
+
 }

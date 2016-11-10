@@ -196,6 +196,39 @@ public class ConceptQueryDAOImpl implements ConceptQueryDAO {
         return customFilteringValue;
     }
 
+    @Override
+    public boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition) {
+
+        ConnectionBD connect = new ConnectionBD();
+        String sql = "{call semantikos.get_view_info_by_relationship_definition(?,?)}";
+
+        boolean multipleFilteringValue = false;
+
+        try (Connection connection = connect.getConnection();
+
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setLong(1, category.getId());
+            call.setLong(2, relationshipDefinition.getId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            if (rs.next()) {
+
+                multipleFilteringValue = rs.getBoolean("multiple_filterable");
+
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar información adicional sobre esta categoría desde la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return multipleFilteringValue;
+    }
+
     private void bindParameter(int paramNumber, CallableStatement call, Connection connection, ConceptQueryParameter param)
             throws SQLException {
 

@@ -16,18 +16,15 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="ui-g-12 ui-md-6 ui-lg-2">
-
-        <p:autoComplete id="findHTRecords1" scrollHeight="200" style="width: 90%;"
-                        inputStyle="width: 90%;"
+    <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <p:autoComplete id="findHTRecords2" scrollHeight="200"
                         completeMethod="#{helperTableBean.getRecordSearchInput}"
-                        dropdown="true"
                         forceSelection="true"
                         var="record"
-                        placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                        placeholder="#{ empty cc.attrs.targets? cc.attrs.relationshipDefinition.name: ''}"
                         converter="helperTableRecordConverter"
-                        value="#{conceptBrowserBean.helperTableRecord}"
-                        rendered="#{cc.attrs.targets.isEmpty() }"
+                        value="#{cc.attrs.targets}"
+                        multiple="true"
                         itemLabel="#{record.fields['description']}"
                         itemValue="#{record}">
             <!-- Parámetros del buscador -->
@@ -40,32 +37,11 @@
                 <h:outputText value="#{record.fields['description']}"/>
             </p:column>
 
-            <p:ajax event="itemSelect"
-                    listener="#{conceptBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, conceptBrowserBean.helperTableRecord)}"
-                    update="@(.conceptFilters)"
-                    process="@this" />
-
-            <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
+            <p:ajax event="itemSelect" update="@(.conceptBrowserTable),@(.conceptFilters)" />
+            <p:ajax event="itemUnselect" update="@(.conceptBrowserTable),@(.conceptFilters)" />
 
         </p:autoComplete>
 
-        <p:repeat  value="#{cc.attrs.targets}"
-                   offset="0"
-                   size="#{cc.attrs.targets.size()}"
-                   step="1"
-                   var="target"
-                   varStatus="var">
-
-            <p:inputText style="width: 65%;" disabled="true" id="itemSelected" value="#{target.fields['description']}"
-                         rendered="#{ not cc.attrs.targets.isEmpty() }" />
-            <p:commandButton icon="fa fa-close" title="Eliminar"
-                             action="#{conceptBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}"
-                             styleClass="ui-datepicker-trigger ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only CyanButton"
-                             update="@(.conceptFilters),@(.conceptBrowserTable)"
-                             rendered="#{ not cc.attrs.targets.isEmpty() }"
-                             process="@this">
-            </p:commandButton>
-        </p:repeat>
     </div>
 
 

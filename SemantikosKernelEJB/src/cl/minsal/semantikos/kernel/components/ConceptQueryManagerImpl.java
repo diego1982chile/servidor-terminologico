@@ -37,15 +37,17 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
         query.setFilters(filters);
 
         // Stablishing custom filtering value
-        query.setCustomFilterable(getCustomFIlteringValue(category));
+        query.setCustomFilterable(getCustomFilteringValue(category));
 
         // Adding dynamic columns
         for (RelationshipDefinition relationshipDefinition : getShowableAttributesByCategory(category)) {
-            query.getColumns().add(new ConceptQueryColumn(relationshipDefinition.getName(), new Sort(null, false)));
+            query.getColumns().add(new ConceptQueryColumn(relationshipDefinition.getName(), new Sort(null, false), relationshipDefinition));
         }
         // Adding dynamic filters
         for (RelationshipDefinition relationshipDefinition : getSearchableAttributesByCategory(category)) {
-            query.getFilters().add(new ConceptQueryFilter(relationshipDefinition));
+            ConceptQueryFilter conceptQueryFilter = new ConceptQueryFilter(relationshipDefinition);
+            conceptQueryFilter.setMultiple(getMultipleFilteringValue(category, relationshipDefinition));
+            query.getFilters().add(conceptQueryFilter);
         }
 
         return query;
@@ -69,7 +71,11 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
         return conceptQueryDAO.getSearchableAttributesByCategory(category);
     }
 
-    private boolean getCustomFIlteringValue(Category category){
+    private boolean getCustomFilteringValue(Category category){
         return conceptQueryDAO.getCustomFilteringValue(category);
+    }
+
+    private boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition){
+        return conceptQueryDAO.getMultipleFilteringValue(category, relationshipDefinition);
     }
 }

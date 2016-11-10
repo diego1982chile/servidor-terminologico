@@ -71,8 +71,12 @@
                         relationshipDefinition="#{filter.definition}"
                         targetDefinition="#{filter.definition.targetDefinition}"
                         targets="#{filter.targets}"
-                        multiple="#{filter.multiple}"
-                        rendered="#{filter.definition.targetDefinition.helperTable}" />
+                        rendered="#{filter.definition.targetDefinition.helperTable and not filter.multiple}" />
+                <smtk:helperTableTypeMultipleFilter
+                        relationshipDefinition="#{filter.definition}"
+                        targetDefinition="#{filter.definition.targetDefinition}"
+                        targets="#{filter.targets}"
+                        rendered="#{filter.definition.targetDefinition.helperTable and filter.multiple}" />
                 <smtk:smtkTypeFilter relationshipDefinition="#{filter.definition}"
                                      targetDefinition="#{filter.definition.targetDefinition}"
                                      targets="#{filter.targets}"
