@@ -120,6 +120,7 @@
             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
                         and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
+
         <p:repeat  value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                    offset="0"
                    size="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition).size()}"
@@ -143,6 +144,9 @@
                     <p:ajax event="itemSelect"
                             listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,relationship.target)}"
                             process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
+                    <p:ajax event="itemSelect"
+                            listener="#{changeMarketedBean.changeMarketedEvent(conceptBean.concept,cc.attrs.relationshipDefinition,relationship.target)}"
+                            process="@this" update="@(.conceptMarketed)" />
                     <f:selectItem itemLabel="Seleccione"
                                   itemValue="#{null}"
                     />
