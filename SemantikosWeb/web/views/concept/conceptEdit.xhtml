@@ -17,7 +17,7 @@
 
         <p:panel id="createEdit" style="background: rgba(0, 0, 0, 0); border: hidden;">
             <h:form id="mainForm" rendered="#{ not (conceptBean.concept eq null ) }" styleClass="#{conceptBean.editable? '' : 'consult'}">
-
+                <smtk:changeMarketed></smtk:changeMarketed>
                 <p:panel>
 
                     <p:growl id="growl" showDetail="true" showSummary="true"/>
@@ -281,6 +281,8 @@
                 <h:outputText value="La URL de registro ISP no se encuentra disponible en este momento, por favor intente más tarde." />
             </p:dialog>
         </p:panel>
+
+
 
         <script type="text/javascript">
 
