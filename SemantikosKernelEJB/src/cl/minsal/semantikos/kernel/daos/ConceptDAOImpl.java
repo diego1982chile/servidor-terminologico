@@ -657,4 +657,32 @@ public class ConceptDAOImpl implements ConceptDAO {
         return getConceptByID(81239); // Desarrollo
         //return getConceptByID(81340); // Testing
     }
+
+    @Override
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK) {
+        List<ConceptSMTK> concepts = new ArrayList<>();
+
+        ConnectionBD connect = new ConnectionBD();
+
+
+        CallableStatement call;
+
+        try (Connection connection = connect.getConnection();) {
+
+            call = connection.prepareCall("{call semantikos.get_related_concept(?)}");
+            call.setLong(1,conceptSMTK.getId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                concepts.add(createConceptSMTKFromResultSet(rs));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return concepts;
+    }
 }

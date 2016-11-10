@@ -104,7 +104,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         //Búsqueda por categoría y patron o concept ID
         if ((categories.length != 0 && patternOrConceptID != null)) {
-            if (patternOrConceptID.length() >= 3) {
+            if (patternOrConceptID.length() >= 2) {
                 if (arrayPattern.length >= 2) {
                     return conceptDAO.getConceptBy(arrayPattern, categories, isModeled, pageSize, pageNumber);
                 } else {
@@ -115,7 +115,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         //Búsqueda por patron o concept ID
         if ((categories.length == 0 && patternOrConceptID != null)) {
-            if (patternOrConceptID.length() >= 3) {
+            if (patternOrConceptID.length() >= 2) {
                 if (arrayPattern.length >= 2) {
                     return conceptDAO.getConceptBy(arrayPattern, isModeled, pageSize, pageNumber);
                 } else {
@@ -164,7 +164,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         //Cuenta por categoría y patron o concept ID
         if ((categories.length != 0 && pattern != null)) {
-            if (pattern.length() >= 3) {
+            if (pattern.length() >= 2) {
                 if (arrayPattern.length >= 2) {
                     return conceptDAO.countConceptBy(arrayPattern, categories, isModeled);
                 } else {
@@ -176,7 +176,7 @@ public class ConceptManagerImpl implements ConceptManager {
         //Cuenta por patron o concept ID
 
         if (pattern != null) {
-            if (pattern.length() >= 3) {
+            if (pattern.length() >= 2) {
                 if (arrayPattern.length >= 2) {
                     return conceptDAO.countConceptBy(arrayPattern, new Long[0], isModeled);
                 } else {
@@ -368,6 +368,10 @@ public class ConceptManagerImpl implements ConceptManager {
         return conceptDAO.getNoValidConcept();
     }
 
+    @Override
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK) {
+        return conceptDAO.getRelatedConcepts(conceptSMTK);
+    }
 
     /**
      * Método encargado de convertir un string en una lista de string.
@@ -387,7 +391,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
             while (st.hasMoreTokens()) {
                 token = st.nextToken();
-                if (token.length() >= 3) {
+                if (token.length() >= 2) {
                     listPattern.add(token.trim());
                 }
                 if (count == 0 && listPattern.size() == 0) {

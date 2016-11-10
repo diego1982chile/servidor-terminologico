@@ -161,6 +161,9 @@ public class ConceptBean implements Serializable {
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
+    @ManagedProperty(value = "#{changeMarketedBean}")
+    private ChangeMarketedBean changeMarketedBean;
+
     @EJB
     private ViewAugmenter viewAugmenter;
 
@@ -825,6 +828,8 @@ public class ConceptBean implements Serializable {
             relationshipManager.updateRelationship(concept, relationship.getFirst(), relationship.getSecond(), user);
         }
 
+        changeMarketedBean.changeMarketed();
+
         return relationshipsForPersist.size() + relationshipsForDelete.size() + relationshipsForUpdate.size();
     }
 
@@ -894,7 +899,7 @@ public class ConceptBean implements Serializable {
             conceptManager.delete(concept, user);
             context.addMessage(null, new FacesMessage("Successful", "Concepto eliminado"));
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml");
+            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptBrowser.xhtml?idCategory="+category.getId());
             return "mainMenu.xhtml";
         } else {
             conceptManager.invalidate(concept, user);
@@ -909,6 +914,7 @@ public class ConceptBean implements Serializable {
         concept.restore(_concept);
         descriptionsToTraslate.clear();
         noValidDescriptions.clear();
+        changeMarketedBean.conceptSelected.clear();
         context.addMessage(null, new FacesMessage("Info", "Los cambios se han descartado"));
     }
 
@@ -1315,6 +1321,15 @@ public class ConceptBean implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+
+    public ChangeMarketedBean getChangeMarketedBean() {
+        return changeMarketedBean;
+    }
+
+    public void setChangeMarketedBean(ChangeMarketedBean changeMarketedBean) {
+        this.changeMarketedBean = changeMarketedBean;
     }
 
     /**

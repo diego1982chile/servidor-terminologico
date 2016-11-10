@@ -184,4 +184,6 @@ public interface ConceptManager {
      * @return La instancia (única) del concepto No Válido.
      */
     public ConceptSMTK getNoValidConcept();
+
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
 }
