@@ -38,7 +38,13 @@ public class HelperTableSearchBR {
      */
     private void precondition02(HelperTable helperTable, String columnName) {
 
+        /* Se recupera la columna de la tabla auxiliar */
         HelperTableColumn helperTableColumn = helperTable.getColumnByName(columnName);
+
+        /* Se valida que la columna sea buscable */
+        if (!helperTableColumn.isSearchable()) {
+            throw new BusinessRuleException("La columna " + columnName + " no está definida como buscable para la tabla auxiliar " + helperTable);
+        }
     }
 
 }
