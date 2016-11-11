@@ -647,6 +647,13 @@ public class ConceptBean implements Serializable {
     }
 
     /**
+     * Este método es el encargado de remover un atributo de relación específico de una relación
+     */
+    public void removeRelationshipAttribute(Relationship r, RelationshipAttribute ra) {
+        r.getRelationshipAttributes().remove(ra);
+    }
+
+    /**
      * Este método es el encargado de agregar descripciones al concepto
      */
     public void addDescription() {
