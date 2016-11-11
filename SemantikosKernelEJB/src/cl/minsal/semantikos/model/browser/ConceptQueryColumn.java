@@ -39,4 +39,11 @@ public class ConceptQueryColumn {
         this.columnName = columnName;
     }
 
+    public RelationshipDefinition getRelationshipDefinition() {
+        return relationshipDefinition;
+    }
+
+    public void setRelationshipDefinition(RelationshipDefinition relationshipDefinition) {
+        this.relationshipDefinition = relationshipDefinition;
+    }
 }

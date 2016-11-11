@@ -44,7 +44,10 @@ public class ConceptQueryFilter {
     }
 
     public void setTargets(List<Target> targets) {
-        this.targets = targets;
+        if(targets == null)
+            this.targets.clear();
+        else
+            this.targets = targets;
     }
 
     public boolean isMultiple() {
