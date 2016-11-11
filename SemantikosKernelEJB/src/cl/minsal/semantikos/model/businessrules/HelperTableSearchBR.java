@@ -10,7 +10,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
 public class HelperTableSearchBR {
 
     /** Mínima cantidad de caracteres en el patrón de búsqueda en tablas auxiliares */
-    public short MINIMUM_PATTERN_LENGTH = 2;
+    public static final short MINIMUM_PATTERN_LENGTH = 2;
 
     /**
      * Método para realizar las validaciones.
@@ -70,7 +70,7 @@ public class HelperTableSearchBR {
      */
     protected void precondition03(String pattern) {
         if ((pattern == null) || pattern.length() < MINIMUM_PATTERN_LENGTH) {
-            throw new BusinessRuleException("HelperTable BR-PC03: El patrón de búsqueda sobre tablas auxiliares debe tener un largo mínimo de " + MINIMUM_PATTERN_LENGTH + " caracteres.")
+            throw new BusinessRuleException("HelperTable BR-PC03: El patrón de búsqueda sobre tablas auxiliares debe tener un largo mínimo de " + MINIMUM_PATTERN_LENGTH + " caracteres.");
         }
     }
 }
