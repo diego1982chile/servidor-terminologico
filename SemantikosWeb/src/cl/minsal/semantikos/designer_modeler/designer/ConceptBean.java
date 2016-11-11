@@ -153,10 +153,8 @@ public class ConceptBean implements Serializable {
     //para tipo helpertable
     private int helperTableValuePlaceholder;
 
-
     @ManagedProperty(value = "#{conceptExport}")
     private ConceptExportMBean conceptBeanExport;
-
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
@@ -496,10 +494,6 @@ public class ConceptBean implements Serializable {
         Relationship relationship = null;
         boolean isRelationshipFound = false;
 
-        if(target.toString().equals(""))
-            target = null;
-
-
         if (relationshipDefinition.getTargetDefinition().isSMTKType() && target.getId() == concept.getId()) {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede seleccionar el mismo concepto que está editando"));
@@ -626,6 +620,13 @@ public class ConceptBean implements Serializable {
      */
     public void removeRelationship(RelationshipDefinition rd, Relationship r) {
         concept.removeRelationshipWeb(r);
+    }
+
+    /**
+     * Este método es el encargado de remover un atributo de relación específico de una relación
+     */
+    public void removeRelationshipAttribute(Relationship r, RelationshipAttribute ra) {
+        r.getRelationshipAttributes().remove(ra);
     }
 
     /**
