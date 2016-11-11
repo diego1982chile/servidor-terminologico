@@ -59,7 +59,7 @@ public class HelperTableSearchBR {
 
         /* Se valida que la columna sea buscable */
         if (!helperTableColumn.isSearchable()) {
-            throw new BusinessRuleException("La columna " + columnName + " no está definida como buscable para la tabla auxiliar " + helperTable);
+            throw new BusinessRuleException("HelperTable BR-PC02: La columna " + columnName + " no está definida como buscable para la tabla auxiliar " + helperTable);
         }
     }
 
@@ -68,10 +68,9 @@ public class HelperTableSearchBR {
      *
      * @param pattern El patrón de búsqueda.
      */
-    private void precondition03(String pattern) {
+    protected void precondition03(String pattern) {
         if ((pattern == null) || pattern.length() < MINIMUM_PATTERN_LENGTH) {
-
+            throw new BusinessRuleException("HelperTable BR-PC03: El patrón de búsqueda sobre tablas auxiliares debe tener un largo mínimo de " + MINIMUM_PATTERN_LENGTH + " caracteres.")
         }
     }
-
 }
