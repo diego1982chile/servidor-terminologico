@@ -41,7 +41,7 @@
                                      styleClass="relationships">
                         <p:ajax event="itemSelect"
                                 listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
-                                process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
+                                process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.attributes)" />
                         <f:selectItem itemLabel="Seleccione"
                                       itemValue="#{null}"
                         />
@@ -195,6 +195,7 @@
                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                     <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)" />
+
                 </p:inputNumber>
 
                 <p:inputNumber id="basicTypeValue21"

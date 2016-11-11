@@ -2,10 +2,7 @@ package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
-import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinitionWeb;
+import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.util.Pair;
 
 import java.util.ArrayList;
@@ -494,8 +491,12 @@ public class ConceptSMTKWeb extends ConceptSMTK {
                 if(basicTypeValue.getValue().equals(""))
                     return false;
             }
+            for (RelationshipAttributeDefinition relationshipAttributeDefinition: relationshipDefinition.getRelationshipAttributeDefinitions()) {
+                if(relationshipWeb.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size()<relationshipAttributeDefinition.getMultiplicity().getLowerBoundary()) return false;
+            }
 
         }
+
         return this.getValidRelationshipsWebByRelationDefinition(relationshipDefinition).size()>=relationshipDefinition.getMultiplicity().getLowerBoundary();
     }
 
