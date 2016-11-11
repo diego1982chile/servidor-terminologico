@@ -41,19 +41,21 @@ public interface HelperTableManager {
     public List<HelperTableRecord> getAllRecords(HelperTable helperTable);
 
     /**
-     * Este método es responsable de recuperar todos los registros de una tabla auxiliar que se encuentran vigentes.
+     * Este método es responsable de recuperar registros de una tabla auxiliar de acuerdo a un patrón de búsqueda sobre
+     * una de sus columnas, y su validez.
      *
-     * @param helperTable La tabla cuyos registros se desea recuperar.
-     * @param columnNames El nombre de las columnas que se desea recuperar.
+     * @param helperTable La tabla sobre la cual se realiza la búsqueda.
+     * @param columnName  La columna sobre la cuál se realiza la búsqueda.
+     * @param pattern     El patrón utilizado para la búsqueda.
+     * @param validity    <code>true</code> si se quieren recuperar registros válidos y <code>false</code> si se quiere
+     *                    recuperar todos los registros.
      *
-     * @return Una lista de registros de la tabla <code>helperTable</code> con las columnas <code>columnNames</code>
-     * indicadas que se encuentran vigentes en este momento.
+     * @return La lista de registros en la tabla <code>helperTable</code> que cumplen con el <code>pattern</code> de
+     * búsqueda.
      */
-    public List<HelperTableRecord> getValidRecords(@NotNull HelperTable helperTable, List<String> columnNames);
+    public List<HelperTableRecord> searchRecords(HelperTable helperTable, String columnName, String pattern, boolean validity);
 
-    public List<HelperTableRecord> searchValidRecords(@NotNull HelperTable helperTable, List<String> columnNames, String query);
-
-    HelperTableRecord getRecord(long recordId);
+    public HelperTableRecord getRecord(long recordId);
 
     /**
      * Este método es responsable de recuperar una tabla dado su identificador.

@@ -103,6 +103,11 @@ public class HelperTableDAOImpl implements HelperTableDAO {
     }
 
     @Override
+    public List<HelperTableRecord> findRecordsByPattern(HelperTable helperTable, String columnName, String pattern, boolean validity) {
+        return null;
+    }
+
+    @Override
     public List<HelperTableRecord> getAllRecords(HelperTable helperTable, List<String> columnNames) {
 
         ConnectionBD connectionBD = new ConnectionBD();

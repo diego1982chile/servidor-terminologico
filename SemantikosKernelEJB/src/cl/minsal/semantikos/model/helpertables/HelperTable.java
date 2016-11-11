@@ -107,6 +107,26 @@ public class HelperTable extends PersistentEntity implements TargetDefinition {
     }
 
     /**
+     * Este método es responsable de retornar la columna con el nombre dado como parámetro.
+     *
+     * @param columnName El nombre de la columna que se desea recuperar.
+     *
+     * @return La columna cuyo nombre coincide con <code>columnName</code>.
+     *
+     * @throws java.lang.IllegalArgumentException Cuando la tabla no tiene una columna de nombre <code>columnName</code>.
+     */
+    public HelperTableColumn getColumnByName(String columnName) {
+
+        for (HelperTableColumn column : columns) {
+            if (column.getColumnName().equalsIgnoreCase(columnName)) {
+                return column;
+            }
+        }
+
+        throw new IllegalArgumentException("La tabla auxiliar " + this + " no posee una columna de nombre " + columnName);
+    }
+
+    /**
      * Este método es responsable de retornar una lista con los nombres las columnas dadas como parámetro.
      *
      * @param columns Las columnas cuyos nombres se desea obtener
