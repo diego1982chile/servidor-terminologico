@@ -52,7 +52,7 @@ public class HelperTableSearchBR {
      * @param helperTable La tabla auxiliar sobre la cual se realiza la validación.
      * @param columnName  El nombre de la columna que debe contener.
      */
-    private void precondition02(HelperTable helperTable, String columnName) {
+    protected void precondition02(HelperTable helperTable, String columnName) {
 
         /* Se recupera la columna de la tabla auxiliar */
         HelperTableColumn helperTableColumn = helperTable.getColumnByName(columnName);
