@@ -21,12 +21,26 @@ public class HelperTableSearchBRTest {
      * @throws cl.minsal.semantikos.model.exceptions.BusinessRuleException La excepción esperada.
      */
     @Test(expected = BusinessRuleException.class)
-    public void testPrecondition01() throws Exception {
+    public void testPrecondition01_01() throws Exception {
 
         Collection<HelperTableColumn> columns = dummyHelperTable();
 
         HelperTable helperTable = new HelperTable("HT Dummy", "Dummy", "dummy", columns);
         helperTableSearchBR.precondition01(helperTable, "NON_EXISTENT_COLUMN_NAME");
+    }
+
+    /**
+     * Este test valida que se pueda buscar en tablas que si tienen la columna dada.
+     *
+     * @throws cl.minsal.semantikos.model.exceptions.BusinessRuleException La excepción esperada.
+     */
+    @Test()
+    public void testPrecondition01_02() throws Exception {
+
+        Collection<HelperTableColumn> columns = dummyHelperTable();
+
+        HelperTable helperTable = new HelperTable("HT Dummy", "Dummy", "dummy", columns);
+        helperTableSearchBR.precondition01(helperTable, A_SEARCHABLE_COLUMN_NAME);
     }
 
     /**
