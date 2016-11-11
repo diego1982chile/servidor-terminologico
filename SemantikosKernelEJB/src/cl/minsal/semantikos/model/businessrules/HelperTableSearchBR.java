@@ -39,7 +39,7 @@ public class HelperTableSearchBR {
      * @param helperTable La tabla auxiliar sobre la cual se realiza la validación.
      * @param columnName  El nombre de la columna que debe contener.
      */
-    private void precondition01(HelperTable helperTable, String columnName) {
+    protected void precondition01(HelperTable helperTable, String columnName) {
 
         if (!helperTable.getAllColumnsNames().contains(columnName)) {
             throw new BusinessRuleException("HelperTable BR-PC01: La tabla auxiliar " + helperTable + " no posee una columna de nombre " + columnName + " sobre la cual realizar las búsquedas");
