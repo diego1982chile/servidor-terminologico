@@ -1,11 +1,9 @@
 package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.audit.AuditableEntity;
-import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.businessrules.ConceptStateBusinessRulesContainer;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.*;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
@@ -187,6 +185,43 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         return relationships;
+    }
+
+    /**
+     * Este método es responsable de retornar todas las relaciones de tipo <code>targetType</code>.
+     *
+     * @param targetType El tipo de relaciones que se requiere
+     *
+     * @return Una lista de relaciones que son de tipo <code>targetType</code>.
+     */
+    public List<Relationship> getRelationships(TargetType targetType) {
+
+        List<Relationship> smtkRelationshipsByCategory = new ArrayList<>();
+        for (Relationship relationship : relationships) {
+
+            /* Se filtra por el tipo de relación (hacia SMTK) */
+            if (relationship.getTarget().getTargetType().equals(targetType)) {
+                smtkRelationshipsByCategory.add(relationship);
+            }
+        }
+
+        return smtkRelationshipsByCategory;
+    }
+
+    public List<ConceptSMTK> getRelatedSMTKConceptsBy(Category category){
+        List<ConceptSMTK> relatedConcepts = new ArrayList<>();
+
+        /* Se obtienen las relaciones a conceptos SMTK */
+        for (Relationship smtkRelationship : getRelationships(TargetType.SMTK)) {
+            ConceptSMTK conceptSMTK = (ConceptSMTK) smtkRelationship.getTarget();
+
+            /* Y se filtra por su categoría */
+            if (conceptSMTK.getCategory().equals(category)){
+                relatedConcepts.add(conceptSMTK);
+            }
+        }
+
+        return relatedConcepts;
     }
 
     /**
@@ -414,7 +449,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public void addDescription(Description description) {
 
         /** La descripción asume el estado modelado si el concepto está en modelado */
-        if (this.isModeled()){
+        if (this.isModeled()) {
             description.setModeled(true);
         }
 
