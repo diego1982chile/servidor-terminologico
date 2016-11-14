@@ -151,4 +151,14 @@ public class HelperTableRecord implements Target, Comparable<HelperTableRecord> 
 
         return thisDescription.compareTo(theOtherDescription);
     }
+
+    /**
+     * Este método es responsable de agregar un campo al registro.
+     *
+     * @param fieldName  Nombre del campo.
+     * @param fieldValue Valor del campo.
+     */
+    public void addField(String fieldName, String fieldValue) {
+        this.fields.put(fieldName, fieldValue);
+    }
 }

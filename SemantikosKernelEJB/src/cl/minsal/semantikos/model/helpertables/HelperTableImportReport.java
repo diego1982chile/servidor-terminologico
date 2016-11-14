@@ -14,9 +14,14 @@ public class HelperTableImportReport {
     /** El usuario que realizó la carga */
     private User user;
 
+    /* Status de la carga */
     private LoadStatus status;
 
-    public HelperTableImportReport(User user) {
+    /* La tabla destino de la carga */
+    private HelperTable helperTable;
+
+    public HelperTableImportReport(HelperTable helperTable, User user) {
+        this.helperTable = helperTable;
         this.startTime = new Timestamp(System.currentTimeMillis());
         this.user = user;
     }

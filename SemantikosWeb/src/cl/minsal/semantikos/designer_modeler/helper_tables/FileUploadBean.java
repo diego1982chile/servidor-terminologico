@@ -77,7 +77,6 @@ public class FileUploadBean {
                 logger.error("Error al cargar el streaming.");
                 return;
             }
-            User user;
             helperTableManager.loadFromFile(helperTableID, mode, in, authenticationBean.getLoggedUser());
         } else {
             logger.info("Archivo NO cargado!");
