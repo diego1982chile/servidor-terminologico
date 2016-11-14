@@ -55,6 +55,8 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
             //if(get)
         }
 
+
+
         // Adding related concepts category to columns, if this apply
         if(getShowableRelatedConceptsValue(category)){
             for (Category relatedCategory : categoryManager.getRelatedCategories(category)) {
@@ -107,6 +109,10 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
     @Override
     public List<RelationshipDefinition> getShowableAttributesByCategory(Category category) {
         return conceptQueryDAO.getShowableAttributesByCategory(category);
+    }
+
+    public List<RelationshipDefinition> getSecondOrderAttributesByCategory(Category category){
+        return null;
     }
 
     @Override

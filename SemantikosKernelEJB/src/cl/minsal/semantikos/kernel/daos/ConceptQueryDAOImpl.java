@@ -200,6 +200,44 @@ public class ConceptQueryDAOImpl implements ConceptQueryDAO {
     }
 
     @Override
+    public List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category) {
+        ConnectionBD connect = new ConnectionBD();
+        String sql = "{call semantikos.get_view_info_by_relationship_definition(?,?)}";
+
+        List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
+
+        try (Connection connection = connect.getConnection();
+
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
+
+                boolean showable;
+
+                call.setLong(1, category.getId());
+                call.setLong(2, relationshipDefinition.getId());
+                call.execute();
+
+                ResultSet rs = call.getResultSet();
+
+                if (rs.next()) {
+
+                    showable = rs.getBoolean("showable_by_browser");
+
+                    if(showable)
+                        someRelationshipDefinitions.add(relationshipDefinition);
+                }
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar información adicional sobre esta definición desde la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+        return someRelationshipDefinitions;
+    }
+
+    @Override
     public boolean getCustomFilteringValue(Category category) {
 
         ConnectionBD connect = new ConnectionBD();
