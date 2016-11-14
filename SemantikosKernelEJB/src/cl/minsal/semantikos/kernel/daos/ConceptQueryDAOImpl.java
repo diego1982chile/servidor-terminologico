@@ -202,7 +202,7 @@ public class ConceptQueryDAOImpl implements ConceptQueryDAO {
     @Override
     public List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category) {
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_view_info_by_relationship_definition(?,?)}";
+        String sql = "{call semantikos.get_second_order_view_info_by_relationship_definition(?,?)}";
 
         List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
 
@@ -222,7 +222,7 @@ public class ConceptQueryDAOImpl implements ConceptQueryDAO {
 
                 if (rs.next()) {
 
-                    showable = rs.getBoolean("showable_by_browser");
+                    showable = rs.getBoolean("second_order_showable_by_browser");
 
                     if(showable)
                         someRelationshipDefinitions.add(relationshipDefinition);

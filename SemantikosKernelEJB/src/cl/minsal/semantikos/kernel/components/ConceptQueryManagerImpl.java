@@ -51,11 +51,18 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
         // Adding dynamic columns
         for (RelationshipDefinition relationshipDefinition : getShowableAttributesByCategory(category)) {
             query.getColumns().add(new ConceptQueryColumn(relationshipDefinition.getName(), new Sort(null, false), relationshipDefinition));
-            // Adding second order columns, if this apply
-            //if(get)
+
         }
 
-
+        // Adding second order columns, if this apply
+        for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions() ) {
+            if(relationshipDefinition.getTargetDefinition().isSMTKType()){
+                Category categoryDestination = (Category) relationshipDefinition.getTargetDefinition();
+                for (RelationshipDefinition relationshipDefinitionDestination : getSecondOrderShowableAttributesByCategory(categoryDestination)) {
+                    query.getColumns().add(new ConceptQueryColumn(relationshipDefinitionDestination.getName(), new Sort(null, false), relationshipDefinitionDestination));
+                }
+            }
+        }
 
         // Adding related concepts category to columns, if this apply
         if(getShowableRelatedConceptsValue(category)){
@@ -111,8 +118,8 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
         return conceptQueryDAO.getShowableAttributesByCategory(category);
     }
 
-    public List<RelationshipDefinition> getSecondOrderAttributesByCategory(Category category){
-        return null;
+    public List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category){
+        return conceptQueryDAO.getSecondOrderShowableAttributesByCategory(category);
     }
 
     @Override
