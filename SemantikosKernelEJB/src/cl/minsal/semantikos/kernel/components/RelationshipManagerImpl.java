@@ -6,20 +6,21 @@ import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.kernel.daos.TargetDAO;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.businessrules.ConceptCreationBR;
 import cl.minsal.semantikos.model.businessrules.RelationshipBindingBR;
 import cl.minsal.semantikos.model.businessrules.RelationshipEditionBR;
 import cl.minsal.semantikos.model.businessrules.RelationshipRemovalBR;
-import cl.minsal.semantikos.model.relationships.*;
+import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.System.currentTimeMillis;
@@ -54,7 +55,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
         /* Se hace la relación a nivel del modelo */
         //if (!concept.getRelationships().contains(relationship)) {
-            //concept.addRelationship(relationship);
+        //concept.addRelationship(relationship);
         //}
 
         /* Se asegura la persistencia de la entidad */
@@ -75,7 +76,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
     @Override
     public Relationship createRelationship(Relationship relationship) {
         relationship = relationshipDAO.persist(relationship);
-        for(RelationshipAttribute relationshipAttribute: relationship.getRelationshipAttributes()){
+        for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
             relationshipAttribute.setRelationship(relationship);
             relationshipAttributeDAO.createRelationshipAttribute(relationshipAttribute);
         }
@@ -98,7 +99,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
             relationshipDAO.persist(relationship);
 
             /* Se persisten los atributos */
-            for(RelationshipAttribute relationshipAttribute: relationship.getRelationshipAttributes()){
+            for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
                 relationshipAttribute.setRelationship(relationship);
                 relationshipAttributeDAO.createRelationshipAttribute(relationshipAttribute);
             }
@@ -143,24 +144,13 @@ public class RelationshipManagerImpl implements RelationshipManager {
     public List<ConceptSMTK> getTargetConceptsByCategory(ConceptSMTK conceptSMTK, Category category) {
 
         /* Se espera, por defecto, que el concepto no traiga sus relaciones cargadas, pero se verificará */
-        if (conceptSMTK.getRelationships().isEmpty()){
+        if (conceptSMTK.getRelationships().isEmpty()) {
             List<Relationship> relationshipsBySourceConcept = this.getRelationshipsBySourceConcept(conceptSMTK);
             conceptSMTK.setRelationships(relationshipsBySourceConcept);
         }
 
-        /* Se filtran los conceptos por su categoría */
-        List<ConceptSMTK> conceptsByCategory = new ArrayList<>();
-        List<Relationship> relationships = conceptSMTK.getRelationships(TargetType.SMTK);
-        for (Relationship relationship : relationships) {
-
-            /* Y se filtra por aquellos que apuntan a la categoría dada como parámetro*/
-            ConceptSMTK targetConcept = (ConceptSMTK) relationship.getTarget();
-            if (targetConcept.getCategory().equals(category)) {
-                conceptsByCategory.add(targetConcept);
-            }
-        }
-
-        return conceptsByCategory;
+        /* Se retornan los conceptos que son el destino de relaciones SMTK */
+        return conceptSMTK.getRelatedSMTKConceptsBy(category);
     }
 
     @Override
@@ -194,13 +184,13 @@ public class RelationshipManagerImpl implements RelationshipManager {
                 /**
                  * Si el atributo no esta persistido, persistirlo
                  */
-                if(attribute.getIdRelationshipAttribute() == null){
+                if (attribute.getIdRelationshipAttribute() == null) {
                     relationshipAttributeDAO.createRelationshipAttribute(attribute);
                 }
                 /**
                  * Si el atributo ya esta persistido, actualizarlo
                  */
-                else{
+                else {
                     relationshipAttributeDAO.update(attribute);
                     targetDAO.update(attribute);
                 }
@@ -210,7 +200,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
         }
 
         /* Si el concepto está modelado, se versiona y actualiza */
-        if(conceptSMTK.isModeled()){
+        if (conceptSMTK.isModeled()) {
 
             /* Primero se versiona el original */
             this.invalidate(originalRelationship);
@@ -219,7 +209,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
             /* Se actualiza el objeto de negocio */
             List<Relationship> relationships = conceptSMTK.getRelationships();
             relationships.remove(originalRelationship);
-            if(!relationships.contains(editedRelationship)){
+            if (!relationships.contains(editedRelationship)) {
                 relationships.add(editedRelationship);
             }
         }
