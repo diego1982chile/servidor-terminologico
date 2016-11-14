@@ -67,8 +67,10 @@ public class HelperTableManagerImpl implements HelperTableManager {
     @Override
     public List<HelperTableRecord> searchRecords(HelperTable helperTable, String columnName, String pattern, boolean validity) {
 
+        /* Se validan las pre-condiciones de búsqueda */
         new HelperTableSearchBR().validatePreConditions(helperTable, columnName, pattern);
 
+        /* Se delega la búsqueda al DAO, ya que pasaron las pre-condiciones */
         return helperTableDAO.findRecordsByPattern(helperTable, columnName, pattern, validity);
     }
 

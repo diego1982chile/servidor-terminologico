@@ -11,7 +11,6 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
 
@@ -96,7 +95,9 @@ public class HelperTableDAOImpl implements HelperTableDAO {
                 records.add(record);
             }
         } catch (SQLException e) {
-            logger.error("Error al realizar una consulta sobre las tablas auxiliares", e);
+            String errorMsg = "Error al realizar una consulta sobre las tablas auxiliares";
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg);
         }
 
         return records;
@@ -104,7 +105,43 @@ public class HelperTableDAOImpl implements HelperTableDAO {
 
     @Override
     public List<HelperTableRecord> findRecordsByPattern(HelperTable helperTable, String columnName, String pattern, boolean validity) {
-        return null;
+
+        List<Map<String, String>> records = new ArrayList<>();
+        ConnectionBD connectionBD = new ConnectionBD();
+
+        /*
+        semantikos.find_records_by_pattern(
+            tablename text,
+            search_column,
+            return_columns text[],
+            pattern text)
+         */
+        String selectRecord = "{call semantikos.find_records_by_pattern(?,?,?,?)}";
+        String jsonResult = null;
+        try (Connection connection = connectionBD.getConnection();
+             CallableStatement preparedStatement = connection.prepareCall(selectRecord)) {
+
+            /* Se prepara y realiza la consulta */
+            preparedStatement.setString(1, helperTable.getName());
+            List<String> showableColumnsNames = helperTable.getShowableColumnsNames();
+            Array names = connection.createArrayOf("text", showableColumnsNames.toArray(new String[showableColumnsNames.size()]));
+            preparedStatement.setString(2, columnName);
+            preparedStatement.setArray(3, names);
+            preparedStatement.setString(4, pattern);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            /* Por cada elemento del resultset se extrae un registro */
+            if (resultSet.next()) {
+                jsonResult = resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            String errorMsg = "Error al realizar una consulta sobre las tablas auxiliares";
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg);
+        }
+
+        return new HelperTableFactory().createHelperTableRecordsFromJSON(helperTable, jsonResult);
     }
 
     @Override
@@ -187,7 +224,7 @@ public class HelperTableDAOImpl implements HelperTableDAO {
             ResultSet rs = call.getResultSet();
             while (rs.next()) {
                 String jsonExpression = rs.getString(1);
-                if(jsonExpression != null) {
+                if (jsonExpression != null) {
                     helperTableRecords = this.helperTableRecordFactory.createHelperRecordsFromJSON(jsonExpression);
                 } else {
                     helperTableRecords = emptyList();
@@ -318,7 +355,7 @@ public class HelperTableDAOImpl implements HelperTableDAO {
     }
 
 
-    public long persistAuxilary(long idRecord, long idTableName){
+    public long persistAuxilary(long idRecord, long idTableName) {
 
         ConnectionBD connectionBD = new ConnectionBD();
         String persistAuxiliary = "{call semantikos.create_auxiliary(?,?)}";
@@ -332,8 +369,8 @@ public class HelperTableDAOImpl implements HelperTableDAO {
             call.execute();
             ResultSet rs = call.getResultSet();
             rs.next();
-            idPersist=rs.getLong(1);
-            if (idPersist==-1){
+            idPersist = rs.getLong(1);
+            if (idPersist == -1) {
                 throw new EJBException("Error, no se pudo persistir auxiliary");
             }
             rs.close();
@@ -359,8 +396,8 @@ public class HelperTableDAOImpl implements HelperTableDAO {
             call.execute();
             ResultSet rs = call.getResultSet();
             rs.next();
-            idAuxiliary=rs.getLong(1);
-            if (idAuxiliary==-1){
+            idAuxiliary = rs.getLong(1);
+            if (idAuxiliary == -1) {
                 throw new EJBException("Error, no se pudo persistir auxiliary");
             }
             rs.close();
@@ -386,8 +423,8 @@ public class HelperTableDAOImpl implements HelperTableDAO {
             call.execute();
             ResultSet rs = call.getResultSet();
             rs.next();
-            idAuxiliary=rs.getLong(1);
-            if (idAuxiliary==-1){
+            idAuxiliary = rs.getLong(1);
+            if (idAuxiliary == -1) {
                 throw new EJBException("Error, no se pudo persistir auxiliary");
             }
             rs.close();
@@ -400,3 +437,4 @@ public class HelperTableDAOImpl implements HelperTableDAO {
 
 
 }
+
