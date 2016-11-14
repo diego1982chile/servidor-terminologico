@@ -1,16 +1,18 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
+import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.businessrules.HelperTableSearchBR;
-import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.*;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -82,5 +84,28 @@ public class HelperTableManagerImpl implements HelperTableManager {
     @Override
     public HelperTable findHelperTableByID(long id) {
         return helperTableDAO.getHelperTableByID(id);
+    }
+
+    @Override
+    public HelperTableImportReport loadFromFile(long helperTableID, LoadMode mode, Reader in, User user) {
+
+        HelperTableImportReport helperTableReport = new HelperTableImportReport(user);
+        Iterable<CSVRecord> records;
+        try {
+            records = CSVFormat.EXCEL.parse(in);
+        } catch (IOException e) {
+            logger.error("Error al procesar archivo CSV para importación de tabla auxiliar.", e);
+            helperTableReport.setStatus(LoadStatus.CANCELED);
+
+            return helperTableReport;
+        }
+
+        // TODO: Terminar esto.
+        for (CSVRecord record : records) {
+            String cctnu_concepto_id = record.get("CCTNU_CONCEPTO_ID");
+            logger.info("CCTNU_CONCEPTO_ID=" + cctnu_concepto_id);
+        }
+
+        return helperTableReport;
     }
 }

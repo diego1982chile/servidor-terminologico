@@ -15,16 +15,19 @@
  */
 package cl.minsal.semantikos.designer_modeler.helper_tables;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
+import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
+import cl.minsal.semantikos.kernel.components.HelperTableManager;
+import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.helpertables.LoadMode;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.EJBException;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,6 +37,12 @@ import java.io.Reader;
 public class FileUploadBean {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUploadBean.class);
+
+    @EJB
+    private HelperTableManager helperTableManager;
+
+    @ManagedProperty(value = "#{authenticationBean}")
+    private AuthenticationBean authenticationBean;
 
     /** El archivo cargado */
     private UploadedFile file;
@@ -52,29 +61,26 @@ public class FileUploadBean {
      * Este método es utilizado como acción para cargar el archivo CVS con una tabla.
      */
     public void upload() {
-            logger.info("FileUpload");
+        logger.info("FileUpload");
         if (file != null) {
             logger.info("Archivo cargado:" + file.getFileName());
             FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
 
-            /* El archivo es procesado */
+            /* Se invoca la función de negocio para cargar el archivo */
+            long helperTableID = 0; //TODO: Recuperar desde la vista.
+            LoadMode mode = LoadMode.FULL_FROM_SCRATCH; //TODO: Recuperar el modo de carga.
+            Reader in;
             try {
-                processFile();
+                in = new InputStreamReader(file.getInputstream());
             } catch (IOException e) {
-                throw new EJBException("Error", e);
+                logger.error("Error al cargar el streaming.");
+                return;
             }
+            User user;
+            helperTableManager.loadFromFile(helperTableID, mode, in, authenticationBean.getLoggedUser());
         } else {
             logger.info("Archivo NO cargado!");
-        }
-    }
-
-    private void processFile() throws IOException {
-        Reader in = new InputStreamReader(file.getInputstream());
-        Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
-        for (CSVRecord record : records) {
-            String cctnu_concepto_id = record.get("CCTNU_CONCEPTO_ID");
-            logger.info("CCTNU_CONCEPTO_ID=" + cctnu_concepto_id);
         }
     }
 
