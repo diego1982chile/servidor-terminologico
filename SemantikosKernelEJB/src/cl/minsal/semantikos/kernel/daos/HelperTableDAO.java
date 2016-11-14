@@ -5,7 +5,6 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.helpertables.HelperTableWhereCondition;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.Local;
 import java.util.Collection;
@@ -38,6 +37,21 @@ public interface HelperTableDAO {
      * @return Los registros que satisfacen el criterio de búsqueda.
      */
     public List<Map<String, String>> findRecordsByPattern(HelperTable helperTable, String pattern);
+
+    /**
+     * Este método es responsable de recuperar registros de una tabla bajo ciertos criterios, tales como un patrón de
+     * búsqueda sobre una columna, y la validez de los registros.
+     *
+     * @param helperTable La tabla sobre la cual se realiza la búsqueda.
+     * @param columnName  La columna sobre la cuál se realiza la búsqueda.
+     * @param pattern     El patrón utilizado para la búsqueda.
+     * @param validity    <code>true</code> si se quieren recuperar registros válidos y <code>false</code> si se quiere
+     *                    recuperar todos los registros.
+     *
+     * @return La lista de registros en la tabla <code>helperTable</code> que cumplen con el <code>pattern</code> de
+     * búsqueda.
+     */
+    public List<HelperTableRecord> findRecordsByPattern(HelperTable helperTable, String columnName, String pattern, boolean validity);
 
     /**
      * Este método es responsable de recuperar todos los registros de una tabla auxiliar, recuperando sólo las columnas
@@ -99,21 +113,23 @@ public interface HelperTableDAO {
 
     /**
      * Este metodo es encargado de persistir el valor seleccionado de un helper table
-     * @param idRecord id del registro
+     *
+     * @param idRecord    id del registro
      * @param idTableName id del nombre de la tabla
      */
     public long persistAuxilary(long idRecord, long idTableName);
 
     /**
      * Este metodo es encargado de actualizar el valor seleccionado de un helper table
+     *
      * @param relationship la relacion
      */
     public long updateAuxiliary(Relationship relationship);
 
     /**
      * Este metodo es encargado de actualizar el valor seleccionado de un helper table
+     *
      * @param relationshipAttribute la relacion
      */
     public long updateAuxiliary(RelationshipAttribute relationshipAttribute);
-
 }

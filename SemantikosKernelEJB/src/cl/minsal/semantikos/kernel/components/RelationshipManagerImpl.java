@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.kernel.daos.TargetDAO;
+import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.User;
@@ -138,6 +139,11 @@ public class RelationshipManagerImpl implements RelationshipManager {
     @Override
     public List<Relationship> findRelationsByTargetSCTConcept(ConceptSCT conceptSCT) {
         return relationshipDAO.getRelationshipsToCSTConcept(conceptSCT);
+    }
+
+    @Override
+    public List<ConceptSMTK> getTargetConceptsByCategory(ConceptSMTK conceptSMTK, Category category) {
+        return null;
     }
 
     @Override
