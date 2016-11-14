@@ -70,13 +70,14 @@
                    var="target"
                    varStatus="var">
 
-            <p:inputText style="width: 65%;" disabled="true" id="itemSelected" value="#{target}" />
-            <p:commandButton icon="fa fa-close" title="Eliminar"
-                             action="#{conceptBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}"
-                             styleClass="ui-datepicker-trigger ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only CyanButton"
-                             update="@(.conceptFilters),@(.conceptBrowserTable)"
-                             process="@this">
-            </p:commandButton>
+            <p:inputText disabled="true" id="itemSelected" value="#{target}" />
+            <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
+                           process="@this"
+                           update="@(.conceptFilters),@(.conceptBrowserTable)"
+                           action="#{conceptBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
+                <i class="fa fa-close fa-lg"  />
+            </p:commandLink>
+
 
 
         </p:repeat>

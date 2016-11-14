@@ -88,6 +88,41 @@ public class ConceptQueryDAOImpl implements ConceptQueryDAO {
     }
 
     @Override
+    public long countConceptByQuery(ConceptQuery query) {
+
+        long conceptsNumber = 0;
+
+        ConnectionBD connect = new ConnectionBD();
+
+        //TODO: hacer funcion en pg
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.count_concept_by_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}" )){
+
+            int paramNumber = 1;
+
+            for (ConceptQueryParameter conceptQueryParameter : query.getConceptQueryParameters()) {
+                bindParameter(paramNumber, call, connect.getConnection(), conceptQueryParameter);
+                paramNumber++;
+            }
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+
+                conceptsNumber = rs.getLong(1);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return conceptsNumber;
+    }
+
+    @Override
     public List<RelationshipDefinition> getSearchableAttributesByCategory(Category category) {
 
         ConnectionBD connect = new ConnectionBD();
@@ -195,6 +230,71 @@ public class ConceptQueryDAOImpl implements ConceptQueryDAO {
 
         return customFilteringValue;
     }
+
+    @Override
+    public boolean getShowableRelatedConceptsValue(Category category) {
+
+        ConnectionBD connect = new ConnectionBD();
+        String sql = "{call semantikos.get_view_info_by_category(?)}";
+
+        boolean showableRelatedConcepts = false;
+
+        try (Connection connection = connect.getConnection();
+
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setLong(1, category.getId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            if (rs.next()) {
+
+                showableRelatedConcepts = rs.getBoolean("showable_related_concepts_by_browser");
+
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar información adicional sobre esta categoría desde la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return showableRelatedConcepts;
+    }
+
+    @Override
+    public boolean getShowableValue(Category category) {
+
+        ConnectionBD connect = new ConnectionBD();
+        String sql = "{call semantikos.get_view_info_by_category(?)}";
+
+        boolean showable = false;
+
+        try (Connection connection = connect.getConnection();
+
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setLong(1, category.getId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            if (rs.next()) {
+
+                showable = rs.getBoolean("showable_by_browser");
+
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar información adicional sobre esta categoría desde la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return showable;
+    }
+
 
     @Override
     public boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition) {

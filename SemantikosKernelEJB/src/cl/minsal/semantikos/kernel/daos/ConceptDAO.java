@@ -133,7 +133,6 @@ public interface ConceptDAO {
      * @param conceptSMTK concepto que se relaciona con otros
      * @return Lista de conceptos relacionados
      */
-
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
 
 }

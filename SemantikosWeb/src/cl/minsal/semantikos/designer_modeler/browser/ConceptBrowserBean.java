@@ -75,7 +75,6 @@ public class ConceptBrowserBean implements Serializable {
      */
     private LazyDataModel<ConceptSMTK> concepts;
 
-
     /**
      * Categoría sobre la cual se está navegando
      */
@@ -145,7 +144,7 @@ public class ConceptBrowserBean implements Serializable {
                     conceptQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
 
                 List<ConceptSMTK> conceptSMTKs = conceptQueryManager.executeQuery(conceptQuery);
-                this.setRowCount(30);
+                this.setRowCount(conceptQueryManager.countConceptQuery(conceptQuery));
 
                 return conceptSMTKs;
             }
