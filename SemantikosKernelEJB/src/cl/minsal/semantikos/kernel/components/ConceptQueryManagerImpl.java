@@ -51,6 +51,8 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
         // Adding dynamic columns
         for (RelationshipDefinition relationshipDefinition : getShowableAttributesByCategory(category)) {
             query.getColumns().add(new ConceptQueryColumn(relationshipDefinition.getName(), new Sort(null, false), relationshipDefinition));
+            // Adding second order columns, if this apply
+            //if(get)
         }
 
         // Adding related concepts category to columns, if this apply
