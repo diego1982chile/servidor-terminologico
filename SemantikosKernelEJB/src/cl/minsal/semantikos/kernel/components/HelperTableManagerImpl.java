@@ -85,9 +85,8 @@ public class HelperTableManagerImpl implements HelperTableManager {
     }
 
     @Override
-    public HelperTableImportReport loadFromFile(long helperTableID, LoadMode mode, Reader in, User user) {
+    public HelperTableImportReport loadFromFile(HelperTable helperTable, LoadMode mode, Reader in, User user) {
 
-        HelperTable helperTable = this.findHelperTableByID(helperTableID);
         HelperTableImportReport helperTableReport = new HelperTableImportReport(helperTable, user);
         Iterable<CSVRecord> records;
         try {

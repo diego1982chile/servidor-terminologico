@@ -18,6 +18,7 @@ package cl.minsal.semantikos.designer_modeler.helper_tables;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.HelperTableManager;
 import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.LoadMode;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -77,7 +78,8 @@ public class FileUploadBean {
                 logger.error("Error al cargar el streaming.");
                 return;
             }
-            helperTableManager.loadFromFile(helperTableID, mode, in, authenticationBean.getLoggedUser());
+            HelperTable helperTable = helperTableManager.findHelperTableByID(helperTableID);
+            helperTableManager.loadFromFile(helperTable, mode, in, authenticationBean.getLoggedUser());
         } else {
             logger.info("Archivo NO cargado!");
         }

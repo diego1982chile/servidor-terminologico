@@ -74,12 +74,11 @@ public interface HelperTableManager {
      * Este método es responsable de realizar la importación de una Tabla Auxiliar con datos provenientes de un archivo
      * CSV.
      *
-     * @param helperTableID El identificador único de la Tabla Auxiliar que se desea actualizar.
-     * @param mode          El modo de importación
-     * @param in            La entrada de datos.
+     * @param helperTable La tabla auxiliar que se actualizará
+     * @param mode        El modo de importación
+     * @param in          La entrada de datos.
      *
-     * @param user
      * @return El reporte de la carga realizada.
      */
-    public HelperTableImportReport loadFromFile(long helperTableID, LoadMode mode, Reader in, User user);
+    public HelperTableImportReport loadFromFile(HelperTable helperTable, LoadMode mode, Reader in, User user);
 }
