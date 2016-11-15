@@ -86,6 +86,7 @@ public class ConceptBrowserBean implements Serializable {
      */
     private int idCategory;
 
+
     // Placeholders para los targets de los filtros, dados como elementos seleccionables
     private BasicTypeValue basicTypeValue = new BasicTypeValue(null);
 
@@ -199,7 +200,7 @@ public class ConceptBrowserBean implements Serializable {
         return conceptQuery;
     }
 
-    public void setConceptQuery(cl.minsal.semantikos.model.browser.ConceptQuery conceptQuery) {
+    public void setConceptQuery(ConceptQuery conceptQuery) {
         this.conceptQuery = conceptQuery;
     }
 
@@ -325,6 +326,15 @@ public class ConceptBrowserBean implements Serializable {
             context.addMessage(null, new FacesMessage("Successful", "Concepto invalidado"));
         }
 
+    }
+
+    public void createConcept() throws IOException {
+        // Si el concepto está persistido, invalidarlo
+        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+        String query = "";
+        if(concepts.getRowCount()==0)
+            query=conceptQuery.getQuery();
+        eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + idCategory +"&idConcept=0&favoriteDescription=" + query);
     }
 
 

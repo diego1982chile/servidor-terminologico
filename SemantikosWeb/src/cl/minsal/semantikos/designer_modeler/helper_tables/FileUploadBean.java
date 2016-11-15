@@ -25,6 +25,7 @@ import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -33,6 +34,7 @@ import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.List;
 
 @ManagedBean(name = "fileUploadBean")
 public class FileUploadBean {
@@ -48,21 +50,59 @@ public class FileUploadBean {
     /** El archivo cargado */
     private UploadedFile file;
 
+    /** Helper Table seleccionada */
+    private HelperTable helperTable;
+
+    /** Lista de Helper tables */
+    private List<HelperTable> helperTableList;
+
+
+    public HelperTable getHelperTable() {
+        return helperTable;
+    }
+
+    public void setHelperTable(HelperTable helperTable) {
+        this.helperTable = helperTable;
+    }
+
+    public List<HelperTable> getHelperTableList() {
+        return helperTableList;
+    }
+
+    public void setHelperTableList(List<HelperTable> helperTableList) {
+        this.helperTableList = helperTableList;
+    }
+
     public UploadedFile getFile() {
-        logger.info("Paso 1");
         return file;
     }
 
     public void setFile(UploadedFile file) {
-        logger.info("Paso 2");
         this.file = file;
     }
+
+    public AuthenticationBean getAuthenticationBean() {
+        return authenticationBean;
+    }
+
+    public void setAuthenticationBean(AuthenticationBean authenticationBean) {
+        this.authenticationBean = authenticationBean;
+    }
+
+
+    @PostConstruct
+    public void init(){
+        helperTableList= (List<HelperTable>) helperTableManager.getHelperTables();
+
+    }
+
 
     /**
      * Este método es utilizado como acción para cargar el archivo CVS con una tabla.
      */
-    public void upload() {
+    public void upload(FileUploadEvent event) {
         logger.info("FileUpload");
+        this.file=event.getFile();
         if (file != null) {
             logger.info("Archivo cargado:" + file.getFileName());
             FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded.");

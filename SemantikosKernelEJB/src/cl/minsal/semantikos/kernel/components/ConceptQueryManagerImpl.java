@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.ConceptQueryDAO;
+import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.MultiplicityFactory;
@@ -33,6 +34,9 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
     @EJB
     private CategoryManager categoryManager;
 
+    @EJB
+    private RelationshipDAO relationshipDAO;
+
     @Override
     public ConceptQuery getDefaultQueryByCategory(Category category) {
 
@@ -51,6 +55,19 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
         // Adding dynamic columns
         for (RelationshipDefinition relationshipDefinition : getShowableAttributesByCategory(category)) {
             query.getColumns().add(new ConceptQueryColumn(relationshipDefinition.getName(), new Sort(null, false), relationshipDefinition));
+
+        }
+
+        // Adding second order columns, if this apply
+        for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions() ) {
+            if(relationshipDefinition.getTargetDefinition().isSMTKType()){
+                Category categoryDestination = (Category) relationshipDefinition.getTargetDefinition();
+                for (RelationshipDefinition relationshipDefinitionDestination : getSecondOrderShowableAttributesByCategory(categoryDestination)) {
+                    ConceptQueryColumn secondOrderColumn = new ConceptQueryColumn(relationshipDefinitionDestination.getName(), new Sort(null, false), relationshipDefinitionDestination);
+                    query.getColumns().add(secondOrderColumn);
+                    secondOrderColumn.setSecondOrder(true);
+                }
+            }
         }
 
         // Adding related concepts category to columns, if this apply
@@ -82,8 +99,21 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
         for (ConceptSMTK conceptSMTK : conceptSMTKs) {
             if(!query.getColumns().isEmpty()) {
                 conceptSMTK.setRelationships(conceptManager.loadRelationships(conceptSMTK));
-                // Adding related concepts to relationships, if this apply
                 Category category = query.getCategories().get(0);
+                List<RelationshipDefinition> secondOrderAttributes = query.getSecondOrderDefinitions();
+                // Adding second order columns, if this apply
+                List<Relationship> secondOrderRelationships = new ArrayList<>();
+                for (RelationshipDefinition relationshipDefinition : getSourceSecondOrderShowableAttributesByCategory(category)) {
+                    for (Relationship firstOrderRelationship : conceptSMTK.getRelationshipsByRelationDefinition(relationshipDefinition)) {
+                        ConceptSMTK targetConcept = (ConceptSMTK)firstOrderRelationship.getTarget();
+                        for (Relationship secondOrderRelationship : relationshipDAO.getRelationshipsBySourceConcept(targetConcept.getId())) {
+                            if(secondOrderAttributes.contains(secondOrderRelationship.getRelationshipDefinition()))
+                                secondOrderRelationships.add(secondOrderRelationship);
+                        }
+                    }
+                }
+                conceptSMTK.getRelationships().addAll(secondOrderRelationships);
+                // Adding related concepts to relationships, if this apply
                 if(getShowableRelatedConceptsValue(category)){
                     for (ConceptSMTK relatedConcept : conceptManager.getRelatedConcepts(conceptSMTK)) {
                         RelationshipDefinition rd = new RelationshipDefinition(relatedConcept.getCategory().getId(), relatedConcept.getCategory().getName(), relatedConcept.getCategory().getName(), relatedConcept.getCategory(), MultiplicityFactory.ONE_TO_ONE);
@@ -105,6 +135,22 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
     @Override
     public List<RelationshipDefinition> getShowableAttributesByCategory(Category category) {
         return conceptQueryDAO.getShowableAttributesByCategory(category);
+    }
+
+    public List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category){
+        return conceptQueryDAO.getSecondOrderShowableAttributesByCategory(category);
+    }
+
+    public List<RelationshipDefinition> getSourceSecondOrderShowableAttributesByCategory(Category category){
+        List<RelationshipDefinition> someRelationshipDefinitions = new ArrayList<>();
+        for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions() ) {
+            if(relationshipDefinition.getTargetDefinition().isSMTKType()){
+                Category categoryDestination = (Category) relationshipDefinition.getTargetDefinition();
+                if(!getSecondOrderShowableAttributesByCategory(categoryDestination).isEmpty())
+                    someRelationshipDefinitions.add(relationshipDefinition);
+            }
+        }
+        return someRelationshipDefinitions;
     }
 
     @Override
