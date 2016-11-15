@@ -3,6 +3,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:composite="http://java.sun.com/jsf/composite"
       xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
@@ -19,7 +20,7 @@
         <div class="ui-g">
             <div class="ui-g-12 ui-md-6 ui-lg-2">
                 <p:inputText value="#{cc.attrs.conceptQuery.query}" style="margin-right:10px; width: 80%" placeholder="Buscar...">
-                    <p:ajax event="keyup" update="@(.conceptBrowserTable)" />
+                    <p:ajax event="keyup" update="@(.conceptBrowserTable),@(.conceptQueryFilter)" process="@this" />
                 </p:inputText>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
@@ -27,7 +28,7 @@
                     <f:selectItem itemLabel="¿Revisar?" itemValue="#{null}"/>
                     <f:selectItem itemLabel="Sin Revisar" itemValue="#{false}"/>
                     <f:selectItem itemLabel="Revisar" itemValue="#{true}"/>
-                    <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
+                    <p:ajax event="itemSelect" update="@(.conceptBrowserTable),@(.conceptQueryFilter)" process="@this" />
                 </p:selectOneMenu>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
@@ -35,7 +36,7 @@
                     <f:selectItem itemLabel="¿Consultar?" itemValue="#{null}"/>
                     <f:selectItem itemLabel="Sin Consultar" itemValue="#{false}"/>
                     <f:selectItem itemLabel="Consultar" itemValue="#{true}"/>
-                    <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
+                    <p:ajax event="itemSelect" update="@(.conceptBrowserTable),@(.conceptQueryFilter)" process="@this" />
                 </p:selectOneMenu>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
@@ -43,7 +44,7 @@
                     <f:selectItem itemLabel="Estado" itemValue="#{null}"/>
                     <f:selectItem itemLabel="Borrador" itemValue="#{false}"/>
                     <f:selectItem itemLabel="Modelado" itemValue="#{true}"/>
-                    <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
+                    <p:ajax event="itemSelect" update="@(.conceptBrowserTable),@(.conceptQueryFilter)" process="@this" />
                 </p:selectOneMenu>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
@@ -52,7 +53,7 @@
                     <f:selectItem itemLabel="Etiqueta..." itemValue="#{null}"/>
                     <f:selectItems value="#{conceptBrowserBean.tags}" var="tag"
                                    itemLabel="#{tag.name}" itemValue="#{tag}"/>
-                    <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
+                    <p:ajax event="itemSelect" update="@(.conceptBrowserTable),@(.conceptQueryFilter)" process="@this" />
                 </p:selectOneMenu>
             </div>
             <p:repeat
@@ -92,11 +93,14 @@
             <smtk:UserTypeFilter user="#{cc.attrs.conceptQuery.user}"
                                  rendered="#{cc.attrs.conceptQuery.customFilterable}" />
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:button outcome="conceptEdit" icon="fa fa-plus" styleClass="ui-priority-primary" value="Crear Nuevo">
+                <!--p:button outcome="conceptEdit" icon="fa fa-plus" styleClass="ui-priority-primary" value="Crear Nuevo">
                     <f:param name="editMode" value="#{true}" />
                     <f:param name="idCategory" value="#{conceptBrowserBean.idCategory}" />
                     <f:param name="idConcept" value="#{0}" />
-                </p:button>
+                </p:button-->
+
+                <p:commandButton actionListener="#{conceptBrowserBean.createConcept}" icon="fa fa-plus" styleClass="ui-priority-primary" value="Crear Nuevo" type="submit" process="browserForm" />
+
             </div>
         </div>
     </p:panel>

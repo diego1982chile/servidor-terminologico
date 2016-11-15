@@ -4,6 +4,7 @@ import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Tag;
 import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -184,6 +185,28 @@ public class ConceptQuery {
 
     public void setCustomFilterable(boolean customFilterable) {
         this.customFilterable = customFilterable;
+    }
+
+    public List<ConceptQueryColumn> getColumnsByRelationshipDefinition(RelationshipDefinition relationshipDefinition){
+        List<ConceptQueryColumn> someColumns = new ArrayList<>();
+
+        for (ConceptQueryColumn column : this.getColumns()) {
+            if(column.getRelationshipDefinition().equals(relationshipDefinition))
+                someColumns.add(column);
+        }
+
+        return someColumns;
+    }
+
+    public List<RelationshipDefinition> getSecondOrderDefinitions(){
+        List<RelationshipDefinition> someDefinitions = new ArrayList<>();
+
+        for (ConceptQueryColumn column : this.getColumns()) {
+            if(column.isSecondOrder())
+                someDefinitions.add(column.getRelationshipDefinition());
+        }
+
+        return someDefinitions;
     }
 
     public Long[] getCategoryValues(){

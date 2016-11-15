@@ -145,7 +145,7 @@ public class ConceptBean implements Serializable {
 
     private String FSN;
 
-    private String favoriteDescription = "";
+    private String favoriteDescription;
 
     private int categorySelect;
 
@@ -357,11 +357,6 @@ public class ConceptBean implements Serializable {
      */
     public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
-        try {
-            createConcept();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     public int getIdCategory() {
@@ -376,10 +371,12 @@ public class ConceptBean implements Serializable {
      */
     public void setIdConcept(int idConcept) {
         this.idConcept = idConcept;
-        try {
-            createConcept();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if(idConcept!=0) {
+            try {
+                createConcept();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -1172,6 +1169,11 @@ public class ConceptBean implements Serializable {
 
     public void setFavoriteDescription(String favoriteDescription) {
         this.favoriteDescription = favoriteDescription;
+        try {
+            createConcept();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public HelperTableManager getHelperTableManager() {
