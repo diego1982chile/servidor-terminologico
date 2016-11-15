@@ -17,7 +17,6 @@ package cl.minsal.semantikos.designer_modeler.helper_tables;
 
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.HelperTableManager;
-import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.LoadMode;
 import org.primefaces.event.FileUploadEvent;
@@ -110,7 +109,7 @@ public class FileUploadBean {
 
             /* Se invoca la función de negocio para cargar el archivo */
             long helperTableID = 0; //TODO: Recuperar desde la vista.
-            LoadMode mode = LoadMode.FULL_FROM_SCRATCH; //TODO: Recuperar el modo de carga.
+            LoadMode mode = LoadMode.INITIAL_LOAD; //TODO: Recuperar el modo de carga.
             Reader in;
             try {
                 in = new InputStreamReader(file.getInputstream());

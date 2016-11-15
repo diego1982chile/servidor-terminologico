@@ -25,7 +25,6 @@ public class HelperTableDAOImpl implements HelperTableDAO {
     /** Logger de la clase */
     private static final Logger logger = LoggerFactory.getLogger(HelperTableDAOImpl.class);
 
-
     @EJB
     HelperTableRecordFactory helperTableRecordFactory;
 
@@ -33,6 +32,37 @@ public class HelperTableDAOImpl implements HelperTableDAO {
 
     public HelperTableDAOImpl() {
         this.helperTablesMap = new HashMap<>();
+    }
+
+    @Override
+    public void insertRecord(HelperTable helperTable, HelperTableRecord record) {
+
+        /*
+         * La inserción de registros se hace indicando:
+         *   - la tabla auxiliar (por su nombre de tabla).
+         *   - un arreglo con todos los nombres de los campos.
+         *   - un arreglo con los valores de los campos.
+         */
+        String selectRecord = "{call semantikos.helper_tables_insert_record(?,?,?)}";
+        ConnectionBD connectionBD = new ConnectionBD();
+        try (Connection connection = connectionBD.getConnection();
+             CallableStatement callableStatement = connection.prepareCall(selectRecord)) {
+
+            /* Se preparan los parámetros de la función */
+            Map<String, String> recordFields = record.getFields();
+            Array column_names = connection.createArrayOf("text", recordFields.keySet().toArray(new String[recordFields.size()]));
+            Array column_values = connection.createArrayOf("text", recordFields.values().toArray(new String[recordFields.size()]));
+
+            /* Se prepara y realiza la consulta */
+            callableStatement.setString(1, helperTable.getTablaName());
+            callableStatement.setArray(2, column_names);
+            callableStatement.setArray(3, column_values);
+
+            callableStatement.executeQuery();
+        } catch (SQLException e) {
+            logger.error("Error al realizar una inserción en las tablas auxiliares", e);
+            throw new EJBException(e);
+        }
     }
 
     @Override
