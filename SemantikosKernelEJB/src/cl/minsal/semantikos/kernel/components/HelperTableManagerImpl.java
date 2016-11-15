@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.*;
@@ -105,10 +106,63 @@ public class HelperTableManagerImpl implements HelperTableManager {
         helperTableReport.setCSVLoadedRecords(loadedRecords);
         logger.info("Se han cargado " + loadedRecords.size() + " registros!");
 
+        /* Se valida que los registros cargados tengan las mismas columnas que la tabla auxiliar */
+        List<String> missingColumns = getMissingColumns(helperTable, extractLoadedColumns(loadedRecords));
+        if(missingColumns.size() > 0){
+            helperTableReport.setStatus(LoadStatus.CANCELED);
+            helperTableReport.appendException(new MissingColumnsException(missingColumns));
+        }
+
         /* Ahora se realiza la transacción completa */
-        loadHelperTable(helperTable, loadedRecords, mode, helperTableReport, user);
+        else {
+            loadHelperTable(helperTable, loadedRecords, mode, helperTableReport, user);
+        }
 
         return helperTableReport;
+    }
+
+    /**
+     * Este método es responsable de determinar las columnas que se intentan cargar en una tabla auxiliar que no
+     * existen
+     * en dicha tabla auxiliar.
+     *
+     * @param helperTable   La tabla auxiliar en la que se quiere hacer el import.
+     * @param loadedColumns Las columnas que se desean insertar.
+     *
+     * @return La lista de las columnas que faltan en la Tabla Auxiliar.
+     */
+    private List<String> getMissingColumns(HelperTable helperTable, List<String> loadedColumns) {
+
+        List<String> missingColumns = new ArrayList<>();
+
+        for (String loadedColumn : loadedColumns) {
+            if (!helperTable.getAllColumnsNames().contains(loadedColumn)){
+                missingColumns.add(loadedColumn);
+            }
+        }
+
+        return missingColumns;
+    }
+
+    /**
+     * Este método es responsable de recuperar el nombre de las columnas que contienen los archivos cargados.
+     *
+     * @param loadedRecords Los registros cargados.
+     *
+     * @return Una lista con los nombres de las columnas.
+     */
+    private List<String> extractLoadedColumns(@NotNull List<HelperTableRecord> loadedRecords) {
+
+        /* Si la lista de registros está vacía es seguro que no vienen los títulos */
+        if (loadedRecords.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        /* Se asume que todos los registros contienen los títulos, en particular el primero */
+        HelperTableRecord helperTableRecord = loadedRecords.get(0);
+
+        /* Cada registro tiene un mapa de nombre de columna - valor, luego recuperamos la llave que corresponde al nombre de la columna */
+        return new ArrayList<>(helperTableRecord.getFields().keySet());
     }
 
     /**
