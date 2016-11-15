@@ -1,19 +1,19 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
+import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.businessrules.HelperTableSearchBR;
-import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.*;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.*;
 
 
 /**
@@ -82,5 +82,62 @@ public class HelperTableManagerImpl implements HelperTableManager {
     @Override
     public HelperTable findHelperTableByID(long id) {
         return helperTableDAO.getHelperTableByID(id);
+    }
+
+    @Override
+    public HelperTableImportReport loadFromFile(HelperTable helperTable, LoadMode mode, Reader in, User user) {
+
+        HelperTableImportReport helperTableReport = new HelperTableImportReport(helperTable, user);
+        Iterable<CSVRecord> records;
+        try {
+            records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
+        } catch (IOException e) {
+            logger.error("Error al procesar archivo CSV para importación de tabla auxiliar.", e);
+            helperTableReport.setStatus(LoadStatus.CANCELED);
+
+            return helperTableReport;
+        }
+
+        /* Se procesan los registros contenidos */
+        List <HelperTableRecord> loadedRecords = new ArrayList<>();
+        boolean firstTime = true;
+        for (CSVRecord record : records) {
+
+            /* El primer loop es para recuperar los nombres de las columnas */
+            String[] columnNames = new String[0];
+            if (firstTime) {
+                int size = record.size();
+                columnNames = new String[size];
+
+                for (int i = 0; i < size; i++) {
+                    columnNames[i] = record.get(1);
+                }
+
+                firstTime = false;
+            }
+
+            /* Los siguientes loops recogen la información */
+            else {
+
+                /* El registro que se creará a partir de la lectura de este registro */
+                HelperTableRecord helperTableRecord = new HelperTableRecord(helperTable, new HashMap<String, String>());
+                for (String columnName : columnNames) {
+                    String columnValue = record.get(columnName);
+                    helperTableRecord.addField(columnName, columnValue);
+                }
+
+                loadedRecords.add(helperTableRecord);
+            }
+
+            /* Ahora se realiza la transacción completa */
+            switch (mode) {
+
+                case FULL_FROM_SCRATCH:
+
+                    break;
+            }
+        }
+
+        return helperTableReport;
     }
 }

@@ -6,7 +6,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJBException;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
 
@@ -20,27 +23,10 @@ public class HelperTableFactory {
     /**
      * Este método es responsable de crear una lista de relaciones a partir de un arreglo json de relaciones.
      * <code>
-     * "{""tableName"":""smtk_helper_table_atc"",""records"":[{""id"":2,""description"":""A01AB16""},
-     * {""id"":3,""description"":""A01AB17""},
-     * {""id"":4,""description"":""A01AB18""},
-     * {""id"":5,""description"":""A01AB19""},
-     * {""id"":6,""description"":""A01AB21""},
-     * {""id"":7,""description"":""A01AB22""},
-     * {""id"":8,""description"":""A01AB23""},
-     * {""id"":9,""description"":""A01AB15""},
-     * {""id"":22,""description"":""A01AB14""},
-     * {""id"":27,""description"":""A01AB02""},
-     * {""id"":28,""description"":""A01AB03""},
-     * {""id"":29,""description"":""A01AB04""},
-     * {""id"":30,""description"":""A01AB11""},
-     * {""id"":31,""description"":""A01AB06""},
-     * {""id"":32,""description"":""A01AB07""},
-     * {""id"":33,""description"":""A01AB08""},
-     * {""id"":34,""description"":""A01AB09""},
-     * {""id"":35,""description"":""A01AB10""},
-     * {""id"":36,""description"":""A01AB13""},
-     * {""id"":37,""description"":""A01AB12""},
-     * {""id"":38,""description"":""A01AB05""}]}"
+     * {"tableName":"smtk_helper_table_atc","records":[{"description":"A01AC03"},
+     * {"description":"A01AB16"},
+     * {"description":"A01AB17"},
+     * {"description":"A02BC53"}]}
      * </code>
      *
      * @param jsonExpression La expresión que contiene un arreglo JSON de RD_DTO.
@@ -51,10 +37,10 @@ public class HelperTableFactory {
     public List<HelperTableRecord> createHelperTableRecordsFromJSON(HelperTable helperTable, String jsonExpression) {
 
         ObjectMapper mapper = new ObjectMapper();
-        HelperTableRecordDTO[] dtoRecords;
+        HelperTableRecordDTO dtoRecords;
         try {
 
-            dtoRecords = mapper.readValue(underScoreToCamelCaseJSON(jsonExpression), HelperTableRecordDTO[].class);
+            dtoRecords = mapper.readValue(underScoreToCamelCaseJSON(jsonExpression), HelperTableRecordDTO.class);
         } catch (IOException e) {
             String errorMsg = "No se pudo parsear el RelationshipDefinition desde un JSON.";
             logger.error(errorMsg);
@@ -62,8 +48,8 @@ public class HelperTableFactory {
         }
 
         List<HelperTableRecord> helperTableRecords = new ArrayList<>();
-        for (HelperTableRecordDTO dtoRecord : dtoRecords) {
-            helperTableRecords.add(new HelperTableRecord(helperTable, dtoRecord.getFields()));
+        for (Map<String, String> mapRecord : dtoRecords.getRecords()) {
+            helperTableRecords.add(new HelperTableRecord(helperTable, mapRecord));
         }
 
         return helperTableRecords;
@@ -83,36 +69,32 @@ public class HelperTableFactory {
         return new HelperTable("HT Dummy", "Dummy", "dummy", columns);
     }
 
-    private class HelperTableRecordDTO {
+}
 
-        private String tableName;
+class HelperTableRecordDTO {
 
-        private String[][] records;
+    private String tableName;
 
-        public String getTableName() {
-            return tableName;
-        }
+    private List<Map<String, String>> records;
 
-        public void setTableName(String tableName) {
-            this.tableName = tableName;
-        }
+    public HelperTableRecordDTO() {
+        this.tableName = "";
+        this.records = new ArrayList<>();
+    }
 
-        public String[][] getRecords() {
-            return records;
-        }
+    public String getTableName() {
+        return tableName;
+    }
 
-        public void setRecords(String[][] records) {
-            this.records = records;
-        }
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 
-        public Map<String, String> getFields() {
+    public List<Map<String, String>> getRecords() {
+        return records;
+    }
 
-            HashMap<String, String> records = new HashMap<>();
-            for (String[] record : this.records) {
-                records.put(record[0], record[1]);
-            }
-
-            return records;
-        }
+    public void setRecords(List<Map<String, String>> records) {
+        this.records = records;
     }
 }

@@ -1,9 +1,13 @@
 package cl.minsal.semantikos.kernel.components;
 
+import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
+import cl.minsal.semantikos.model.helpertables.HelperTableImportReport;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.LoadMode;
 
 import javax.validation.constraints.NotNull;
+import java.io.Reader;
 import java.util.Collection;
 import java.util.List;
 
@@ -65,4 +69,16 @@ public interface HelperTableManager {
      * @return La tabla auxiliar.
      */
     public HelperTable findHelperTableByID(long id);
+
+    /**
+     * Este método es responsable de realizar la importación de una Tabla Auxiliar con datos provenientes de un archivo
+     * CSV.
+     *
+     * @param helperTable La tabla auxiliar que se actualizará
+     * @param mode        El modo de importación
+     * @param in          La entrada de datos.
+     *
+     * @return El reporte de la carga realizada.
+     */
+    public HelperTableImportReport loadFromFile(HelperTable helperTable, LoadMode mode, Reader in, User user);
 }
