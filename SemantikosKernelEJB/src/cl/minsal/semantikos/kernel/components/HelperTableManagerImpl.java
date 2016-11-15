@@ -87,6 +87,7 @@ public class HelperTableManagerImpl implements HelperTableManager {
     @Override
     public HelperTableImportReport loadFromFile(HelperTable helperTable, LoadMode mode, Reader in, User user) {
 
+        /* Se cargan los datos desde el archivo */
         HelperTableImportReport helperTableReport = new HelperTableImportReport(helperTable, user);
         Iterable<CSVRecord> records;
         try {
@@ -94,12 +95,29 @@ public class HelperTableManagerImpl implements HelperTableManager {
         } catch (IOException e) {
             logger.error("Error al procesar archivo CSV para importación de tabla auxiliar.", e);
             helperTableReport.setStatus(LoadStatus.CANCELED);
+            helperTableReport.appendException(e);
 
             return helperTableReport;
         }
 
-        /* Se procesan los registros contenidos */
-        List <HelperTableRecord> loadedRecords = new ArrayList<>();
+        /* Se cargan los registros contenidos en el archivo CSV */
+        List<HelperTableRecord> loadedRecords = loadRecordsFromCSV(helperTable, records);
+        logger.info("Se han cargado " + loadedRecords.size() + " registros!");
+
+        /* Ahora se realiza la transacción completa */
+
+        switch (mode) {
+
+            case FULL_FROM_SCRATCH:
+
+                break;
+        }
+
+        return helperTableReport;
+    }
+
+    private List<HelperTableRecord> loadRecordsFromCSV(HelperTable helperTable, Iterable<CSVRecord> records) {
+        List<HelperTableRecord> loadedRecords = new ArrayList<>();
         boolean firstTime = true;
         for (CSVRecord record : records) {
 
@@ -129,15 +147,8 @@ public class HelperTableManagerImpl implements HelperTableManager {
                 loadedRecords.add(helperTableRecord);
             }
 
-            /* Ahora se realiza la transacción completa */
-            switch (mode) {
 
-                case FULL_FROM_SCRATCH:
-
-                    break;
-            }
         }
-
-        return helperTableReport;
+        return loadedRecords;
     }
 }
