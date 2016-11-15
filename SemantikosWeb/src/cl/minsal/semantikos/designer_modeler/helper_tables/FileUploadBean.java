@@ -17,7 +17,6 @@ package cl.minsal.semantikos.designer_modeler.helper_tables;
 
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.HelperTableManager;
-import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.LoadMode;
 import org.primefaces.event.FileUploadEvent;

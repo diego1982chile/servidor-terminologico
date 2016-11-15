@@ -18,6 +18,14 @@ import java.util.Map;
 public interface HelperTableDAO {
 
     /**
+     * Este método es responsable de insertar un registro en la tabla auxiliar.
+     *
+     * @param helperTable La tabla auxiliar donde se cargará el registro.
+     * @param record      El registro que se desea insertar.
+     */
+    public void insertRecord(HelperTable helperTable, HelperTableRecord record);
+
+    /**
      * Este método es responsable de recuperar un registro desde una tabla auxiliar <code>helperTable</code>.
      *
      * @param helperTable La tabla auxiliar desde la cual se recupera el registro.

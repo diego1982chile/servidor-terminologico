@@ -102,18 +102,52 @@ public class HelperTableManagerImpl implements HelperTableManager {
 
         /* Se cargan los registros contenidos en el archivo CSV */
         List<HelperTableRecord> loadedRecords = loadRecordsFromCSV(helperTable, records);
+        helperTableReport.setCSVLoadedRecords(loadedRecords);
         logger.info("Se han cargado " + loadedRecords.size() + " registros!");
 
         /* Ahora se realiza la transacción completa */
-
-        switch (mode) {
-
-            case FULL_FROM_SCRATCH:
-
-                break;
-        }
+        loadHelperTable(helperTable, loadedRecords, mode, helperTableReport);
 
         return helperTableReport;
+    }
+
+    /**
+     * Este método es responsable de delegar la carga de los registros de una tabla auxiliar en función del modo
+     * seleccionado.
+     *
+     * @param helperTable       La tabla en la cual se realiza la carga.
+     * @param loadedRecords     Los registros a cargar.
+     * @param mode              El modo de carga.
+     * @param helperTableReport El reporte de la carga.
+     */
+    private void loadHelperTable(HelperTable helperTable, List<HelperTableRecord> loadedRecords, LoadMode mode, HelperTableImportReport helperTableReport) {
+
+        /* Se delega al mecanismo apropiado según el modo */
+        switch (mode) {
+            case INITIAL_LOAD:
+                loadHelperTableFromScratch(helperTable, loadedRecords, helperTableReport);
+                break;
+        }
+    }
+
+    /**
+     * Este método es responsable de cargar todos los registros en la tabla auxiliar, eliminando todos los datos
+     * existentes previamente.
+     *
+     * @param helperTable       La tabla que se desea cargar.
+     * @param loadedRecords     Los registros a cargar.
+     * @param helperTableReport El reporte de la carga.
+     */
+    private void loadHelperTableFromScratch(HelperTable helperTable, List<HelperTableRecord> loadedRecords, HelperTableImportReport helperTableReport) {
+
+        /* Se insertan todos los registros */
+        long insertedRecords = 0;
+        for (HelperTableRecord loadedRecord : loadedRecords) {
+            helperTableDAO.insertRecord(helperTable, loadedRecord);
+            insertedRecords++;
+        }
+
+        helperTableReport.setInsertedRecords(insertedRecords);
     }
 
     private List<HelperTableRecord> loadRecordsFromCSV(HelperTable helperTable, Iterable<CSVRecord> records) {
