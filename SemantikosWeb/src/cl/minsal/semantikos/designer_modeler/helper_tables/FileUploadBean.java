@@ -18,7 +18,9 @@ package cl.minsal.semantikos.designer_modeler.helper_tables;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.HelperTableManager;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
+import cl.minsal.semantikos.model.helpertables.HelperTableImportReport;
 import cl.minsal.semantikos.model.helpertables.LoadMode;
+import cl.minsal.semantikos.model.helpertables.LoadStatus;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
@@ -103,8 +105,6 @@ public class FileUploadBean {
         if(loadModeSelected!=null)this.loadModeSelected = loadModeSelected;
     }
 
-
-
     public LoadMode[] getLoadModes() {
         return loadModes;
     }
@@ -119,7 +119,6 @@ public class FileUploadBean {
         loadModes= LoadMode.values();
     }
 
-
     /**
      * Este método es utilizado como acción para cargar el archivo CVS con una tabla.
      */
@@ -128,10 +127,6 @@ public class FileUploadBean {
         this.file=event.getFile();
         if (file != null) {
             logger.info("Archivo cargado:" + file.getFileName());
-            FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-
-            /* Se invoca la función de negocio para cargar el archivo */
 
             Reader in;
             try {
@@ -141,9 +136,20 @@ public class FileUploadBean {
                 return;
             }
 
-            helperTableManager.loadFromFile(helperTable, loadModeSelected, in, authenticationBean.getLoggedUser());
+            /* Se invoca la función de negocio para cargar el archivo */
+            HelperTableImportReport helperTableImportReport = helperTableManager.loadFromFile(helperTable, loadModeSelected, in, authenticationBean.getLoggedUser());
+            if (helperTableImportReport.getStatus().equals(LoadStatus.CANCELED)){
+                FacesMessage msg = new FacesMessage("Carga cancelada! " + helperTableImportReport.getExceptions());
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+            }
+            else {
+                FacesMessage msg = new FacesMessage("Carga exitosa! " + helperTableImportReport.getInsertedRecords() + " registros cargados.");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+            }
         } else {
             logger.info("Archivo NO cargado!");
+            FacesMessage msg = new FacesMessage("Carga cancelada! Archivo no cargado");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
 

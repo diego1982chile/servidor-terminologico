@@ -28,6 +28,7 @@ public class HelperTableImportReport {
 
     /** Los records que se querían actualizar */
     private List<HelperTableRecord> CSVLoadedRecords;
+
     private long insertedRecords;
 
     public HelperTableImportReport(HelperTable helperTable, User user) {
@@ -63,5 +64,12 @@ public class HelperTableImportReport {
 
     public long getInsertedRecords() {
         return insertedRecords;
+    }
+
+    public void setExceptions(ArrayList<IOException> exceptions) {
+        this.exceptions = exceptions;
+    }
+    public ArrayList<IOException> getExceptions() {
+        return exceptions;
     }
 }
