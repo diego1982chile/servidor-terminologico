@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
@@ -35,15 +36,16 @@ public class HelperTableDAOImpl implements HelperTableDAO {
     }
 
     @Override
-    public void insertRecord(HelperTable helperTable, HelperTableRecord record) {
+    public void insertRecord(HelperTable helperTable, HelperTableRecord record, User user) {
 
         /*
          * La inserción de registros se hace indicando:
          *   - la tabla auxiliar (por su nombre de tabla).
          *   - un arreglo con todos los nombres de los campos.
          *   - un arreglo con los valores de los campos.
+         *   - ID usuario que realiza la carga.
          */
-        String selectRecord = "{call semantikos.helper_tables_insert_record(?,?,?)}";
+        String selectRecord = "{call semantikos.helper_tables_insert_record(?,?,?,?)}";
         ConnectionBD connectionBD = new ConnectionBD();
         try (Connection connection = connectionBD.getConnection();
              CallableStatement callableStatement = connection.prepareCall(selectRecord)) {
@@ -57,6 +59,7 @@ public class HelperTableDAOImpl implements HelperTableDAO {
             callableStatement.setString(1, helperTable.getTablaName());
             callableStatement.setArray(2, column_names);
             callableStatement.setArray(3, column_values);
+            callableStatement.setLong(4, user.getIdUser());
 
             callableStatement.executeQuery();
         } catch (SQLException e) {

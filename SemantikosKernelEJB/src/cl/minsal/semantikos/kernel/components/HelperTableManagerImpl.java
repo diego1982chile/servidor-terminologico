@@ -106,7 +106,7 @@ public class HelperTableManagerImpl implements HelperTableManager {
         logger.info("Se han cargado " + loadedRecords.size() + " registros!");
 
         /* Ahora se realiza la transacción completa */
-        loadHelperTable(helperTable, loadedRecords, mode, helperTableReport);
+        loadHelperTable(helperTable, loadedRecords, mode, helperTableReport, user);
 
         return helperTableReport;
     }
@@ -119,13 +119,14 @@ public class HelperTableManagerImpl implements HelperTableManager {
      * @param loadedRecords     Los registros a cargar.
      * @param mode              El modo de carga.
      * @param helperTableReport El reporte de la carga.
+     * @param user              El usuario que realiza la carga.
      */
-    private void loadHelperTable(HelperTable helperTable, List<HelperTableRecord> loadedRecords, LoadMode mode, HelperTableImportReport helperTableReport) {
+    private void loadHelperTable(HelperTable helperTable, List<HelperTableRecord> loadedRecords, LoadMode mode, HelperTableImportReport helperTableReport, User user) {
 
         /* Se delega al mecanismo apropiado según el modo */
         switch (mode) {
             case INITIAL_LOAD:
-                loadHelperTableFromScratch(helperTable, loadedRecords, helperTableReport);
+                loadHelperTableFromScratch(helperTable, loadedRecords, helperTableReport, user);
                 break;
         }
     }
@@ -137,13 +138,14 @@ public class HelperTableManagerImpl implements HelperTableManager {
      * @param helperTable       La tabla que se desea cargar.
      * @param loadedRecords     Los registros a cargar.
      * @param helperTableReport El reporte de la carga.
+     * @param user              El usuario que realiza la carga.
      */
-    private void loadHelperTableFromScratch(HelperTable helperTable, List<HelperTableRecord> loadedRecords, HelperTableImportReport helperTableReport) {
+    private void loadHelperTableFromScratch(HelperTable helperTable, List<HelperTableRecord> loadedRecords, HelperTableImportReport helperTableReport, User user) {
 
         /* Se insertan todos los registros */
         long insertedRecords = 0;
         for (HelperTableRecord loadedRecord : loadedRecords) {
-            helperTableDAO.insertRecord(helperTable, loadedRecord);
+            helperTableDAO.insertRecord(helperTable, loadedRecord, user);
             insertedRecords++;
         }
 

@@ -5,7 +5,7 @@ package cl.minsal.semantikos.model.helpertables;
  */
 public enum LoadMode {
 
-    FULL_FROM_SCRATCH("Carga Inicial!"),
+    INITIAL_LOAD("Carga Inicial!"),
     DELTA("Carga de un delta");
 
 
