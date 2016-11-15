@@ -25,6 +25,8 @@ public interface ConceptQueryDAO {
 
     List<RelationshipDefinition> getShowableAttributesByCategory(Category category);
 
+    List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category);
+
     boolean getCustomFilteringValue(Category category);
 
     boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition);
@@ -32,5 +34,6 @@ public interface ConceptQueryDAO {
     boolean getShowableRelatedConceptsValue(Category category);
 
     boolean getShowableValue(Category category);
+
 
 }

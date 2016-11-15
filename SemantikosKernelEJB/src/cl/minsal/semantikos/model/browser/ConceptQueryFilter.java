@@ -27,6 +27,8 @@ public class ConceptQueryFilter {
 
     boolean checked;
 
+    boolean secondOrder;
+
     public ConceptQueryFilter(RelationshipDefinition definition) {
         this.definition = definition;
     }
@@ -72,6 +74,14 @@ public class ConceptQueryFilter {
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    public boolean isSecondOrder() {
+        return secondOrder;
+    }
+
+    public void setSecondOrder(boolean secondOrder) {
+        this.secondOrder = secondOrder;
     }
 
     public List<Long> getCategoryValues(){

@@ -13,6 +13,8 @@ public class ConceptQueryColumn {
     Sort sort;
     RelationshipDefinition relationshipDefinition;
 
+    boolean secondOrder;
+
     public ConceptQueryColumn(String columnName, Sort sort) {
         this.columnName = columnName;
         this.sort = sort;
@@ -45,5 +47,13 @@ public class ConceptQueryColumn {
 
     public void setRelationshipDefinition(RelationshipDefinition relationshipDefinition) {
         this.relationshipDefinition = relationshipDefinition;
+    }
+
+    public boolean isSecondOrder() {
+        return secondOrder;
+    }
+
+    public void setSecondOrder(boolean secondOrder) {
+        this.secondOrder = secondOrder;
     }
 }

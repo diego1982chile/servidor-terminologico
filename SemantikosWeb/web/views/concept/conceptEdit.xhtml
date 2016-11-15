@@ -13,11 +13,12 @@
             <f:viewParam name="editMode" value="#{conceptBean.editable}" />
             <f:viewParam name="idCategory" value="#{conceptBean.idCategory}" />
             <f:viewParam name="idConcept" value="#{conceptBean.idConcept}" />
+            <f:viewParam name="favoriteDescription" value="#{conceptBean.favoriteDescription}" />
         </f:metadata>
 
         <p:panel id="createEdit" style="background: rgba(0, 0, 0, 0); border: hidden;">
             <h:form id="mainForm" rendered="#{ not (conceptBean.concept eq null ) }" styleClass="#{conceptBean.editable? '' : 'consult'}">
-                <smtk:changeMarketed></smtk:changeMarketed>
+                <smtk:changeMarketed />
                 <p:panel>
 
                     <p:growl id="growl" showDetail="true" showSummary="true"/>
