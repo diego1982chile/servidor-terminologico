@@ -30,13 +30,16 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "fileUploadBean")
+@ViewScoped
 public class FileUploadBean {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUploadBean.class);
@@ -56,13 +59,17 @@ public class FileUploadBean {
     /** Lista de Helper tables */
     private List<HelperTable> helperTableList;
 
+    private LoadMode loadModeSelected;
+
+    private LoadMode[] loadModes;
+
 
     public HelperTable getHelperTable() {
         return helperTable;
     }
 
     public void setHelperTable(HelperTable helperTable) {
-        this.helperTable = helperTable;
+        if(helperTable!=null)this.helperTable = helperTable;
     }
 
     public List<HelperTable> getHelperTableList() {
@@ -70,7 +77,7 @@ public class FileUploadBean {
     }
 
     public void setHelperTableList(List<HelperTable> helperTableList) {
-        this.helperTableList = helperTableList;
+       this.helperTableList = helperTableList;
     }
 
     public UploadedFile getFile() {
@@ -89,11 +96,28 @@ public class FileUploadBean {
         this.authenticationBean = authenticationBean;
     }
 
+    public LoadMode getLoadModeSelected() {
+        return loadModeSelected;
+    }
+
+    public void setLoadModeSelected(LoadMode loadModeSelected) {
+        if(loadModeSelected!=null)this.loadModeSelected = loadModeSelected;
+    }
+
+
+
+    public LoadMode[] getLoadModes() {
+        return loadModes;
+    }
+
+    public void setLoadModes(LoadMode[] loadModes) {
+        this.loadModes = loadModes;
+    }
 
     @PostConstruct
     public void init(){
         helperTableList= (List<HelperTable>) helperTableManager.getHelperTables();
-
+        loadModes= LoadMode.values();
     }
 
 
@@ -109,8 +133,7 @@ public class FileUploadBean {
             FacesContext.getCurrentInstance().addMessage(null, message);
 
             /* Se invoca la función de negocio para cargar el archivo */
-            long helperTableID = 0; //TODO: Recuperar desde la vista.
-            LoadMode mode = LoadMode.FULL_FROM_SCRATCH; //TODO: Recuperar el modo de carga.
+
             Reader in;
             try {
                 in = new InputStreamReader(file.getInputstream());
@@ -118,8 +141,8 @@ public class FileUploadBean {
                 logger.error("Error al cargar el streaming.");
                 return;
             }
-            HelperTable helperTable = helperTableManager.findHelperTableByID(helperTableID);
-            helperTableManager.loadFromFile(helperTable, mode, in, authenticationBean.getLoggedUser());
+
+            helperTableManager.loadFromFile(helperTable, loadModeSelected, in, authenticationBean.getLoggedUser());
         } else {
             logger.info("Archivo NO cargado!");
         }
