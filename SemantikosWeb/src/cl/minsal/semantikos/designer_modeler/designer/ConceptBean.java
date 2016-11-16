@@ -885,6 +885,8 @@ public class ConceptBean implements Serializable {
             }
             if (!containDescriptionNoValidToTranslate(description) && noValidDescriptions.size() > 0) {
                 descriptionManager.deleteDescription(description, user);
+            }else{
+                descriptionManager.deleteDescription(description, user);
             }
             _concept.removeDescription(description);
         }
