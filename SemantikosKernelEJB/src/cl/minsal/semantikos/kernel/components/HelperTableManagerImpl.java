@@ -81,6 +81,11 @@ public class HelperTableManagerImpl implements HelperTableManager {
     }
 
     @Override
+    public HelperTableRecord getRecord(HelperTable helperTable, long recordId) {
+        return helperTableDAO.getHelperTableRecordFromId(helperTable, recordId);
+    }
+
+    @Override
     public HelperTable findHelperTableByID(long id) {
         return helperTableDAO.getHelperTableByID(id);
     }
