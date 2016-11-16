@@ -130,10 +130,11 @@ public class HelperTableRecord implements Target, Comparable<HelperTableRecord> 
 
     @Override
     public String toString() {
-        if (this.getFields() == null)
-            return "null";
-        else
-            return getValueColumn("description");
+        if (this.getFields() == null) {
+            return helperTable.getName() + "[]";
+        } else {
+            return helperTable.getName() + "[" + this.getFields() + "]";
+        }
     }
 
     public HelperTableRecord copy() {

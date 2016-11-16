@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
@@ -25,7 +26,6 @@ public class HelperTableDAOImpl implements HelperTableDAO {
     /** Logger de la clase */
     private static final Logger logger = LoggerFactory.getLogger(HelperTableDAOImpl.class);
 
-
     @EJB
     HelperTableRecordFactory helperTableRecordFactory;
 
@@ -33,6 +33,43 @@ public class HelperTableDAOImpl implements HelperTableDAO {
 
     public HelperTableDAOImpl() {
         this.helperTablesMap = new HashMap<>();
+    }
+
+    @Override
+    public void insertRecord(HelperTable helperTable, HelperTableRecord record, User user) {
+
+        /*
+         * La inserción de registros se hace indicando:
+         *   - la tabla auxiliar (por su nombre de tabla).
+         *   - un arreglo con todos los nombres de los campos.
+         *   - un arreglo con los valores de los campos.
+         *   - ID usuario que realiza la carga.
+         */
+        String selectRecord = "{call semantikos.helper_tables_insert_record(?,?,?)}";
+        ConnectionBD connectionBD = new ConnectionBD();
+        try (Connection connection = connectionBD.getConnection();
+             CallableStatement callableStatement = connection.prepareCall(selectRecord)) {
+
+            /* Se agregan las columnas y valores de sistema */
+            record.addField("id_usuario", Long.toString(user.getIdUser()));
+            record.addField("creation_date", new Timestamp(System.currentTimeMillis()).toString());
+
+            /* Se preparan los parámetros de la función */
+            Map<String, String> recordFields = record.getFields();
+            Array column_names = connection.createArrayOf("text", recordFields.keySet().toArray(new String[recordFields.size()]));
+            Array column_values = connection.createArrayOf("text", recordFields.values().toArray(new String[recordFields.size()]));
+
+            /* Se prepara y realiza la consulta */
+            callableStatement.setString(1, helperTable.getTablaName());
+            callableStatement.setArray(2, column_names);
+            callableStatement.setArray(3, column_values);
+            callableStatement.setLong(4, user.getIdUser());
+
+            callableStatement.executeQuery();
+        } catch (SQLException e) {
+            logger.error("Error al realizar una inserción en las tablas auxiliares", e);
+            throw new EJBException(e);
+        }
     }
 
     @Override
@@ -267,6 +304,39 @@ public class HelperTableDAOImpl implements HelperTableDAO {
 
             /* Se prepara y realiza la consulta */
             call.setLong(1, idHelperTableRecord);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                recordFromJSON = this.helperTableRecordFactory.createRecordFromJSON(rs.getString(1));
+            } else {
+                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Hubo un error al acceder a la base de datos.", e);
+            throw new EJBException(e);
+        } catch (IOException e) {
+            logger.error("Hubo un error procesar los resultados con JSON.", e);
+            throw new EJBException(e);
+        }
+
+        return recordFromJSON;
+    }
+
+    @Override
+    public HelperTableRecord getHelperTableRecordFromId(HelperTable helperTable, long idHelperTableRecord) {
+
+        ConnectionBD connectionBD = new ConnectionBD();
+
+        String selectRecord = "{call semantikos.get_record_by_id_auxiliary(?,?)}";
+        HelperTableRecord recordFromJSON;
+        try (Connection connection = connectionBD.getConnection();
+             CallableStatement call = connection.prepareCall(selectRecord)) {
+
+            /* Se prepara y realiza la consulta */
+            call.setLong(1, helperTable.getId());
+            call.setLong(2, idHelperTableRecord);
             call.execute();
 
             ResultSet rs = call.getResultSet();

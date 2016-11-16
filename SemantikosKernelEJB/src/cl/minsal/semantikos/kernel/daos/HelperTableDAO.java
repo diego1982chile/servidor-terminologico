@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.helpertables.HelperTableWhereCondition;
@@ -16,6 +17,15 @@ import java.util.Map;
  */
 @Local
 public interface HelperTableDAO {
+
+    /**
+     * Este método es responsable de insertar un registro en la tabla auxiliar.
+     *
+     * @param helperTable La tabla auxiliar donde se cargará el registro.
+     * @param record      El registro que se desea insertar.
+     * @param user        El usuario que realiza la carga.
+     */
+    public void insertRecord(HelperTable helperTable, HelperTableRecord record, User user);
 
     /**
      * Este método es responsable de recuperar un registro desde una tabla auxiliar <code>helperTable</code>.
@@ -94,6 +104,8 @@ public interface HelperTableDAO {
      * @return Un registro (<code>HelperTableRecord</code>).
      */
     public HelperTableRecord getHelperTableRecordFromId(long idHelperTableRecord);
+
+    public HelperTableRecord getHelperTableRecordFromId(HelperTable helperTable, long idHelperTableRecord);
 
     /**
      * Este método recupera todas las tablas auxiliares.

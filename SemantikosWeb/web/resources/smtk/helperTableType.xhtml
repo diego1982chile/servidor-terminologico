@@ -29,15 +29,14 @@
                 <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:autoComplete id="findHTRecords1" scrollHeight="200" style="width: 90%;"
+                <p:autoComplete id="findHTRecords1" scrollHeight="200"
+                                style="width: 90%;"
                                 inputStyle="width: 90%;"
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                dropdown="true"
                                 forceSelection="true"
                                 var="record"
                                 placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                 converter="helperTableRecordConverter"
-                                validator="#{validatorBean.validateRequiredRecordSelect}"
                                 value="#{conceptBean.selectedHelperTableRecord}"
                                 disabled="#{not cc.attrs.concept.editable}"
                                 itemLabel="#{record.fields['description']}"
@@ -58,6 +57,7 @@
                             process="@this"/>
 
                 </p:autoComplete>
+                <i class="fa fa-search fa-lg"  />
             </div>
         </div>
     </p:panel>
@@ -78,7 +78,7 @@
                     <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target}" style="width: 70%" />
+                    <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target}" style="width: 80%" />
                     <p:commandLink process="@this"
                                    update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                    action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
@@ -106,12 +106,10 @@
                                 inputStyle="width: 90%;"
                                 styleClass="findHTRecords1"
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                dropdown="true"
                                 forceSelection="true"
                                 var="record"
                                 placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                 converter="helperTableRecordConverter"
-                                validator="#{validatorBean.validateRequiredRecordSelect}"
                                 disabled="#{not cc.attrs.concept.editable}"
                                 value="#{conceptBean.selectedHelperTableRecord}"
                                 itemLabel="#{record.fields['description']}"
@@ -132,6 +130,7 @@
                             process="@this"/>
 
                 </p:autoComplete>
+                <i class="fa fa-search fa-lg"  />
             </div>
             <!-- Atributos de relación -->
             <p:repeat
@@ -171,7 +170,7 @@
                     <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target}" style="width: 70%" />
+                    <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target}" style="width: 80%" />
                     <p:commandLink process="@this"
                                    update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                    action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
@@ -219,7 +218,6 @@
                                 styleClass="fragments"
                                 inputStyle="width: 90%;"
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                dropdown="#{not cc.attrs.relationshipDefinition.isISP()}"
                                 queryDelay="#{cc.attrs.relationshipDefinition.isISP()? 1000 : 0}"
                                 minQueryLength="#{cc.attrs.relationshipDefinition.isISP()? 3 : 0}"
                                 forceSelection="true"
@@ -248,6 +246,7 @@
                             process="@this"/>
 
                 </p:autoComplete>
+                <i class="fa fa-search fa-lg"  />
             </div>
 
             <smtk:info relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
@@ -289,7 +288,7 @@
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:panel id="helperTableTypeCollectionWithAttributes"
+    <p:outputPanel id="helperTableTypeCollectionWithAttributes"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <h3>#{cc.attrs.relationshipDefinition.name}</h3>
@@ -308,7 +307,6 @@
                                     inputStyle="width: 90%;"
                                     completeMethod="#{helperTableBean.getRecordSearchInput}"
                                     var="record"
-                                    dropdown="#{not cc.attrs.relationshipDefinition.isISP()}"
                                     queryDelay="#{cc.attrs.relationshipDefinition.isISP()? 1000 : 0}"
                                     minQueryLength="#{cc.attrs.relationshipDefinition.isISP()? 3 : 0}"
                                     forceSelection="true"
@@ -334,7 +332,7 @@
                                 process="@this"/>
 
                     </p:autoComplete>
-
+                    <i class="fa fa-search fa-lg"  />
                 </div>
 
                 <!-- Atributos de relación -->
@@ -424,7 +422,7 @@
                 </p:column>
             </p:dataTable>
         </div>
-    </p:panel>
+    </p:outputPanel>
 
     <script type="text/javascript">
         /*

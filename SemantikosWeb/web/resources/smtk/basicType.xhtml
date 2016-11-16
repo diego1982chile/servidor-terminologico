@@ -61,6 +61,8 @@
                                    disabled="#{not cc.attrs.concept.editable}"
                                    rendered="#{cc.attrs.targetDefinition.type.typeName=='int' and not cc.attrs.targetDefinition.discreteDomain}"
                                    styleClass="relationships"
+                                   inputStyle="width: 80%"
+                                   style="width: 80%"
                                    autocomplete="off">
                         <f:attribute name="concept" value="#{cc.attrs.concept}"  />
                         <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
@@ -79,6 +81,8 @@
                                    disabled="#{not cc.attrs.concept.editable}"
                                    rendered="#{cc.attrs.targetDefinition.type.typeName=='float' and not cc.attrs.targetDefinition.discreteDomain}"
                                    styleClass="relationships"
+                                   inputStyle="width: 80%"
+                                   style="width: 80%"
                                    autocomplete="off">
                         <f:attribute name="concept" value="#{cc.attrs.concept}"  />
                         <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
@@ -93,6 +97,8 @@
                                  disabled="#{not cc.attrs.concept.editable}"
                                  rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}"
                                  styleClass="relationships"
+                                 inputStyle="width: 80%"
+                                 style="width: 80%"
                                  autocomplete="off">
                         <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                 update="@(.panel_#{cc.attrs.relationshipDefinition.id})"/>
@@ -104,6 +110,8 @@
                                 mindate="#{cc.attrs.targetDefinition.interval.lowerBoundary}"
                                 maxdate="#{cc.attrs.targetDefinition.interval.upperBoundary}"
                                 disabled="#{not cc.attrs.concept.editable}"
+                                inputStyle="width: 80%"
+                                style="width: 80%"
                                 rendered="#{cc.attrs.targetDefinition.type.typeName=='date' and not cc.attrs.targetDefinition.discreteDomain}"
                                 styleClass="relationships">
                         <f:attribute name="concept" value="#{cc.attrs.concept}"  />
@@ -136,7 +144,7 @@
                 <p:outputLabel value=" *" rendered="#{!cc.attrs.relationshipDefinition.multiplicity.optional}" />
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" style="width: 70%" />
+                <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" style="width: 80%" />
                 <p:commandLink process="@this"
                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
@@ -167,6 +175,7 @@
                                  converter="omnifaces.SelectItemsConverter"
                                  rendered="#{cc.attrs.targetDefinition.discreteDomain}"
                                  disabled="#{not cc.attrs.concept.editable}"
+                                 style="width: 70%"
                                  styleClass="relationships">
                     <p:ajax event="itemSelect"
                             listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
@@ -189,6 +198,8 @@
                                decimalSeparator=","
                                thousandSeparator="."
                                disabled="#{not cc.attrs.concept.editable}"
+                               inputStyle="width: 80%"
+                               style="width: 80%"
                                rendered="#{cc.attrs.targetDefinition.type.typeName=='int' and not cc.attrs.targetDefinition.discreteDomain}"
                                styleClass="relationships">
                     <f:attribute name="concept" value="#{cc.attrs.concept}"  />
@@ -209,6 +220,8 @@
                                decimalPlaces="2"
                                disabled="#{not cc.attrs.concept.editable}"
                                rendered="#{cc.attrs.targetDefinition.type.typeName=='float' and not cc.attrs.targetDefinition.discreteDomain}"
+                               inputStyle="width: 80%"
+                               style="width: 80%"
                                styleClass="relationships">
                     <f:attribute name="concept" value="#{cc.attrs.concept}"  />
                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
@@ -222,6 +235,8 @@
                              maxValue="#{cc.attrs.targetDefinition.interval.upperBoundary}"
                              disabled="#{not cc.attrs.concept.editable}"
                              rendered="#{cc.attrs.targetDefinition.type.typeName=='string' and not cc.attrs.targetDefinition.discreteDomain}"
+                             inputStyle="width: 80%"
+                             style="width: 80%"
                              styleClass="relationships"
                 >
                     <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}" />
@@ -234,6 +249,8 @@
                             maxdate="#{cc.attrs.targetDefinition.interval.upperBoundary}"
                             disabled="#{not cc.attrs.concept.editable}"
                             rendered="#{cc.attrs.targetDefinition.type.typeName=='date' and not cc.attrs.targetDefinition.discreteDomain}"
+                            inputStyle="width: 80%"
+                            style="width: 80%"
                             styleClass="relationships">
                     <f:attribute name="concept" value="#{cc.attrs.concept}"  />
                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
@@ -276,7 +293,7 @@
                     <p:outputLabel value=" *" rendered="#{!cc.attrs.relationshipDefinition.multiplicity.optional}" />
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" style="width: 70%" />
+                    <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" style="width: 80%" />
                     <p:commandLink process="@this"
                                    update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                    action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
@@ -294,6 +311,7 @@
                     <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                                    relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                                    relationship="#{relationship}"
+                                                   concept="#{cc.attrs.concept}"
                                                    targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
                                                    rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
                     />

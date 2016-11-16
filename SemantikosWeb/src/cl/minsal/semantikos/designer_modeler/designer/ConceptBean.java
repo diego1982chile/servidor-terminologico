@@ -313,19 +313,15 @@ public class ConceptBean implements Serializable {
         ConceptSMTKWeb conceptWeb = new ConceptSMTKWeb(concept);
 
         DescriptionWeb fsnDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFSN());
-        fsnDescription.setCaseSensitive(true);
-        fsnDescription.setModeled(false);
         fsnDescription.setDescriptionId(descriptionManager.generateDescriptionId());
 
         DescriptionWeb favouriteDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFavorite());
-        favouriteDescription.setCaseSensitive(true);
-        fsnDescription.setModeled(false);
         favouriteDescription.setDescriptionId(descriptionManager.generateDescriptionId());
 
         for (DescriptionWeb description : new DescriptionWeb[]{favouriteDescription, fsnDescription})
             conceptWeb.addDescriptionWeb(description);
 
-        return conceptWeb;
+        return viewAugmenter.augmentConcept(category, conceptWeb);
     }
 
     //Este método es responsable de pasarle a la vista un concepto plantilla
@@ -455,7 +451,7 @@ public class ConceptBean implements Serializable {
 
 
             if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship,relationshipDefinition,attributeDefinition) ) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe seleccionar un valor para el atributo " + attributeDefinition.getName()));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Información incompleta para agregar " + relationshipDefinition.getName()));
                 relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>()));
                 resetPlaceHolders();
                 return;
@@ -718,7 +714,7 @@ public class ConceptBean implements Serializable {
                 return false;
             }
             if(changeDirectMultiplicity(relationshipDefinition)){
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El atributo " + relationshipDefinition.getName() + " no cumple con el minimo requerido"));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Información incompleta Cantidad y Unidad en "+relationshipDefinition.getName() ));
                 return false;
             }
 
@@ -884,6 +880,8 @@ public class ConceptBean implements Serializable {
                 descriptionManager.deleteDescription(description, user);
             }
             if (!containDescriptionNoValidToTranslate(description) && noValidDescriptions.size() > 0) {
+                descriptionManager.deleteDescription(description, user);
+            }else{
                 descriptionManager.deleteDescription(description, user);
             }
             _concept.removeDescription(description);
@@ -1542,10 +1540,10 @@ public class ConceptBean implements Serializable {
     }
 
     public boolean changeIndirectMultiplicity(Relationship relation, RelationshipDefinition relationshipDefinition, RelationshipAttributeDefinition relationshipAttributeDefinition) {
-        if(relationshipAttributeDefinition.getId()==8){
+        if(relationshipAttributeDefinition.getId()==8 && relation.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size()>0){
             return isEmpty(relation,relationshipDefinition,relationshipAttributeDefinition,9L);
         }
-        if(relationshipAttributeDefinition.getId()==10){
+        if(relationshipAttributeDefinition.getId()==10 && relation.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size()>0){
             return isEmpty(relation,relationshipDefinition,relationshipAttributeDefinition,11L);
         }
         return false;
