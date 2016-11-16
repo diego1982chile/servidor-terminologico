@@ -4,6 +4,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
+import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
@@ -59,6 +60,36 @@ public class SnomedCTRelationship extends Relationship {
 
         /* En cualquier otro caso de los considerados antes, no es definitoria */
         return false;
+    }
+
+    public boolean isES_UN() {
+        return getSnomedCTRelationshipType().equalsIgnoreCase(ES_UN);
+    }
+
+    public boolean isES_UN_MAPEO_DE() {
+        return getSnomedCTRelationshipType().equalsIgnoreCase(ES_UN_MAPEO_DE);
+    }
+
+    public String getSnomedCTRelationshipType() {
+
+        /* Se obtienen los atributos de la relación y se itera por ellos para buscar las del tipo que sirve*/
+        List<RelationshipAttribute> relationshipAttributes = this.getRelationshipAttributes();
+        for (RelationshipAttribute relationshipAttribute : relationshipAttributes) {
+
+            /* El atributo debe ser de tipo Helper Table (en particular a la tabla de tipos de relaciones */
+            if (relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isHelperTable()) {
+                HelperTableRecord snomedType = (HelperTableRecord) relationshipAttribute.getTarget();
+
+                /* Sin preguntar si es la tabla correcta, se ve si su campo descripción tienen los valores requeridos */
+                // TODO: Validar que el target es a la tabla correcta.
+                Map<String, String> fields = snomedType.getFields();
+                if (fields.containsKey(SYSTEM_COLUMN_DESCRIPTION.getColumnName())) {
+                    return fields.get(SYSTEM_COLUMN_DESCRIPTION.getColumnName());
+                }
+            }
+        }
+
+        throw new EJBException("Esta relación no posee un tipo de relación Snomed-CT");
     }
 
     @Override
