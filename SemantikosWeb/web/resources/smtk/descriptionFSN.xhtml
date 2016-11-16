@@ -32,6 +32,12 @@
                 <p:ajax event="change" update="@this" process="@this" delay="100" />
             </p:inputText>
         </div>
+        <!-- DescriptionId -->
+        <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <p:outputLabel value="DESCID " rendered="#{not cc.attrs.description.persistent}"/>
+
+            <p:outputLabel value="DESCID: #{cc.attrs.description.descriptionId}" rendered="#{cc.attrs.description.persistent}"/>
+        </div>
         <!-- Sensibilidad descripción -->
         <div class="ui-g-12 ui-md-6 ui-lg-3">
             <p:selectOneRadio id="caseSensitiveNew"
@@ -43,12 +49,6 @@
                 <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
                 <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
             </p:selectOneRadio>
-        </div>
-        <!-- DescriptionId -->
-        <div class="ui-g-12 ui-md-6 ui-lg-3">
-            <p:outputLabel value="DESCID " rendered="#{not cc.attrs.description.persistent}"/>
-
-            <p:outputLabel value="DESCID: #{cc.attrs.description.descriptionId}" rendered="#{cc.attrs.description.persistent}"/>
         </div>
     </div>
 </composite:implementation>
