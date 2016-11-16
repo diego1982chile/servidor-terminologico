@@ -1444,4 +1444,14 @@ public class ConceptBean implements Serializable {
     public boolean disabledMCSpecial(RelationshipDefinition relationshipDefinition){
         return (relationshipDefinition.getId()==74 && concept.isModeled())? true:false;
     }
+
+    public void isFullyDefined(boolean fullyDefined){
+        try{
+            concept.setFullyDefined(fullyDefined);
+        }catch(BusinessRuleException br) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT"));
+        }
+
+    }
 }
