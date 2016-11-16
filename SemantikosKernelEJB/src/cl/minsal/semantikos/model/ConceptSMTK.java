@@ -77,6 +77,9 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     /** El Tag Semántikos que tiene asociado el concepto */
     private TagSMTK tagSMTK;
 
+    /** Variable que indica si el grado de definición se obtiene heredado * */
+    private boolean inherited;
+
     /**
      * La categoría es la mínima información que se le puede dar a un concepto.
      */
@@ -94,6 +97,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.isPublished = false;
         this.isToBeConsulted = false;
         this.isToBeReviewed = false;
+        this.inherited = false;
 
         /** Categoría del concepto */
         this.category = null;
@@ -123,12 +127,14 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * @param isToBeConsulted Si debe ser consultado.
      * @param modeled         Si se encuentra modelado.
      * @param isFullyDefined  Si es Completamente definido.
+     * @param inherited       Determina si el atributo isFullyDefined fue heredado (<code>true</code>) o no
+     *                        (<code>false</code>).
      * @param isPublished     Si se encuentra publicado
      * @param observation     La observación.
      * @param tagSMTK         El Tag Semántikos asociado al concepto.
      * @param descriptions    Sus descripciones.
      */
-    public ConceptSMTK(long id, String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, Boolean isFullyDefined, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
+    public ConceptSMTK(long id, String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, Boolean isFullyDefined, boolean inherited, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
         this(category, modeled, descriptions);
 
         this.setId(id);
@@ -138,6 +144,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.isToBeReviewed = isToBeReviewed;
         this.isToBeConsulted = isToBeConsulted;
         this.isFullyDefined = isFullyDefined;
+        this.inherited = inherited;
         this.isPublished = isPublished;
         this.observation = observation;
         this.tagSMTK = tagSMTK;
@@ -155,11 +162,13 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * @param isToBeConsulted ¿Es para ser consultado?
      * @param modeled         El estado de este concepto
      * @param isFullyDefined  ¿Completamente definido?
+     * @param inherited       Determina si el atributo isFullyDefined fue heredado (<code>true</code>) o no
+     *                        (<code>false</code>).
      * @param isPublished     ¿Publicado?
      * @param descriptions    Las descripciones para este concepto
      */
-    public ConceptSMTK(String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, boolean isFullyDefined, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
-        this(NON_PERSISTED_ID, conceptID, category, isToBeReviewed, isToBeConsulted, modeled, isFullyDefined, isPublished, observation, tagSMTK, descriptions);
+    public ConceptSMTK(String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, boolean isFullyDefined, boolean inherited, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
+        this(NON_PERSISTED_ID, conceptID, category, isToBeReviewed, isToBeConsulted, modeled, isFullyDefined, inherited, isPublished, observation, tagSMTK, descriptions);
 
         /* Se indica que no se han cargado sus relaciones */
         this.relationshipsLoaded = true;
@@ -657,6 +666,14 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     public void setTagSMTK(TagSMTK tagSMTK) {
         this.tagSMTK = tagSMTK;
+    }
+
+    public boolean isInherited() {
+        return inherited;
+    }
+
+    public void setInherited(boolean inherited) {
+        this.inherited = inherited;
     }
 
     @Override

@@ -457,6 +457,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         boolean modeled;
         boolean completelyDefined;
         boolean published;
+        boolean heritable;
         String conceptId;
 
         id = Long.valueOf(resultSet.getString("id"));
@@ -467,6 +468,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         modeled = resultSet.getBoolean("is_modeled");
         completelyDefined = resultSet.getBoolean("is_fully_defined");
         published = resultSet.getBoolean("is_published");
+        heritable= resultSet.getBoolean("is_heritable");
         conceptId = resultSet.getString("conceptid");
         String observation = resultSet.getString("observation");
         long idTagSMTK = resultSet.getLong("id_tag_smtk");
@@ -474,7 +476,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         /* Se recupera su Tag Semántikos */
         TagSMTK tagSMTKByID = tagSMTKDAO.findTagSMTKByID(idTagSMTK);
-        ConceptSMTK conceptSMTK = new ConceptSMTK(id, conceptId, objectCategory, check, consult, modeled, completelyDefined, published, observation, tagSMTKByID);
+        ConceptSMTK conceptSMTK = new ConceptSMTK(id, conceptId, objectCategory, check, consult, modeled, completelyDefined, heritable, published, observation, tagSMTKByID);
 
         /* Se recuperan las descripciones del concepto */
         List<Description> descriptions = descriptionDAO.getDescriptionsByConcept(conceptSMTK);
@@ -490,7 +492,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         ConnectionBD connect = new ConnectionBD();
         long id;
-        String sql = "{call semantikos.create_concept(?,?,?,?,?,?,?,?,?)}";
+        String sql = "{call semantikos.create_concept(?,?,?,?,?,?,?,?,?,?)}";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
@@ -501,9 +503,10 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setBoolean(4, conceptSMTK.isToBeConsulted());
             call.setBoolean(5, conceptSMTK.isModeled());
             call.setBoolean(6, conceptSMTK.isFullyDefined());
-            call.setBoolean(7, conceptSMTK.isPublished());
-            call.setString(8, conceptSMTK.getObservation());
-            call.setLong(9, conceptSMTK.getTagSMTK().getId());
+            call.setBoolean(7, conceptSMTK.isInherited());
+            call.setBoolean(8, conceptSMTK.isPublished());
+            call.setString(9, conceptSMTK.getObservation());
+            call.setLong(10, conceptSMTK.getTagSMTK().getId());
             call.execute();
 
             ResultSet rs = call.getResultSet();
@@ -544,9 +547,10 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setBoolean(5, conceptSMTK.isToBeConsulted());
             call.setBoolean(6, conceptSMTK.isModeled());
             call.setBoolean(7, conceptSMTK.isFullyDefined());
-            call.setBoolean(8, conceptSMTK.isPublished());
-            call.setString(9, conceptSMTK.getObservation());
-            call.setLong(10, conceptSMTK.getTagSMTK().getId());
+            call.setBoolean(8, conceptSMTK.isInherited());
+            call.setBoolean(9, conceptSMTK.isPublished());
+            call.setString(10, conceptSMTK.getObservation());
+            call.setLong(11, conceptSMTK.getTagSMTK().getId());
             call.execute();
 
             ResultSet rs = call.getResultSet();
