@@ -93,11 +93,14 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.descriptions = new ArrayList<>();
 
         this.modeled = false;
-        this.isFullyDefined = false;
+
+        /* El valor de Completamente Definido es nulo, pero no ha sido heredado */
+        this.isFullyDefined = null;
+        this.inherited = false;
+
         this.isPublished = false;
         this.isToBeConsulted = false;
         this.isToBeReviewed = false;
-        this.inherited = false;
 
         /** Categoría del concepto */
         this.category = null;
