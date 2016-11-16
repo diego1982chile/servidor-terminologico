@@ -42,7 +42,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * Este campo establece si el concepto está completamente definido o si es primitivo. Por defecto, el concepto se
      * considera primitivo
      */
-    private boolean isFullyDefined;
+    private Boolean isFullyDefined;
 
     /** Determina si el concepto está publicado o no */
     private boolean isPublished;
@@ -130,7 +130,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * @param tagSMTK         El Tag Semántikos asociado al concepto.
      * @param descriptions    Sus descripciones.
      */
-    public ConceptSMTK(long id, String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, boolean isFullyDefined, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
+    public ConceptSMTK(long id, String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, Boolean isFullyDefined, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
         this(category, modeled, descriptions);
 
         this.setId(id);
@@ -337,7 +337,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.isToBeConsulted = toBeConsulted;
     }
 
-    public boolean isFullyDefined() {
+    public Boolean isFullyDefined() {
         return isFullyDefined;
     }
 
@@ -368,7 +368,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     /**
      * Este método es responsable de establecer si un concepto es completamente definido.
      */
-    public void setFullyDefined(boolean fullyDefined) {
+    public void setFullyDefined(Boolean fullyDefined) {
 
         /* Antes de asignarle la propiedad, ser verifica si cumple las reglas de negocio */
         new ConceptStateBusinessRulesContainer().apply(this);

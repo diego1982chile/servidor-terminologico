@@ -21,6 +21,7 @@ public class ConceptStateBusinessRulesContainer implements BusinessRulesContaine
     @EJB
     private RelationshipManager relationshipManager;
 
+    // TODO: Revisar esto.
     public void apply(ConceptSMTK conceptSMTK) throws BusinessRuleException {
 
         if (conceptSMTK.isFullyDefined()) {
