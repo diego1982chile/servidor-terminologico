@@ -38,4 +38,6 @@ form#mainForm table tbody tr td div.relationshipDefinitionError {
     color: #F03369;
 }
 
-
+.fullyDefined .ui-panelgrid-cell {
+    padding: 0px !important;
+}

@@ -33,16 +33,6 @@
             <p:outputLabel for="toBeReviewedCheck" value="Grado de definición" rendered="#{cc.attrs.concept.modeled}" />
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-4">
-            <p:selectOneRadio id="fullyDefined"
-                              layout="responsive"
-                              columns="2"
-                              value="#{conceptBean.fullyDefined}"
-                              style="width:100%"
-                              disabled="#{cc.attrs.concept.modeled or not cc.attrs.concept.editable}"
-                              rendered="#{cc.attrs.concept.modeled}">
-                <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
-                <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
-            </p:selectOneRadio>
 
             <p:selectOneRadio id="customRadio" value="#{conceptBean.fullyDefined}" layout="custom"
                               disabled="#{cc.attrs.concept.modeled or not cc.attrs.concept.editable}"
@@ -51,12 +41,13 @@
                 <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
             </p:selectOneRadio>
 
-            <p:panelGrid columns="4" columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-7" layout="grid" styleClass="ui-panelgrid-blank"
-                         style="width: 100%">
+            <p:panelGrid id="fullyDefined" columns="4" columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-7" layout="grid"
+                         styleClass="ui-panelgrid-blank fullyDefined"
+                         style="width: 100%" rendered="#{cc.attrs.concept.modeled}">
                 <p:radioButton id="opt1" for="customRadio" itemIndex="0" />
                 <h:outputLabel for="opt1" value="Primitivo" />
 
-                <p:radioButton id="opt2" for="customRadio" itemIndex="1" />
+                <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>
                 <h:outputLabel for="opt2" value="Completamente Definido" />
             </p:panelGrid>
         </div>
