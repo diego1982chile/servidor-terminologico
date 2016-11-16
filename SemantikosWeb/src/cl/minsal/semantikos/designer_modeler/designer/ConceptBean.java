@@ -324,7 +324,7 @@ public class ConceptBean implements Serializable {
         // TODO: Diego
         TagSMTK tagSMTK = new TagSMTK(category.getTagSemantikos().getId(), category.getTagSemantikos().getName());
 
-        ConceptSMTK conceptSMTK = new ConceptSMTK(conceptManager.generateConceptId(), category, false, false, false, false, false, observation, tagSMTK);
+        ConceptSMTK conceptSMTK = new ConceptSMTK(conceptManager.generateConceptId(), category, false, false, false, false, false, observation, tagSMTK,false);
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = initConcept(conceptSMTK, term);
         concept.setEditable(editable);

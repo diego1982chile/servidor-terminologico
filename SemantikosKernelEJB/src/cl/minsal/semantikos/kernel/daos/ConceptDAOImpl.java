@@ -478,7 +478,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         /* Se recupera su Tag Semántikos */
         TagSMTK tagSMTKByID = tagSMTKDAO.findTagSMTKByID(idTagSMTK);
-        ConceptSMTK conceptSMTK = new ConceptSMTK(id, conceptId, objectCategory, check, consult, modeled, completelyDefined, published, observation, tagSMTKByID);
+        ConceptSMTK conceptSMTK = new ConceptSMTK(id, conceptId, objectCategory, check, consult, modeled, completelyDefined, published, observation, tagSMTKByID,heritable);
 
         /* Se recuperan las descripciones del concepto */
         List<Description> descriptions = descriptionDAO.getDescriptionsByConcept(conceptSMTK);
