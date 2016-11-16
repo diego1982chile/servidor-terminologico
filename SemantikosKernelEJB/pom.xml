@@ -135,7 +135,16 @@
             <version>1.0.0.GA</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Para el procesamiento del archivo CSV -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.3</version>
+        </dependency>
     </dependencies>
+
+
 
     <build>
         <sourceDirectory>src</sourceDirectory>
