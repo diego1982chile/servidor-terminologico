@@ -24,12 +24,25 @@
         <div class="ui-g-12 ui-md-6 ui-lg-4">
             <p:panelGrid columns="2" columnClasses="ui-grid-col-5,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
                 <p:selectBooleanCheckbox id="toBeReviewedCheck" itemLabel="Revisar" disabled="#{not cc.attrs.concept.editable}"
-                                         value="#{cc.attrs.concept.toBeReviewed}" style="width:100%;"/>
+                                         value="#{cc.attrs.concept.toBeReviewed}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
                 <p:selectBooleanCheckbox id="toBeConsultatedCheck" itemLabel="Consultar" disabled="#{not cc.attrs.concept.editable}"
-                                         value="#{cc.attrs.concept.toBeConsulted}" style="width:100%;"/>
+                                         value="#{cc.attrs.concept.toBeConsulted}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
             </p:panelGrid>
         </div>
-        <div class="ui-g-12 ui-md-6 ui-lg-6">
+        <div class="ui-g-12 ui-md-6 ui-lg-2">
+            <p:outputLabel for="toBeReviewedCheck" value="Grado de definición" rendered="#{cc.attrs.concept.modeled}" />
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <p:selectOneRadio id="fullyDefined"
+                              layout="responsive"
+                              columns="2"
+                              value="#{cc.attrs.concept.fullyDefined}"
+                              style="width:90%"
+                              disabled="#{cc.attrs.concept.modeled or not cc.attrs.concept.editable}"
+                              rendered="#{cc.attrs.concept.modeled}">
+                <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
+                <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
+            </p:selectOneRadio>
         </div>
     </div>
 

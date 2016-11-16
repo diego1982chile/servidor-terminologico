@@ -146,7 +146,7 @@ public class TargetDAOImpl implements TargetDAO {
 
             /* Almacenar registro Tabla auxiliar */
             else if (targetDefinition.isHelperTable()) {
-                call.setLong(6, helperTableDAO.persistAuxilary(target.getId(),targetDefinition.getId()));
+                call.setLong(6, helperTableDAO.persistAuxilary(target.getId(), targetDefinition.getId()));
                 call.setLong(10, HelperTable.getIdTargetType());
             }
 
@@ -155,7 +155,6 @@ public class TargetDAOImpl implements TargetDAO {
                 call.setLong(8, target.getId());
                 call.setLong(10, SnomedCT.getIdTargetType());
             }
-
 
             call.execute();
             ResultSet rs = call.getResultSet();

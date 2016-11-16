@@ -130,7 +130,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> getConceptBy(Category category, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> getConceptBy(Category category) {
 
         List<ConceptSMTK> concepts = new ArrayList<>();
         ConnectionBD connect = new ConnectionBD();
@@ -138,11 +138,9 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         try (Connection connection = connect.getConnection();) {
 
-            call = connection.prepareCall("{call semantikos.find_concept_by_category(?,?,?)}");
+            call = connection.prepareCall("{call semantikos.find_concept_by_category(?)}");
 
             call.setLong(1, category.getId());
-            call.setInt(2, pageNumber);
-            call.setInt(3, pageSize);
 
             call.execute();
 
@@ -656,7 +654,35 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public ConceptSMTK getNoValidConcept() {
         // TODO: Parametrizar esto
-        return getConceptByID(81223); // Desarrollo
-        //return getConceptByID(81340); // Testing
+        return getConceptByID(81239); // Desarrollo
+        //return getConceptByID(81281); // Testing
+    }
+
+    @Override
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK) {
+        List<ConceptSMTK> concepts = new ArrayList<>();
+
+        ConnectionBD connect = new ConnectionBD();
+
+
+        CallableStatement call;
+
+        try (Connection connection = connect.getConnection();) {
+
+            call = connection.prepareCall("{call semantikos.get_related_concept(?)}");
+            call.setLong(1,conceptSMTK.getId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                concepts.add(createConceptSMTKFromResultSet(rs));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return concepts;
     }
 }

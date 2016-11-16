@@ -13,17 +13,19 @@
             <f:viewParam name="editMode" value="#{conceptBean.editable}" />
             <f:viewParam name="idCategory" value="#{conceptBean.idCategory}" />
             <f:viewParam name="idConcept" value="#{conceptBean.idConcept}" />
+            <f:viewParam name="favoriteDescription" value="#{conceptBean.favoriteDescription}" />
         </f:metadata>
 
         <p:panel id="createEdit" style="background: rgba(0, 0, 0, 0); border: hidden;">
             <h:form id="mainForm" rendered="#{ not (conceptBean.concept eq null ) }" styleClass="#{conceptBean.editable? '' : 'consult'}">
-
+                <smtk:changeMarketed />
                 <p:panel>
 
                     <p:growl id="growl" showDetail="true" showSummary="true"/>
                     <p:growl id="editMsgs" showDetail="true"/>
 
                     <!--p:messages autoUpdate="true"></p:messages-->
+
                     <smtk:title concept="#{conceptBean.concept}"/>
                     <p:separator />
                     <p:panel id="conceptHeader" style="border: hidden;" styleClass="conceptHeader">
@@ -280,6 +282,8 @@
                 <h:outputText value="La URL de registro ISP no se encuentra disponible en este momento, por favor intente más tarde." />
             </p:dialog>
         </p:panel>
+
+
 
         <script type="text/javascript">
 

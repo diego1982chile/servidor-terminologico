@@ -119,7 +119,7 @@ public interface ConceptManager {
 
     /*Método temporal para trabajar con el navegador de conceptos*/
     @Deprecated
-    public List<ConceptSMTK> findConceptBy(Category category, int pageNumber, int pageSize);
+    public List<ConceptSMTK> findConceptBy(Category category);
 
     /**
      * Método encargado de realizar la búsqueda de conceptos por patron, en caso de no encontrar un "Perfect Match" por
@@ -184,4 +184,6 @@ public interface ConceptManager {
      * @return La instancia (única) del concepto No Válido.
      */
     public ConceptSMTK getNoValidConcept();
+
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
 }

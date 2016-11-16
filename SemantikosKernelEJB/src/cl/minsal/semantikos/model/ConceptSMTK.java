@@ -1,11 +1,9 @@
 package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.audit.AuditableEntity;
-import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.businessrules.ConceptStateBusinessRulesContainer;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.*;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
@@ -187,6 +185,30 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         return relationships;
+    }
+
+    /**
+     * Este método es responsable de retornar todos los conceptos SMTK de relaciones (a conceptos STMK) que pertenecen a
+     * la categoría indicada.
+     *
+     * @param category La categoría a la cual pertenecen los conceptos SMTK buscados.
+     *
+     * @return Una lista fresca de los conceptos solicitados.
+     */
+    public List<ConceptSMTK> getRelatedSMTKConceptsBy(Category category) {
+        List<ConceptSMTK> relatedConcepts = new ArrayList<>();
+
+        /* Se obtienen las relaciones a conceptos SMTK */
+        for (Relationship smtkRelationship : getRelationshipsTo(TargetType.SMTK)) {
+            ConceptSMTK conceptSMTK = (ConceptSMTK) smtkRelationship.getTarget();
+
+            /* Y se filtra por su categoría */
+            if (conceptSMTK.getCategory().equals(category)) {
+                relatedConcepts.add(conceptSMTK);
+            }
+        }
+
+        return relatedConcepts;
     }
 
     /**
@@ -414,7 +436,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public void addDescription(Description description) {
 
         /** La descripción asume el estado modelado si el concepto está en modelado */
-        if (this.isModeled()){
+        if (this.isModeled()) {
             description.setModeled(true);
         }
 
@@ -454,7 +476,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.getTags().add(tag);
     }
 
-
     /**
      * Este método es responsable de remover una relación a un concepto.
      *
@@ -463,6 +484,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public void removeRelationship(Relationship relationship) {
         this.getRelationships().remove(relationship);
     }
+
 
     /**
      * <p>
@@ -485,7 +507,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         throw new BusinessRuleException("Concepto sin descripción preferida");
     }
 
-
     /**
      * <p>
      * Este método es responsable de determinar si este concepto tiene una <i>descripción preferida</i>. Basados en la
@@ -504,6 +525,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         /* En este punto, no se encontró una descripción preferida, y se arroja una excepción */
         return false;
     }
+
 
     /**
      * <p>
@@ -567,7 +589,9 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public List<Relationship> getRelationshipsTo(TargetType targetType) {
 
         List<Relationship> sctRelations = new ArrayList<>();
-        for (Relationship relationship : this.getRelationships()) {
+        for (Relationship relationship : relationships) {
+
+            /* Se filtra por el tipo de relación (hacia SMTK) */
             if (relationship.getTarget().getTargetType().equals(targetType)) {
                 sctRelations.add(relationship);
             }
