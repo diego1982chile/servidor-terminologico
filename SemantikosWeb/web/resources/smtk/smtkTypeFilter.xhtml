@@ -18,30 +18,13 @@
 <composite:implementation>
 
     <div class="ui-g-12 ui-md-6 ui-lg-2">
-        <p:selectCheckboxMenu id="helperTableTypeMultipleSelection"
-                              value="#{cc.attrs.targets}"
-                              converter="omnifaces.SelectItemsConverter"
-                              label="#{cc.attrs.relationshipDefinition.name}"
-                              filter="true"
-                              filterMatchMode="startsWith"
-                              style="margin-right:10px; width: 60%"
-                              rendered="#{ cc.attrs.multiple }">
-            <p:ajax event="change"
-                    update="@(.conceptFilters)"
-                    process="@this" />
-
-            <f:selectItems value="#{conceptBrowserBean.helperTableManager.getAllRecords(cc.attrs.targetDefinition)}"
-                           var="helperTableRecord"
-                           itemLabel="#{helperTableRecord.fields['description']}"
-                           itemValue="#{helperTableRecord.fields['id']}"/>
-        </p:selectCheckboxMenu>
 
         <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
                         forceSelection="true"
                         placeholder="#{cc.attrs.relationshipDefinition.name}..."
-                        dropdown="true"
-                        id="findConceptSMTK" scrollHeight="200" size="5" style="width: 85%;"
-                        inputStyle="width: 85%;"
+                        id="findConceptSMTK" scrollHeight="200" size="5"
+                        style="width: 85%;"
+                        inputStyle="width: 90%;"
                         completeMethod="#{smtkBean.getConceptSearchInput}"
                         converter="conceptConverter"
                         var="concept"
@@ -70,6 +53,9 @@
             <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
 
         </p:autoComplete>
+        <p:commandLink rendered="#{ cc.attrs.targets.isEmpty() }">
+            <i class="fa fa-search fa-lg" />
+        </p:commandLink>
 
         <p:repeat  value="#{cc.attrs.targets}"
                    offset="0"
@@ -78,7 +64,7 @@
                    var="target"
                    varStatus="var">
 
-            <p:inputText style="width: 65%;" disabled="true" id="itemSelected" value="#{target.descriptionFavorite.term}" />
+            <p:inputText style="width: 75%;" disabled="true" id="itemSelected" value="#{target.descriptionFavorite.term}" />
             <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
                            process="@this"
                            update="@(.conceptFilters),@(.conceptBrowserTable)"

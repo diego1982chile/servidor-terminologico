@@ -95,6 +95,8 @@ public interface HelperTableDAO {
      */
     public HelperTableRecord getHelperTableRecordFromId(long idHelperTableRecord);
 
+    public HelperTableRecord getHelperTableRecordFromId(HelperTable helperTable, long idHelperTableRecord);
+
     /**
      * Este método recupera todas las tablas auxiliares.
      *

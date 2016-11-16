@@ -313,19 +313,15 @@ public class ConceptBean implements Serializable {
         ConceptSMTKWeb conceptWeb = new ConceptSMTKWeb(concept);
 
         DescriptionWeb fsnDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFSN());
-        fsnDescription.setCaseSensitive(true);
-        fsnDescription.setModeled(false);
         fsnDescription.setDescriptionId(descriptionManager.generateDescriptionId());
 
         DescriptionWeb favouriteDescription = new DescriptionWeb(conceptWeb, term, descriptionManager.getTypeFavorite());
-        favouriteDescription.setCaseSensitive(true);
-        fsnDescription.setModeled(false);
         favouriteDescription.setDescriptionId(descriptionManager.generateDescriptionId());
 
         for (DescriptionWeb description : new DescriptionWeb[]{favouriteDescription, fsnDescription})
             conceptWeb.addDescriptionWeb(description);
 
-        return conceptWeb;
+        return viewAugmenter.augmentConcept(category, conceptWeb);
     }
 
     //Este método es responsable de pasarle a la vista un concepto plantilla

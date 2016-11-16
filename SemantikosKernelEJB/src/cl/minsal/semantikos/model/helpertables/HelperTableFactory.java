@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJBException;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,7 +50,12 @@ public class HelperTableFactory {
 
         List<HelperTableRecord> helperTableRecords = new ArrayList<>();
         for (Map<String, String> mapRecord : dtoRecords.getRecords()) {
-            helperTableRecords.add(new HelperTableRecord(helperTable, mapRecord));
+            HelperTableRecord helperTableRecord = new HelperTableRecord(helperTable, mapRecord);
+            /**
+             * Se setea el id desde el fields para ser utilizado por el custom converter
+             */
+            helperTableRecord.setId(new Long(helperTableRecord.getFields().get("id")));
+            helperTableRecords.add(helperTableRecord);
         }
 
         return helperTableRecords;
@@ -94,7 +100,9 @@ class HelperTableRecordDTO {
         return records;
     }
 
-    public void setRecords(List<Map<String, String>> records) {
-        this.records = records;
+    public void setRecords(@NotNull List<Map<String, String>> records) {
+        if (records != null) {
+            this.records = records;
+        }
     }
 }

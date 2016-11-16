@@ -61,6 +61,8 @@ public interface HelperTableManager {
 
     public HelperTableRecord getRecord(long recordId);
 
+    public HelperTableRecord getRecord(HelperTable helperTable, long recordId);
+
     /**
      * Este método es responsable de recuperar una tabla dado su identificador.
      *

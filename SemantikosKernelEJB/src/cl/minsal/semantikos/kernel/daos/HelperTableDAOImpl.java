@@ -288,6 +288,39 @@ public class HelperTableDAOImpl implements HelperTableDAO {
     }
 
     @Override
+    public HelperTableRecord getHelperTableRecordFromId(HelperTable helperTable, long idHelperTableRecord) {
+
+        ConnectionBD connectionBD = new ConnectionBD();
+
+        String selectRecord = "{call semantikos.get_record_by_id_auxiliary(?,?)}";
+        HelperTableRecord recordFromJSON;
+        try (Connection connection = connectionBD.getConnection();
+             CallableStatement call = connection.prepareCall(selectRecord)) {
+
+            /* Se prepara y realiza la consulta */
+            call.setLong(1, helperTable.getId());
+            call.setLong(2, idHelperTableRecord);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                recordFromJSON = this.helperTableRecordFactory.createRecordFromJSON(rs.getString(1));
+            } else {
+                throw new EJBException("Error imposible en HelperTableDAOImpl");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Hubo un error al acceder a la base de datos.", e);
+            throw new EJBException(e);
+        } catch (IOException e) {
+            logger.error("Hubo un error procesar los resultados con JSON.", e);
+            throw new EJBException(e);
+        }
+
+        return recordFromJSON;
+    }
+
+    @Override
     public Collection<HelperTable> getHelperTables() {
 
         ConnectionBD connectionBD = new ConnectionBD();
