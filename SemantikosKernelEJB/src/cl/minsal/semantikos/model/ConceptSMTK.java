@@ -1,11 +1,9 @@
 package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.audit.AuditableEntity;
-import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.businessrules.ConceptStateBusinessRulesContainer;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.*;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
@@ -78,6 +76,9 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     /** El Tag Semántikos que tiene asociado el concepto */
     private TagSMTK tagSMTK;
+    
+    /** Variable que indica si el grado de definición se obtiene heredado **/
+    private boolean inheritable;
 
     /**
      * La categoría es la mínima información que se le puede dar a un concepto.
@@ -96,6 +97,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.isPublished = false;
         this.isToBeConsulted = false;
         this.isToBeReviewed = false;
+        this.inheritable = false;
 
         /** Categoría del concepto */
         this.category = null;
@@ -130,7 +132,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * @param tagSMTK         El Tag Semántikos asociado al concepto.
      * @param descriptions    Sus descripciones.
      */
-    public ConceptSMTK(long id, String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, Boolean isFullyDefined, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
+    public ConceptSMTK(long id, String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, Boolean isFullyDefined, boolean isPublished, String observation, TagSMTK tagSMTK, boolean inheritable, Description... descriptions) {
         this(category, modeled, descriptions);
 
         this.setId(id);
@@ -143,6 +145,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         this.isPublished = isPublished;
         this.observation = observation;
         this.tagSMTK = tagSMTK;
+        this.inheritable = inheritable;
 
         /* Se indica que no se han cargado sus relaciones */
         this.relationshipsLoaded = false;
@@ -160,8 +163,8 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * @param isPublished     ¿Publicado?
      * @param descriptions    Las descripciones para este concepto
      */
-    public ConceptSMTK(String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, boolean isFullyDefined, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
-        this(NON_PERSISTED_ID, conceptID, category, isToBeReviewed, isToBeConsulted, modeled, isFullyDefined, isPublished, observation, tagSMTK, descriptions);
+    public ConceptSMTK(String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, boolean isFullyDefined, boolean isPublished, String observation, TagSMTK tagSMTK, boolean inheritable, Description... descriptions) {
+        this(NON_PERSISTED_ID, conceptID, category, isToBeReviewed, isToBeConsulted, modeled, isFullyDefined, isPublished, observation, tagSMTK, inheritable, descriptions);
 
         /* Se indica que no se han cargado sus relaciones */
         this.relationshipsLoaded = true;
@@ -633,6 +636,14 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     public void setTagSMTK(TagSMTK tagSMTK) {
         this.tagSMTK = tagSMTK;
+    }
+
+    public boolean isInheritable() {
+        return inheritable;
+    }
+
+    public void setInheritable(boolean inheritable) {
+        this.inheritable = inheritable;
     }
 
     @Override

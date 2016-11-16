@@ -459,6 +459,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         boolean modeled;
         boolean completelyDefined;
         boolean published;
+        boolean heritable;
         String conceptId;
 
         id = Long.valueOf(resultSet.getString("id"));
@@ -469,6 +470,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         modeled = resultSet.getBoolean("is_modeled");
         completelyDefined = resultSet.getBoolean("is_fully_defined");
         published = resultSet.getBoolean("is_published");
+        heritable= resultSet.getBoolean("is_heritable");
         conceptId = resultSet.getString("conceptid");
         String observation = resultSet.getString("observation");
         long idTagSMTK = resultSet.getLong("id_tag_smtk");
