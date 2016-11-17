@@ -7,10 +7,7 @@ import cl.minsal.semantikos.kernel.daos.TargetDAO;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.User;
-import cl.minsal.semantikos.model.businessrules.ConceptCreationBR;
-import cl.minsal.semantikos.model.businessrules.RelationshipBindingBR;
-import cl.minsal.semantikos.model.businessrules.RelationshipEditionBR;
-import cl.minsal.semantikos.model.businessrules.RelationshipRemovalBR;
+import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -47,11 +44,14 @@ public class RelationshipManagerImpl implements RelationshipManager {
     @EJB
     private RelationshipAttributeDAO relationshipAttributeDAO;
 
+    @EJB
+    private RelationshipBindingBRInterface relationshipBindingBR;
+
     @Override
     public Relationship bindRelationshipToConcept(ConceptSMTK concept, Relationship relationship, User user) {
 
         /* Primero se validan las reglas de negocio asociadas a la eliminación de un concepto */
-        new RelationshipBindingBR().verifyPreConditions(concept, relationship, user);
+        relationshipBindingBR.verifyPreConditions(concept, relationship, user);
 
         /* Se hace la relación a nivel del modelo */
         //if (!concept.getRelationships().contains(relationship)) {

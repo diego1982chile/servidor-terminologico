@@ -42,11 +42,11 @@
 
             <p:panelGrid id="fullyDefined" columns="4" columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-7" layout="grid"
                          styleClass="ui-panelgrid-blank fullyDefined"
-                         style="width: 100%">
-                <p:radioButton id="opt1" for="customRadio" itemIndex="0" />
+                         style="width: 100%" >
+                <p:radioButton id="opt1" for="customRadio" itemIndex="0" disabled="#{conceptBean.concept.inherited}" />
                 <h:outputLabel for="opt1" value="Primitivo" />
 
-                <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>
+                <p:radioButton id="opt2" for="customRadio" itemIndex="1" disabled="#{conceptBean.concept.inherited}" />
                 <h:outputLabel for="opt2" value="Completamente Definido" />
             </p:panelGrid>
         </div>

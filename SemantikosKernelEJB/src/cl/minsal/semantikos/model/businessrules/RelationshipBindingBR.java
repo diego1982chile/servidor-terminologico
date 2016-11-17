@@ -93,8 +93,14 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface{
         List<SnomedCTRelationship> relationshipsSnomedCT = concept.getRelationshipsSnomedCT();
         for (SnomedCTRelationship ctRelationship : relationshipsSnomedCT) {
 
+
             /* Si es la misma no se compara */
-            if (ctRelationship == relationshipsSnomedCT) {
+            if (ctRelationship.getTarget() == snomedCTRelationship.getTarget()) {
+                continue;
+            }
+
+            /* Si es la misma no se compara */
+            if (ctRelationship == snomedCTRelationship) {
                 continue;
             }
 
@@ -171,7 +177,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface{
         }
 
         /* Si es una relación definitoria, se hace deja como modelada */
-        SnomedCTRelationship sctRelationship = (SnomedCTRelationship) relationship;
+        SnomedCTRelationship sctRelationship = new SnomedCTRelationship(relationship.getSourceConcept(),(ConceptSCT) relationship.getTarget(),relationship.getRelationshipDefinition(),relationship.getRelationshipAttributes()) ;
         if (sctRelationship.isDefinitional()) {
             sourceConcept.setModeled(true);
             conceptDAO.update(sourceConcept);

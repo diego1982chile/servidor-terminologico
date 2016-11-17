@@ -240,7 +240,8 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
         }
 
         /* Si es de tipo Snomed, hay que ver el valor de su atributo */
-        SnomedCTRelationship relationshipSCT = (SnomedCTRelationship) this;
+        SnomedCTRelationship relationshipSCT = new SnomedCTRelationship(this.getSourceConcept(),(ConceptSCT) this.getTarget(),this.getRelationshipDefinition(),this.getRelationshipAttributes()) ;
+
         return relationshipSCT.isDefinitional();
     }
 
