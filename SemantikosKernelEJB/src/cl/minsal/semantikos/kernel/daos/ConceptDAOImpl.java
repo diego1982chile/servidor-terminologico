@@ -92,7 +92,8 @@ public class ConceptDAOImpl implements ConceptDAO {
             rs.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
         }
 
         return concepts;
@@ -123,7 +124,8 @@ public class ConceptDAOImpl implements ConceptDAO {
             }
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
         }
 
         return concepts;
@@ -151,7 +153,8 @@ public class ConceptDAOImpl implements ConceptDAO {
             }
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
         }
 
         return concepts;
@@ -178,7 +181,8 @@ public class ConceptDAOImpl implements ConceptDAO {
             }
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
         }
 
         return concepts;
@@ -209,7 +213,8 @@ public class ConceptDAOImpl implements ConceptDAO {
             }
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
         }
 
         return concepts;
@@ -251,9 +256,13 @@ public class ConceptDAOImpl implements ConceptDAO {
                 concepts.add(createConceptSMTKFromResultSet(rs));
             }
             rs.close();
+            call.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        } finally {
+
         }
 
         return concepts;
@@ -310,7 +319,8 @@ public class ConceptDAOImpl implements ConceptDAO {
             rs.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
         }
 
 
@@ -346,7 +356,8 @@ public class ConceptDAOImpl implements ConceptDAO {
             rs.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
         }
         return count;
     }
@@ -373,6 +384,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             }
             rs.close();
         } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
             throw new EJBException(e);
         }
 
@@ -401,6 +413,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             }
             rs.close();
         } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
             throw new EJBException(e);
         }
 
@@ -468,7 +481,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         modeled = resultSet.getBoolean("is_modeled");
         completelyDefined = resultSet.getBoolean("is_fully_defined");
         published = resultSet.getBoolean("is_published");
-        heritable= resultSet.getBoolean("is_inherited");
+        heritable = resultSet.getBoolean("is_inherited");
         conceptId = resultSet.getString("conceptid");
         String observation = resultSet.getString("observation");
         long idTagSMTK = resultSet.getLong("id_tag_smtk");
@@ -591,7 +604,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         try (Connection connection = connect.getConnection();) {
 
             call = connection.prepareCall("{call semantikos.get_concept_by_refset(?)}");
-            call.setLong(1,refSet.getId());
+            call.setLong(1, refSet.getId());
             call.execute();
 
             ResultSet rs = call.getResultSet();
@@ -611,17 +624,13 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public List<ConceptSMTK> getConceptDraft() {
 
-
         List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
-
         ConnectionBD connect = new ConnectionBD();
 
 
-        CallableStatement call;
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.get_concept_draft()}")) {
 
-        try (Connection connection = connect.getConnection();) {
-
-            call = connection.prepareCall("{call semantikos.get_concept_draft()}");
             call.execute();
 
             ResultSet rs = call.getResultSet();
