@@ -252,36 +252,39 @@
             <smtk:info relationshipDefinition="#{cc.attrs.relationshipDefinition}" />
 
         </div>
+
         <div class="ui-g">
             <div class="ui-g-12 ui-md-6 ui-lg-12">
-                <p:dataTable id="collectionValues12"
-                             styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
-                             var="relationship"
-                             value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                             style="width: 100%"
-                             reflow="true">
-                    <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
-                               var="column"
-                               columnIndexVar="colIndex"
-                               >
-                        <f:facet name="header">
-                            <h:outputText value="#{column.columnName}" />
-                        </f:facet>
-                        <h:outputText value="#{relationship.target.fields.get(column.columnName)}" />
-                    </p:columns>
-                    <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
-                        <p:commandButton
-                                icon="fa fa-trash"
-                                title="Eliminar"
-                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                style="float: right"
-                                process="@this"
-                                immediate="true"
-                                actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                                styleClass="relationships"
-                        />
+
+                <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
+                             id="tableRelationship3"
+                             style="margin: 10px;"
+                             value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                             var="rel">
+
+                    <!-- Parámetros del validador -->
+                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                    <!---->
+
+                    <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}" />
+
+                    <p:column headerText="ID">
+                        <h:outputText value="#{rel.target}"/>
+                    </p:column>
+
+                    <p:column headerText="Descripción">
+                        <h:outputText value="#{rel.target}"/>
+                    </p:column>
+
+                    <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
+                        <p:commandButton icon="fa fa-trash" title="Eliminar"
+                                         action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
+                                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})"
+                                         process="@this">
+                        </p:commandButton>
                     </p:column>
                 </p:dataTable>
+
             </div>
         </div>
     </p:panel>

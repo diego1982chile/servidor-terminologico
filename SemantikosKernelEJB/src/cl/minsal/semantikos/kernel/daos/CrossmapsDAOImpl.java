@@ -2,7 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.DirectCrossmap;
+import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
