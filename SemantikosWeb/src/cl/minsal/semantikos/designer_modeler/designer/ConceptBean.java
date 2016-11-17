@@ -5,6 +5,9 @@ import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.businessrules.BusinessRulesContainer;
+import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
+import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
@@ -1565,14 +1568,20 @@ public class ConceptBean implements Serializable {
         return this.fullyDefined;
     }
 
+    @EJB
+    private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR;
+
     public void setFullyDefined(boolean fullyDefined) {
         try{
             concept.setFullyDefined(fullyDefined);
             this.fullyDefined = fullyDefined;
+            conceptDefinitionalGradeBR.apply(concept);
         }catch(BusinessRuleException br) {
+            concept.setFullyDefined(null);
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT"));
         }
+
     }
 
 }
