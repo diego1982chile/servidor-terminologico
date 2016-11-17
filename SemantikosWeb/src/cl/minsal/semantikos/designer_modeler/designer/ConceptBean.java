@@ -1575,7 +1575,7 @@ public class ConceptBean implements Serializable {
         try{
             concept.setFullyDefined(fullyDefined);
             this.fullyDefined = fullyDefined;
-            conceptDefinitionalGradeBR.apply(conceptSMTK);
+            conceptDefinitionalGradeBR.apply(concept);
         }catch(BusinessRuleException br) {
             concept.setFullyDefined(null);
             FacesContext context = FacesContext.getCurrentInstance();
