@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -1576,10 +1577,15 @@ public class ConceptBean implements Serializable {
             concept.setFullyDefined(fullyDefined);
             this.fullyDefined = fullyDefined;
             conceptDefinitionalGradeBR.apply(concept);
-        }catch(BusinessRuleException br) {
-            concept.setFullyDefined(null);
+        }catch(EJBException e){
+            if(concept.isModeled()){
+                concept.setFullyDefined(false);
+            }else{
+                concept.setFullyDefined(null);
+            }
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT"));
+
         }
 
     }
