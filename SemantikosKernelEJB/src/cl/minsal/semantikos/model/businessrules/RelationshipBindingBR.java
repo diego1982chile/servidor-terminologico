@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.model.businessrules;
 
+import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.User;
@@ -7,6 +8,8 @@ import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -15,7 +18,11 @@ import static cl.minsal.semantikos.model.ProfileFactory.MODELER_PROFILE;
 /**
  * @author Andrés Farías on 9/8/16.
  */
+@Singleton
 public class RelationshipBindingBR {
+
+    @EJB
+    private RelationshipManager relationshipManager;
 
     /**
      * Este método es responsabled de realizar las validaciones de reglas de negocio.
@@ -27,6 +34,9 @@ public class RelationshipBindingBR {
 
         /* Que no se agreguen dos Snomed de tipo "ES UN MAPEDO DE" */
         brRelationshipBinding002(concept, relationship);
+
+        /* Las relaciones de semantikos con Snomed CT son 1-1 */
+        brRelationshipBinding003(concept, relationship);
     }
 
     /**
@@ -92,6 +102,49 @@ public class RelationshipBindingBR {
                         "sistema valida que el concepto no tenga otra relación de tipo “Es un Mapeo”. Si la tuviese, " +
                         "debe indicar esto al usuario, y no se agrega la relación ingresada.");
             }
+        }
+    }
+
+    /**
+     * <b>BR-SCT-001</b>: La Relación de Tipo “Es un Mapeo de” que asocia un Concepto de Semantikos con un Concepto de
+     * SNOMED-CT; esta relación es uno a uno y es la que hereda el grado de definición de la tabla del Snapshot
+     * conceptos de SNOMED CT.
+     *
+     * @param concept      El concepto al cual se desea agregar la relación.
+     * @param relationship La relación que se desea agregar.
+     */
+    private void brRelationshipBinding003(ConceptSMTK concept, Relationship relationship) {
+
+        /* Esta regla de negocio aplica sólo a relaciones de tipo SnomedCT */
+        if (!relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()) {
+            return;
+        }
+
+        /* Se transforma a una relación Snomed CT */
+        SnomedCTRelationship snomedCTRelationship = (SnomedCTRelationship) relationship;
+
+        /* Y se verifica que sup tipo sea "ES_UN_MAPEO DE" */
+        if (!snomedCTRelationship.isES_UN_MAPEO_DE()) {
+            return;
+        }
+
+        /* Ahora que sabemos que es una relación Snomed y de tipo ES UN MAPEO DE, se verifica que no exista otra
+         * relación Snomed desde otro concepto al mismo concepto destino
+         */
+
+            /* Se recuperan todas las relaciones del mismo tipo de relación y que se dirigen al mismo concepto SCT */
+        List<Relationship> relationshipsLike = relationshipManager.getRelationshipsLike(snomedCTRelationship.getRelationshipDefinition(), snomedCTRelationship.getTarget());
+        for (Relationship relationshipCandidate : relationshipsLike) {
+            ConceptSMTK candidateConcept = relationshipCandidate.getSourceConcept();
+
+                /* Si es el mismo concepto, no importa */
+            if (candidateConcept.equals(concept)) {
+                continue;
+            }
+
+            throw new BusinessRuleException("La Relación de Tipo “Es un Mapeo de” que asocia un Concepto de Semantikos " +
+                    "con un Concepto de SNOMED-CT; esta relación es uno a uno y es la que hereda el grado de definición " +
+                    "de la tabla del Snapshot conceptos de SNOMED CT.");
         }
     }
 
