@@ -2,9 +2,9 @@ package cl.minsal.semantikos.model.businessrules;
 
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -50,11 +50,45 @@ public class ConceptDefinitionalGradeBR implements ConceptDefinitionalGradeBRInt
             for (Relationship relationshipCandidate : relationshipsLike) {
                 ConceptSMTK candidateConcept = relationshipCandidate.getSourceConcept();
 
-                /* Si el concepto candidato (el origen de la relación) posee las mismas relaciones SCT, entonces no es completamente definido */
-                if (candidateConcept.contains(sctRelationships)) {
+                /* Se cargan las relaciones del concepto (porque no las debiera traer) */
+                List<Relationship> relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(candidateConcept);
+                candidateConcept.setRelationships(relationshipsBySourceConcept);
+
+                if (haveSameSnomedCTRelationshipsButFromConceptSource(candidateConcept.getRelationshipsSnomedCT(), candidateConcept.getRelationshipsSnomedCT())) {
                     throw new BusinessRuleException("El concepto no es completamente definido.");
                 }
             }
         }
+    }
+
+    /**
+     * Este método es responsable de comparar dos conjuntos de relaciones, sin considerar en la comparación el concepto
+     * origen de la relación.
+     *
+     * @param sourceRelationships Las relaciones origen.
+     * @param targetRelationships Las relaciones destino.
+     *
+     * @return <code>true</code> si son los mismos conjuntos de relaciones (salvo por su concepto origen) y
+     * <code>false</code> sino.
+     */
+    private boolean haveSameSnomedCTRelationshipsButFromConceptSource(List<SnomedCTRelationship> sourceRelationships, List<SnomedCTRelationship> targetRelationships) {
+
+        if (sourceRelationships.size() != targetRelationships.size()) return false;
+
+        for (SnomedCTRelationship sourceRelationship : sourceRelationships) {
+
+            boolean isItContained = false;
+            for (SnomedCTRelationship targetRelationship : targetRelationships) {
+                if (sourceRelationship.equalsButConceptSource(targetRelationship)) {
+                    isItContained = true;
+                }
+            }
+
+            if (!isItContained) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
