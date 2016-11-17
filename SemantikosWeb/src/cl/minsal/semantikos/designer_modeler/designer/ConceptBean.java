@@ -325,6 +325,8 @@ public class ConceptBean implements Serializable {
         for (DescriptionWeb description : new DescriptionWeb[]{favouriteDescription, fsnDescription})
             conceptWeb.addDescriptionWeb(description);
 
+        fullyDefined = concept.isFullyDefined();
+
         return viewAugmenter.augmentConcept(category, conceptWeb);
     }
 
