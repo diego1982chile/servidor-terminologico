@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model.snomedct.RelationshipSCT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -239,13 +240,8 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
         }
 
         /* Si es de tipo Snomed, hay que ver el valor de su atributo */
-        List<RelationshipAttribute> relationshipAttributes = this.getRelationshipAttributes();
-        if (relationshipAttributes.isEmpty()) {
-            logger.error("Se encontró una relación Snomed CT sin atributo!!!");
-            return true;
-        }
-
-        return this.toSnomedCT().isDefinitional();
+        SnomedCTRelationship relationshipSCT = (SnomedCTRelationship) this;
+        return relationshipSCT.isDefinitional();
     }
 
     /**
@@ -288,12 +284,6 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
 
     public boolean isMultiplicitySatisfied(RelationshipAttributeDefinition attributeDefinition) {
         return this.getAttributesByAttributeDefinition(attributeDefinition).size() >= attributeDefinition.getMultiplicity().getLowerBoundary();
-    }
-
-    public SnomedCTRelationship toSnomedCT() {
-        if (!this.getRelationshipDefinition().getTargetDefinition().isSnomedCTType())
-            return null;
-        return new SnomedCTRelationship(this.getSourceConcept(), (ConceptSCT) this.getTarget(), this.getRelationshipDefinition(), this.getRelationshipAttributes());
     }
 
     @Override

@@ -67,7 +67,7 @@ public class RelationshipBindingBR {
         }
 
         /* Si es una relación definitoria, se hace deja como modelada */
-        SnomedCTRelationship sctRelationship = relationship.toSnomedCT();
+        SnomedCTRelationship sctRelationship = (SnomedCTRelationship) relationship;
         if (sctRelationship.isDefinitional()) {
             sourceConcept.setModeled(true);
             conceptDAO.update(sourceConcept);

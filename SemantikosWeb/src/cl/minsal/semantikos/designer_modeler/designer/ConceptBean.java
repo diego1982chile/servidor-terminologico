@@ -849,7 +849,7 @@ public class ConceptBean implements Serializable {
         List<RelationshipWeb> relationshipsForPersist = concept.getUnpersistedRelationshipsWeb();
         /* Se persisten las nuevas relaciones */
         for (RelationshipWeb relationshipWeb : relationshipsForPersist) {
-            relationshipManager.bindRelationshipToConcept(concept, (Relationship) relationshipWeb, user);
+            relationshipManager.bindRelationshipToConcept(concept, relationshipWeb.toRelationship(), user);
         }
 
         /* Se elimina las relaciones eliminadas */
