@@ -196,35 +196,6 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
         return id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Relationship that = (Relationship) o;
-
-        if (id != that.id) return false;
-        if (toBeUpdated != that.toBeUpdated) return false;
-        if (!relationshipDefinition.equals(that.relationshipDefinition)) return false;
-        if (!sourceConcept.equals(that.sourceConcept)) return false;
-        if (!target.equals(that.target)) return false;
-        if (validityUntil != null ? !validityUntil.equals(that.validityUntil) : that.validityUntil != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + sourceConcept.hashCode();
-        result = 31 * result + relationshipDefinition.hashCode();
-        result = 31 * result + target.hashCode();
-        result = 31 * result + (validityUntil != null ? validityUntil.hashCode() : 0);
-        result = 31 * result + (toBeUpdated ? 1 : 0);
-        return result;
-    }
-
     /**
      * Este método es responsable de retornar todas las relaciones de este concepto que son de un cierto tipo de
      * relación.
@@ -269,7 +240,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
 
         /* Si es de tipo Snomed, hay que ver el valor de su atributo */
         List<RelationshipAttribute> relationshipAttributes = this.getRelationshipAttributes();
-        if (relationshipAttributes.isEmpty()){
+        if (relationshipAttributes.isEmpty()) {
             logger.error("Se encontró una relación Snomed CT sin atributo!!!");
             return true;
         }
@@ -319,14 +290,82 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
         return this.getAttributesByAttributeDefinition(attributeDefinition).size() >= attributeDefinition.getMultiplicity().getLowerBoundary();
     }
 
-    public SnomedCTRelationship toSnomedCT(){
-        if(!this.getRelationshipDefinition().getTargetDefinition().isSnomedCTType())
+    public SnomedCTRelationship toSnomedCT() {
+        if (!this.getRelationshipDefinition().getTargetDefinition().isSnomedCTType())
             return null;
-        return new SnomedCTRelationship(this.getSourceConcept(), (ConceptSCT)this.getTarget(), this.getRelationshipDefinition(), this.getRelationshipAttributes());
+        return new SnomedCTRelationship(this.getSourceConcept(), (ConceptSCT) this.getTarget(), this.getRelationshipDefinition(), this.getRelationshipAttributes());
     }
 
     @Override
     public String toString() {
         return relationshipDefinition.getName();
     }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (o == this) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        /* Ahora comparamos con otra relacion */
+        Relationship relationship = (Relationship) o;
+
+        /* Se comparan las relaciones excepto por su concepto destino */
+        if (!equalsButConceptSource(relationship)) return false;
+
+        /* Se compara el concepto origen */
+        return (this.getSourceConcept().getId() == relationship.getSourceConcept().getId());
+    }
+
+    /**
+     * Este método es responsabled e comparar dos relaciones, sin exigir que su concepto de origen sea igual.
+     *
+     * @param relationship La relación contra la cual se hace la comparación.
+     *
+     * @return <code>true</code> si son idénticas, a excepción de sus conceptos origen.
+     */
+    public boolean equalsButConceptSource(Relationship relationship) {
+
+        /* Si ambas están persistidas y no tienen el mismo ID, entonces son distintas */
+        if (this.isPersisted() && relationship.isPersisted() && this.getId() != relationship.getId()) return false;
+
+        /* Si alguna de ellas no está persistida, comparamos 1. tipo relacion, 2. sus atributos, y 3. el destino */
+
+        /* 1. Se compara el tipo de relación y sus atributos */
+        if (!this.getRelationshipDefinition().equals(relationship.getRelationshipDefinition())) return false;
+
+        /* 2. Si no tienen los mismos atributos */
+        for (RelationshipAttribute attribute : this.getRelationshipAttributes()) {
+            if (!relationship.getRelationshipAttributes().contains(attribute)) {
+                return false;
+            }
+        }
+
+        /* 3. Se compara el target */
+        return this.getTarget().equals(relationship.getTarget());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + sourceConcept.hashCode();
+        result = 31 * result + relationshipDefinition.hashCode();
+        result = 31 * result + target.hashCode();
+        result = 31 * result + validityUntil.hashCode();
+        result = 31 * result + (toBeUpdated ? 1 : 0);
+        result = 31 * result + relationshipAttributes.hashCode();
+        return result;
+    }
+
+    public RelationshipAttribute getAttribute(RelationshipAttributeDefinition definition) {
+        for (RelationshipAttribute attribute : getRelationshipAttributes()) {
+            if (definition.equals(attribute.getRelationAttributeDefinition()))
+                return attribute;
+        }
+
+        return null;
+    }
+
 }
