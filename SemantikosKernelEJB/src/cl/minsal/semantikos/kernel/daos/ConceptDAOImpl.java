@@ -548,7 +548,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         logger.info("Actualizando información básica de concepto: " + conceptSMTK.toString());
         ConnectionBD connect = new ConnectionBD();
         long updated;
-        String sql = "{call semantikos.update_concept(?,?,?,?,?,?,?,?,?,?)}";
+        String sql = "{call semantikos.update_concept(?,?,?,?,?,?,?,?,?,?,?)}";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
