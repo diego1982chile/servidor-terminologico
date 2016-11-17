@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.businessrules.BusinessRulesContainer;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
+import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
@@ -133,6 +134,8 @@ public class ConceptBean implements Serializable {
     private ConceptSMTK conceptSelected;
 
     private ConceptSCT conceptSCTSelected;
+
+    private Crossmap crossmapSelected;
 
     private Map<Long, ConceptSMTK> targetSelected;
 
@@ -840,7 +843,7 @@ public class ConceptBean implements Serializable {
         List<RelationshipWeb> relationshipsForPersist = concept.getUnpersistedRelationshipsWeb();
         /* Se persisten las nuevas relaciones */
         for (RelationshipWeb relationshipWeb : relationshipsForPersist) {
-            relationshipManager.bindRelationshipToConcept(concept, (Relationship) relationshipWeb, user);
+            relationshipManager.bindRelationshipToConcept(concept, relationshipWeb.toRelationship(), user);
         }
 
         /* Se elimina las relaciones eliminadas */
@@ -1365,6 +1368,14 @@ public class ConceptBean implements Serializable {
 
     public void setChangeMarketedBean(ChangeMarketedBean changeMarketedBean) {
         this.changeMarketedBean = changeMarketedBean;
+    }
+
+    public Crossmap getCrossmapSelected() {
+        return crossmapSelected;
+    }
+
+    public void setCrossmapSelected(Crossmap crossmapSelected) {
+        this.crossmapSelected = crossmapSelected;
     }
 
     /**
