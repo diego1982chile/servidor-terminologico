@@ -41,3 +41,7 @@ form#mainForm table tbody tr td div.relationshipDefinitionError {
 .fullyDefined .ui-panelgrid-cell {
     padding: 0px !important;
 }
+
+.fullyDefined .ui-chkbox-label {
+    padding-left: 14px !important;
+}

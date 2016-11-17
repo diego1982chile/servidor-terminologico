@@ -64,7 +64,7 @@
                     value="#{cc.attrs.relationship.relationshipAttributes}"
                     var="relationshipAttribute">
 
-                <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target}" style="width: 70%" />
+                <p:inputText disabled="true" id="helperTableRecord" value="#{relationshipAttribute.target.fields['description']}" style="width: 70%" />
                 <p:commandLink process="@this"
                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                action="#{conceptBean.removeRelationshipAttribute(cc.attrs.relationship,relationshipAttribute)}">
