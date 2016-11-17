@@ -6,7 +6,9 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipFactory;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -19,7 +21,7 @@ import static cl.minsal.semantikos.model.ProfileFactory.MODELER_PROFILE;
  * @author Andrés Farías on 9/8/16.
  */
 @Singleton
-public class RelationshipBindingBR {
+public class RelationshipBindingBR implements RelationshipBindingBRInterface{
 
     @EJB
     private RelationshipManager relationshipManager;
@@ -80,7 +82,7 @@ public class RelationshipBindingBR {
         }
 
         /* Se transforma a una relación Snomed CT */
-        SnomedCTRelationship snomedCTRelationship = (SnomedCTRelationship) relationship;
+        SnomedCTRelationship snomedCTRelationship = new SnomedCTRelationship(concept,(ConceptSCT) relationship.getTarget(),relationship.getRelationshipDefinition(),relationship.getRelationshipAttributes()) ;
 
         /* Y se verifica que sup tipo sea "ES_UN_MAPEO DE" */
         if (!snomedCTRelationship.isES_UN_MAPEO_DE()) {
@@ -121,7 +123,8 @@ public class RelationshipBindingBR {
         }
 
         /* Se transforma a una relación Snomed CT */
-        SnomedCTRelationship snomedCTRelationship = (SnomedCTRelationship) relationship;
+        SnomedCTRelationship snomedCTRelationship = new SnomedCTRelationship(concept,(ConceptSCT) relationship.getTarget(),relationship.getRelationshipDefinition(),relationship.getRelationshipAttributes()) ;
+
 
         /* Y se verifica que sup tipo sea "ES_UN_MAPEO DE" */
         if (!snomedCTRelationship.isES_UN_MAPEO_DE()) {

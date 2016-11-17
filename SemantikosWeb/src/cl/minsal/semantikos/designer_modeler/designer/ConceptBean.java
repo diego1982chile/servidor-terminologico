@@ -5,9 +5,7 @@ import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.businessrules.BusinessRulesContainer;
-import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
-import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
+import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
@@ -435,6 +433,8 @@ public class ConceptBean implements Serializable {
         // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
     }
+    @EJB
+    private RelationshipBindingBRInterface relationshipBindingBR;
 
     /**
      * Este método es el encargado de agregar relaciones al concepto recibiendo como parámetro un Relationship
@@ -454,16 +454,27 @@ public class ConceptBean implements Serializable {
             return;
         }
 
+
+
+        try{
+
+            if (relationship.getClass().equals(RelationshipWeb.class)){
+                relationship = ((RelationshipWeb) relationship).toRelationship();
+            }
+            relationshipBindingBR.verifyPreConditions(concept,relationship,user);
+        }catch(EJBException EJB){
+
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", EJB.getMessage()));
+            return;
+        }
+
         for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-
-
             if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Información incompleta para agregar " + relationshipDefinition.getName()));
                 relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>()));
                 resetPlaceHolders();
                 return;
             }
-
         }
 
         if (relationshipDefinition.getOrderAttributeDefinition() != null) {
@@ -1591,9 +1602,7 @@ public class ConceptBean implements Serializable {
             } else {
                 concept.setFullyDefined(null);
             }
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT"));
-
+            messageError("No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT");
         }
 
     }
@@ -1613,5 +1622,12 @@ public class ConceptBean implements Serializable {
         }
         return false;
     }
+
+    private void messageError(String msg){
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
+    }
+
+
 
 }
