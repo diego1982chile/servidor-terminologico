@@ -4,6 +4,7 @@ import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.*;
+import cl.minsal.semantikos.model.snomedct.SnomedCT;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
@@ -251,7 +252,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         List<SnomedCTRelationship> snomedRelationships = new ArrayList<>();
         for (Relationship relationship : relationships) {
             if (relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()) {
-                snomedRelationships.add(relationship.toSnomedCT());
+                snomedRelationships.add((SnomedCTRelationship) relationship);
             }
         }
 
