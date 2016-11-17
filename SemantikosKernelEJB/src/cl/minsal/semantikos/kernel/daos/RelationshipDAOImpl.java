@@ -219,7 +219,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, relationshipDefinition.getId());
-            call.setLong(1, target.getId());
+            call.setLong(2, target.getId());
             call.execute();
 
             ResultSet rs = call.getResultSet();
