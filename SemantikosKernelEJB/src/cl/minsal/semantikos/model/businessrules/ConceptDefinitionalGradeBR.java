@@ -50,6 +50,11 @@ public class ConceptDefinitionalGradeBR implements ConceptDefinitionalGradeBRInt
             for (Relationship relationshipCandidate : relationshipsLike) {
                 ConceptSMTK candidateConcept = relationshipCandidate.getSourceConcept();
 
+                /* Si es el mismo concepto, no importa */
+                if(candidateConcept.equals(conceptSMTK)){
+                    continue;
+                }
+
                 /* Se cargan las relaciones del concepto (porque no las debiera traer) */
                 List<Relationship> relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(candidateConcept);
                 candidateConcept.setRelationships(relationshipsBySourceConcept);
