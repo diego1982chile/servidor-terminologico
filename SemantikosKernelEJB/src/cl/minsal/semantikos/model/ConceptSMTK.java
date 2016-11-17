@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.audit.AuditableEntity;
-import cl.minsal.semantikos.model.businessrules.ConceptStateBusinessRulesContainer;
+import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.*;
 
@@ -403,11 +403,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * Este método es responsable de establecer si un concepto es completamente definido.
      */
     public void setFullyDefined(Boolean fullyDefined) {
-
-        /* Antes de asignarle la propiedad, ser verifica si cumple las reglas de negocio */
-        new ConceptStateBusinessRulesContainer().apply(this);
-
-        /* Como se han validado las reglas de negocio, se realiza la asignación */
         this.isFullyDefined = fullyDefined;
     }
 
