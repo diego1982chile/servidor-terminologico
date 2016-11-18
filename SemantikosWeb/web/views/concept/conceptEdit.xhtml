@@ -141,7 +141,11 @@
                                             style="border:0px; margin: 0px; padding: 0px;"
                                             styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
 
-                                        <smtk:sctType
+                                        #{relationshipDefinition.targetDefinition.crossMapType}
+                                        #{conceptBean.concept.persistent}
+                                        #{conceptBean.concept.modeled}
+
+                                        <smtk:crossmapType
                                                 targetDefinition="#{relationshipDefinition.targetDefinition}"
                                                 relationshipDefinition="#{relationshipDefinition}"
                                                 concept="#{conceptBean.concept}"

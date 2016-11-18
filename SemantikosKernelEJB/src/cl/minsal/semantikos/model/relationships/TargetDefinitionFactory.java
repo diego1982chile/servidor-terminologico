@@ -71,7 +71,7 @@ public class TargetDefinitionFactory {
                 return helperTableDAO.getHelperTableByID(targetDefinitionDTO.idHelperTableName);
 
             case CROSSMAP_TYPE_ID:
-                //return crossmapsDAO.getCrossmapSetByID(targetDefinitionDTO.getIdHelperTableName())
+                return crossmapsDAO.getCrossmapSetByID(targetDefinitionDTO.idExternTableName);
 
             default:
                 throw new EJBException("TIPO DE DEFINICION INCORRECTO. ID Target Type=" + targetDefinitionDTO.idTargetType);
@@ -88,6 +88,7 @@ class TargetDefinitionDTO {
     protected String name;
     protected long idCategory;
     protected long idHelperTableName;
+    protected long idExternTableName;
     protected long idTargetType;
     protected long idBasicType;
     protected boolean sctType;
@@ -125,6 +126,14 @@ class TargetDefinitionDTO {
 
     public void setIdHelperTableName(long idHelperTableName) {
         this.idHelperTableName = idHelperTableName;
+    }
+
+    public long getIdExternTableName() {
+        return idExternTableName;
+    }
+
+    public void setIdExternTableName(long idExternTableName) {
+        this.idExternTableName = idExternTableName;
     }
 
     public long getIdTargetType() {
