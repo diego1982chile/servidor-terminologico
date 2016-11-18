@@ -85,12 +85,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     public List<DirectCrossmap> getDirectCrossmaps(ConceptSMTK conceptSMTK) {
 
         ArrayList<DirectCrossmap> crossmaps = new ArrayList<>();
-        if (conceptSMTK.isPersistent()) {
-            crossmaps.addAll(crossmapsDAO.getDirectCrossmapsByIdConcept(conceptSMTK.getId()));
-        } else {
-            crossmaps.addAll(crossmapsDAO.getDirectCrossmapsByConceptID(conceptSMTK.getConceptID()));
-        }
-
+        // TODO
         return crossmaps;
     }
 
@@ -121,7 +116,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
         List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
         for (CrossmapSetMember crossmapSetMember : crossmapSetMembers) {
             RelationshipDefinition relationshipDefinition = new RelationshipDefinition("Indirect Crossmap", "Un crossmap Indirecto", MultiplicityFactory.ONE_TO_ONE, crossmapSetMember.getCrossmapSet());
-            indirectCrossmaps.add(new IndirectCrossmap(conceptSMTK, crossmapSetMember, relationshipDefinition));
+            indirectCrossmaps.add(new IndirectCrossmap(conceptSMTK, crossmapSetMember, relationshipDefinition, null));
         }
 
         return indirectCrossmaps;

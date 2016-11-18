@@ -5,6 +5,7 @@ import cl.minsal.semantikos.kernel.components.HelperTableManager;
 import cl.minsal.semantikos.kernel.daos.*;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +63,6 @@ public class RelationshipFactory {
     @EJB
     private RelationshipAttributeDAO relationshipAttributeDAO;
 
-
     public Relationship createFromJSON(String jsonExpression) throws EJBException {
 
         /* Transformar el JSON a DTO primero */
@@ -73,7 +73,7 @@ public class RelationshipFactory {
         Target target = targetDAO.getTargetByID(relationshipDTO.idTarget);
         RelationshipDefinition relationshipDefinition = relDefDAO.getRelationshipDefinitionByID(relationshipDTO.idRelationshipDefinition);
 
-        return new Relationship(id, sourceConcept, target, relationshipDefinition, relationshipDTO.validityUntil,new ArrayList<RelationshipAttribute>());
+        return new Relationship(id, sourceConcept, target, relationshipDefinition, relationshipDTO.validityUntil, new ArrayList<RelationshipAttribute>());
     }
 
     /**
@@ -106,7 +106,7 @@ public class RelationshipFactory {
     public List<Relationship> createRelationshipsFromJSON(String jsonExpression) {
 
         /* Si JSON es nulo, se retorna una lista vacía */
-        if (jsonExpression == null){
+        if (jsonExpression == null) {
             return Collections.emptyList();
         }
 
@@ -196,16 +196,15 @@ public class RelationshipFactory {
             throw new EJBException(msg);
         }
 
-        List<RelationshipAttribute> relationshipAttributes= relationshipAttributeDAO.getRelationshipAttribute(relationshipDTO.getId());
+        List<RelationshipAttribute> relationshipAttributes = relationshipAttributeDAO.getRelationshipAttribute(relationshipDTO.getId());
 
         // Se agregan las definiciones de atributo
         relationshipDefinition.setRelationshipAttributeDefinitions(relationshipDefinitionDAO.getRelationshipAttributeDefinitionsByRelationshipDefinition(relationshipDefinition));
 
-        Relationship relationship= new Relationship(relationshipDTO.getId(), sourceConceptSMTK, target, relationshipDefinition, relationshipDTO.validityUntil,new ArrayList<RelationshipAttribute>());
+        Relationship relationship = new Relationship(relationshipDTO.getId(), sourceConceptSMTK, target, relationshipDefinition, relationshipDTO.validityUntil, new ArrayList<RelationshipAttribute>());
         relationship.setRelationshipAttributes(relationshipAttributes);
         return relationship;
     }
-
 }
 
 class RelationshipDTO {

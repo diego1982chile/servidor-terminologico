@@ -94,48 +94,6 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         return directCrossmapFromResultSet;
     }
 
-    @Override
-    public List<IndirectCrossmap> getIndirectCrossmapsByIdConcept(long id) {
-
-        ConnectionBD connect = new ConnectionBD();
-        List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_direct_crossmap(?)}")) {
-
-            call.setLong(1, id);
-            call.execute();
-
-            ResultSet rs = call.getResultSet();
-            if (rs.next()) {
-                indirectCrossmaps.add(crossmapFactory.createIndirectCrossmapFromResultSet(rs));
-            } else {
-                throw new EJBException("Error al intentar obtener un crossmap directo de ID= " + id);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            String s = "Error al crear un Crossmap en la base de datos";
-            logger.error(s);
-            throw new EJBException(s, e);
-        }
-
-        return indirectCrossmaps;
-    }
-
-    @Override
-    public List<IndirectCrossmap> getIndirectCrossmapsByConceptID(String conceptID) {
-        return null;
-    }
-
-    @Override
-    public List<DirectCrossmap> getDirectCrossmapsByIdConcept(long id) {
-        return null;
-    }
-
-    @Override
-    public List<DirectCrossmap> getDirectCrossmapsByConceptID(String conceptID) {
-        return null;
-    }
-
     /**
      * Este método es responsable de crear un objeto <code>DirectCrossmap</code> a partir de un ResultSet.
      *

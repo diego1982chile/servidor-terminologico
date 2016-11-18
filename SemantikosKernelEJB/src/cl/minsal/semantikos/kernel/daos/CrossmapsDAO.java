@@ -5,7 +5,6 @@ import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
-import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.Local;
@@ -36,15 +35,7 @@ public interface CrossmapsDAO {
      */
     public DirectCrossmap getDirectCrossmapById(long id);
 
-    List<IndirectCrossmap> getIndirectCrossmapsByIdConcept(long id);
-
-    List<IndirectCrossmap> getIndirectCrossmapsByConceptID(String conceptID);
-
-    public List<DirectCrossmap> getDirectCrossmapsByIdConcept(long id);
-
-    List<DirectCrossmap> getDirectCrossmapsByConceptID(String conceptID);
-
-    DirectCrossmap bindConceptSMTKToCrossmapSetMember(ConceptSMTK conceptSMTK, CrossmapSetMember crossmapSetMember);
+    public DirectCrossmap bindConceptSMTKToCrossmapSetMember(ConceptSMTK conceptSMTK, CrossmapSetMember crossmapSetMember);
 
     public CrossmapSet getCrossmapSetByID(long id);
 
