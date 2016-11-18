@@ -9,6 +9,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -265,20 +266,16 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
         }
 
         Crossmap crossmap = (Crossmap) this;
-        if (this.isPersistent() && crossmap.is(CrossMapType.INDIRECT)){
+        if (crossmap.is(CrossMapType.INDIRECT)){
             return new IndirectCrossmap(getId(),  this.sourceConcept, (CrossmapSetMember) target, this.relationshipDefinition, this.validityUntil);
         }
 
-        else if (!this.isPersistent() && crossmap.is(CrossMapType.INDIRECT)){
-            return new IndirectCrossmap(this.sourceConcept, (CrossmapSetMember) target, this.relationshipDefinition, this.validityUntil);
-        }
 
-        else if (this.isPersistent() && crossmap.is(CrossMapType.DIRECT)){
+         if (this.isPersistent() && crossmap.is(CrossMapType.DIRECT)){
             return new DirectCrossmap(getId(), this.sourceConcept, (CrossmapSetMember) this.target, this.relationshipDefinition, this.validityUntil);
-        } else {
-            return new DirectCrossmap(this.sourceConcept, (CrossmapSetMember) this.target, this.relationshipDefinition, this.validityUntil);
         }
 
+        throw new EJBException("UN CASO NO CONTEMPLADO");
     }
 
     @Override
