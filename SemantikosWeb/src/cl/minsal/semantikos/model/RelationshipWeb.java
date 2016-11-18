@@ -1,8 +1,6 @@
 package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.relationships.*;
-import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.model.snomedct.RelationshipSCT;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +69,7 @@ public class RelationshipWeb extends Relationship implements Comparable<Relation
     }
 
     public Relationship toRelationship(){
-        return new Relationship(this.getSourceConcept(), this.getTarget(), this.getRelationshipDefinition(), this.getRelationshipAttributes());
+        return new Relationship(this.getSourceConcept(), this.getTarget(), this.getRelationshipDefinition(), this.getRelationshipAttributes(), null);
     }
 
     @Override

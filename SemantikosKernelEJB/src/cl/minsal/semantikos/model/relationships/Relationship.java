@@ -1,13 +1,10 @@
 package cl.minsal.semantikos.model.relationships;
 
-import cl.minsal.semantikos.kernel.daos.DAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
-import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.model.snomedct.RelationshipSCT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,7 +77,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
      * @param relationshipDefinition Definición de la relación.
      * @param relationshipAttributes Lista de Atributos
      */
-    public Relationship(ConceptSMTK sourceConcept, Target target, RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes) {
+    public Relationship(ConceptSMTK sourceConcept, Target target, RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes, Timestamp validityUntil) {
 
         /* No está persistido originalmente */
         this.id = NON_PERSISTED_ID;
@@ -102,14 +99,13 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
      */
     public Relationship(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull Target target,
                         @NotNull RelationshipDefinition relationshipDefinition, Timestamp validityUntil, List<RelationshipAttribute> relationshipAttributes) {
-        this(sourceConcept, target, relationshipDefinition, relationshipAttributes);
+        this(sourceConcept, target, relationshipDefinition, relationshipAttributes, validityUntil);
 
         /* Basic ID validation */
         if (id < 0) {
             throw new IllegalArgumentException("El ID de una relación no puede ser negativo o cero.");
         }
         this.id = id;
-        this.validityUntil = validityUntil;
     }
 
     public ConceptSMTK getSourceConcept() {
@@ -216,33 +212,20 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
     }
 
     /**
-     * Este método es responsable de determinar si esta instancia tiene un ID de bdd distinto de nulo, y por ende se
-     * entiende que se encuentra persistido.
-     *
-     * @return <code>true</code> si está persistida y <code>false</code>.
-     */
-    public boolean isPersisted() {
-        return this.id != DAO.NON_PERSISTED_ID;
-    }
-
-    /**
      * Este método es responsable de determinar si esta relación es de tipo definitoria o atributo
      *
      * @return <code>true</code> si es de atributo y <code>false</code>.
      */
     public boolean isAttribute() {
 
-        /* Todos estos casos hacen la relación de tipo atributo, y por ende NO definitoria */
-        TargetDefinition targetDefinition = this.getRelationshipDefinition().getTargetDefinition();
-        if (targetDefinition.isBasicType() || targetDefinition.isCrossMapType() || targetDefinition.isHelperTable()
-                || targetDefinition.isSMTKType() || !targetDefinition.isSnomedCTType()) {
-            return true;
+        /* Si es de tipo Snomed, hay que ver el valor de su atributo */
+        if (SnomedCTRelationship.isSnomedCTRelationship(this)) {
+            SnomedCTRelationship relationshipSCT = SnomedCTRelationship.createSnomedCT(this);
+            return relationshipSCT.isDefinitional();
         }
 
-        /* Si es de tipo Snomed, hay que ver el valor de su atributo */
-        SnomedCTRelationship relationshipSCT = new SnomedCTRelationship(this.getSourceConcept(),(ConceptSCT) this.getTarget(),this.getRelationshipDefinition(),this.getRelationshipAttributes()) ;
-
-        return relationshipSCT.isDefinitional();
+        /* En cualquier otro caso es un atributo */
+        return true;
     }
 
     /**
@@ -319,7 +302,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
     public boolean equalsButConceptSource(Relationship relationship) {
 
         /* Si ambas están persistidas y no tienen el mismo ID, entonces son distintas */
-        if (this.isPersisted() && relationship.isPersisted() && this.getId() != relationship.getId()) return false;
+        if (this.isPersistent() && relationship.isPersistent() && this.getId() != relationship.getId()) return false;
 
         /* Si alguna de ellas no está persistida, comparamos 1. tipo relacion, 2. sus atributos, y 3. el destino */
 

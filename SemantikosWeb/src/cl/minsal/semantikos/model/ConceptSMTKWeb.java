@@ -249,7 +249,7 @@ public class ConceptSMTKWeb extends ConceptSMTK {
             relationshipWeb.setTarget(relationshipDefinitionWeb.getDefaultValue());
         }
         */
-        Relationship r = new Relationship(this, relationshipDefinitionWeb.getDefaultValue(), relationshipDefinitionWeb, new ArrayList<RelationshipAttribute>());
+        Relationship r = new Relationship(this, relationshipDefinitionWeb.getDefaultValue(), relationshipDefinitionWeb, new ArrayList<RelationshipAttribute>(), null);
         addRelationshipWeb(new RelationshipWeb(this, r.getId(), r, r.getRelationshipAttributes()));
     }
 
