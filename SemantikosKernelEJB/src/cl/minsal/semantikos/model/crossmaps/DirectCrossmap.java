@@ -23,6 +23,11 @@ public class DirectCrossmap extends Crossmap implements Target {
     }
 
     @Override
+    public boolean is(CrossMapType indirect) {
+        return indirect.equals(CrossMapType.DIRECT);
+    }
+
+    @Override
     public TargetType getTargetType() {
         return null;
     }

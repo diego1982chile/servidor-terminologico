@@ -268,12 +268,24 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @return Una lista de relaciones a SnomedCT
      */
-    public List<Crossmap> getRelationshipsCrossMap(CrossMapType crossMapType) {
+    public List<Crossmap> getRelationshipsCrossMap() {
 
-        List<Crossmap> indirectCrossmaps = new ArrayList<>();
+        List<Crossmap> crossmaps = new ArrayList<>();
         for (Relationship relationship : relationships) {
             if (relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
-                indirectCrossmaps.add(relationship.toCrossMap());
+                crossmaps.add(relationship.toCrossMap());
+            }
+        }
+
+        return crossmaps;
+    }
+
+    public List<Crossmap> getRelationshipsIndirectCrossMap(){
+
+        List<Crossmap> indirectCrossmaps = new ArrayList<>();
+        for (Crossmap crossmap : getRelationshipsCrossMap()) {
+            if (crossmap.is(CrossMapType.INDIRECT)){
+                indirectCrossmaps.add(crossmap);
             }
         }
 

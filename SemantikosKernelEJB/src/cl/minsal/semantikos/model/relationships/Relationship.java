@@ -4,8 +4,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.crossmaps.Crossmap;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
+import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +30,6 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
 
     // TODO: Normalizar esta clase
     private static final Logger logger = LoggerFactory.getLogger(Relationship.class);
-
-    /** Identificador único de la base de datos */
-    private long id;
 
     /** El concepto origen de esta relación */
     private ConceptSMTK sourceConcept;
@@ -62,10 +58,6 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
      */
     @Deprecated
     public Relationship(ConceptSMTK sourceConcept, RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes) {
-
-        /* No está persistido originalmente */
-        this.id = NON_PERSISTED_ID;
-
         this.sourceConcept = sourceConcept;
         this.relationshipDefinition = relationshipDefinition;
         this.relationshipAttributes = relationshipAttributes;
@@ -80,10 +72,6 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
      * @param relationshipAttributes Lista de Atributos
      */
     public Relationship(ConceptSMTK sourceConcept, Target target, RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes, Timestamp validityUntil) {
-
-        /* No está persistido originalmente */
-        this.id = NON_PERSISTED_ID;
-
         this.sourceConcept = sourceConcept;
         this.target = target;
         this.relationshipDefinition = relationshipDefinition;
@@ -106,8 +94,9 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
         /* Basic ID validation */
         if (id < 0) {
             throw new IllegalArgumentException("El ID de una relación no puede ser negativo o cero.");
+        } else {
+            super.setId(id);
         }
-        this.id = id;
     }
 
     public ConceptSMTK getSourceConcept() {
@@ -185,14 +174,6 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
      */
     public boolean isWellDefined() {
         return target != null && this.isConsistent();
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getId() {
-        return id;
     }
 
     /**
@@ -283,11 +264,21 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
             throw new IllegalArgumentException("Esta relación no puede ser transformada a una Relación SnomedCT");
         }
 
-        if (this.isPersistent()) {
-            return new Crossmap(this.id, this.sourceConcept, (CrossmapSetMember) this.target, this.relationshipDefinition, this.validityUntil);
-        } else {
-            return new Crossmap(this.sourceConcept, (CrossmapSetMember) this.target, this.relationshipDefinition, this.validityUntil);
+        Crossmap crossmap = (Crossmap) this;
+        if (this.isPersistent() && crossmap.is(CrossMapType.INDIRECT)){
+            return new IndirectCrossmap(getId(),  this.sourceConcept, (CrossmapSetMember) target, this.relationshipDefinition, this.validityUntil);
         }
+
+        else if (!this.isPersistent() && crossmap.is(CrossMapType.INDIRECT)){
+            return new IndirectCrossmap(this.sourceConcept, (CrossmapSetMember) target, this.relationshipDefinition, this.validityUntil);
+        }
+
+        else if (this.isPersistent() && crossmap.is(CrossMapType.DIRECT)){
+            return new DirectCrossmap(getId(), this.sourceConcept, (CrossmapSetMember) this.target, this.relationshipDefinition, this.validityUntil);
+        } else {
+            return new DirectCrossmap(this.sourceConcept, (CrossmapSetMember) this.target, this.relationshipDefinition, this.validityUntil);
+        }
+
     }
 
     @Override
@@ -338,13 +329,12 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + sourceConcept.hashCode();
-        result = 31 * result + relationshipDefinition.hashCode();
-        result = 31 * result + target.hashCode();
-        result = 31 * result + validityUntil.hashCode();
+        int result = sourceConcept != null ? sourceConcept.hashCode() : 0;
+        result = 31 * result + (relationshipDefinition != null ? relationshipDefinition.hashCode() : 0);
+        result = 31 * result + (target != null ? target.hashCode() : 0);
+        result = 31 * result + (validityUntil != null ? validityUntil.hashCode() : 0);
         result = 31 * result + (toBeUpdated ? 1 : 0);
-        result = 31 * result + relationshipAttributes.hashCode();
+        result = 31 * result + (relationshipAttributes != null ? relationshipAttributes.hashCode() : 0);
         return result;
     }
 
