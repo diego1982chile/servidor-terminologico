@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
@@ -14,6 +15,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.System.currentTimeMillis;
@@ -142,5 +144,47 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
     public CrossmapSetMember getCrossmapSetMemberById(long idCrossmapSet) {
         // TODO: Terminar la BDD.
         return null;
+    }
+
+    @Override
+    public List<CrossmapSetMember> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern) {
+        List<CrossmapSetMember> crossmapSetMembers = new ArrayList<CrossmapSetMember>();
+        ConnectionBD connect = new ConnectionBD();
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.find_crossmapsetmember_by_pattern_and_crossmapset(?,?)}")) {
+
+            call.setLong(1, crossmapSet.getId());
+            call.setString(2, pattern);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                CrossmapSetMember crossmapSetMember = createCrossmapSetMemberFromResultSet(rs, crossmapSet);
+                crossmapSetMembers.add(crossmapSetMember);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Se produjo un error al acceder a la BDD.", e);
+            throw new EJBException(e);
+        }
+
+        return crossmapSetMembers;
+    }
+
+    /**
+     * Este método es responsable de crear un objeto <code>DirectCrossmap</code> a partir de un ResultSet.
+     *
+     * @param rs El ResultSet a partir del cual se crea el crossmap.
+     *
+     * @return Un Crossmap Directo creado a partir del result set.
+     */
+    private CrossmapSetMember createCrossmapSetMemberFromResultSet(ResultSet rs, CrossmapSet crossmapSet) throws SQLException {
+        // id bigint, id_concept bigint, id_crossmapset bigint, id_user bigint, id_validity_until timestamp
+        long id = rs.getLong("id");
+        String code = rs.getString("code");
+        String gloss = rs.getString("gloss");
+
+        return new CrossmapSetMember(id,crossmapSet,code, gloss);
     }
 }

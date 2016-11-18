@@ -37,18 +37,18 @@
                                 var="crossmap"
                                 placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                 converter="omnifaces.SelectItemsConverter"
-                                value="#{conceptBean.selectedHelperTableRecord}"
+                                value="#{conceptBean.crossmapSelected}"
                                 disabled="#{not cc.attrs.concept.editable}"
-                                itemLabel="#{crossmap}"
+                                itemLabel="#{crossmap.gloss}"
                                 itemValue="#{crossmap}">
                     <!-- Parámetros del buscador -->
-                    <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                    <f:attribute name="crossmapSet" value="#{cc.attrs.targetDefinition}"  />
                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                     <!-- Parámetros del validador -->
                     <f:attribute name="crossmap" value="#{conceptBean.crossmapSelected}"  />
                     <!---->
                     <p:column>
-                        <h:outputText value="#{crossmap.target}"/>
+                        <h:outputText value="#{crossmap.gloss}"/>
                     </p:column>
 
                     <p:ajax event="itemSelect"
@@ -231,13 +231,13 @@
                                 itemValue="#{crossmap}">
 
                     <!-- Parámetros del buscador -->
-                    <f:attribute name="concept" value="#{cc.attrs.concept}"  />
+                    <f:attribute name="crossmapSet" value="#{cc.attrs.relationshipDefinition}"  />
                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                     <!-- Parámetros del validador -->
                     <f:attribute name="crossmap" value="#{conceptBean.crossmapSelected}"  />
                     <!---->
                     <p:column>
-                        <h:outputText value="#{crossmap.target}"/>
+                        <h:outputText value="#{crossmap.gloss}"/>
                     </p:column>
 
                     <p:ajax event="itemSelect"
@@ -254,6 +254,7 @@
         </div>
 
         <div class="ui-g">
+
             <div class="ui-g-12 ui-md-6 ui-lg-12">
 
                 <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
@@ -268,12 +269,16 @@
 
                     <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}" />
 
-                    <p:column headerText="ID">
-                        <h:outputText value="#{rel.target}"/>
+                    <p:column headerText="Terminología">
+                        <h:outputText value="#{rel.target.crossmapSet.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Cod Crossmaps">
+                        <h:outputText value="#{rel.target.code}"/>
                     </p:column>
 
                     <p:column headerText="Descripción">
-                        <h:outputText value="#{rel.target}"/>
+                        <h:outputText value="#{rel.target.gloss}"/>
                     </p:column>
 
                     <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
@@ -291,7 +296,7 @@
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:panel id="helperTableTypeCollectionWithAttributes"
+    <p:panel id="crossmapTypeCollectionWithAttributes"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <h3>#{cc.attrs.relationshipDefinition.name}</h3>
@@ -306,7 +311,7 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
 
-                    <p:autoComplete id="findHTRecords6" scrollHeight="200" style="width: 90%;"
+                    <p:autoComplete id="findCSM6" scrollHeight="200" style="width: 90%;"
                                     inputStyle="width: 90%;"
                                     completeMethod="#{helperTableBean.getRecordSearchInput}"
                                     var="record"

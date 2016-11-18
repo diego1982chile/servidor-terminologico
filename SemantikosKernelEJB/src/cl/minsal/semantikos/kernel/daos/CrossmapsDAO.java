@@ -54,5 +54,5 @@ public interface CrossmapsDAO {
      */
     public CrossmapSetMember getCrossmapSetMemberById(long idCrossmapSetMember);
 
-    public List<CrossmapSetMember> getCrossmapSetMemberBy(CrossmapSet crossmapSet);
+    public List<CrossmapSetMember> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern);
 }

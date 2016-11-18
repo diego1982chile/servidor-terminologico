@@ -25,11 +25,69 @@ public class CrossmapSet extends PersistentEntity implements TargetDefinition {
     /** Fecha de creación */
     private Timestamp creationDate;
 
+    /** Fecha <em>hasta</em> de vigencia */
+
+    private Timestamp validityUntil;
+
     /** Usuario que creo la terminología */
     private User creator;
 
-    /** Fecha <em>hasta</em> de vigencia */
-    private Timestamp validityUntil;
+    public Timestamp getValidityUntil() {
+        return validityUntil;
+    }
+
+    public void setValidityUntil(Timestamp validityUntil) {
+        this.validityUntil = validityUntil;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public Timestamp getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAbbreviatedName() {
+        return abbreviatedName;
+    }
+
+    public void setAbbreviatedName(String abbreviatedName) {
+        this.abbreviatedName = abbreviatedName;
+    }
+
+    public long getIdCrossmapSet() {
+        return idCrossmapSet;
+    }
+
+    public void setIdCrossmapSet(long idCrossmapSet) {
+        this.idCrossmapSet = idCrossmapSet;
+    }
+
 
     @Override
     public boolean isBasicType() {

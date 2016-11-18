@@ -4,6 +4,8 @@ import cl.minsal.semantikos.kernel.components.CrossmapsManager;
 import cl.minsal.semantikos.kernel.components.HelperTableManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -39,7 +41,7 @@ public class CrossmapBean implements Serializable {
     public void init() {
     }
 
-    public List<Crossmap> getCrossmapSearchInput(String patron) {
+    public List<CrossmapSetMember> getCrossmapSearchInput(String patron) {
 
         /* Si el patrón viene vacío o es menor a tres caracteres, no se hace nada */
          if ( patron == null || patron.length() < 2 ) {
@@ -47,14 +49,12 @@ public class CrossmapBean implements Serializable {
         }
 
         FacesContext context = FacesContext.getCurrentInstance();
-        RequestContext context2 = RequestContext.getCurrentInstance();
 
-        ConceptSMTK concept = (ConceptSMTK) UIComponent.getCurrentComponent(context).getAttributes().get("concept");
-        RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinition");
+        CrossmapSet crossmapSet = (CrossmapSet) UIComponent.getCurrentComponent(context).getAttributes().get("crossmapSet");
 
-        List<Crossmap> someCrossmaps = crossmapsManager.getCrossmaps(concept);
+        List<CrossmapSetMember> someCrossmapSetMembers = crossmapsManager.findByPattern(crossmapSet, patron);
 
-        return someCrossmaps;
+        return someCrossmapSetMembers;
     }
 
 
