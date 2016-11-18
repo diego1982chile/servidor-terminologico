@@ -96,6 +96,11 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     }
 
     @Override
+    public CrossmapSetMember getCrossmapSetMemberById(long id) {
+        return crossmapsDAO.getCrossmapSetMemberById(id);
+    }
+
+    @Override
     public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSMTK conceptSMTK) {
 
         /* Se valida si el concepto tiene cargada sus relaciones */
@@ -130,7 +135,6 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
 
     @Override
     public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern) {
-        //TODO: Terminar esto
-        return null;
+        return crossmapsDAO.findCrossmapSetMemberBy(crossmapSet, pattern);
     }
 }

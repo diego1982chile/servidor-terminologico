@@ -17,7 +17,6 @@
 <composite:implementation>
 
     <!-- Multiplicidad 1 + Nueva relacion + Sin atributos -->
-    HOLA
     <p:panel id="CrossMapTypeSimpleNew"
              widgetVar="panelCrossMapTypeSimple#{cc.attrs.relationshipDefinition.id}"
              rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
@@ -37,7 +36,7 @@
                                 var="crossmap"
                                 placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                 converter="omnifaces.SelectItemsConverter"
-                                value="#{conceptBean.crossmapSelected}"
+                                value="#{conceptBean.crossmapSetMemberSelected}"
                                 disabled="#{not cc.attrs.concept.editable}"
                                 itemLabel="#{crossmap.gloss}"
                                 itemValue="#{crossmap}">
@@ -45,14 +44,14 @@
                     <f:attribute name="crossmapSet" value="#{cc.attrs.targetDefinition}"  />
                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                     <!-- Parámetros del validador -->
-                    <f:attribute name="crossmap" value="#{conceptBean.crossmapSelected}"  />
+                    <f:attribute name="crossmap" value="#{conceptBean.crossmapSetMemberSelected}"  />
                     <!---->
                     <p:column>
                         <h:outputText value="#{crossmap.gloss}"/>
                     </p:column>
 
                     <p:ajax event="itemSelect"
-                            listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.crossmapSelected)}"
+                            listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.crossmapSetMemberSelected)}"
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                             process="@this"/>
 
@@ -111,21 +110,21 @@
                                 placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                 converter="omnifaces.SelectItemsConverter"
                                 disabled="#{not cc.attrs.concept.editable}"
-                                value="#{conceptBean.crossmapSelected}"
+                                value="#{conceptBean.crossmapSetMemberSelected}"
                                 itemLabel="#{crossmap.target}"
                                 itemValue="#{crossmap}">
                     <!-- Parámetros del buscador -->
                     <f:attribute name="concept" value="#{cc.attrs.concept}"  />
                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                     <!-- Parámetros del validador -->
-                    <f:attribute name="crossmap" value="#{conceptBean.crossmapSelected}"  />
+                    <f:attribute name="crossmap" value="#{conceptBean.crossmapSetMemberSelected}"  />
                     <!---->
                     <p:column>
                         <h:outputText value="#{crossmap.target}"/>
                     </p:column>
 
                     <p:ajax event="itemSelect"
-                            listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.crossmapSelected)}"
+                            listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.crossmapSetMemberSelected)}"
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                             process="@this"/>
 
@@ -223,18 +222,18 @@
                                 forceSelection="true"
                                 var="crossmap"
                                 placeholder="#{cc.attrs.relationshipDefinition.name}..."
-                                converter="omnifaces.SelectItemsConverter"
+                                converter="crossmapSetMemberConverter"
                                 rendered="#{cc.attrs.concept.editable}"
                                 disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
-                                value="#{conceptBean.crossmapSelected}"
-                                itemLabel="#{crossmap.target}"
+                                value="#{conceptBean.crossmapSetMemberSelected}"
+                                itemLabel="#{crossmap.gloss}"
                                 itemValue="#{crossmap}">
 
                     <!-- Parámetros del buscador -->
-                    <f:attribute name="crossmapSet" value="#{cc.attrs.relationshipDefinition}"  />
+                    <f:attribute name="crossmapSet" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                     <!-- Parámetros del validador -->
-                    <f:attribute name="crossmap" value="#{conceptBean.crossmapSelected}"  />
+                    <f:attribute name="crossmap" value="#{conceptBean.crossmapSetMemberSelected}"  />
                     <!---->
                     <p:column>
                         <h:outputText value="#{crossmap.gloss}"/>
@@ -242,7 +241,7 @@
 
                     <p:ajax event="itemSelect"
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                            listener="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.crossmapSelected)}"
+                            listener="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.crossmapSetMemberSelected)}"
                             process="@this"/>
 
                 </p:autoComplete>

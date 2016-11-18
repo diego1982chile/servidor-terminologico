@@ -9,6 +9,7 @@ import cl.minsal.semantikos.model.businessrules.BusinessRulesContainer;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
@@ -135,7 +136,7 @@ public class ConceptBean implements Serializable {
 
     private ConceptSCT conceptSCTSelected;
 
-    private Crossmap crossmapSelected;
+    private CrossmapSetMember crossmapSetMemberSelected;
 
     private Map<Long, ConceptSMTK> targetSelected;
 
@@ -1370,12 +1371,12 @@ public class ConceptBean implements Serializable {
         this.changeMarketedBean = changeMarketedBean;
     }
 
-    public Crossmap getCrossmapSelected() {
-        return crossmapSelected;
+    public CrossmapSetMember getCrossmapSetMemberSelected() {
+        return crossmapSetMemberSelected;
     }
 
-    public void setCrossmapSelected(Crossmap crossmapSelected) {
-        this.crossmapSelected = crossmapSelected;
+    public void setCrossmapSetMemberSelected(CrossmapSetMember crossmapSetMemberSelected) {
+        this.crossmapSetMemberSelected = crossmapSetMemberSelected;
     }
 
     /**

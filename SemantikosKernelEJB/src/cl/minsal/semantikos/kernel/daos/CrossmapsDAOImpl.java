@@ -283,7 +283,7 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         String code = rs.getString("code");
         String gloss = rs.getString("gloss");
 
-        return new CrossmapSetMember(id,crossmapSet,code, gloss);
+        return new CrossmapSetMember(id, id, crossmapSet, code, gloss);
     }
 
     /**
