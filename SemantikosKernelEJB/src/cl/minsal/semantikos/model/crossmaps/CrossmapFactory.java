@@ -5,12 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Singleton;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by des01c7 on 18-11-16.
+ * @author Gustavo Punucura on 18-11-16.
  */
 @Singleton
 public class CrossmapFactory {
@@ -20,28 +21,22 @@ public class CrossmapFactory {
      */
     private static final Logger logger = LoggerFactory.getLogger(CrossmapFactory.class);
 
-
     @EJB
     private CrossmapsDAO crossmapsDAO;
 
     /**
      * Este método crea un CrossmapSetMember con un Resulset
      *
-     * @param resultSet
-     * @return
+     * @param resultSet El resultset a partir del cual se crea el CrossmapSetMember
+     *
+     * @return Un CrossmapSetMember fresco, creado a partir del ResultSet.
      */
-    public CrossmapSetMember createFromRS(ResultSet resultSet) throws SQLException {
+    public CrossmapSetMember createCrossmapSetMemberFromResultSet(ResultSet resultSet) throws SQLException {
 
         logger.debug("creando CrossmapSetMember de ResultSet: ", resultSet);
 
-        long id = resultSet.getLong("id");
         CrossmapSet crossmapSet = crossmapsDAO.getCrossmapSetByID(resultSet.getLong("id_cross_map_set"));
-        String code = resultSet.getString("code");
-        String gloss = resultSet.getString("gloss");
-
-        CrossmapSetMember crossmapSetMember = new CrossmapSetMember(id, crossmapSet, code, gloss);
-
-        return crossmapSetMember;
+        return createCrossmapSetMemberFromResultSet(resultSet, crossmapSet);
     }
 
 
@@ -49,10 +44,10 @@ public class CrossmapFactory {
      * Este método es responsable de crear un objeto <code>DirectCrossmap</code> a partir de un ResultSet.
      *
      * @param rs El ResultSet a partir del cual se crea el crossmap.
+     *
      * @return Un Crossmap Directo creado a partir del result set.
      */
     public CrossmapSetMember createCrossmapSetMemberFromResultSet(ResultSet rs, CrossmapSet crossmapSet) throws SQLException {
-        // id bigint, id_concept bigint, id_crossmapset bigint, id_user bigint, id_validity_until timestamp
         long id = rs.getLong("id");
         String code = rs.getString("code");
         String gloss = rs.getString("gloss");
@@ -60,4 +55,7 @@ public class CrossmapFactory {
         return new CrossmapSetMember(id, crossmapSet, code, gloss);
     }
 
+    public IndirectCrossmap createIndirectCrossmapFromResultSet(ResultSet rs) {
+        throw new EJBException("NO IMPLEMENTADO: createIndirectCrossmapFromResultSet");
+    }
 }

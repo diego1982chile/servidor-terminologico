@@ -1,11 +1,12 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
-import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
+import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
+import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -55,6 +56,16 @@ public interface CrossmapsDAO {
      * @return Un CrossmapSetMember fresco.
      */
     public CrossmapSetMember getCrossmapSetMemberById(long idCrossmapSetMember);
+
+    /**
+     * Este método es responsable de recuperar todas las relaciones que van desde un concepto Snomed CT hacia registros
+     * en otras terminologías (CrossmapSetMembers).
+     *
+     * @param conceptSCT El concepto Snomed CT del cual salen las referencias a términos en otras terminologías.
+     *
+     * @return Una lista de terminos de terminologías externas asociadas al concepto Snomed <code>conceptSCT</code>.
+     */
+    List<CrossmapSetMember> getRelatedCrossMapSetMembers(ConceptSCT conceptSCT);
 
     /**
      * Este método es responsable de recuperar un CrossmapSetMember dada su terminología y un patrón de búsqueda
