@@ -179,12 +179,9 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
         List<SnomedCTRelationship> relationshipsSnomedCT = concept.getRelationshipsSnomedCT();
 
             /* Si tiene una relación verificamos que sea la misma que se está validando (podría ya estar agregada) */
-        if (relationshipsSnomedCT.size() == 1 && relationship.equals(relationshipsSnomedCT.get(0))) {
-            return;
-        } else {
+        if (relationshipsSnomedCT.size() == 1 && !relationship.equals(relationshipsSnomedCT.get(0))) {
             throw new BusinessRuleException("BR-SCT-003: Si un concepto Semantikos tiene una relación SnomedCT de tipo “Es un Mapeo el concepto no puede tener ninguna otra relación de tipo SnomedCT.");
         }
-
     }
 
 
