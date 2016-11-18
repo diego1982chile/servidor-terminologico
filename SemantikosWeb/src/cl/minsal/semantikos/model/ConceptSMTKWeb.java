@@ -32,7 +32,7 @@ public class ConceptSMTKWeb extends ConceptSMTK {
 
         // Crear un nuevo concepto con su información básica
         super(conceptSMTK.getConceptID(), conceptSMTK.getCategory(), conceptSMTK.isToBeReviewed(), conceptSMTK.isToBeConsulted(), conceptSMTK.isModeled(),
-                conceptSMTK.isFullyDefined(), conceptSMTK.isPublished(), conceptSMTK.getObservation(), conceptSMTK.getTagSMTK());
+                conceptSMTK.isFullyDefined(), conceptSMTK.isInherited(), conceptSMTK.isPublished(), conceptSMTK.getObservation(), conceptSMTK.getTagSMTK());
 
         // Agregar descripciones y relaciones
         if(conceptSMTK.isPersistent()){
@@ -249,7 +249,7 @@ public class ConceptSMTKWeb extends ConceptSMTK {
             relationshipWeb.setTarget(relationshipDefinitionWeb.getDefaultValue());
         }
         */
-        Relationship r = new Relationship(this, relationshipDefinitionWeb.getDefaultValue(), relationshipDefinitionWeb, new ArrayList<RelationshipAttribute>());
+        Relationship r = new Relationship(this, relationshipDefinitionWeb.getDefaultValue(), relationshipDefinitionWeb, new ArrayList<RelationshipAttribute>(), null);
         addRelationshipWeb(new RelationshipWeb(this, r.getId(), r, r.getRelationshipAttributes()));
     }
 
