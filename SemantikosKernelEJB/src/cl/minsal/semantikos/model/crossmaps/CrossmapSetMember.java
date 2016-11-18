@@ -76,7 +76,6 @@ public class CrossmapSetMember extends PersistentEntity implements Target {
 
     @Override
     public Target copy() {
-        // TODO: Terminar esto.
-        return null;
+        return new CrossmapSetMember(this.getIdCrossmapSetMember(), this.getIdCrossmapSetMember(), this.getCrossmapSet(), this.getCode(), this.getGloss());
     }
 }

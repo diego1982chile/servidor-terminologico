@@ -34,11 +34,14 @@ public class CrossmapBean implements Serializable {
 
     private Crossmap crossmapPlaceHolder = null;
 
+    private List<CrossmapSet> crossmapSets;
+
     @EJB
     private CrossmapsManager crossmapsManager;
 
     @PostConstruct
     public void init() {
+        crossmapSets = crossmapsManager.getCrossmapSets();
     }
 
     public List<CrossmapSetMember> getCrossmapSearchInput(String patron) {
@@ -82,5 +85,12 @@ public class CrossmapBean implements Serializable {
         this.crossmapsManager = crossmapsManager;
     }
 
+    public List<CrossmapSet> getCrossmapSets() {
+        return crossmapSets;
+    }
+
+    public void setCrossmapSets(List<CrossmapSet> crossmapSets) {
+        this.crossmapSets = crossmapSets;
+    }
 
 }

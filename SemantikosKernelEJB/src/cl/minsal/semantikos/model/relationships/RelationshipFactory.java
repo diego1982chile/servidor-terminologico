@@ -184,7 +184,9 @@ public class RelationshipFactory {
 
         /* Y sino, puede ser crossmap */
         else if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
-            target = crossmapDAO.getDirectCrossmapById(idTarget);
+            //target = crossmapDAO.getDirectCrossmapById(idTarget);
+            //target = crossmapDAO.getCrossmapSetMemberById(idTarget);
+            target = targetDAO.getTargetByID(idTarget);
         }
 
         /* Sino, hay un nuevo tipo de target que no está siendo gestionado */

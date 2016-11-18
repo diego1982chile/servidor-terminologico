@@ -488,6 +488,7 @@ public class ConceptBean implements Serializable {
         selectedHelperTableRecord = null;
         conceptSelected = null;
         conceptSCTSelected = null;
+        crossmapSetMemberSelected = null;
     }
 
     /**

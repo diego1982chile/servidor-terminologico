@@ -78,8 +78,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
 
     @Override
     public List<CrossmapSet> getCrossmapSets() {
-        //TODO: Terminar esto.
-        return null;
+        return crossmapsDAO.getCrossmapSets();
     }
 
     @Override

@@ -76,4 +76,11 @@ public interface CrossmapsDAO {
      * @return Un CrossmapSetMember fresco.
      */
     public List<CrossmapSetMember> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern);
+
+    /**
+     * Este método es responsable de recuperar todas las terminologías válidas existentes en el sistema
+     *
+     * @return Un <code>java.util.List</code> de CrossmapSet
+     */
+    public List<CrossmapSet> getCrossmapSets();
 }

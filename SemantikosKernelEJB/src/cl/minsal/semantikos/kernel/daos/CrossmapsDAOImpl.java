@@ -269,6 +269,30 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         return crossmapSetMembers;
     }
 
+    @Override
+    public List<CrossmapSet> getCrossmapSets() {
+        ConnectionBD connect = new ConnectionBD();
+        List<CrossmapSet> crossmapSets = new ArrayList<>();
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.get_crossmapsets()}")) {
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                crossmapSets.add(getCrossmapSetByID(rs.getLong(1)));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            String s = "Error al recuperar los crossmaps";
+            logger.error(s);
+            throw new EJBException(s, e);
+        }
+
+        return crossmapSets;
+    }
+
 
     /**
      * Este método es responsable de crear un objeto <code>CrossmapSetMember</code> a partir de un ResultSet.
