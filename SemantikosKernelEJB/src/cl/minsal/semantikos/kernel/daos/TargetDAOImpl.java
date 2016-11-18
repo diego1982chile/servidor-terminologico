@@ -119,9 +119,10 @@ public class TargetDAOImpl implements TargetDAO {
          *   4: Valor Booleano tipo básico.
          *   5: Valor entero tipo básico.
          *   6: ID helper table record.
-         *   7: id helper Ext
+         *   7: ID terminologia externa (crossmap set)
          *   8: ID SCT
          *   9: Concept SMTK
+         *   10: ID del tipo de Target.
          */
         String sql = "{call semantikos.create_target(?,?,?,?,?,?,?,?,?,?)}";
         long idTarget;
@@ -154,6 +155,12 @@ public class TargetDAOImpl implements TargetDAO {
             else if (targetDefinition.isSnomedCTType()) {
                 call.setLong(8, target.getId());
                 call.setLong(10, SnomedCT.getIdTargetType());
+            }
+
+            /* Almacenar registro crossmap (directo) */
+            else if (targetDefinition.isCrossMapType()){
+                call.setLong(7, target.getId());
+                call.setLong(10, CrossMap.getIdTargetType());
             }
 
             call.execute();
