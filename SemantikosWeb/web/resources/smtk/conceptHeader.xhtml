@@ -37,16 +37,16 @@
             <p:selectOneRadio id="customRadio" value="#{conceptBean.fullyDefined}" layout="custom">
                 <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
                 <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
-                <p:ajax event="change" process="@this" update="@this" />
+                <p:ajax event="change" listener="#{conceptBean.changeFullyDefined}" process="@this" update=":createEdit" />
             </p:selectOneRadio>
 
             <p:panelGrid id="fullyDefined" columns="4" columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-7" layout="grid"
                          styleClass="ui-panelgrid-blank fullyDefined"
-                         style="width: 100%">
-                <p:radioButton id="opt1" for="customRadio" itemIndex="0" />
+                         style="width: 100%" >
+                <p:radioButton id="opt1" for="customRadio" itemIndex="0" disabled="#{conceptBean.concept.inherited}" />
                 <h:outputLabel for="opt1" value="Primitivo" />
 
-                <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>
+                <p:radioButton id="opt2" for="customRadio" itemIndex="1" disabled="#{conceptBean.concept.inherited}" />
                 <h:outputLabel for="opt2" value="Completamente Definido" />
             </p:panelGrid>
         </div>

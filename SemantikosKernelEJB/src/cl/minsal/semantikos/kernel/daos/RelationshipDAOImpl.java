@@ -213,7 +213,7 @@ public class RelationshipDAOImpl implements RelationshipDAO {
     public List<Relationship> getRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target) {
 
         ConnectionBD connect = new ConnectionBD();
-        String sql = "{call semantikos.get_relationships_by_definition_and_id(?, ?)}";
+        String sql = "{call semantikos.get_snomedct_relationship(?, ?)}";
         String resultJSON;
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
