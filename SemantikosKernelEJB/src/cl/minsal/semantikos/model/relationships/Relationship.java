@@ -4,6 +4,8 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.crossmaps.Crossmap;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -273,6 +275,19 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
     @Override
     public String toString() {
         return relationshipDefinition.getName();
+    }
+
+    public Crossmap toCrossMap() {
+
+        if (!this.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
+            throw new IllegalArgumentException("Esta relación no puede ser transformada a una Relación SnomedCT");
+        }
+
+        if (this.isPersistent()) {
+            return new Crossmap(this.id, this.sourceConcept, (CrossmapSetMember) this.target, this.relationshipDefinition, this.validityUntil);
+        } else {
+            return new Crossmap(this.sourceConcept, (CrossmapSetMember) this.target, this.relationshipDefinition, this.validityUntil);
+        }
     }
 
     @Override

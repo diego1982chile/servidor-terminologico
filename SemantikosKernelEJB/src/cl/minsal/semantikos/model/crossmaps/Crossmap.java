@@ -14,18 +14,11 @@ import java.util.ArrayList;
  */
 public class Crossmap extends Relationship {
 
-    public Crossmap(ConceptSMTK sourceConcept, Target target, RelationshipDefinition relationshipDefinition) {
-        super(sourceConcept, target, relationshipDefinition,new ArrayList<RelationshipAttribute>(), null);
+    public Crossmap(ConceptSMTK sourceConcept, CrossmapSetMember target, RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
+        super(sourceConcept, target, relationshipDefinition,new ArrayList<RelationshipAttribute>(), validityUntil);
     }
 
-    public Crossmap(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull Target target, @NotNull RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
+    public Crossmap(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull CrossmapSetMember target, @NotNull RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
         super(id, sourceConcept, target, relationshipDefinition, validityUntil,new ArrayList<RelationshipAttribute>());
     }
-
-    @Override
-    public long getId() {
-        return 0;
-    }
-
-
 }

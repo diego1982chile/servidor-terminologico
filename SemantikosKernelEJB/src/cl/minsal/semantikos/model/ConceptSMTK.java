@@ -1,6 +1,11 @@
 package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.audit.AuditableEntity;
+import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
+import cl.minsal.semantikos.model.crossmaps.CrossMapType;
+import cl.minsal.semantikos.model.crossmaps.Crossmap;
+import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
+import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.*;
 
@@ -256,6 +261,23 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         return snomedRelationships;
+    }
+
+    /**
+     * Este método es responsable de retornar las relaciones de tipo SNOMED_CT.
+     *
+     * @return Una lista de relaciones a SnomedCT
+     */
+    public List<Crossmap> getRelationshipsCrossMap(CrossMapType crossMapType) {
+
+        List<Crossmap> indirectCrossmaps = new ArrayList<>();
+        for (Relationship relationship : relationships) {
+            if (relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
+                indirectCrossmaps.add(relationship.toCrossMap());
+            }
+        }
+
+        return indirectCrossmaps;
     }
 
     /**

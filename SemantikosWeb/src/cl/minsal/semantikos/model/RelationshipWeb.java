@@ -72,10 +72,6 @@ public class RelationshipWeb extends Relationship implements Comparable<Relation
         return new Relationship(this.getSourceConcept(), this.getTarget(), this.getRelationshipDefinition(), this.getRelationshipAttributes(), null);
     }
 
-    public Relationship toRelationship(){
-        return new Relationship(this.getSourceConcept(), this.getTarget(), this.getRelationshipDefinition(), this.getRelationshipAttributes());
-    }
-
     @Override
     public int compareTo(RelationshipWeb o) {
         return this.getOrder() - o.getOrder();

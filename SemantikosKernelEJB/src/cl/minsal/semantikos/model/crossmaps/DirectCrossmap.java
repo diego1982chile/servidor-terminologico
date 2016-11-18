@@ -13,11 +13,12 @@ import java.sql.Timestamp;
  * @author Andrés Farías on 11/3/16.
  */
 public class DirectCrossmap extends Crossmap implements Target {
-    public DirectCrossmap(ConceptSMTK sourceConcept, Target target, RelationshipDefinition relationshipDefinition) {
-        super(sourceConcept, target, relationshipDefinition);
+
+    public DirectCrossmap(ConceptSMTK sourceConcept, CrossmapSetMember target, RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
+        super(sourceConcept, target, relationshipDefinition, validityUntil);
     }
 
-    public DirectCrossmap(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull Target target, @NotNull RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
+    public DirectCrossmap(@NotNull long id, @NotNull ConceptSMTK sourceConcept, @NotNull CrossmapSetMember target, @NotNull RelationshipDefinition relationshipDefinition, Timestamp validityUntil) {
         super(id, sourceConcept, target, relationshipDefinition, validityUntil);
     }
 
