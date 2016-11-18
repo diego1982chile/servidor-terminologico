@@ -280,7 +280,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
 
         if (o == this) return true;
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !this.getClass().isAssignableFrom(o.getClass())) return false;
 
         /* Ahora comparamos con otra relacion */
         Relationship relationship = (Relationship) o;
