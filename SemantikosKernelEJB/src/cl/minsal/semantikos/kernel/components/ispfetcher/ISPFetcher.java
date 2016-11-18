@@ -8,5 +8,11 @@ import java.util.Map;
  */
 @Local
 public interface ISPFetcher {
+
+    /**
+     * Obtiene mapa con datos del la pagina del ISP a partir del id de registro
+     * @param registro
+     * @return
+     */
     Map<String,String> getISPData(String registro);
 }
