@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.MultiplicityFactory;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -249,6 +250,64 @@ public class CrossmapsDAOImpl implements CrossmapsDAO {
         }
 
         return crossmapSets;
+    }
+
+    @Override
+    public List<IndirectCrossmap> getCrossmapsBySCT(long idConceptSCT, ConceptSMTK sourceConcept) {
+
+        List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
+
+        ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.get_crossmap_by_sct(?)}")) {
+
+            call.setLong(1, idConceptSCT);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+
+                IndirectCrossmap indirectCrossmap = createIndirectCrossMapFromResultSet(rs, sourceConcept);
+                indirectCrossmaps.add(indirectCrossmap);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            String s = "Error al recuperar los crossmaps";
+            logger.error(s);
+            throw new EJBException(s, e);
+        }
+
+        return indirectCrossmaps;
+    }
+
+    private IndirectCrossmap createIndirectCrossMapFromResultSet(ResultSet rs, ConceptSMTK sourceConcept) throws SQLException {
+
+        long id = rs.getLong("id");
+        long idCrossMapSetMember = rs.getLong("id_cross_map_set_member");
+        CrossmapSetMember crossmapSetMemberById = this.getCrossmapSetMemberById(idCrossMapSetMember);
+        RelationshipDefinition relationshipDefinition = new RelationshipDefinition("Indirect Crossmap", "Un crossmap Indirecto", MultiplicityFactory.ONE_TO_ONE, crossmapSetMemberById.getCrossmapSet());
+
+        int mapGroup = rs.getInt("map_group");
+        int mapPriority = rs.getInt("map_priority");
+        String mapRule = rs.getString("map_rule");
+        String mapAdvice = rs.getString("map_advice");
+        String mapTarget = rs.getString("map_target");
+
+        long idCorrelation = rs.getLong("id_correlation");
+        long idCrossmapCategory = rs.getLong("id_crossmap_category");
+        boolean state = rs.getBoolean("state");
+
+        IndirectCrossmap indirectCrossmap = new IndirectCrossmap(id, sourceConcept, crossmapSetMemberById, relationshipDefinition, null);
+        indirectCrossmap.setCorrelation(idCorrelation);
+        indirectCrossmap.setIdCrossmapCategory(idCrossmapCategory);
+        indirectCrossmap.setMapGroup(mapGroup);
+        indirectCrossmap.setMapPriority(mapPriority);
+        indirectCrossmap.setMapRule(mapRule);
+        indirectCrossmap.setMapAdvice(mapAdvice);
+        indirectCrossmap.setMapTarget(mapTarget);
+        indirectCrossmap.setState(state);
+
+        return indirectCrossmap;
     }
 
 

@@ -103,20 +103,16 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
             conceptSMTK.setRelationships(relationshipsBySourceConcept);
         }
 
+
         /* Se recuperan las relaciones a Snomed CT del tipo ES_UN o ES UN MAPEO DE */
         List<CrossmapSetMember> crossmapSetMembers = new ArrayList<>();
-        List<SnomedCTRelationship> relationshipsSnomedCT = conceptSMTK.getRelationshipsSnomedCT();
-        for (SnomedCTRelationship snomedCTRelationship : relationshipsSnomedCT) {
-            if (snomedCTRelationship.isES_UN_MAPEO_DE() || snomedCTRelationship.isES_UN()){
-                crossmapSetMembers.addAll(crossmapsDAO.getRelatedCrossMapSetMembers(snomedCTRelationship.getTarget()));
-            }
-        }
 
-        /* Con la lista de los crossmapSetMembers se pueden construir los Crossmaps indirectos */
+        List<SnomedCTRelationship> relationshipsSnomedCT = conceptSMTK.getRelationshipsSnomedCT();
         List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
-        for (CrossmapSetMember crossmapSetMember : crossmapSetMembers) {
-            RelationshipDefinition relationshipDefinition = new RelationshipDefinition("Indirect Crossmap", "Un crossmap Indirecto", MultiplicityFactory.ONE_TO_ONE, crossmapSetMember.getCrossmapSet());
-            indirectCrossmaps.add(new IndirectCrossmap(conceptSMTK, crossmapSetMember, relationshipDefinition, null));
+        for (SnomedCTRelationship snomedCTRelationship : relationshipsSnomedCT) {
+            if (snomedCTRelationship.isES_UN_MAPEO_DE() || snomedCTRelationship.isES_UN()) {
+                indirectCrossmaps = crossmapsDAO.getCrossmapsBySCT(snomedCTRelationship.getTarget().getId(), conceptSMTK);
+            }
         }
 
         return indirectCrossmaps;
