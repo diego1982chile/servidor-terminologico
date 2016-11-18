@@ -199,7 +199,7 @@ public class RelationshipFactory {
 
         /* El target puede ser un concepto Snomed CT */
         if (relationshipDefinition.getTargetDefinition().isSnomedCTType()) {
-            ConceptSCT conceptCSTByID = conceptSCTDAO.getConceptCSTByID(idTarget);
+            ConceptSCT conceptCSTByID = (ConceptSCT) targetDAO.getTargetByID(idTarget);
             return new SnomedCTRelationship(relationshipDTO.getId(), sourceConceptSMTK, conceptCSTByID, relationshipDefinition, new ArrayList<RelationshipAttribute>(), relationshipDTO.validityUntil);
         }
 
