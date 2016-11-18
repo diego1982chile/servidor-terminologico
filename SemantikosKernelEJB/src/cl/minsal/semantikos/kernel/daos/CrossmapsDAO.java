@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
@@ -52,4 +53,6 @@ public interface CrossmapsDAO {
      * @return Un CrossmapSetMember fresco.
      */
     public CrossmapSetMember getCrossmapSetMemberById(long idCrossmapSetMember);
+
+    public List<CrossmapSetMember> getCrossmapSetMemberBy(CrossmapSet crossmapSet);
 }
