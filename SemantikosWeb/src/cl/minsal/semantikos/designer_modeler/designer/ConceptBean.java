@@ -443,7 +443,10 @@ public class ConceptBean implements Serializable {
     public void addRelationshipWithAttributes(RelationshipDefinition relationshipDefinition) {
 
         FacesContext context = FacesContext.getCurrentInstance();
-
+        if(existMapping()){
+            messageError("Cuando existe una relación Es un mapeo, no se pueden agregar más relaciones.");
+            return;
+        }
         Relationship relationship = relationshipPlaceholders.get(relationshipDefinition.getId());
 
         // Validar placeholders de targets de relacion
@@ -488,6 +491,7 @@ public class ConceptBean implements Serializable {
             ConceptSCT conceptSCT= (ConceptSCT) relationship.getTarget();
             fullyDefined=(conceptSCT.isCompletelyDefined())?true:false;
             concept.setFullyDefined(fullyDefined);
+            concept.setInherited(true);
         }
 
         // Se utiliza el constructor mínimo (sin id)
@@ -860,6 +864,7 @@ public class ConceptBean implements Serializable {
         List<RelationshipWeb> relationshipsForPersist = concept.getUnpersistedRelationshipsWeb();
         /* Se persisten las nuevas relaciones */
         for (RelationshipWeb relationshipWeb : relationshipsForPersist) {
+            relationshipWeb.setSourceConcept(concept);
             relationshipManager.bindRelationshipToConcept(concept, relationshipWeb.toRelationship(), user);
         }
 
@@ -1585,6 +1590,9 @@ public class ConceptBean implements Serializable {
     }
 
     public boolean isFullyDefined() {
+        if(concept!=null){
+            return (concept.isFullyDefined())?true:false;
+        }
         return this.fullyDefined;
     }
 
@@ -1592,15 +1600,18 @@ public class ConceptBean implements Serializable {
     private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR;
 
     public void setFullyDefined(boolean fullyDefined) {
+        this.fullyDefined = fullyDefined;
+    }
+
+    public void changeFullyDefined() {
         try {
-            concept.setFullyDefined(fullyDefined);
-            this.fullyDefined = fullyDefined;
+            concept.setFullyDefined((fullyDefined)?true:false);
             conceptDefinitionalGradeBR.apply(concept);
         } catch (EJBException e) {
             if (concept.isModeled()) {
                 concept.setFullyDefined(false);
             } else {
-                concept.setFullyDefined(null);
+                concept.setFullyDefined(false);
             }
             messageError("No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT");
         }
@@ -1620,6 +1631,15 @@ public class ConceptBean implements Serializable {
                 }
             }
         }
+        return false;
+    }
+    private boolean existMapping() {
+        for (Relationship relationship: concept.getValidRelationships()) {
+            if (relationship.getRelationshipDefinition().getId() == ID_RELATIONSHIP_DEFINITION_SNOMED_CT) {
+                return true;
+            }
+        }
+
         return false;
     }
 
