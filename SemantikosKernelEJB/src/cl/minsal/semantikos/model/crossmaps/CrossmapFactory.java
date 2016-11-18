@@ -35,8 +35,7 @@ public class CrossmapFactory {
         logger.debug("creando CrossmapSetMember de ResultSet: ", resultSet);
 
         long id = resultSet.getLong("id");
-        resultSet.getLong("id_cross_map_set");
-        CrossmapSet crossmapSet = null;
+        CrossmapSet crossmapSet = crossmapsDAO.getCrossmapSetByID(resultSet.getLong("id_cross_map_set"));
         String code = resultSet.getString("code");
         String gloss = resultSet.getString("gloss");
 
