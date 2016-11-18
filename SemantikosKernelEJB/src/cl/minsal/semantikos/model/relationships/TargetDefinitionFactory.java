@@ -71,7 +71,7 @@ public class TargetDefinitionFactory {
                 return helperTableDAO.getHelperTableByID(targetDefinitionDTO.idHelperTableName);
 
             case CROSSMAP_TYPE_ID:
-                return crossmapsDAO.
+                //return crossmapsDAO.getCrossmapSetByID(targetDefinitionDTO.getIdHelperTableName())
 
             default:
                 throw new EJBException("TIPO DE DEFINICION INCORRECTO. ID Target Type=" + targetDefinitionDTO.idTargetType);
