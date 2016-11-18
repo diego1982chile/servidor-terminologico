@@ -45,6 +45,8 @@ public interface CrossmapsDAO {
 
     DirectCrossmap bindConceptSMTKToCrossmapSetMember(ConceptSMTK conceptSMTK, CrossmapSetMember crossmapSetMember);
 
+    public CrossmapSet getCrossmapSetByID(long id);
+
     /**
      * Este método es responsable de recuperar un CrossmapSetMember por su ID de la base de datos.
      *
@@ -54,5 +56,13 @@ public interface CrossmapsDAO {
      */
     public CrossmapSetMember getCrossmapSetMemberById(long idCrossmapSetMember);
 
+    /**
+     * Este método es responsable de recuperar un CrossmapSetMember dada su terminología y un patrón de búsqueda
+     *
+     * @param crossmapSet La terminología
+     * @param pattern El patrón de búsqueda
+     *
+     * @return Un CrossmapSetMember fresco.
+     */
     public List<CrossmapSetMember> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern);
 }

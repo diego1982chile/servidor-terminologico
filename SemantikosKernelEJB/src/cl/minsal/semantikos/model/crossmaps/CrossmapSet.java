@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 public class CrossmapSet extends PersistentEntity implements TargetDefinition {
 
     /** Identificador de negocio */
-    private long idCrossmapSet;
+    //private long idCrossmapSet;
 
     private String abbreviatedName;
 
@@ -22,39 +22,31 @@ public class CrossmapSet extends PersistentEntity implements TargetDefinition {
     /** Año de la versión */
     private int version;
 
-    /** Fecha de creación */
-    private Timestamp creationDate;
-
-    /** Fecha <em>hasta</em> de vigencia */
-
-    private Timestamp validityUntil;
-
-    /** Usuario que creo la terminología */
-    private User creator;
-
-    public Timestamp getValidityUntil() {
-        return validityUntil;
+    public CrossmapSet(String abbreviatedName, String name, int version, boolean state) {
+        this.abbreviatedName = abbreviatedName;
+        this.name = name;
+        this.version = version;
+        this.state = state;
     }
 
-    public void setValidityUntil(Timestamp validityUntil) {
-        this.validityUntil = validityUntil;
+    public CrossmapSet(long id, String abbreviatedName, String name, int version, boolean state) {
+        super(id);
+        this.abbreviatedName = abbreviatedName;
+        this.name = name;
+        this.version = version;
+        this.state = state;
     }
 
-    public User getCreator() {
-        return creator;
+    public boolean isState() {
+        return state;
+
     }
 
-    public void setCreator(User creator) {
-        this.creator = creator;
+    public void setState(boolean state) {
+        this.state = state;
     }
 
-    public Timestamp getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Timestamp creationDate) {
-        this.creationDate = creationDate;
-    }
+    private boolean state;
 
     public int getVersion() {
         return version;
@@ -79,15 +71,6 @@ public class CrossmapSet extends PersistentEntity implements TargetDefinition {
     public void setAbbreviatedName(String abbreviatedName) {
         this.abbreviatedName = abbreviatedName;
     }
-
-    public long getIdCrossmapSet() {
-        return idCrossmapSet;
-    }
-
-    public void setIdCrossmapSet(long idCrossmapSet) {
-        this.idCrossmapSet = idCrossmapSet;
-    }
-
 
     @Override
     public boolean isBasicType() {
