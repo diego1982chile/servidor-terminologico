@@ -141,13 +141,7 @@
                                             style="border:0px; margin: 0px; padding: 0px;"
                                             styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
 
-
-
-                                        <smtk:crossmapType
-                                                targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                                relationshipDefinition="#{relationshipDefinition}"
-                                                concept="#{conceptBean.concept}"
-                                                rendered="#{relationshipDefinition.targetDefinition.crossMapType}"/>
+                                        <smtk:crossmapIndirect/>
 
                                     </p:outputPanel>
 

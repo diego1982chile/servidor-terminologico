@@ -269,8 +269,6 @@ public class ConceptBean implements Serializable {
         conceptSMTKNotValid = conceptManager.getNoValidConcept();
 
         conceptSuggestedList = new ArrayList<>();
-
-
     }
 
     public void addSuggest() {
@@ -347,6 +345,7 @@ public class ConceptBean implements Serializable {
         TagSMTK tagSMTK = new TagSMTK(category.getTagSemantikos().getId(), category.getTagSemantikos().getName());
 
         ConceptSMTK conceptSMTK = new ConceptSMTK(conceptManager.generateConceptId(), category, false, false, false, false, false, false, observation, tagSMTK);
+
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = initConcept(conceptSMTK, term);
         concept.setEditable(editable);
@@ -397,6 +396,7 @@ public class ConceptBean implements Serializable {
     public void getConceptById(long conceptId) {
         ConceptSMTK conceptSMTK = conceptManager.getConceptByID(conceptId);
         conceptSMTK.setRelationships(conceptManager.loadRelationships(conceptSMTK));
+        this.conceptSMTK= conceptSMTK;
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = new ConceptSMTKWeb(conceptSMTK);
         // Se crea una copia con la imagen original del concepto

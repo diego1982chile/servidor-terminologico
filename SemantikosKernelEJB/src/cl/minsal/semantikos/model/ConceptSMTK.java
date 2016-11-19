@@ -273,7 +273,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         List<Crossmap> crossmaps = new ArrayList<>();
         for (Relationship relationship : relationships) {
             if (relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
-                crossmaps.add(relationship.toCrossMap());
+                crossmaps.add((IndirectCrossmap)relationship);
             }
         }
 

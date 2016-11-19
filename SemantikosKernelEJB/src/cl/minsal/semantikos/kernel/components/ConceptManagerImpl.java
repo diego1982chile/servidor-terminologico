@@ -6,6 +6,7 @@ import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.*;
+import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import org.slf4j.Logger;
@@ -54,7 +55,8 @@ public class ConceptManagerImpl implements ConceptManager {
     @EJB
     private RelationshipManager relationshipManager;
 
-
+    @EJB
+    private CrossmapsManager crossmapsManager;
 
 
     @Override
@@ -355,6 +357,9 @@ public class ConceptManagerImpl implements ConceptManager {
     public List<Relationship> loadRelationships(ConceptSMTK concept) {
         List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
         concept.setRelationships(relationships);
+        List<IndirectCrossmap> relationshipsCrossMapIndirect = crossmapsManager.getIndirectCrossmaps(concept);
+        relationships.addAll(relationshipsCrossMapIndirect);
+
         return relationships;
     }
 

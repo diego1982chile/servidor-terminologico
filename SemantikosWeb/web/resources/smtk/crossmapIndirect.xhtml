@@ -10,25 +10,27 @@
       xmlns:p="http://primefaces.org/ui">
 
 <composite:interface>
-
+    <composite:attribute name="crossmap" type="cl.minsal.semantikos.model.crossmaps.IndirectCrossmap" />
 </composite:interface>
 <composite:implementation>
 
-    <p:dataTable value="" var="crossmapsIndirect">
+    <h3>Crossmap Indirecto</h3>
+
+    <p:dataTable value="#{conceptBean.conceptSMTK.relationshipsIndirectCrossMap}" var="crossmapsIndirect">
         <p:column headerText="Terminología">
-            <h:outputText value=""/>
+            <h:outputText value="#{crossmapsIndirect.target.crossmapSet.name}"/>
         </p:column>
         <p:column headerText="Cod. Crossmaps">
-            <h:outputText value=""/>
+            <h:outputText value="#{crossmapsIndirect.target.code}"/>
         </p:column>
         <p:column headerText="Descripcion">
-            <h:outputText value=""/>
+            <h:outputText value="#{crossmapsIndirect.target.gloss}"/>
         </p:column>
         <p:column headerText="MapRule">
-            <h:outputText value=""/>
+            <h:outputText value="#{crossmapsIndirect.mapRule}"/>
         </p:column>
         <p:column headerText="MapAdvice">
-            <h:outputText value=""/>
+            <h:outputText value="#{crossmapsIndirect.mapAdvice}"/>
         </p:column>
         <p:column headerText="Origen">
             <h:outputText value=""/>

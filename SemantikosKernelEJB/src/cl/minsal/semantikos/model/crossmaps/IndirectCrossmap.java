@@ -70,7 +70,7 @@ public class IndirectCrossmap extends Crossmap {
     }
 
     public void setMapAdvice(String mapAdvice) {
-        this.mapAdvice = mapAdvice;
+        if(mapAdvice!=null)this.mapAdvice = mapAdvice;
     }
 
     public String getMapTarget() {
@@ -103,5 +103,20 @@ public class IndirectCrossmap extends Crossmap {
 
     public void setState(boolean state) {
         this.state = state;
+    }
+
+
+    @Override
+    public String toString() {
+        return "IndirectCrossmap{" +
+                "mapGroup=" + mapGroup +
+                ", mapPriority=" + mapPriority +
+                ", mapRule='" + mapRule + '\'' +
+                ", mapAdvice='" + mapAdvice + '\'' +
+                ", mapTarget='" + mapTarget + '\'' +
+                ", correlation=" + correlation +
+                ", idCrossmapCategory=" + idCrossmapCategory +
+                ", state=" + state +
+                '}';
     }
 }
