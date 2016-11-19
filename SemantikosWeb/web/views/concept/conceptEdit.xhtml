@@ -126,6 +126,9 @@
                     </p:tab>
                     <p:tab title="Crossmaps" rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
                         <!--Relaciones -->
+
+                        <smtk:crossmapIndirect/>
+
                         <p:panel id="atributoCrossmap"
                                  widgetVar="panelAtributoCrossmap"
                                  styleClass="attributes"
@@ -141,7 +144,7 @@
                                             style="border:0px; margin: 0px; padding: 0px;"
                                             styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
 
-                                        <smtk:crossmapIndirect/>
+
 
                                     </p:outputPanel>
 
