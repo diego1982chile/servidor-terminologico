@@ -127,7 +127,7 @@
                     <p:tab title="Crossmaps" rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
                         <!--Relaciones -->
 
-                        <smtk:crossmapIndirect/>
+                        <smtk:crossmapIndirect rendered="#{not empty conceptBean.conceptSMTK.relationshipsIndirectCrossMap}"/>
 
                         <p:panel id="atributoCrossmap"
                                  widgetVar="panelAtributoCrossmap"
