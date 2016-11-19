@@ -74,6 +74,25 @@ public class CrossmapSetMember extends PersistentEntity implements Target {
         return TargetType.CrossMap;
     }
 
+    // Métodos para soportar conversión automática
+    @Override
+    public boolean equals(Object other) {
+        return (other instanceof CrossmapSetMember) && (String.valueOf(idCrossmapSetMember) != null)
+                ? String.valueOf(idCrossmapSetMember).equals(String.valueOf(((CrossmapSetMember) other).idCrossmapSetMember))
+                : (other == this);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getClass().hashCode() + new Long(idCrossmapSetMember).hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return Long.toString(idCrossmapSetMember);
+    }
+
+
     @Override
     public Target copy() {
         return new CrossmapSetMember(this.getIdCrossmapSetMember(), this.getIdCrossmapSetMember(), this.getCrossmapSet(), this.getCode(), this.getGloss());

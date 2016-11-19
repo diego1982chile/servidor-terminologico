@@ -156,6 +156,7 @@ public class RelationshipFactory {
         /* El target que puede ser básico, smtk, tablas, crossmaps o snomed-ct */
         Relationship relationship = createRelationshipByTargetType(relationshipDTO, sourceConceptSMTK, relationshipDefinition);
         relationship.setRelationshipAttributes(relationshipAttributes);
+        relationship.setValidityUntil(relationshipDTO.getValidityUntil());
         return relationship;
     }
 
@@ -205,8 +206,9 @@ public class RelationshipFactory {
 
         /* Y sino, puede ser crossmap */
         if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
-            CrossmapSetMember crossmapSetMemberById = crossmapDAO.getCrossmapSetMemberById(idTarget);
-            return new DirectCrossmap(relationshipDTO.getId(), sourceConceptSMTK, crossmapSetMemberById, relationshipDefinition, relationshipDTO.validityUntil);
+            target = targetDAO.getTargetByID(idTarget);
+            //CrossmapSetMember crossmapSetMemberById = crossmapDAO.getCrossmapSetMemberById(idTarget);
+            return new DirectCrossmap(relationshipDTO.getId(), sourceConceptSMTK, (CrossmapSetMember)target, relationshipDefinition, relationshipDTO.validityUntil);
         }
 
         /* Sino, hay un nuevo tipo de target que no está siendo gestionado */
