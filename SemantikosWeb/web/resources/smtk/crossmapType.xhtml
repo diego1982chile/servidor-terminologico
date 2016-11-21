@@ -374,7 +374,7 @@
                                                    concept="#{cc.attrs.concept}"
                                                    relationship="#{relationship}"
                                                    targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                   rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
+                                                   rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable and not relationshipAttributeDefinition.relationshipTypeAttribute}"
                     />
                 </p:repeat>
 

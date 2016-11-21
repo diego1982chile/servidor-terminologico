@@ -142,12 +142,14 @@
                     var="relationshipAttributeDefinition">
                 <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                          relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                         concept="#{cc.attrs.concept}"
                                          targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
                                          rendered="#{relationshipAttributeDefinition.targetDefinition.basicType}"
                 />
                 <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                                relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                                targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                               concept="#{cc.attrs.concept}"
                                                rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
                 />
             </p:repeat>
@@ -189,12 +191,14 @@
                                              relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                              targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
                                              relationship="#{relationship}"
+                                             concept="#{cc.attrs.concept}"
                                              rendered="#{relationshipAttributeDefinition.targetDefinition.basicType}"
                     />
                     <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                                    relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                                    targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
                                                    relationship="#{relationship}"
+                                                   concept="#{cc.attrs.concept}"
                                                    rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
                     />
                 </p:repeat>
@@ -346,11 +350,13 @@
                     <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                              relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                              targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                             concept="#{cc.attrs.concept}"
                                              rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()}"
                     />
                     <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                                    relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                                    targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                                   concept="#{cc.attrs.concept}"
                                                    rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
                     />
                 </p:repeat>
