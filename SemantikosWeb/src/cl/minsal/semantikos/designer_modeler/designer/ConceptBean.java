@@ -808,6 +808,10 @@ public class ConceptBean implements Serializable {
     public void saveConcept() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (validateRelationships()) {
+            if(concept.isModeled() && !existRelationshipToSCT()){
+               messageError("No es posible guardar el concepto, debe tener al menos una relación a SNOMED CT cuando se encuentra modelado");
+               return;
+            }
             // Si el concepto está persistido, actualizarlo. Si no, persistirlo
             if (concept.isPersistent()) {
                 updateConcept(context);
@@ -1661,6 +1665,15 @@ public class ConceptBean implements Serializable {
     public boolean existRelationshipISAMapping() {
         for (Relationship relationship : concept.getValidRelationships()) {
             return isMapping(relationship);
+        }
+        return false;
+    }
+
+    private boolean existRelationshipToSCT() {
+        for (Relationship relationship: concept.getValidRelationships()) {
+            if (relationship.getRelationshipDefinition().getId() == ID_RELATIONSHIP_DEFINITION_SNOMED_CT) {
+                return true;
+            }
         }
         return false;
     }
