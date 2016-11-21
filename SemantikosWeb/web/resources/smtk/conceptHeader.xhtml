@@ -22,7 +22,7 @@
             <p:outputLabel for="toBeReviewedCheck" value="Indicadores"/>
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-4">
-            <p:panelGrid columns="2" columnClasses="ui-grid-col-5,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+            <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
                 <p:selectBooleanCheckbox id="toBeReviewedCheck" itemLabel="Revisar" disabled="#{not cc.attrs.concept.editable}"
                                          value="#{cc.attrs.concept.toBeReviewed}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
                 <p:selectBooleanCheckbox id="toBeConsultatedCheck" itemLabel="Consultar" disabled="#{not cc.attrs.concept.editable}"
@@ -30,19 +30,25 @@
             </p:panelGrid>
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-2">
-            <p:outputLabel for="toBeReviewedCheck" value="Grado de definición" rendered="#{cc.attrs.concept.modeled}" />
+            <p:outputLabel for="toBeReviewedCheck" value="Grado de Definición" />
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-4">
-            <p:selectOneRadio id="fullyDefined"
-                              layout="responsive"
-                              columns="2"
-                              value="#{cc.attrs.concept.fullyDefined}"
-                              style="width:90%"
-                              disabled="#{cc.attrs.concept.modeled or not cc.attrs.concept.editable}"
-                              rendered="#{cc.attrs.concept.modeled}">
+
+            <p:selectOneRadio id="customRadio" value="#{conceptBean.fullyDefined}" layout="custom">
                 <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
                 <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
+                <p:ajax event="change" process="@this" update="@this" />
             </p:selectOneRadio>
+
+            <p:panelGrid id="fullyDefined" columns="4" columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-7" layout="grid"
+                         styleClass="ui-panelgrid-blank fullyDefined"
+                         style="width: 100%">
+                <p:radioButton id="opt1" for="customRadio" itemIndex="0" />
+                <h:outputLabel for="opt1" value="Primitivo" />
+
+                <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>
+                <h:outputLabel for="opt2" value="Completamente Definido" />
+            </p:panelGrid>
         </div>
     </div>
 

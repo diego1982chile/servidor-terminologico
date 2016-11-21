@@ -5,13 +5,16 @@ import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.businessrules.BusinessRulesContainer;
+import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
+import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
+import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.util.Pair;
 import cl.minsal.semantikos.view.components.ViewAugmenter;
-import org.omnifaces.util.Ajax;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.ReorderEvent;
 import org.primefaces.event.RowEditEvent;
@@ -132,6 +135,8 @@ public class ConceptBean implements Serializable {
 
     private ConceptSCT conceptSCTSelected;
 
+    private Crossmap crossmapSelected;
+
     private Map<Long, ConceptSMTK> targetSelected;
 
     // Placeholders para los atributos de relacion
@@ -144,6 +149,8 @@ public class ConceptBean implements Serializable {
     //Parametros del formulario
 
     private String FSN;
+
+    private boolean fullyDefined;
 
     private String favoriteDescription;
 
@@ -334,7 +341,7 @@ public class ConceptBean implements Serializable {
         // TODO: Diego
         TagSMTK tagSMTK = new TagSMTK(category.getTagSemantikos().getId(), category.getTagSemantikos().getName());
 
-        ConceptSMTK conceptSMTK = new ConceptSMTK(conceptManager.generateConceptId(), category, false, false, false, false, false, observation, tagSMTK);
+        ConceptSMTK conceptSMTK = new ConceptSMTK(conceptManager.generateConceptId(), category, false, false, false, false, false, false, observation, tagSMTK);
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = initConcept(conceptSMTK, term);
         concept.setEditable(editable);
@@ -836,7 +843,7 @@ public class ConceptBean implements Serializable {
         List<RelationshipWeb> relationshipsForPersist = concept.getUnpersistedRelationshipsWeb();
         /* Se persisten las nuevas relaciones */
         for (RelationshipWeb relationshipWeb : relationshipsForPersist) {
-            relationshipManager.bindRelationshipToConcept(concept, (Relationship) relationshipWeb, user);
+            relationshipManager.bindRelationshipToConcept(concept, relationshipWeb.toRelationship(), user);
         }
 
         /* Se elimina las relaciones eliminadas */
@@ -1363,6 +1370,14 @@ public class ConceptBean implements Serializable {
         this.changeMarketedBean = changeMarketedBean;
     }
 
+    public Crossmap getCrossmapSelected() {
+        return crossmapSelected;
+    }
+
+    public void setCrossmapSelected(Crossmap crossmapSelected) {
+        this.crossmapSelected = crossmapSelected;
+    }
+
     /**
      * Este método retorna una lista ordenada de relaciones.
      *
@@ -1558,6 +1573,26 @@ public class ConceptBean implements Serializable {
             }
         }
         return true;
+    }
+
+    public boolean isFullyDefined() {
+        return this.fullyDefined;
+    }
+
+    @EJB
+    private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR;
+
+    public void setFullyDefined(boolean fullyDefined) {
+        try{
+            concept.setFullyDefined(fullyDefined);
+            this.fullyDefined = fullyDefined;
+            conceptDefinitionalGradeBR.apply(concept);
+        }catch(BusinessRuleException br) {
+            concept.setFullyDefined(null);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT"));
+        }
+
     }
 
 }

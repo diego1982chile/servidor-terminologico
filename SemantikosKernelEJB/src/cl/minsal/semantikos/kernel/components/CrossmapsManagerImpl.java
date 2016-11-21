@@ -2,14 +2,14 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.CrossmapsDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.DirectCrossmap;
+import cl.minsal.semantikos.model.MultiplicityFactory;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.businessrules.CrossMapCreationBR;
 import cl.minsal.semantikos.model.businessrules.CrossMapRemovalBR;
-import cl.minsal.semantikos.model.crossmaps.Crossmap;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
-import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
-import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
+import cl.minsal.semantikos.model.crossmaps.*;
+import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -27,6 +27,9 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
 
     @EJB
     private CrossmapsDAO crossmapsDAO;
+
+    @EJB
+    private RelationshipManager relationshipManager;
 
     @Override
     public Crossmap create(DirectCrossmap directCrossmap, User user) {
@@ -81,6 +84,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
 
     @Override
     public List<DirectCrossmap> getDirectCrossmaps(ConceptSMTK conceptSMTK) {
+
         ArrayList<DirectCrossmap> crossmaps = new ArrayList<>();
         if (conceptSMTK.isPersistent()) {
             crossmaps.addAll(crossmapsDAO.getDirectCrossmapsByIdConcept(conceptSMTK.getId()));
@@ -93,12 +97,30 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
 
     @Override
     public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSMTK conceptSMTK) {
-        if (conceptSMTK.isPersistent()) {
-            return crossmapsDAO.getIndirectCrossmapsByIdConcept(conceptSMTK.getId());
-        } else {
-            return crossmapsDAO.getIndirectCrossmapsByConceptID(conceptSMTK.getConceptID());
+
+        /* Se valida si el concepto tiene cargada sus relaciones */
+        if (conceptSMTK.getRelationships().size() == 0) {
+            List<Relationship> relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(conceptSMTK);
+            conceptSMTK.setRelationships(relationshipsBySourceConcept);
         }
 
+        /* Se recuperan las relaciones a Snomed CT del tipo ES_UN o ES UN MAPEO DE */
+        List<CrossmapSetMember> crossmapSetMembers = new ArrayList<>();
+        List<SnomedCTRelationship> relationshipsSnomedCT = conceptSMTK.getRelationshipsSnomedCT();
+        for (SnomedCTRelationship snomedCTRelationship : relationshipsSnomedCT) {
+            if (snomedCTRelationship.isES_UN_MAPEO_DE() || snomedCTRelationship.isES_UN()){
+                crossmapSetMembers.addAll(crossmapsDAO.getRelatedCrossMapSetMembers(snomedCTRelationship.getTarget()));
+            }
+        }
+
+        /* Con la lista de los crossmapSetMembers se pueden construir los Crossmaps indirectos */
+        List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
+        for (CrossmapSetMember crossmapSetMember : crossmapSetMembers) {
+            RelationshipDefinition relationshipDefinition = new RelationshipDefinition("Indirect Crossmap", "Un crossmap Indirecto", MultiplicityFactory.ONE_TO_ONE, crossmapSetMember.getCrossmapSet());
+            indirectCrossmaps.add(new IndirectCrossmap(conceptSMTK, crossmapSetMember, relationshipDefinition));
+        }
+
+        return indirectCrossmaps;
     }
 
     @Override

@@ -15,8 +15,9 @@ import static cl.minsal.semantikos.model.relationships.TargetType.SnomedCT;
 /**
  * @author Andrés Farías
  */
+
 @Singleton
-public class ConceptStateBusinessRulesContainer implements BusinessRulesContainer {
+public class ConceptDefinitionalGradeBR implements ConceptDefinitionalGradeBRInterface {
 
     @EJB
     private RelationshipManager relationshipManager;
