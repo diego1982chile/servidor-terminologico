@@ -225,6 +225,8 @@ public class ConceptManagerImpl implements ConceptManager {
         /* Y sus relaciones */
         for (Relationship relationship : conceptSMTK.getRelationships()) {
             relationshipManager.createRelationship(relationship);
+            /* Se realizan las acciones asociadas a la asociación */
+            new RelationshipBindingBR().postActions(relationship, conceptDAO);
         }
 
         /* Y sus tags */
