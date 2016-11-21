@@ -65,6 +65,16 @@ public interface CrossmapsManager {
     public List<DirectCrossmap> getDirectCrossmaps(ConceptSMTK conceptSMTK);
 
     /**
+     * Este método es responsable de recuperar un crossmapSetMember dado su
+     * <code>conceptSMTK</code> no es persistente, se recuperan los crossmaps asociados a su <code>CONCEPT_ID</code>.
+     *
+     * @param id El id del crossmapsetmember
+     *
+     * @return La lista de CrossmapSetMembers asociados al concepto <code>conceptSMTK</code>.
+     */
+    public CrossmapSetMember getCrossmapSetMemberById(long id);
+
+    /**
      * Este método es responsable de recuperar los crossmaps indirectos de un concepto y actualizarle su lista de
      * crossmaps. Si el
      * <code>conceptSMTK</code> no es persistente, se recuperan los crossmaps asociados a su <code>CONCEPT_ID</code>.
@@ -94,5 +104,7 @@ public interface CrossmapsManager {
      * @return Una lista de registros
      */
     public List<CrossmapSetMember> findByPattern(CrossmapSet crossmapSet, String pattern);
+
+
 
 }

@@ -36,15 +36,7 @@ public interface CrossmapsDAO {
      */
     public DirectCrossmap getDirectCrossmapById(long id);
 
-    List<IndirectCrossmap> getIndirectCrossmapsByIdConcept(long id);
-
-    List<IndirectCrossmap> getIndirectCrossmapsByConceptID(String conceptID);
-
-    public List<DirectCrossmap> getDirectCrossmapsByIdConcept(long id);
-
-    List<DirectCrossmap> getDirectCrossmapsByConceptID(String conceptID);
-
-    DirectCrossmap bindConceptSMTKToCrossmapSetMember(ConceptSMTK conceptSMTK, CrossmapSetMember crossmapSetMember);
+    public DirectCrossmap bindConceptSMTKToCrossmapSetMember(ConceptSMTK conceptSMTK, CrossmapSetMember crossmapSetMember);
 
     public CrossmapSet getCrossmapSetByID(long id);
 
@@ -71,9 +63,27 @@ public interface CrossmapsDAO {
      * Este método es responsable de recuperar un CrossmapSetMember dada su terminología y un patrón de búsqueda
      *
      * @param crossmapSet La terminología
-     * @param pattern El patrón de búsqueda
+     * @param pattern     El patrón de búsqueda
      *
      * @return Un CrossmapSetMember fresco.
      */
     public List<CrossmapSetMember> findCrossmapSetMemberBy(CrossmapSet crossmapSet, String pattern);
+
+    /**
+     * Este método es responsable de recuperar todas las terminologías válidas existentes en el sistema
+     *
+     * @return Un <code>java.util.List</code> de CrossmapSet
+     */
+    public List<CrossmapSet> getCrossmapSets();
+
+    /**
+     * Este método es responsable de recuperar los crossmaps (como relaciones indirectas) ya pobladas con todos sus
+     * campos, a partir del concepto SCT.
+     *
+     * @param idConceptSCT  El ID del concepto Snomed CT.
+     * @param sourceConcept El concepto base.
+     *
+     * @return Una lista de todos los crossmaps que van a través del concepto SnomedCT.
+     */
+    public List<IndirectCrossmap> getCrossmapsBySCT(long idConceptSCT, ConceptSMTK sourceConcept);
 }

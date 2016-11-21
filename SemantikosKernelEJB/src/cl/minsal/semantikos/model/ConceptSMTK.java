@@ -2,6 +2,10 @@ package cl.minsal.semantikos.model;
 
 import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
+import cl.minsal.semantikos.model.crossmaps.CrossMapType;
+import cl.minsal.semantikos.model.crossmaps.Crossmap;
+import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
+import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.*;
 
@@ -200,7 +204,8 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     }
 
     /**
-     * Este método es responsable de retornar todos los conceptos SMTK de relaciones (a conceptos STMK) que pertenecen a
+     * Este método es responsable de retornar todos los conceptos SMTK de relaciones (a conceptos STMK) que pertenecen
+     * a
      * la categoría indicada.
      *
      * @param category La categoría a la cual pertenecen los conceptos SMTK buscados.
@@ -250,12 +255,46 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
         List<SnomedCTRelationship> snomedRelationships = new ArrayList<>();
         for (Relationship relationship : relationships) {
-            if (relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()) {
-                snomedRelationships.add(relationship.toSnomedCT());
+            if (SnomedCTRelationship.isSnomedCTRelationship(relationship)) {
+                snomedRelationships.add(SnomedCTRelationship.createSnomedCT(relationship));
             }
         }
 
         return snomedRelationships;
+    }
+
+    /**
+     * Este método es responsable de retornar las relaciones de tipo SNOMED_CT.
+     *
+     * @return Una lista de relaciones a SnomedCT
+     */
+    public List<Crossmap> getRelationshipsCrossMap() {
+
+        List<Crossmap> crossmaps = new ArrayList<>();
+        for (Relationship relationship : relationships) {
+            if (relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType()) {
+                try{
+                    crossmaps.add((IndirectCrossmap)relationship);
+                }catch(ClassCastException e){
+                    crossmaps.add((DirectCrossmap)relationship);
+                }
+
+            }
+        }
+
+        return crossmaps;
+    }
+
+    public List<Crossmap> getRelationshipsIndirectCrossMap(){
+
+        List<Crossmap> indirectCrossmaps = new ArrayList<>();
+        for (Crossmap crossmap : getRelationshipsCrossMap()) {
+            if (crossmap.is(CrossMapType.INDIRECT)){
+                indirectCrossmaps.add(crossmap);
+            }
+        }
+
+        return indirectCrossmaps;
     }
 
     /**
