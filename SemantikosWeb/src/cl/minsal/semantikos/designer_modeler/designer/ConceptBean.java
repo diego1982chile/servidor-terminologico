@@ -1595,7 +1595,6 @@ public class ConceptBean implements Serializable {
 
     /**
      * Metodo encargado de validar si la relacion que recibe por parametro es de tipo Es un Mapeo.
-     *
      * @param relationship relacion a validar.
      * @return retorna true o false segun corresponda.
      */
