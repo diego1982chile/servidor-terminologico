@@ -396,7 +396,7 @@ public class ConceptBean implements Serializable {
     public void getConceptById(long conceptId) {
         ConceptSMTK conceptSMTK = conceptManager.getConceptByID(conceptId);
         conceptSMTK.setRelationships(conceptManager.loadRelationships(conceptSMTK));
-        this.conceptSMTK= conceptSMTK;
+        this.conceptSMTK = conceptSMTK;
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = new ConceptSMTKWeb(conceptSMTK);
         // Se crea una copia con la imagen original del concepto
@@ -440,6 +440,7 @@ public class ConceptBean implements Serializable {
         // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
     }
+
     @EJB
     private RelationshipBindingBRInterface relationshipBindingBR;
 
@@ -450,11 +451,18 @@ public class ConceptBean implements Serializable {
     public void addRelationshipWithAttributes(RelationshipDefinition relationshipDefinition) {
 
         FacesContext context = FacesContext.getCurrentInstance();
-        if(existMapping()){
+        if (existRelationshipISAMapping()) {
             messageError("Cuando existe una relación Es un mapeo, no se pueden agregar más relaciones.");
             return;
         }
         Relationship relationship = relationshipPlaceholders.get(relationshipDefinition.getId());
+
+        if (isMapping(relationship)) {
+            ConceptSCT conceptSCT = (ConceptSCT) relationship.getTarget();
+            fullyDefined = (conceptSCT.isCompletelyDefined()) ? true : false;
+            concept.setFullyDefined(fullyDefined);
+            concept.setInherited(true);
+        }
 
         // Validar placeholders de targets de relacion
         if (relationship.getTarget() == null) {
@@ -464,15 +472,13 @@ public class ConceptBean implements Serializable {
             return;
         }
 
+        try {
 
-
-        try{
-
-            if (relationship.getClass().equals(RelationshipWeb.class)){
+            if (relationship.getClass().equals(RelationshipWeb.class)) {
                 relationship = ((RelationshipWeb) relationship).toRelationship();
             }
-            relationshipBindingBR.verifyPreConditions(concept,relationship,user);
-        }catch(EJBException EJB){
+            relationshipBindingBR.verifyPreConditions(concept, relationship, user);
+        } catch (EJBException EJB) {
 
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", EJB.getMessage()));
             return;
@@ -494,12 +500,6 @@ public class ConceptBean implements Serializable {
 
         autogenerateRelationshipWithAttributes(relationshipDefinition, relationship);
 
-        if(isMapping(relationship)){
-            ConceptSCT conceptSCT= (ConceptSCT) relationship.getTarget();
-            fullyDefined=(conceptSCT.isCompletelyDefined())?true:false;
-            concept.setFullyDefined(fullyDefined);
-            concept.setInherited(true);
-        }
 
         // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
@@ -1606,8 +1606,8 @@ public class ConceptBean implements Serializable {
     }
 
     public boolean isFullyDefined() {
-        if(concept!=null){
-            return (concept.isFullyDefined())?true:false;
+        if (concept != null) {
+            return (concept.isFullyDefined()) ? true : false;
         }
         return this.fullyDefined;
     }
@@ -1621,49 +1621,59 @@ public class ConceptBean implements Serializable {
 
     public void changeFullyDefined() {
         try {
-            concept.setFullyDefined((fullyDefined)?true:false);
-            conceptDefinitionalGradeBR.apply(concept);
+            concept.setFullyDefined((fullyDefined) ? true : false);
+            if (existRelationshipISAMapping()) conceptDefinitionalGradeBR.apply(concept);
         } catch (EJBException e) {
-            if (concept.isModeled()) {
-                concept.setFullyDefined(false);
-            } else {
-                concept.setFullyDefined(false);
-            }
+            concept.setFullyDefined(false);
             messageError("No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT");
         }
 
     }
 
     private static final long ID_RELATIONSHIP_DEFINITION_SNOMED_CT = 101;
-    private static final long ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT=25;
-    private static final long ID_TYPE_IS_MAPPING=2;
+    private static final long ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT = 25;
+    private static final long ID_TYPE_IS_MAPPING = 2;
+
+
+    /**
+     * Metodo encargado de validar si la relacion que recibe por parametro es de tipo Es un Mapeo.
+     * @param relationship relacion a validar.
+     * @return retorna true o false segun corresponda.
+     */
 
     private boolean isMapping(Relationship relationship) {
         if (relationship.getRelationshipDefinition().getId() == ID_RELATIONSHIP_DEFINITION_SNOMED_CT) {
-            for (RelationshipAttribute relationshipAttribute: relationship.getRelationshipAttributes()) {
-                if(relationshipAttribute.getRelationAttributeDefinition().getId()==ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT){
-                    HelperTableRecord typeRelationship= (HelperTableRecord) relationshipAttribute.getTarget();
-                    if(typeRelationship.getId()==ID_TYPE_IS_MAPPING) return true;
+            for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
+                if (relationshipAttribute.getRelationAttributeDefinition().getId() == ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT) {
+                    HelperTableRecord typeRelationship = (HelperTableRecord) relationshipAttribute.getTarget();
+                    if (typeRelationship.getId() == ID_TYPE_IS_MAPPING) return true;
                 }
             }
         }
         return false;
     }
-    private boolean existMapping() {
-        for (Relationship relationship: concept.getValidRelationships()) {
-            if (relationship.getRelationshipDefinition().getId() == ID_RELATIONSHIP_DEFINITION_SNOMED_CT) {
-                return true;
-            }
-        }
 
+    /**
+     * Metodo encargado de ver si existe una relacion Es un mapeo en el concepto que se esta creando o editando.
+     * @return retorna true o false segun corresponda.
+     */
+
+    public boolean existRelationshipISAMapping() {
+        for (Relationship relationship : concept.getValidRelationships()) {
+            return isMapping(relationship);
+        }
         return false;
     }
 
-    private void messageError(String msg){
+    /**
+     * Metodo encargado de agregar mensajes de error en la vista.
+     * @param msg mensaje que se muestra.
+     */
+
+    private void messageError(String msg) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
     }
-
 
 
 }
