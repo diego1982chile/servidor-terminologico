@@ -59,7 +59,7 @@ public class ConceptDefinitionalGradeBR implements ConceptDefinitionalGradeBRInt
                 List<Relationship> relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(candidateConcept);
                 candidateConcept.setRelationships(relationshipsBySourceConcept);
 
-                if (haveSameSnomedCTRelationshipsButFromConceptSource(candidateConcept.getRelationshipsSnomedCT(), candidateConcept.getRelationshipsSnomedCT())) {
+                if (haveSameSnomedCTRelationshipsButFromConceptSource(conceptSMTK.getRelationshipsSnomedCT(), candidateConcept.getRelationshipsSnomedCT())) {
                     throw new BusinessRuleException("El concepto no es completamente definido.");
                 }
             }

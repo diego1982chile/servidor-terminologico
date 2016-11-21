@@ -1622,13 +1622,9 @@ public class ConceptBean implements Serializable {
     public void changeFullyDefined() {
         try {
             concept.setFullyDefined((fullyDefined)?true:false);
-            conceptDefinitionalGradeBR.apply(concept);
+            if(concept.isFullyDefined())conceptDefinitionalGradeBR.apply(concept);
         } catch (EJBException e) {
-            if (concept.isModeled()) {
-                concept.setFullyDefined(false);
-            } else {
-                concept.setFullyDefined(false);
-            }
+            concept.setFullyDefined(false);
             messageError("No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT");
         }
 
