@@ -60,7 +60,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
 
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_cst_by_concept_id(?)}")) {
+             CallableStatement call = connection.prepareCall("{call semantikos.get_sct_by_concept_id(?)}")) {
 
             call.setLong(1, conceptID);
             call.execute();
