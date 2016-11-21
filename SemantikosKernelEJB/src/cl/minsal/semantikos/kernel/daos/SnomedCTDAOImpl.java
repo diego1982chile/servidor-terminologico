@@ -88,7 +88,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
         List<ConceptSCT> conceptSCTs = new ArrayList<>();
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_concepts_sct_by_pattern_id(?,?)}")) {
+             CallableStatement call = connection.prepareCall("{call semantikos.get_concepts_sct_by_id(?,?)}")) {
 
             call.setLong(1, conceptIdPattern);
             if (group == null){
