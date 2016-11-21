@@ -248,7 +248,7 @@
                 <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
                     <p:commandButton icon="fa fa-trash" title="Eliminar"
                                      action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
-                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})"
+                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes)"
                                      process="@this">
                     </p:commandButton>
                 </p:column>
