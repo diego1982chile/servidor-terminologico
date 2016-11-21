@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.businessrules.BusinessRulesContainer;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
+import cl.minsal.semantikos.model.crossmaps.CrossMapType;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.businessrules.*;
@@ -950,7 +951,8 @@ public class ConceptBean implements Serializable {
         return _concept.isToBeReviewed() != concept.isToBeReviewed()
                 || _concept.isToBeConsulted() != concept.isToBeConsulted()
                 || !_concept.getObservation().equalsIgnoreCase(concept.getObservation())
-                || !_concept.getTagSMTK().equals(concept.getTagSMTK());
+                || !_concept.getTagSMTK().equals(concept.getTagSMTK())
+                || !_concept.isFullyDefined().equals(concept.isFullyDefined());
     }
 
 
@@ -1651,7 +1653,7 @@ public class ConceptBean implements Serializable {
     }
     private boolean existMapping() {
         for (Relationship relationship: concept.getValidRelationships()) {
-            if (relationship.getRelationshipDefinition().getId() == ID_RELATIONSHIP_DEFINITION_SNOMED_CT) {
+            if (!relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType() && (relationship.getRelationshipDefinition().getId() == ID_RELATIONSHIP_DEFINITION_SNOMED_CT)) {
                 return true;
             }
         }
