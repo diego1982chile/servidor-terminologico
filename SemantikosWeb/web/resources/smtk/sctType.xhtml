@@ -196,6 +196,7 @@
                             process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                             action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
                             update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                            disabled="#{conceptBean.existRelationshipISAMapping()}"
                             value="Agregar">
                     </p:commandButton>
                 </div>
