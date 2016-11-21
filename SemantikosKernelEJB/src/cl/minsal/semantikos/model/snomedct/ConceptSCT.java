@@ -199,4 +199,10 @@ public class ConceptSCT extends PersistentEntity implements Target {
         return this.definitionStatusId == COMPLETELY_DEFINED;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        return this.getId() ==((ConceptSCT)o).getId();
+    }
+
 }
