@@ -15,9 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static cl.minsal.semantikos.model.snomedct.DescriptionSCTType.FSN;
-import static cl.minsal.semantikos.model.snomedct.DescriptionSCTType.SYNONYM;
-
 /**
  * @author Andrés Farías on 10/25/16.
  */
@@ -27,14 +24,19 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     private static final Logger logger = LoggerFactory.getLogger(SnomedCTDAOImpl.class);
 
     @Override
-    public List<ConceptSCT> findConceptsBy(String pattern) {
+    public List<ConceptSCT> findConceptsBy(String pattern, Integer group) {
         List<ConceptSCT> concepts = new ArrayList<>();
 
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.find_sct_by_pattern(?)}")) {
+             CallableStatement call = connection.prepareCall("{call semantikos.find_sct_by_pattern(?,?)}")) {
 
             call.setString(1, pattern);
+            if (group == null){
+                call.setNull(2, Types.INTEGER);
+            } else {
+                call.setInt(2, group);
+            }
             call.execute();
 
             ResultSet rs = call.getResultSet();
@@ -81,14 +83,19 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
     }
 
     @Override
-    public List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern) {
+    public List<ConceptSCT> findConceptsByConceptID(long conceptIdPattern, Integer group) {
 
         List<ConceptSCT> conceptSCTs = new ArrayList<>();
         ConnectionBD connect = new ConnectionBD();
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_concepts_sct_by_pattern_id(?)}")) {
+             CallableStatement call = connection.prepareCall("{call semantikos.get_concepts_sct_by_pattern_id(?,?)}")) {
 
             call.setLong(1, conceptIdPattern);
+            if (group == null){
+                call.setNull(2, Types.INTEGER);
+            } else {
+                call.setInt(2, group);
+            }
             call.execute();
 
             ResultSet rs = call.getResultSet();
