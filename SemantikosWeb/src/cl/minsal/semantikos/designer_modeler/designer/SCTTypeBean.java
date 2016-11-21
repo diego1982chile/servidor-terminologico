@@ -40,7 +40,7 @@ public class SCTTypeBean implements Serializable {
 
     private Integer relationshipGroup = null;
 
-    List<Integer> relationshipGroups = Arrays.asList(new Integer[] {1, 2, 3, 4, 5, 6});
+    List<Integer> relationshipGroups = Arrays.asList(new Integer[] {0, 1, 2, 3, 4});
 
     /**
      * Constructor por defecto para la inicialización de componentes.
@@ -74,10 +74,10 @@ public class SCTTypeBean implements Serializable {
 
         /* La búsqueda empieza aquí */
         if(searchOption.equals("term"))
-            return cstManager.findConceptsByPattern(patron);
+            return cstManager.findConceptsByPattern(patron, relationshipGroup);
         else{
             try{
-                return cstManager.findConceptsByConceptID(new Long(patron));
+                return cstManager.findConceptsByConceptID(new Long(patron), relationshipGroup);
             }
             catch (NumberFormatException e){
                 return null;
@@ -86,11 +86,11 @@ public class SCTTypeBean implements Serializable {
 
     }
 
-    public int getRelationshipGroup() {
+    public Integer getRelationshipGroup() {
         return relationshipGroup;
     }
 
-    public void setRelationshipGroup(int relationshipGroup) {
+    public void setRelationshipGroup(Integer relationshipGroup) {
         this.relationshipGroup = relationshipGroup;
     }
 
