@@ -132,7 +132,6 @@ public class ConceptManagerImpl implements ConceptManager {
             return conceptDAO.getConceptBy(categories, isModeled, pageSize, pageNumber);
         }
 
-
         //Búsqueda por largo (PageSize y PageNumber)
         return conceptDAO.getConceptsBy(isModeled, pageSize, pageNumber);
     }
@@ -140,10 +139,14 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public List<ConceptSMTK> findConceptBy(String pattern) {
 
+        /* Se realiza la búsqueda estándard */
         List<ConceptSMTK> conceptSMTKList = findConceptBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
         if (conceptSMTKList.size() != 0) {
             return conceptSMTKList;
-        } else {
+        }
+
+        /* Si la búsqueda estándard no dio resultados, se intenta con una búsqueda truncada */
+        else {
             pattern = truncatePattern(pattern);
             return findConceptBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
         }
@@ -153,12 +156,7 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public int countConceptBy(String pattern, Long[] categories) {
 
-
-        // TODO: arreglar esto (Estados)
-
         boolean isModeled = true;
-
-
         pattern = standardizationPattern(pattern);
         String[] arrayPattern = patternToArray(pattern);
 
@@ -225,6 +223,8 @@ public class ConceptManagerImpl implements ConceptManager {
         /* Y sus relaciones */
         for (Relationship relationship : conceptSMTK.getRelationships()) {
             relationshipManager.createRelationship(relationship);
+            /* Se realizan las acciones asociadas a la asociación */
+            new RelationshipBindingBR().postActions(relationship, conceptDAO);
         }
 
         /* Y sus tags */
@@ -234,7 +234,6 @@ public class ConceptManagerImpl implements ConceptManager {
                 tagManager.assignTag(conceptSMTK,tag);
             }
         }
-
 
         /* Se deja registro en la auditoría sólo para conceptos modelados */
         if (conceptSMTK.isModeled()) {

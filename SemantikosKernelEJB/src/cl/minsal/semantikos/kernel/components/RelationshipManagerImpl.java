@@ -54,9 +54,9 @@ public class RelationshipManagerImpl implements RelationshipManager {
         relationshipBindingBR.verifyPreConditions(concept, relationship, user);
 
         /* Se hace la relación a nivel del modelo */
-        //if (!concept.getRelationships().contains(relationship)) {
-        //concept.addRelationship(relationship);
-        //}
+        if (!concept.getRelationships().contains(relationship)) {
+            concept.addRelationship(relationship);
+        }
 
         /* Se asegura la persistencia de la entidad */
         assurePersistence(concept, relationship, user);
