@@ -17,6 +17,8 @@ import static cl.minsal.semantikos.model.ProfileFactory.MODELER_PROFILE;
 import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.isSnomedCTRelationship;
 
 /**
+ * Esta clase implementa las reglas de negocio de agregar relaciones.
+ *
  * @author Andrés Farías on 9/8/16.
  */
 @Singleton
@@ -34,13 +36,13 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
         brRelationshipBinding001(relationship, user);
 
         /* Que no se agreguen dos Snomed de tipo "ES UN MAPEDO DE" */
-        brRelationshipBinding002(concept, relationship);
+        if(concept.isFullyDefined())brRelationshipBinding002(concept, relationship);
 
         /* Las relaciones de semantikos con Snomed CT son 1-1 */
-        brRelationshipBinding003(concept, relationship);
+        if(concept.isFullyDefined())brRelationshipBinding003(concept, relationship);
 
         /* BR-SCT-003: ES MAPEO DE, es una relación exclusiva de Snomed CT */
-        brRelationshipBinding004(concept, relationship);
+        if(concept.isFullyDefined())brRelationshipBinding004(concept, relationship);
 
     }
 
