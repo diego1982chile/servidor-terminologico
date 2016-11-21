@@ -118,10 +118,22 @@
 
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <p:selectOneMenu value="#{sctBean.searchOption}" style="margin-right:10px; width: 60%" autoWidth="false">
+                        <f:selectItem itemLabel="Grupo..." itemValue="#{null}" />
+                        <f:selectItems value="#{sctBean.relationshipGroups}" var="relationshipGroup"
+                                       itemLabel="#{relationshipGroup}"
+                                       itemValue="#{relationshipGroup}" />
+                        <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
+                    </p:selectOneMenu>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                    <p:selectOneMenu value="#{sctBean.searchOption}" style="margin-right:10px; width: 60%" autoWidth="false">
                         <f:selectItem itemLabel="Buscar por Término" itemValue="term" />
                         <f:selectItem itemLabel="Buscar por ConceptId" itemValue="conceptId" />
                         <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
                     </p:selectOneMenu>
+
                 </div>
 
 

@@ -10,9 +10,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Collections.emptyList;
 
@@ -39,6 +37,10 @@ public class SCTTypeBean implements Serializable {
     private List<ConceptSMTK> conceptSel;
 
     private String searchOption = "term";
+
+    private Integer relationshipGroup = null;
+
+    List<Integer> relationshipGroups = Arrays.asList(new Integer[] {1, 2, 3, 4, 5, 6});
 
     /**
      * Constructor por defecto para la inicialización de componentes.
@@ -84,6 +86,14 @@ public class SCTTypeBean implements Serializable {
 
     }
 
+    public int getRelationshipGroup() {
+        return relationshipGroup;
+    }
+
+    public void setRelationshipGroup(int relationshipGroup) {
+        this.relationshipGroup = relationshipGroup;
+    }
+
     public SnomedCTManager getCstManager() {
         return cstManager;
     }
@@ -94,6 +104,7 @@ public class SCTTypeBean implements Serializable {
 
     @PostConstruct
     public void init() {
+
     }
 
     public String getPattern() {
@@ -110,6 +121,14 @@ public class SCTTypeBean implements Serializable {
 
     public void setSearchOption(String searchOption) {
         this.searchOption = searchOption;
+    }
+
+    public List<Integer> getRelationshipGroups() {
+        return relationshipGroups;
+    }
+
+    public void setRelationshipGroups(List<Integer> relationshipGroups) {
+        this.relationshipGroups = relationshipGroups;
     }
 
 
