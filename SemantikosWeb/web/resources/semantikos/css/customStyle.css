@@ -33,9 +33,27 @@ form.consult .fa.fa-close.fa-lg {
     display: none !important;
 }
 
+form.consult .ui-messages-detail {
+    display: none !important;
+}
+
+form.consult .fa.fa-search.fa-lg {
+    display: none !important;
+}
+
+form.consult .ui-messages-icon.fa.fa-info-circle {
+    display: none !important;
+}
+
 form#mainForm table tbody tr td div.relationshipDefinitionError {
     border: 1px solid #F03369 !important;
     color: #F03369;
 }
 
+.fullyDefined .ui-panelgrid-cell {
+    padding: 0px !important;
+}
 
+.fullyDefined .ui-chkbox-label {
+    padding-left: 14px !important;
+}

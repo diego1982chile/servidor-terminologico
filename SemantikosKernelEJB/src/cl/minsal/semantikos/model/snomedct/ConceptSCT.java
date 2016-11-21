@@ -22,6 +22,9 @@ import static java.util.Collections.emptyList;
  */
 public class ConceptSCT extends PersistentEntity implements Target {
 
+    public static final long COMPLETELY_DEFINED = 900000000000073002l;
+    public static final long PRIMITIVE = 900000000000074008l;
+
     /** Identificador único (oficial) de Snomed CT para este concepto. */
     private long idSnomedCT;
 
@@ -91,14 +94,6 @@ public class ConceptSCT extends PersistentEntity implements Target {
 
     public void setModuleId(long moduleId) {
         this.moduleId = moduleId;
-    }
-
-    public long getDefinitionStatusId() {
-        return definitionStatusId;
-    }
-
-    public void setDefinitionStatusId(long definitionStatusId) {
-        this.definitionStatusId = definitionStatusId;
     }
 
     public long getIdSnomedCT() {
@@ -194,11 +189,21 @@ public class ConceptSCT extends PersistentEntity implements Target {
         conceptSCT.setId(this.getId());
         conceptSCT.setIdSnomedCT(this.idSnomedCT);
         conceptSCT.setActive(this.isActive);
-        conceptSCT.setDefinitionStatusId(this.definitionStatusId);
+        conceptSCT.definitionStatusId = this.definitionStatusId;
         conceptSCT.setEffectiveTime(this.effectiveTime);
         conceptSCT.setModuleId(this.moduleId);
         conceptSCT.setDescriptions(this.getDescriptions());
         return conceptSCT;
+    }
+
+    public boolean isCompletelyDefined(){
+        return this.definitionStatusId == COMPLETELY_DEFINED;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        return this.getId() ==((ConceptSCT)o).getId();
     }
 
 }

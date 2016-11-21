@@ -45,10 +45,14 @@ public class HelperTableDAOImpl implements HelperTableDAO {
          *   - un arreglo con los valores de los campos.
          *   - ID usuario que realiza la carga.
          */
-        String selectRecord = "{call semantikos.helper_tables_insert_record(?,?,?,?)}";
+        String selectRecord = "{call semantikos.helper_tables_insert_record(?,?,?)}";
         ConnectionBD connectionBD = new ConnectionBD();
         try (Connection connection = connectionBD.getConnection();
              CallableStatement callableStatement = connection.prepareCall(selectRecord)) {
+
+            /* Se agregan las columnas y valores de sistema */
+            record.addField("id_usuario", Long.toString(user.getIdUser()));
+            record.addField("creation_date", new Timestamp(System.currentTimeMillis()).toString());
 
             /* Se preparan los parámetros de la función */
             Map<String, String> recordFields = record.getFields();

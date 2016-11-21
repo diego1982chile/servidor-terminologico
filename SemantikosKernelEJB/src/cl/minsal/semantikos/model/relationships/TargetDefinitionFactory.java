@@ -128,6 +128,14 @@ class TargetDefinitionDTO {
         this.idHelperTableName = idHelperTableName;
     }
 
+    public long getIdExternTableName() {
+        return idExternTableName;
+    }
+
+    public void setIdExternTableName(long idExternTableName) {
+        this.idExternTableName = idExternTableName;
+    }
+
     public long getIdTargetType() {
         return idTargetType;
     }

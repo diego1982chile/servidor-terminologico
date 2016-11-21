@@ -24,7 +24,7 @@ public class HelperTableImportReport {
     private HelperTable helperTable;
 
     /** Lista de excepciones asociadas al proceso */
-    private ArrayList<IOException> exceptions;
+    private ArrayList<Exception> exceptions;
 
     /** Los records que se querían actualizar */
     private List<HelperTableRecord> CSVLoadedRecords;
@@ -46,7 +46,7 @@ public class HelperTableImportReport {
         return status;
     }
 
-    public void appendException(IOException e) {
+    public void appendException(Exception e) {
         this.exceptions.add(e);
     }
 
@@ -66,10 +66,10 @@ public class HelperTableImportReport {
         return insertedRecords;
     }
 
-    public void setExceptions(ArrayList<IOException> exceptions) {
+    public void setExceptions(ArrayList<Exception> exceptions) {
         this.exceptions = exceptions;
     }
-    public ArrayList<IOException> getExceptions() {
+    public ArrayList<Exception> getExceptions() {
         return exceptions;
     }
 }

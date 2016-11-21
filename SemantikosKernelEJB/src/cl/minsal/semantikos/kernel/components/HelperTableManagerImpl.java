@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -97,7 +98,7 @@ public class HelperTableManagerImpl implements HelperTableManager {
         HelperTableImportReport helperTableReport = new HelperTableImportReport(helperTable, user);
         Iterable<CSVRecord> records;
         try {
-            records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
+            records = CSVFormat.RFC4180.withFirstRecordAsHeader(). parse(in);
         } catch (IOException e) {
             logger.error("Error al procesar archivo CSV para importación de tabla auxiliar.", e);
             helperTableReport.setStatus(LoadStatus.CANCELED);
@@ -113,7 +114,8 @@ public class HelperTableManagerImpl implements HelperTableManager {
 
         /* Se valida que los registros cargados tengan las mismas columnas que la tabla auxiliar */
         List<String> missingColumns = getMissingColumns(helperTable, extractLoadedColumns(loadedRecords));
-        if(missingColumns.size() > 0){
+        if (missingColumns.size() > 0) {
+            logger.info("Problemas al cargar las columnas: " + missingColumns);
             helperTableReport.setStatus(LoadStatus.CANCELED);
             helperTableReport.appendException(new MissingColumnsException(missingColumns));
         }
@@ -141,7 +143,7 @@ public class HelperTableManagerImpl implements HelperTableManager {
         List<String> missingColumns = new ArrayList<>();
 
         for (String loadedColumn : loadedColumns) {
-            if (!helperTable.getAllColumnsNames().contains(loadedColumn)){
+            if (!helperTable.getAllColumnsNames().contains(loadedColumn)) {
                 missingColumns.add(loadedColumn);
             }
         }
@@ -204,8 +206,13 @@ public class HelperTableManagerImpl implements HelperTableManager {
         /* Se insertan todos los registros */
         long insertedRecords = 0;
         for (HelperTableRecord loadedRecord : loadedRecords) {
-            helperTableDAO.insertRecord(helperTable, loadedRecord, user);
-            insertedRecords++;
+            try {
+                helperTableDAO.insertRecord(helperTable, loadedRecord, user);
+                insertedRecords++;
+            } catch (EJBException ejbE) {
+                logger.error("Error al insertar un registro: ", ejbE);
+                helperTableReport.appendException(ejbE);
+            }
         }
 
         helperTableReport.setInsertedRecords(insertedRecords);
@@ -214,6 +221,7 @@ public class HelperTableManagerImpl implements HelperTableManager {
     private List<HelperTableRecord> loadRecordsFromCSV(HelperTable helperTable, Iterable<CSVRecord> records) {
         List<HelperTableRecord> loadedRecords = new ArrayList<>();
         boolean firstTime = true;
+
         for (CSVRecord record : records) {
 
             /* El primer loop es para recuperar los nombres de las columnas */
