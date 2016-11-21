@@ -142,9 +142,9 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
 
         /*
          * Ahora que sabemos que es una relación Snomed y de tipo ES UN MAPEO DE, se verifica que no exista otra
+         *
          * relación Snomed desde otro concepto al mismo concepto destino
          */
-
         /* Se recuperan todas las relaciones del mismo tipo de relación y que se dirigen al mismo concepto SCT */
         List<Relationship> relationshipsLike = relationshipManager.getRelationshipsLike(snomedCTRelationship.getRelationshipDefinition(), snomedCTRelationship.getTarget());
         for (Relationship relationshipCandidate : relationshipsLike) {
