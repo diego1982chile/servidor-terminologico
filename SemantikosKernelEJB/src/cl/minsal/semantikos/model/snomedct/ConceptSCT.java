@@ -24,6 +24,7 @@ public class ConceptSCT extends PersistentEntity implements Target {
 
     public static final long COMPLETELY_DEFINED = 900000000000073002l;
     public static final long PRIMITIVE = 900000000000074008l;
+
     /** Identificador único (oficial) de Snomed CT para este concepto. */
     private long idSnomedCT;
 
