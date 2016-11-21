@@ -17,6 +17,8 @@ import static cl.minsal.semantikos.model.ProfileFactory.MODELER_PROFILE;
 import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.isSnomedCTRelationship;
 
 /**
+ * Esta clase implementa las reglas de negocio de agregar relaciones.
+ *
  * @author Andrés Farías on 9/8/16.
  */
 @Singleton
