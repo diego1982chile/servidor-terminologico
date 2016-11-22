@@ -36,13 +36,13 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
         brRelationshipBinding001(relationship, user);
 
         /* Que no se agreguen dos Snomed de tipo "ES UN MAPEDO DE" */
-        if(concept.isFullyDefined())brRelationshipBinding002(concept, relationship);
+        brRelationshipBinding002(concept, relationship);
 
         /* Las relaciones de semantikos con Snomed CT son 1-1 */
-        if(concept.isFullyDefined())brRelationshipBinding003(concept, relationship);
+        brRelationshipBinding003(concept, relationship);
 
         /* BR-SCT-003: ES MAPEO DE, es una relación exclusiva de Snomed CT */
-        if(concept.isFullyDefined())brRelationshipBinding004(concept, relationship);
+        brRelationshipBinding004(concept, relationship);
 
     }
 
