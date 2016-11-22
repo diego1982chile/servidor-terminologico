@@ -48,13 +48,21 @@
                 </p:selectOneMenu>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:selectOneMenu value="#{cc.attrs.conceptQuery.tag}" converter="omnifaces.SelectItemsConverter"
-                                 style="margin-right:10px; width: 60%">
-                    <f:selectItem itemLabel="Etiqueta..." itemValue="#{null}"/>
+
+                <p:selectCheckboxMenu id="tags"
+                                      value="#{cc.attrs.conceptQuery.tags}"
+                                      converter="omnifaces.SelectItemsConverter"
+                                      label="Etiquetas"
+                                      filter="true"
+                                      filterMatchMode="startsWith"
+                                      style="margin-right:10px; width: 60%">
+                    <p:ajax event="change"
+                            update="@(.conceptBrowserTable),@(.conceptFilters)"
+                            process="@this" />
+
                     <f:selectItems value="#{conceptBrowserBean.tags}" var="tag"
                                    itemLabel="#{tag.name}" itemValue="#{tag}"/>
-                    <p:ajax event="itemSelect" update="@(.conceptBrowserTable),@(.conceptQueryFilter)" process="@this" />
-                </p:selectOneMenu>
+                </p:selectCheckboxMenu>
             </div>
             <p:repeat
                     offset="0"

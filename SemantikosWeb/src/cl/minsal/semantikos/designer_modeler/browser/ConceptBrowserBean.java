@@ -168,8 +168,19 @@ public class ConceptBrowserBean implements Serializable {
         }
     }
 
-    public String stringifyList(List<Object> objects){
-        return Arrays.toString(objects.toArray());
+    public List<Tag> getRecordSearchInput(String patron) {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+
+        List<Tag> someTags = new ArrayList<Tag>();
+
+        for (Tag tag : getTags()) {
+            if(tag.getName().toLowerCase().contains(patron.trim().toLowerCase()))
+                someTags.add(tag);
+        }
+
+        return someTags;
     }
 
     public LazyDataModel<ConceptSMTK> getConcepts() {
