@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Funciones de base de dato para acceder a los datos de Snomed.
+ *
  * @author Andrés Farías on 10/25/16.
  */
 @Stateless
@@ -32,7 +34,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
              CallableStatement call = connection.prepareCall("{call semantikos.find_sct_by_pattern(?,?)}")) {
 
             call.setString(1, pattern);
-            if (group == null){
+            if (group == null) {
                 call.setNull(2, Types.INTEGER);
             } else {
                 call.setInt(2, group);
@@ -91,7 +93,7 @@ public class SnomedCTDAOImpl implements SnomedCTDAO {
              CallableStatement call = connection.prepareCall("{call semantikos.get_concepts_sct_by_id(?,?)}")) {
 
             call.setLong(1, conceptIdPattern);
-            if (group == null){
+            if (group == null) {
                 call.setNull(2, Types.INTEGER);
             } else {
                 call.setInt(2, group);

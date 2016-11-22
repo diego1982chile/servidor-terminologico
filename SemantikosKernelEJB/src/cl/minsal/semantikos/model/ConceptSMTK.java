@@ -655,7 +655,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @return <code>true</code> si el concepto contiene estas relaciones y <code>false</code> sino.
      */
-    public boolean contains(List<Relationship> relationships) {
+    public boolean contains(Relationship[] relationships) {
 
         for (Relationship relationship : relationships) {
             if (!this.contains(relationship)) {
@@ -735,4 +735,34 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         return conceptSMTK;
     }
 
+    public boolean contains(String snomedRelationshipType) {
+        for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
+            if (snomedCTRelationship.getSnomedCTRelationshipType().equalsIgnoreCase(snomedRelationshipType)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean containsLike(SnomedCTRelationship[] relationships) {
+
+        for (SnomedCTRelationship relationship : relationships) {
+            if (!this.containsLike(relationship)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean containsLike(SnomedCTRelationship theSnomedRelationship) {
+        for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
+            if (theSnomedRelationship.equalsButConceptSource(snomedCTRelationship)){
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }
