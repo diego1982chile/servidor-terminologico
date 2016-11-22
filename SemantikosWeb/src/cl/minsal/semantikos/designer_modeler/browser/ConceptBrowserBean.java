@@ -348,7 +348,17 @@ public class ConceptBrowserBean implements Serializable {
         eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + idCategory +"&idConcept=0&favoriteDescription=" + query);
     }
 
+    public String stringifyTags(List<Tag> tags){
+        if(tags.isEmpty())
+            return "Etiquetas...";
 
+        String stringTags= "";
+
+        for (Tag tag : tags) {
+            stringTags= stringTags.concat(tag.getName()).concat(", ");
+        }
+        return  stringTags;
+    }
 
 }
 
