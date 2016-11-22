@@ -21,6 +21,8 @@ public class HelperTableFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(HelperTableFactory.class);
 
+    public static String ES_UN_MAPEO_DE = "Es un mapeo de";
+
     /**
      * Este método es responsable de crear una lista de relaciones a partir de un arreglo json de relaciones.
      * <code>
