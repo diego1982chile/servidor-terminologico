@@ -16,46 +16,6 @@ public class HelperTableSearchBRTest {
     public static final String A_NON_SEARCHABLE_COLUMN_NAME = "A_NON_SEARCHABLE_COLUMN_NAME";
 
     /**
-     * Este test valida que no se pueda buscar en tablas que no tienen la columna dada.
-     *
-     * @throws cl.minsal.semantikos.model.exceptions.BusinessRuleException La excepción esperada.
-     */
-    @Test(expected = BusinessRuleException.class)
-    public void testPrecondition01_01() throws Exception {
-        helperTableSearchBR.precondition01(dummyHelperTable(), "NON_EXISTENT_COLUMN_NAME");
-    }
-
-    /**
-     * Este test valida que se pueda buscar en tablas que si tienen la columna dada.
-     *
-     * @throws cl.minsal.semantikos.model.exceptions.BusinessRuleException La excepción esperada.
-     */
-    @Test()
-    public void testPrecondition01_02() throws Exception {
-        helperTableSearchBR.precondition01(dummyHelperTable(), A_SEARCHABLE_COLUMN_NAME);
-    }
-
-    /**
-     * Este test valida que no se pueda buscar en tablas que tienen la columna dada, pero esta no es buscable.
-     *
-     * @throws cl.minsal.semantikos.model.exceptions.BusinessRuleException La excepción esperada.
-     */
-    @Test(expected = BusinessRuleException.class)
-    public void testPrecondition02_01() throws Exception {
-        helperTableSearchBR.precondition02(dummyHelperTable(), A_NON_SEARCHABLE_COLUMN_NAME);
-    }
-
-    /**
-     * Este test valida que se pueda buscar en tablas que tienen la columna dada y ésta es buscable.
-     *
-     * @throws cl.minsal.semantikos.model.exceptions.BusinessRuleException La excepción esperada.
-     */
-    @Test()
-    public void testPrecondition02_02() throws Exception {
-        helperTableSearchBR.precondition01(dummyHelperTable(), A_SEARCHABLE_COLUMN_NAME);
-    }
-
-    /**
      * Este método es responsable de crear una tabla auxiliar con columnas básicas.
      *
      * @return Un objeto Tabla Auxiliar no persistido.
