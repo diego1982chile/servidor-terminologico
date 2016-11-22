@@ -64,7 +64,7 @@
                                                 <br/>
                                                 <p:tab title="Atributos" rendered="#{not empty conceptBean.category.relationshipDefinitions}">
                                                     <!--Relaciones -->
-                                                    <p:panel id="atributos"
+                                                    <p:outputPanel id="atributos"
                                                              widgetVar="panelAtributos"
                                                              styleClass="attributes"
                                                              rendered="#{conceptBean.category.hasRelationshipDefinitions}">
@@ -77,7 +77,8 @@
                                                                 <p:outputPanel
                                                                          id="panelRelationshipDefiniton"
                                                                          style="border:0px; margin: 0px; padding: 0px;"
-                                                                         styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}">
+                                                                         styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}"
+                                                                         rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
 
                                                                     <smtk:smtkType
                                                                             rendered="#{relationshipDefinition.targetDefinition.SMTKType}"
@@ -101,11 +102,11 @@
 
                                                             </h:column>
                                                         </h:dataTable>
-                                                    </p:panel>
+                                                    </p:outputPanel>
                                                 </p:tab>
                                                 <p:tab title="SNOMED-CT">
                                                     <!--Relaciones -->
-                                                    <p:panel id="atributoSCT"
+                                                    <p:outputPanel id="atributoSCT"
                                                              widgetVar="panelAtributoSCT"
                                                              styleClass="attributes"
                                                              rendered="#{conceptBean.category.hasRelationshipDefinitions}">
@@ -130,7 +131,7 @@
 
                                                             </h:column>
                                                         </h:dataTable>
-                                                    </p:panel>
+                                                    </p:outputPanel>
                                                 </p:tab>
                                                 <p:tab title="Crossmaps" rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
                                                     <!--Relaciones -->
