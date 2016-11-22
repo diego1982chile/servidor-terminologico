@@ -11,6 +11,37 @@
 
         <h:form>
 
+            <p:panel>
+
+
+
+            <p:dataTable value="#{managerPendingTermsBean.conceptPending.descriptions}" var="descriptionPending">
+                <p:column headerText="Categoría">
+                    <h:outputText value="#{managerPendingTermsBean.conceptPending.category.name}"/>
+                </p:column>
+                <p:column headerText="Término">
+                    <h:outputText value="#{descriptionPending.term}"/>
+                </p:column>
+                <p:column headerText="DESCID">
+                    <h:outputText value="#{descriptionPending.descriptionId}"/>
+                </p:column>
+                <p:column headerText="Usos">
+                    <h:outputText value="#{descriptionPending.uses}"/>
+                </p:column>
+                <p:column headerText="Lugar">
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column headerText="Observación">
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column headerText="Acción">
+
+                </p:column>
+            </p:dataTable>
+
+
+
+            </p:panel>
 
         </h:form>
 
