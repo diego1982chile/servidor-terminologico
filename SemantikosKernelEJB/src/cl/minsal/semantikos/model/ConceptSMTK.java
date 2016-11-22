@@ -744,4 +744,25 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
         return false;
     }
+
+    public boolean containsLike(SnomedCTRelationship[] relationships) {
+
+        for (SnomedCTRelationship relationship : relationships) {
+            if (!this.containsLike(relationship)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean containsLike(SnomedCTRelationship theSnomedRelationship) {
+        for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
+            if (theSnomedRelationship.equalsButConceptSource(snomedCTRelationship)){
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }
