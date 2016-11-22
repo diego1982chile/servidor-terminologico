@@ -23,6 +23,10 @@ public class HelperTableFactory {
 
     public static String ES_UN_MAPEO_DE = "Es un mapeo de";
 
+    public static String ISP = "ISP";
+
+    public static String ATC = "ATC";
+
     /**
      * Este método es responsable de crear una lista de relaciones a partir de un arreglo json de relaciones.
      * <code>
