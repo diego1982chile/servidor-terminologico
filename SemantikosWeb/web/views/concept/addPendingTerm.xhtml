@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template.xhtml">
+    >
+    <ui:define name="content">
+        <p:panel id="addPendingTerm">
+            <h:form>
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+                    <p:outputLabel id="termLabel" for="term" value="Término"/>
+                    <p:inputText id="term" value="#{pendingTerms.term}"/>
+
+                    <p:outputLabel id="dateLabel" for="date" value="Fecha"/>
+                    <p:inputText type="date" id="date" value="#{pendingTerms.date}"/>
+
+                    <p:outputLabel id="sensitiveLabel" for="sensibility" value="Sensibilidad"/>
+                    <p:selectOneRadio id="sensibility" value="#{pendingTerms.sensibility}">
+                        <f:selectItem itemLabel="Si" itemValue="true"/>
+                        <f:selectItem itemLabel="No" itemValue="false"/>
+                    </p:selectOneRadio>
+
+                    <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categiría propuesta"/>
+                    <p:selectOneMenu id="categoryMenu" value="#{pendingTerms.categoryId}">
+                        <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
+                                       itemLabel="#{category.name}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel id="nameProfessionLabel" for="nameProfessional" value="Lugar"/>
+                    <p:inputText type="text" id="nameProfessional" value="#{pendingTerms.nameProfessional}"/>
+
+                    <p:outputLabel id="professionLabel" for="profession" value="Lugar"/>
+                    <p:inputText type="text" id="profession" value="#{pendingTerms.profession}"/>
+
+                    <p:outputLabel id="specialityLabel" for="speciality" value="Lugar"/>
+                    <p:inputText type="text" id="speciality" value="#{pendingTerms.speciality}" placeholder="Escriba su especialidad"/>
+
+                    <p:outputLabel id="subspecialityLabel" for="subspeciality" value="Lugar"/>
+                    <p:inputText type="text" id="subspeciality" value="#{pendingTerms.subspeciality}"/>
+
+                    <p:outputLabel id="mailLabel" for="mail" value="Lugar"/>
+                    <p:inputText type="text" id="mail" value="#{pendingTerms.mail}"/>
+
+                    <p:outputLabel id="observationLabel" for="observation" value="Lugar"/>
+                    <p:inputText type="text" id="observation" value="#{pendingTerms.observation}"/>
+
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+    </ui:define>
+</ui:composition>
