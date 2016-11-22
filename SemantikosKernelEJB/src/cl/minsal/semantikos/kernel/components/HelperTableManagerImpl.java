@@ -77,6 +77,16 @@ public class HelperTableManagerImpl implements HelperTableManager {
     }
 
     @Override
+    public List<HelperTableRecord> searchRecords(HelperTable helperTable, List<String> searchColumns, String pattern, boolean validity){
+
+        List<HelperTableRecord> records = new ArrayList<>();
+
+
+
+        return records;
+    }
+
+    @Override
     public HelperTableRecord getRecord(long recordId) {
         return helperTableDAO.getHelperTableRecordFromId(recordId);
     }
