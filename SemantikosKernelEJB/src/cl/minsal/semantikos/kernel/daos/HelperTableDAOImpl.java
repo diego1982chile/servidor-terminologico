@@ -36,7 +36,7 @@ public class HelperTableDAOImpl implements HelperTableDAO {
     }
 
     @Override
-    public void insertRecord(HelperTable helperTable, HelperTableRecord record, User user) {
+    public HelperTableRecord insertRecord(HelperTable helperTable, HelperTableRecord record, User user) {
 
         /*
          * La inserción de registros se hace indicando:
@@ -65,11 +65,18 @@ public class HelperTableDAOImpl implements HelperTableDAO {
             callableStatement.setArray(3, column_values);
             callableStatement.setLong(4, user.getIdUser());
 
-            callableStatement.executeQuery();
+            ResultSet rs =callableStatement.executeQuery();
+
+            record.setId(rs.getBigDecimal(1).longValue());
+
+
+
         } catch (SQLException e) {
             logger.error("Error al realizar una inserción en las tablas auxiliares", e);
             throw new EJBException(e);
         }
+
+        return null;
     }
 
     @Override

@@ -296,36 +296,50 @@
         <div class="ui-g">
 
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-            <p:outputLabel>Existe ISP</p:outputLabel>
-        </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:selectBooleanButton value="#{ispbean.existe}" offLabel="No" onLabel="Si"></p:selectBooleanButton>
+                <p:outputLabel for="ispexistebooleanbutton">Existe ISP</p:outputLabel>
             </div>
+
             <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:outputLabel for="ispregnum">RegNum</p:outputLabel>
+                <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close" >
+                    <p:ajax immediate="true" listener="#{ispbean.updateExiste}" update="ispfetcherinputs" process="ispexistebooleanbutton"></p:ajax>
+                </p:selectBooleanButton>
             </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:inputText id="ispregnum" value="#{ispbean.regnum}" />
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:outputLabel for="ispregano" >Regaño</p:outputLabel>
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:inputText id="ispregano" value="#{ispbean.ano}" />
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:commandButton action="#{ispbean.fetchData}" type="button" onsuccess="PF('ispfetcheddialog').show()" value="Cargar Data" process="@this, ispregnum, ispregano">Cargar Data</p:commandButton>
-            </div>
-            <p:dialog id="ispfetcheddialog" widgetVar="ispfetcheddialog" >
-                <p:panel>
-                    <h:dataTable value="#{ispbean.fetchedData.entrySet.toArray()}" var="entry">
-                        <h:column>#{entry.key}</h:column>
-                        <h:column>#{entry.value}</h:column>
-                    </h:dataTable>
-                </p:panel>
-            </p:dialog>
 
         </div>
+        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherinputs">
+            <p:outputPanel  rendered="#{ispbean.existe}">
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <p:outputLabel for="ispregnum">RegNum</p:outputLabel>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <p:inputText id="ispregnum" value="#{ispbean.regnum}" />
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <p:outputLabel for="ispregano" >Regaño</p:outputLabel>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <p:inputText id="ispregano" value="#{ispbean.ano}" />
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <p:commandButton id="buttonispcargadatos" action="#{ispbean.fetchData}" update="ispfetcheddialogcontent" onsuccess="PF('ispfetcheddialog').show()" value="Cargar Data" process="@this, ispregnum, ispregano" />
+                </div>
+                <p:dialog id="ispfetcheddialog" widgetVar="ispfetcheddialog" header="Confirmar datos recuperados del Registro ISP" modal="true">
+                    <p>Se han recuperado los siguientes datos desde el ISP:</p>
+                    <p:panel id="ispfetcheddialogcontent">
+
+                        <p:dataTable value="#{ispbean.mapKeys}" var="key">
+                            <p:column>#{key}</p:column>
+                            <p:column width="10" >:</p:column>
+                            <p:column>#{ispbean.fetchedData[key]}</p:column>
+                        </p:dataTable>
+                    </p:panel>
+
+                    <p:commandButton value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="Cancelar" type="button" onclick="PF('ispfetcheddialog').hide()" />
+                </p:dialog>
+
+            </p:outputPanel>
+        </p:outputPanel>
         <div class="ui-g">
             <div class="ui-g-12 ui-md-6 ui-lg-12">
                 <p:dataTable id="collectionValues123"
@@ -333,7 +347,8 @@
                              var="relationship"
                              value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                              style="width: 100%"
-                             reflow="true">
+                             reflow="true"
+                             rendered="#{ispbean.existe}" >
                     <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
                                var="column"
                                columnIndexVar="colIndex"
