@@ -13,32 +13,34 @@
 </composite:interface>
 <composite:implementation>
 
-    <h3>Crossmap Indirecto</h3>
-    <p:spacer />
-    <p:dataTable value="#{conceptBean.conceptSMTK.relationshipsIndirectCrossMap}" var="crossmapsIndirect">
-        <p:column headerText="Terminología">
-            <h:outputText value="#{crossmapsIndirect.target.crossmapSet.name}"/>
-        </p:column>
-        <p:column headerText="Cod. Crossmaps">
-            <h:outputText value="#{crossmapsIndirect.target.code}"/>
-        </p:column>
-        <p:column headerText="Descripcion">
-            <h:outputText value="#{crossmapsIndirect.target.gloss}"/>
-        </p:column>
-        <p:column headerText="MapRule">
-            <h:outputText value="#{crossmapsIndirect.mapRule}"/>
-        </p:column>
-        <p:column headerText="MapAdvice">
-            <h:outputText value="#{crossmapsIndirect.mapAdvice}"/>
-        </p:column>
-        <p:column headerText="Origen">
-            <h:outputText value=""/>
-        </p:column>
-        <p:column headerText="Fecha de ingreso">
-            <h:outputText value=""/>
-        </p:column>
-    </p:dataTable>
+    <p:panel header="Crossmap Indirecto" collapsed="true" toggleable="true" styleClass="crossmapindirect">
+        <p:dataTable value="#{crossmapBean.indirectCrossmaps}" var="crossmapsIndirect">
+            <p:column headerText="Terminología">
+                <h:outputText value="#{crossmapsIndirect.target.crossmapSet.name}"/>
+            </p:column>
+            <p:column headerText="Cod. Crossmaps">
+                <h:outputText value="#{crossmapsIndirect.target.code}"/>
+            </p:column>
+            <p:column headerText="Descripcion">
+                <h:outputText value="#{crossmapsIndirect.target.gloss}"/>
+            </p:column>
+            <p:column headerText="MapRule">
+                <h:outputText value="#{crossmapsIndirect.mapRule}"/>
+            </p:column>
+            <p:column headerText="MapAdvice">
+                <h:outputText value="#{crossmapsIndirect.mapAdvice}"/>
+            </p:column>
+            <p:column headerText="Origen">
+                <h:outputText value=""/>
+            </p:column>
+            <p:column headerText="Fecha de ingreso">
+                <h:outputText value=""/>
+            </p:column>
+        </p:dataTable>
+    </p:panel>
 
+    <br/>
+    <br/>
 
 </composite:implementation>
 </html>
