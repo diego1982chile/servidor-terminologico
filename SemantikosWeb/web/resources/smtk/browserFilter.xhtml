@@ -52,7 +52,7 @@
                 <p:selectCheckboxMenu id="tags"
                                       value="#{cc.attrs.conceptQuery.tags}"
                                       converter="omnifaces.SelectItemsConverter"
-                                      label="Etiquetas"
+                                      label="#{ conceptBrowserBean.stringifyTags(cc.attrs.conceptQuery.tags) }"
                                       filter="true"
                                       filterMatchMode="startsWith"
                                       style="margin-right:10px; width: 60%">

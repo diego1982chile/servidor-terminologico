@@ -814,7 +814,11 @@ public class ConceptBean implements Serializable {
             }
             // Si el concepto está persistido, actualizarlo. Si no, persistirlo
             if (concept.isPersistent()) {
-                updateConcept(context);
+                try{
+                    updateConcept(context);
+                }catch (EJBException e){
+                    messageError(e.getMessage());
+                }
             } else {
                 if (!containDescriptionCategory(concept)) {
                     persistConcept(context);
