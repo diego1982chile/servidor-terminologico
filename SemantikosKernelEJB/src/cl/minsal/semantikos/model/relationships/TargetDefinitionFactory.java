@@ -160,14 +160,6 @@ class TargetDefinitionDTO {
         this.sctType = isSctType;
     }
 
-    public long getIdExternTableName() {
-        return idExternTableName;
-    }
-
-    public void setIdExternTableName(long idExternTableName) {
-        this.idExternTableName = idExternTableName;
-    }
-
     @Override
     public String toString() {
         return "TargetDefinitionDTO{" +

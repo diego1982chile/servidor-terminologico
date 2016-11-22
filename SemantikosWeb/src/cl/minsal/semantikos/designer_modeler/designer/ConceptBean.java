@@ -48,7 +48,7 @@ import java.util.*;
 @ViewScoped
 public class ConceptBean implements Serializable {
 
-    static final Logger logger = LoggerFactory.getLogger(ConceptBean.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConceptBean.class);
 
     @EJB
     ConceptManager conceptManager;
