@@ -194,7 +194,8 @@ public class RelationshipFactory {
 
         /* El target puede ser un concepto SMTK */
         if (relationshipDefinition.getTargetDefinition().isSMTKType()) {
-            ConceptSMTK conceptByID = conceptDAO.getConceptByID(idTarget);
+
+            ConceptSMTK conceptByID = (ConceptSMTK) targetDAO.getTargetByID(idTarget);
             return new Relationship(relationshipDTO.getId(), sourceConceptSMTK, conceptByID, relationshipDefinition, relationshipDTO.validityUntil, new ArrayList<RelationshipAttribute>());
         }
 

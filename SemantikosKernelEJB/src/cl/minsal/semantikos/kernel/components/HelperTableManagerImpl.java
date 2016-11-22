@@ -82,6 +82,18 @@ public class HelperTableManagerImpl implements HelperTableManager {
     }
 
     @Override
+    public List<HelperTableRecord> searchRecords(HelperTable helperTable, List<String> searchColumns, String pattern, boolean validity) {
+
+        List<HelperTableRecord> records = new ArrayList<>();
+
+        for (String searchColumn : searchColumns) {
+            records.addAll(searchRecords(helperTable, searchColumn, pattern, validity));
+        }
+
+        return records;
+    }
+
+    @Override
     public HelperTableRecord getRecord(long recordId) {
         return helperTableDAO.getHelperTableRecordFromId(recordId);
     }
@@ -103,7 +115,7 @@ public class HelperTableManagerImpl implements HelperTableManager {
         HelperTableImportReport helperTableReport = new HelperTableImportReport(helperTable, user);
         Iterable<CSVRecord> records;
         try {
-            records = CSVFormat.RFC4180.withFirstRecordAsHeader(). parse(in);
+            records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
         } catch (IOException e) {
             logger.error("Error al procesar archivo CSV para importación de tabla auxiliar.", e);
             helperTableReport.setStatus(LoadStatus.CANCELED);

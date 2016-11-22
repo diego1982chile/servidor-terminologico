@@ -26,7 +26,7 @@ public class ConceptQuery {
 
     private Boolean modeled;
 
-    private Tag tag;
+    private List<Tag> tags = new ArrayList<>();
 
     private boolean customFilterable;
 
@@ -99,12 +99,15 @@ public class ConceptQuery {
         this.modeled = modeled;
     }
 
-    public Tag getTag() {
-        return tag;
+    public List<Tag> getTags() {
+        return tags;
     }
 
-    public void setTag(Tag tag) {
-        this.tag = tag;
+    public void setTags(List<Tag> tags) {
+        if(tags == null)
+            this.tags.clear();
+        else
+            this.tags = tags;
     }
 
     public Date getCreationDateSince() {
@@ -225,6 +228,22 @@ public class ConceptQuery {
         }
     }
 
+    public Long[] getTagValues(){
+
+        List<Long> tagValues = new ArrayList<>();
+
+        for (Tag tag : getTags())
+            tagValues.add(tag.getId());
+
+        if(tagValues.isEmpty())
+            return null;
+
+        else {
+            Long[] array = new Long[tagValues.size()];
+            return tagValues.toArray(array);
+        }
+    }
+
     public Long[] getConceptCategoryValues(){
 
         List<Long> conceptCategoryValues = new ArrayList<>();
@@ -338,7 +357,7 @@ public class ConceptQuery {
         conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getModeled(), false)); /** está modelado? **/
         conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getToBeReviewed(), false)); /** para revisar? **/
         conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getToBeConsulted(), false)); /** para consultar? **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Tag.class, getTag(), false)); /** etiquetas **/
+        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getTagValues(), true)); /** etiquetas **/
         conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getConceptCategoryValues(), true));
         conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getConceptValues(), true));
         conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getBasicTypeDefinitionValues(), true)); /** ids basicTypeDefinitionValues **/
