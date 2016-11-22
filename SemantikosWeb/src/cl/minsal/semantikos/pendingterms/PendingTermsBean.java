@@ -70,4 +70,8 @@ public class PendingTermsBean {
     public String getObservation() {
         return observation;
     }
+
+    public void save(){
+        logger.info("Se está grabando el término");
+    }
 }

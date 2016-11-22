@@ -35,7 +35,8 @@
                     <p:inputText type="text" id="profession" value="#{pendingTerms.profession}"/>
 
                     <p:outputLabel id="specialityLabel" for="speciality" value="Lugar"/>
-                    <p:inputText type="text" id="speciality" value="#{pendingTerms.speciality}" placeholder="Escriba su especialidad"/>
+                    <p:inputText type="text" id="speciality" value="#{pendingTerms.speciality}"
+                                 placeholder="Escriba su especialidad"/>
 
                     <p:outputLabel id="subspecialityLabel" for="subspeciality" value="Lugar"/>
                     <p:inputText type="text" id="subspeciality" value="#{pendingTerms.subspeciality}"/>
@@ -46,6 +47,9 @@
                     <p:outputLabel id="observationLabel" for="observation" value="Lugar"/>
                     <p:inputText type="text" id="observation" value="#{pendingTerms.observation}"/>
 
+                    <p:commandButton actionListener="#{pendingTerms.save}" icon="fa fa-check"
+                                     styleClass="ui-priority-primary"
+                                     value="Guardar"/>
                 </h:panelGrid>
             </h:form>
         </p:panel>
