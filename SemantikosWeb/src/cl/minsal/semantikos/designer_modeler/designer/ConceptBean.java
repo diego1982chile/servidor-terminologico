@@ -239,6 +239,17 @@ public class ConceptBean implements Serializable {
         this.observationNoValid = observationNoValid;
     }
 
+    @ManagedProperty(value = "#{crossmapBean}")
+    private CrossmapBean crossmapBean;
+
+    public CrossmapBean getCrossmapBean() {
+        return crossmapBean;
+    }
+
+    public void setCrossmapBean(CrossmapBean crossmapBean) {
+        this.crossmapBean = crossmapBean;
+    }
+
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() throws ParseException {
@@ -396,6 +407,7 @@ public class ConceptBean implements Serializable {
     public void getConceptById(long conceptId) {
         ConceptSMTK conceptSMTK = conceptManager.getConceptByID(conceptId);
         conceptSMTK.setRelationships(conceptManager.loadRelationships(conceptSMTK));
+        crossmapBean.refreshCrossmapIndirect(conceptSMTK);
         this.conceptSMTK = conceptSMTK;
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = new ConceptSMTKWeb(conceptSMTK);
@@ -450,11 +462,15 @@ public class ConceptBean implements Serializable {
         }
         Relationship relationship = relationshipPlaceholders.get(relationshipDefinition.getId());
 
+        if (existRelationshipToSCT()) crossmapBean.refreshCrossmapIndirect(concept);
+
         if (isMapping(relationship)) {
             ConceptSCT conceptSCT = (ConceptSCT) relationship.getTarget();
             fullyDefined = (conceptSCT.isCompletelyDefined()) ? true : false;
             concept.setFullyDefined(fullyDefined);
             concept.setInherited(true);
+        } else {
+            concept.setInherited(false);
         }
 
         // Validar placeholders de targets de relacion
@@ -471,7 +487,7 @@ public class ConceptBean implements Serializable {
             }
             relationshipBindingBR.verifyPreConditions(concept, relationship, user);
         } catch (EJBException EJB) {
-            messageError( EJB.getMessage());
+            messageError(EJB.getMessage());
             return;
         }
 
@@ -656,6 +672,7 @@ public class ConceptBean implements Serializable {
      */
     public void removeRelationship(RelationshipDefinition rd, Relationship r) {
         concept.removeRelationshipWeb(r);
+        crossmapBean.refreshCrossmapIndirect(concept);
     }
 
     /**
@@ -672,7 +689,7 @@ public class ConceptBean implements Serializable {
         if (!otherTermino.trim().equals("")) {
             if (otherDescriptionType != null) {
                 if (otherDescriptionType.getName().equalsIgnoreCase("abreviada") && concept.getValidDescriptionAbbreviated() != null) {
-                    messageError( "Solo puede existir una descripción abreviada");
+                    messageError("Solo puede existir una descripción abreviada");
                     return;
                 }
                 DescriptionWeb description = new DescriptionWeb(concept, otherTermino, otherDescriptionType);
@@ -700,7 +717,7 @@ public class ConceptBean implements Serializable {
                 messageError("No se ha seleccionado el tipo de descripción");
             }
         } else {
-            messageError( "No se ha ingresado el término a la descripción");
+            messageError("No se ha ingresado el término a la descripción");
         }
     }
 
@@ -716,7 +733,7 @@ public class ConceptBean implements Serializable {
             relationshipDefinition.setMultiplicitySatisfied(isMultiplicitySatisfied);
 
             if (!isMultiplicitySatisfied) {
-                messageError( "El atributo " + relationshipDefinition.getName() + " no cumple con el minimo requerido");
+                messageError("El atributo " + relationshipDefinition.getName() + " no cumple con el minimo requerido");
                 return false;
             }
             if (changeDirectMultiplicity(relationshipDefinition)) {
@@ -872,9 +889,7 @@ public class ConceptBean implements Serializable {
      */
     private int updateConceptDescriptions() {
 
-        for (DescriptionWeb description : descriptionsToTraslate) {
-            descriptionManager.moveDescriptionToConcept(concept, description, user);
-        }
+
 
         /* Se persisten las nuevas descripciones */
         List<DescriptionWeb> unpersistedDescriptions = concept.getUnpersistedDescriptions();
@@ -884,12 +899,7 @@ public class ConceptBean implements Serializable {
         /* Se invalidan las descripciones eliminadas */
         List<DescriptionWeb> descriptionsForDelete = concept.getRemovedDescriptionsWeb(_concept);
         for (Description description : descriptionsForDelete) {
-            if (!containDescriptionToTranslate(description) && descriptionsToTraslate.size() > 0) {
-                descriptionManager.deleteDescription(description, user);
-            }
-            if (!containDescriptionNoValidToTranslate(description) && noValidDescriptions.size() > 0) {
-                descriptionManager.deleteDescription(description, user);
-            } else {
+            if (!(containDescriptionToTranslate(description) || containDescriptionNoValidToTranslate(description))) {
                 descriptionManager.deleteDescription(description, user);
             }
             _concept.removeDescription(description);
@@ -905,6 +915,11 @@ public class ConceptBean implements Serializable {
         for (NoValidDescription noValidDescription : noValidDescriptions) {
             descriptionManager.invalidateDescription(concept, noValidDescription, user);
         }
+        for (DescriptionWeb description : descriptionsToTraslate) {
+            descriptionManager.moveDescriptionToConcept(concept, description, user);
+        }
+        descriptionsToTraslate.clear();
+        noValidDescriptions.clear();
         return unpersistedDescriptions.size() + descriptionsForDelete.size() + descriptionsForUpdate.size() + descriptionsToTraslate.size() + noValidDescriptions.size();
     }
 
@@ -938,7 +953,8 @@ public class ConceptBean implements Serializable {
         } else {
             conceptManager.invalidate(concept, user);
             context.addMessage(null, new FacesMessage("Successful", "Concepto invalidado"));
-        }return "";
+        }
+        return "";
     }
 
     public void cancelConcept() {
@@ -1399,7 +1415,8 @@ public class ConceptBean implements Serializable {
             } else {
                 autogenerateString = autogenerateString + " + " + autoGenerateList.get(i);
             }
-        } return autogenerateString;
+        }
+        return autogenerateString;
     }
 
     public String autogenerateMCCE() {
@@ -1580,8 +1597,8 @@ public class ConceptBean implements Serializable {
 
     public void changeFullyDefined() {
         try {
-            concept.setFullyDefined((fullyDefined)?true:false);
-            if(concept.isFullyDefined())conceptDefinitionalGradeBR.apply(concept);
+            concept.setFullyDefined((fullyDefined) ? true : false);
+            if (concept.isFullyDefined()) conceptDefinitionalGradeBR.apply(concept);
         } catch (EJBException e) {
             concept.setFullyDefined(false);
             messageError("No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT");
@@ -1595,6 +1612,7 @@ public class ConceptBean implements Serializable {
 
     /**
      * Metodo encargado de validar si la relacion que recibe por parametro es de tipo Es un Mapeo.
+     *
      * @param relationship relacion a validar.
      * @return retorna true o false segun corresponda.
      */
@@ -1623,7 +1641,7 @@ public class ConceptBean implements Serializable {
     }
 
     private boolean existRelationshipToSCT() {
-        for (Relationship relationship: concept.getValidRelationships()) {
+        for (Relationship relationship : concept.getValidRelationships()) {
             if (!relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType() && (relationship.getRelationshipDefinition().getId() == ID_RELATIONSHIP_DEFINITION_SNOMED_CT)) {
                 return true;
             }

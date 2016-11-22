@@ -48,7 +48,7 @@ public class HelperTableBean implements Serializable {
     public List<HelperTableRecord> getRecordSearchInput(String patron) {
 
         /* Si el patrón viene vacío o es menor a tres caracteres, no se hace nada */
-         if ( patron == null || patron.length() < 2 ) {
+         if ( patron == null || patron.length() <= 1 ) {
             return emptyList();
         }
 
