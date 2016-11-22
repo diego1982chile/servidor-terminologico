@@ -81,25 +81,28 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
             List<Relationship> relationshipsLike = relationshipManager.getRelationshipsLike(snomedCTRelationship.getRelationshipDefinition(), snomedCTRelationship.getTarget());
             for (Relationship relationship : relationshipsLike) {
 
+
                 /* Se recupera el concepto origen y se cargan sus relaciones */
                 ConceptSMTK sourceConcept = relationship.getSourceConcept();
-                List<Relationship> relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(sourceConcept);
-                sourceConcept.setRelationships(relationshipsBySourceConcept);
+                if(sourceConcept.getId()!=concept.getId()) {
+                    List<Relationship> relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(sourceConcept);
+                    sourceConcept.setRelationships(relationshipsBySourceConcept);
 
                 /* Se pregunta si ambos conceptos tienen las mismas relaciones SnomedCT */
 
                 /* Primero se ve si el concepto origen tiene las relaciones Snomed del concepto en cuestion */
-                SnomedCTRelationship[] relationships = relationshipsSnomedCT.toArray(new SnomedCTRelationship[relationshipsSnomedCT.size()]);
-                boolean contains1 = sourceConcept.containsLike(relationships);
+                    SnomedCTRelationship[] relationships = relationshipsSnomedCT.toArray(new SnomedCTRelationship[relationshipsSnomedCT.size()]);
+                    boolean contains1 = sourceConcept.containsLike(relationships);
 
-                List<SnomedCTRelationship> relationshipsSnomedCT1 = sourceConcept.getRelationshipsSnomedCT();
-                boolean contains2 = concept.containsLike(relationshipsSnomedCT1.toArray(new SnomedCTRelationship[relationshipsSnomedCT1.size()]));
+                    List<SnomedCTRelationship> relationshipsSnomedCT1 = sourceConcept.getRelationshipsSnomedCT();
+                    boolean contains2 = concept.containsLike(relationshipsSnomedCT1.toArray(new SnomedCTRelationship[relationshipsSnomedCT1.size()]));
 
-                if (contains1 && contains2) {
-                    if (added){
-                        concept.removeRelationship(theRelationship);
+                    if (contains1 && contains2) {
+                        if (added) {
+                            concept.removeRelationship(theRelationship);
+                        }
+                        throw new BusinessRuleException("BR-SCT-004: Un concepto [" + sourceConcept.toString() + "] con una relación \"ES UN\" no debe grabarse si existe otro concepto con las mismas relaciones.");
                     }
-                    throw new BusinessRuleException("BR-SCT-004: Un concepto [" + sourceConcept.toString() + "] con una relación \"ES UN\" no debe grabarse si existe otro concepto con las mismas relaciones.");
                 }
             }
         }

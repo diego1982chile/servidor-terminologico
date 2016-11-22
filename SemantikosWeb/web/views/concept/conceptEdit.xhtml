@@ -33,12 +33,12 @@
 
                                                 <!--p:messages autoUpdate="true"></p:messages-->
 
-                                                <smtk:title concept="#{conceptBean.concept}"/>
-                                                <p:separator />
-                                                <p:spacer />
-                                                <p:outputPanel id="conceptHeader" style="border: hidden;" styleClass="conceptHeader">
-                                                    <smtk:conceptHeader concept="#{conceptBean.concept}"/>
-                                                </p:outputPanel>
+                    <smtk:title concept="#{conceptBean.concept}"/>
+                    <p:separator />
+                    <p:panel id="conceptHeader" style="border: hidden;" styleClass="conceptHeader">
+                        <p:growl id="editMsgs2" showDetail="true"/>
+                        <smtk:conceptHeader concept="#{conceptBean.concept}"/>
+                    </p:panel>
 
                                             </p:outputPanel>
 
