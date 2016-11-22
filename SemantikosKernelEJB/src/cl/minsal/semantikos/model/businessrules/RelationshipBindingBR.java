@@ -36,13 +36,43 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
         brRelationshipBinding001(relationship, user);
 
         /* Que no se agreguen dos Snomed de tipo "ES UN MAPEDO DE" */
-        if(concept.isFullyDefined())brRelationshipBinding002(concept, relationship);
+        brRelationshipBinding002(concept, relationship);
 
         /* Las relaciones de semantikos con Snomed CT son 1-1 */
-        if(concept.isFullyDefined())brRelationshipBinding003(concept, relationship);
+        brRelationshipBinding003(concept, relationship);
 
         /* BR-SCT-003: ES MAPEO DE, es una relación exclusiva de Snomed CT */
-        if(concept.isFullyDefined())brRelationshipBinding004(concept, relationship);
+        brRelationshipBinding004(concept, relationship);
+
+        /* BR-SCT-004: Un concepto con una relación "ES UN" no debe grabarse si existe otro concepto con las mismas relaciones */
+        brRelationshipBinding005(concept);
+
+    }
+
+    /**
+     * BR-SCT-004: Un concepto con una relación "ES UN" no debe grabarse si existe otro concepto con las mismas
+     * relaciones.
+     *
+     * @param concept El concepto cuyas relaciones están cambiando.
+     */
+    private void brRelationshipBinding005(ConceptSMTK concept) {
+
+        /* Esta arregla aplica sólo a conceptos con una relación ES UN */
+        if (!concept.contains(SnomedCTRelationship.ES_UN)) {
+            return;
+        }
+
+        List<SnomedCTRelationship> relationshipsSnomedCT = concept.getRelationshipsSnomedCT();
+        for (SnomedCTRelationship snomedCTRelationship : relationshipsSnomedCT) {
+            List<Relationship> relationshipsLike = relationshipManager.getRelationshipsLike(snomedCTRelationship.getRelationshipDefinition(), snomedCTRelationship.getTarget());
+            for (Relationship relationship : relationshipsLike) {
+                ConceptSMTK sourceConcept = relationship.getSourceConcept();
+                relationshipManager.getRelationshipsBySourceConcept(sourceConcept);
+                if (sourceConcept.contains(relationshipsSnomedCT.toArray(new SnomedCTRelationship[relationshipsSnomedCT.size()]))) {
+                    throw new BusinessRuleException("BR-SCT-004: Un concepto [" + sourceConcept.toString() + "] con una relación \"ES UN\" no debe grabarse si existe otro concepto con las mismas relaciones.");
+                }
+            }
+        }
 
     }
 
