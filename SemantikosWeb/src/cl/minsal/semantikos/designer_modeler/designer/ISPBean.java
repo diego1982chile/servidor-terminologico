@@ -22,8 +22,8 @@ public class ISPBean {
 
 
     private Boolean existe = true;
-    private String regnum = "123C-254";
-    private int ano = 15;
+    private String regnum;
+    private int ano;
 
 
     private Map<String,String> fetchedData;
