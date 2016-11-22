@@ -11,6 +11,7 @@ import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.List;
 
 import static cl.minsal.semantikos.model.ProfileFactory.MODELER_PROFILE;
@@ -45,7 +46,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
         brRelationshipBinding004(concept, relationship);
 
         /* BR-SCT-004: Un concepto con una relación "ES UN" no debe grabarse si existe otro concepto con las mismas relaciones */
-        brRelationshipBinding005(concept);
+        brRelationshipBinding005(concept, relationship);
 
     }
 
@@ -53,25 +54,58 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      * BR-SCT-004: Un concepto con una relación "ES UN" no debe grabarse si existe otro concepto con las mismas
      * relaciones.
      *
-     * @param concept El concepto cuyas relaciones están cambiando.
+     * @param concept      El concepto cuyas relaciones están cambiando.
+     * @param theRelationship La relacion que se agrega, que quizas ya esta.
      */
-    private void brRelationshipBinding005(ConceptSMTK concept) {
+    private void brRelationshipBinding005(ConceptSMTK concept, Relationship theRelationship) {
 
         /* Esta arregla aplica sólo a conceptos con una relación ES UN */
         if (!concept.contains(SnomedCTRelationship.ES_UN)) {
             return;
         }
 
+        boolean added = false;
+        if (!concept.getRelationshipsSnomedCT().contains(theRelationship)) {
+            concept.addRelationship(theRelationship);
+            added = true;
+        }
+
+        /* Se revisa cada una de las relaciones Snomed del concepto */
         List<SnomedCTRelationship> relationshipsSnomedCT = concept.getRelationshipsSnomedCT();
         for (SnomedCTRelationship snomedCTRelationship : relationshipsSnomedCT) {
+
+            /*
+             * Se recuperan todas las relaciones similares.
+             * Se verifica si cada concepto origen de la relacion tiene las mismas relacioens snomed
+             */
             List<Relationship> relationshipsLike = relationshipManager.getRelationshipsLike(snomedCTRelationship.getRelationshipDefinition(), snomedCTRelationship.getTarget());
             for (Relationship relationship : relationshipsLike) {
+
+                /* Se recupera el concepto origen y se cargan sus relaciones */
                 ConceptSMTK sourceConcept = relationship.getSourceConcept();
-                relationshipManager.getRelationshipsBySourceConcept(sourceConcept);
-                if (sourceConcept.contains(relationshipsSnomedCT.toArray(new SnomedCTRelationship[relationshipsSnomedCT.size()]))) {
+                List<Relationship> relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(sourceConcept);
+                sourceConcept.setRelationships(relationshipsBySourceConcept);
+
+                /* Se pregunta si ambos conceptos tienen las mismas relaciones SnomedCT */
+
+                /* Primero se ve si el concepto origen tiene las relaciones Snomed del concepto en cuestion */
+                SnomedCTRelationship[] relationships = relationshipsSnomedCT.toArray(new SnomedCTRelationship[relationshipsSnomedCT.size()]);
+                boolean contains1 = sourceConcept.containsLike(relationships);
+
+                List<SnomedCTRelationship> relationshipsSnomedCT1 = sourceConcept.getRelationshipsSnomedCT();
+                boolean contains2 = concept.containsLike(relationshipsSnomedCT1.toArray(new SnomedCTRelationship[relationshipsSnomedCT1.size()]));
+
+                if (contains1 && contains2) {
+                    if (added){
+                        concept.removeRelationship(theRelationship);
+                    }
                     throw new BusinessRuleException("BR-SCT-004: Un concepto [" + sourceConcept.toString() + "] con una relación \"ES UN\" no debe grabarse si existe otro concepto con las mismas relaciones.");
                 }
             }
+        }
+
+        if (added){
+            concept.removeRelationship(theRelationship);
         }
 
     }
@@ -204,6 +238,14 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
 
         /* Esta regla de negocio solo aplica a relaciones de tipo SnomedCT */
         if (!isSnomedCTRelationship(relationship)) {
+            return;
+        }
+
+          /* Se transforma a una relación Snomed CT */
+        SnomedCTRelationship snomedCTRelationship = SnomedCTRelationship.createSnomedCT(relationship);
+
+        /* Y se verifica que sup tipo sea "ES_UN_MAPEO DE" */
+        if (!snomedCTRelationship.isES_UN_MAPEO_DE()) {
             return;
         }
 
