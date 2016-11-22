@@ -673,7 +673,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public ConceptSMTK getPendingConcept() {
         // TODO: Parametrizar esto
-        return getConceptByID(81349); // Desarrollo
+        return getConceptByID(81394); // Desarrollo
     }
 
     @Override
