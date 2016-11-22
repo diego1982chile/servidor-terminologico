@@ -122,7 +122,7 @@
                         <f:selectItems value="#{sctBean.relationshipGroups}" var="relationshipGroup"
                                        itemLabel="#{relationshipGroup}"
                                        itemValue="#{relationshipGroup}" />
-                        <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
+                        <p:ajax event="itemSelect" process="@this" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
                     </p:selectOneMenu>
                 </div>
 

@@ -13,6 +13,8 @@ import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import cl.minsal.semantikos.model.helpertables.HelperTable;
+import cl.minsal.semantikos.model.helpertables.HelperTableFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
@@ -323,8 +325,21 @@ public class ConceptBean implements Serializable {
             if (!concept.isPersistent() && relationshipDefinitionWeb.hasDefaultValue())
                 concept.initRelationship(relationshipDefinitionWeb);
 
-            if (!relationshipDefinition.getRelationshipAttributeDefinitions().isEmpty())
+            if (!relationshipDefinition.getRelationshipAttributeDefinitions().isEmpty()) {
                 relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
+                // Si esta definición de relación es de tipo CROSSMAP, Se agrega el atributo tipo de relacion = "ES_UN_MAPEO_DE" (por defecto)
+                if(relationshipDefinition.getTargetDefinition().isCrossMapType()){
+                    for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
+                        if(attDef.isRelationshipTypeAttribute()) {
+                            Relationship r = relationshipPlaceholders.get(relationshipDefinition.getId());
+                            HelperTable helperTable = (HelperTable)attDef.getTargetDefinition();
+                            String[] columnNames= {HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()};
+                            RelationshipAttribute ra = new RelationshipAttribute(attDef, r, helperTableManager.searchRecords(helperTable, Arrays.asList(columnNames), HelperTableFactory.ES_UN_MAPEO_DE, true).get(0));
+                            r.getRelationshipAttributes().add(ra);
+                        }
+                    }
+                }
+            }
         }
         //context.execute("PF('dialogNameConcept').hide();");
     }
