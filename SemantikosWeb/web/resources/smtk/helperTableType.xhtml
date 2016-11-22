@@ -338,17 +338,20 @@
                 </div>
                 <p:dialog id="ispfetcheddialog" widgetVar="ispfetcheddialog" header="Confirmar datos recuperados del Registro ISP" modal="true">
                     <p>Se han recuperado los siguientes datos desde el ISP:</p>
-                    <p:panel id="ispfetcheddialogcontent">
+                    <p:panel id="ispfetcheddialogcontent" >
 
-                        <p:dataTable value="#{ispbean.mapKeys}" var="key">
-                            <p:column>#{key}</p:column>
-                            <p:column width="10" >:</p:column>
-                            <p:column>#{ispbean.fetchedData[key]}</p:column>
+                        <p:dataTable value="#{ispbean.mapKeys}" var="key" rendered="#{not empty ispbean.mapKeys}">
+                            <p:column width="200">#{key}</p:column>
+                            <p:column width="300">#{ispbean.fetchedData[key]}</p:column>
                         </p:dataTable>
+
+
+                        <p:outputLabel endered="#{empty ispbean.mapKeys}" value="No se pudo recuperar datos del ISP" />
+                        <p:commandButton rendered="#{not empty ispbean.mapKeys}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Cancelar" type="button" onclick="PF('ispfetcheddialog').hide()" />
+
                     </p:panel>
 
-                    <p:commandButton value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                    <p:commandButton value="Cancelar" type="button" onclick="PF('ispfetcheddialog').hide()" />
                 </p:dialog>
 
             </p:outputPanel>
@@ -371,6 +374,7 @@
                         </f:facet>
                         <h:outputText value="#{relationship.target.fields.get(column.columnName)}" />
                     </p:columns>
+
                     <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
                         <p:commandButton
                                 icon="fa fa-trash"

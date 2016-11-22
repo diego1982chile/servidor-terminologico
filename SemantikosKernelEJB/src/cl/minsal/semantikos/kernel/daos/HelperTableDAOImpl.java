@@ -45,14 +45,14 @@ public class HelperTableDAOImpl implements HelperTableDAO {
          *   - un arreglo con los valores de los campos.
          *   - ID usuario que realiza la carga.
          */
-        String selectRecord = "{call semantikos.helper_tables_insert_record(?,?,?)}";
+        String selectRecord = "{call semantikos.helper_tables_insert_record2(?,?,?)}";
         ConnectionBD connectionBD = new ConnectionBD();
         try (Connection connection = connectionBD.getConnection();
              CallableStatement callableStatement = connection.prepareCall(selectRecord)) {
 
             /* Se agregan las columnas y valores de sistema */
-            record.addField("id_usuario", Long.toString(user.getIdUser()));
-            record.addField("creation_date", new Timestamp(System.currentTimeMillis()).toString());
+            //record.addField("id_user", Long.toString(user.getIdUser()));
+            //record.addField("creation_date", new Timestamp(System.currentTimeMillis()).toString());
 
             /* Se preparan los parámetros de la función */
             Map<String, String> recordFields = record.getFields();
@@ -60,23 +60,24 @@ public class HelperTableDAOImpl implements HelperTableDAO {
             Array column_values = connection.createArrayOf("text", recordFields.values().toArray(new String[recordFields.size()]));
 
             /* Se prepara y realiza la consulta */
-            callableStatement.setString(1, helperTable.getTablaName());
+            callableStatement.setString(1, helperTable.getName());
             callableStatement.setArray(2, column_names);
             callableStatement.setArray(3, column_values);
-            callableStatement.setLong(4, user.getIdUser());
+            //callableStatement.setLong(4, user.getIdUser());
 
             ResultSet rs =callableStatement.executeQuery();
 
+            rs.next();
             record.setId(rs.getBigDecimal(1).longValue());
 
-
+            return record;
 
         } catch (SQLException e) {
             logger.error("Error al realizar una inserción en las tablas auxiliares", e);
             throw new EJBException(e);
         }
 
-        return null;
+
     }
 
     @Override

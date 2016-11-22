@@ -116,14 +116,24 @@ public class ISPBean {
     public void agregarISP(RelationshipDefinition relationshipDefinition){
         HelperTable ispHT = getISPHelperTable();
 
-
         HelperTableRecord record = new HelperTableRecord(ispHT, mapFetchedData(fetchedData));
 
         HelperTableRecord inserted = helperTableManager.insertRecord(ispHT,record,authenticationBean.getLoggedUser());
 
-        conceptBean.addRelationship(relationshipDefinition,inserted);
+        HelperTableRecord refreshed = helperTableManager.getRecord(ispHT,inserted.getId());
 
+        conceptBean.setSelectedHelperTableRecord(refreshed);
 
+        conceptBean.addRelationship(relationshipDefinition,refreshed);
+
+        clean();
+
+    }
+
+    private void clean() {
+       existe = true;
+       regnum = "";
+       ano = 0;
     }
 
     private Map<String, String> mapFetchedData(Map<String, String> fetchedData) {
@@ -137,7 +147,7 @@ public class ISPBean {
         ret.put("equivalencia_terapeutica", fetchedData.get("Equivalencia Terapéutica"));
         ret.put("titular", fetchedData.get("Titular"));
         ret.put("estado_del_registro", fetchedData.get("Estado del Registro"));
-        ret.put("resolución_inscribase", fetchedData.get("Resolución Inscríbase"));
+        ret.put("resolucion_inscribase", fetchedData.get("Resolución Inscríbase"));
         ret.put("fecha_inscribase", fetchedData.get("Fecha Inscríbase"));
         ret.put("ultima_renovacion", fetchedData.get("Ultima Renovación"));
         ret.put("fecha_proxima_renovacion", fetchedData.get("Fecha Próxima renovación"));
@@ -147,7 +157,7 @@ public class ISPBean {
         ret.put("expende_tipo_establecimiento", fetchedData.get("Expende tipo establecimiento"));
         ret.put("indicacion", fetchedData.get("Indicación"));
 
-        ret.put("descripcion", fetchedData.get("Registro"));
+        ret.put("description", fetchedData.get("Registro"));
 
         return ret;
 
