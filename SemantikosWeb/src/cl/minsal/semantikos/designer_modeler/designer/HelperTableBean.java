@@ -19,10 +19,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Collections.emptyList;
 
@@ -61,7 +58,7 @@ public class HelperTableBean implements Serializable {
         List<HelperTableRecord> someRecords = new ArrayList<>();
 
         if(relationshipDefinition.isATC())
-            someRecords = helperTableManager.searchRecords(helperTable, HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName(), patron, true);
+            someRecords = helperTableManager.searchRecords(helperTable, Arrays.asList(new String[]{"description","description"}), patron, true);
         else
             someRecords = helperTableManager.searchRecords(helperTable, HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName(), patron, true);
 
