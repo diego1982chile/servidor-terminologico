@@ -67,6 +67,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
             List<Relationship> relationshipsLike = relationshipManager.getRelationshipsLike(snomedCTRelationship.getRelationshipDefinition(), snomedCTRelationship.getTarget());
             for (Relationship relationship : relationshipsLike) {
                 ConceptSMTK sourceConcept = relationship.getSourceConcept();
+                relationshipManager.getRelationshipsBySourceConcept(sourceConcept);
                 if (sourceConcept.contains(relationshipsSnomedCT.toArray(new SnomedCTRelationship[relationshipsSnomedCT.size()]))) {
                     throw new BusinessRuleException("BR-SCT-004: Un concepto [" + sourceConcept.toString() + "] con una relación \"ES UN\" no debe grabarse si existe otro concepto con las mismas relaciones.");
                 }
