@@ -58,9 +58,9 @@ public class HelperTableBean implements Serializable {
         List<HelperTableRecord> someRecords = new ArrayList<>();
 
         if(relationshipDefinition.isATC())
-            someRecords = helperTableManager.searchRecords(helperTable, Arrays.asList(new String[]{"description","description"}), patron, true);
+            someRecords = helperTableManager.searchRecords(helperTable, Arrays.asList(new String[]{"codigo_atc","dsc_completa_atc"}), patron, true);
         else
-            someRecords = helperTableManager.searchRecords(helperTable, HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName(), patron, true);
+            someRecords = helperTableManager.searchRecords(helperTable, Arrays.asList(new String[]{HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()}), patron, true);
 
         if(relationshipDefinition.isISP() && someRecords.isEmpty()){
             context2.execute("PF('dialogISP').show();");

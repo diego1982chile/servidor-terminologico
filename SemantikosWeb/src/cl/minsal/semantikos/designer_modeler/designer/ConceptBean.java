@@ -322,7 +322,8 @@ public class ConceptBean implements Serializable {
                         if(attDef.isRelationshipTypeAttribute()) {
                             Relationship r = relationshipPlaceholders.get(relationshipDefinition.getId());
                             HelperTable helperTable = (HelperTable)attDef.getTargetDefinition();
-                            RelationshipAttribute ra = new RelationshipAttribute(attDef, r, helperTableManager.searchRecords(helperTable, "description", HelperTableFactory.ES_UN_MAPEO_DE, true).get(0));
+                            String[] columnNames= {HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()};
+                            RelationshipAttribute ra = new RelationshipAttribute(attDef, r, helperTableManager.searchRecords(helperTable, Arrays.asList(columnNames), HelperTableFactory.ES_UN_MAPEO_DE, true).get(0));
                             r.getRelationshipAttributes().add(ra);
                         }
                     }
