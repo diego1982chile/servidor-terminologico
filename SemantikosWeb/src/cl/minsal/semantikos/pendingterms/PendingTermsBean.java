@@ -6,10 +6,12 @@ import cl.minsal.semantikos.kernel.components.PendingTermsManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.PendingTerm;
 import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -150,7 +152,7 @@ public class PendingTermsBean {
         this.authenticationBean = authenticationBean;
     }
 
-    public void save(){
+    public void save() {
 
         logger.info("Se está grabando el término pendiente: " + this);
         FacesContext context = FacesContext.getCurrentInstance();
@@ -159,7 +161,12 @@ public class PendingTermsBean {
         PendingTerm pendingTerm = new PendingTerm(term, date, sensibility, category, nameProfessional, profession, speciality, subspeciality, mail, observation);
 
         User loggedUser = authenticationBean.getLoggedUser();
-        pendingTermsManager.addPendingTerm(pendingTerm, loggedUser);
+        try {
+            pendingTermsManager.addPendingTerm(pendingTerm, loggedUser);
+        } catch (EJBException bre) {
+            context.addMessage(null, new FacesMessage("Problema!", bre.getMessage()));
+            return;
+        }
 
         /* Se avisa */
         context.addMessage(null, new FacesMessage("Éxito!", "Término '" + pendingTerm.getTerm() + "' guardado como Pendiente!"));
