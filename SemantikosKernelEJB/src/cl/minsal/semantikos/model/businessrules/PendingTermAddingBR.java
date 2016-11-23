@@ -24,11 +24,31 @@ public class PendingTermAddingBR {
      *
      * @param pendingTerm El término pendiente que se ha agregado.
      */
+    public void validatePreConditions(PendingTerm pendingTerm) {
+
+        /* El término pendiente no debe existir dentro de los términos pendientes */
+        preCondition001(pendingTerm);
+    }
+
+    /**
+     * Este método valida las post-condiciones asociadas a la agregación del c
+     *
+     * @param pendingTerm El término pendiente que se ha agregado.
+     */
     public void validatePostConditions(PendingTerm pendingTerm) {
 
         /* El concepto fue asociado al concepto especial 'Pendientes' */
         postCondition001(pendingTerm);
     }
+
+    /**
+     * BR-PEND-002: El sistema deberá guarda sólo un formulario por Término Pendiente.
+
+     * @param pendingTerm El término que se desea agregar
+     */
+    private void preCondition001(PendingTerm pendingTerm) {
+
+      }
 
     /**
      * BR-PEND-001: El valor del campo Término del Formulario de Solicitud quedará asociado a una descripción
@@ -49,6 +69,6 @@ public class PendingTermAddingBR {
         }
 
         /* En este punto, no se encontró el término en las descripcioens del concepto */
-        throw new BusinessRuleException("El término pendiente " + pendingTerm + " no fue agregado como descripción al concepto 'Pendientes'.");
+        throw new BusinessRuleException("BR-PEND-001", "El término pendiente " + pendingTerm + " no fue agregado como descripción al concepto 'Pendientes'.");
     }
 }
