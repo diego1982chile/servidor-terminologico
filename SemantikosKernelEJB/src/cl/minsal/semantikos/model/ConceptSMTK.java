@@ -374,7 +374,11 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     }
 
     public void setRelationships(List<Relationship> relationships) {
-        this.relationships = relationships;
+        if (relationships.isEmpty()) {
+            this.relationships = new ArrayList<>();
+        } else {
+            this.relationships = new ArrayList<>(relationships);
+        }
         this.relationshipsLoaded = true;
     }
 
@@ -510,7 +514,8 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * @param relationship La relación que es agregada.
      */
     public void addRelationship(Relationship relationship) {
-        this.getRelationships().add(relationship);
+        //this.getRelationships().add(relationship);
+        this.relationships.add(relationship);
     }
 
     /**
