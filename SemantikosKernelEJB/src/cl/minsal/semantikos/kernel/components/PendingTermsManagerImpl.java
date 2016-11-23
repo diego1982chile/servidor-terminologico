@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.businessrules.PendingTermAddingBR;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.List;
 
 /**
  * @author Andrés Farías on 11/23/16.
@@ -44,5 +45,10 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
 
         /* Validación de post-condiciones */
         pendingTermAddingBR.validatePostConditions(pendingTerm);
+    }
+
+    @Override
+    public List<PendingTerm> getAllPendingTerms() {
+        return pendingTermDAO.getAllPendingTerms();
     }
 }

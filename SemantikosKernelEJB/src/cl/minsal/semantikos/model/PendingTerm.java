@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -21,13 +22,16 @@ public class PendingTerm extends PersistentEntity {
 
     private String speciality;
 
-    private String subspeciality;
+    private String subSpeciality;
 
     private String mail;
 
     private String observation;
 
-    public PendingTerm(String term, Date date, boolean sensibility, Category category, String nameProfessional, String profession, String speciality, String subspeciality, String mail, String observation) {
+    /** La descripción a la cual está asociado el término pendiente (en cualquier concepto) */
+    private Description relatedDescription;
+
+    public PendingTerm(String term, Date date, boolean sensibility, Category category, String nameProfessional, String profession, String speciality, String subSpeciality, String mail, String observation) {
         this.term = term;
         this.date = date;
         this.sensibility = sensibility;
@@ -35,9 +39,15 @@ public class PendingTerm extends PersistentEntity {
         this.nameProfessional = nameProfessional;
         this.profession = profession;
         this.speciality = speciality;
-        this.subspeciality = subspeciality;
+        this.subSpeciality = subSpeciality;
         this.mail = mail;
         this.observation = observation;
+        this.relatedDescription = null;
+    }
+
+    public PendingTerm(long id, String term, Timestamp submissionDate, boolean sensibility, Category categoryById, String nameProfessional, String profession, String specialty, String subSpecialty, String mail, String observation) {
+        this(term, submissionDate, sensibility, categoryById, nameProfessional, profession, specialty, subSpecialty, mail, observation);
+        this.setId(id);
     }
 
     public String getTerm() {
@@ -68,8 +78,8 @@ public class PendingTerm extends PersistentEntity {
         return speciality;
     }
 
-    public String getSubspeciality() {
-        return subspeciality;
+    public String getSubSpeciality() {
+        return subSpeciality;
     }
 
     public String getMail() {
@@ -78,6 +88,14 @@ public class PendingTerm extends PersistentEntity {
 
     public String getObservation() {
         return observation;
+    }
+
+    public Description getRelatedDescription() {
+        return relatedDescription;
+    }
+
+    public void setRelatedDescription(Description relatedDescription) {
+        this.relatedDescription = relatedDescription;
     }
 
     @Override
