@@ -1,6 +1,9 @@
 package cl.minsal.semantikos.model.businessrules;
 
+import cl.minsal.semantikos.kernel.components.CategoryManager;
+import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
+import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.PendingTerm;
@@ -8,6 +11,7 @@ import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,6 +22,12 @@ public class PendingTermAddingBR {
 
     @EJB
     ConceptDAO conceptDAO;
+
+    @EJB
+    private DescriptionManager descriptionManager;
+
+    @EJB
+    private CategoryManager categoryManager;
 
     /**
      * Este método valida las post-condiciones asociadas a la agregación del c
@@ -43,12 +53,24 @@ public class PendingTermAddingBR {
 
     /**
      * BR-PEND-002: El sistema deberá guarda sólo un formulario por Término Pendiente.
-
+     *
      * @param pendingTerm El término que se desea agregar
      */
     private void preCondition001(PendingTerm pendingTerm) {
+        /* La búsqueda de térimnos se realiza en la categoría del concepto especial */
+        Category specialConceptCategory = conceptDAO.getPendingConcept().getCategory();
 
-      }
+        /* Se obtienen descripciones similares (no hay busqueda exacta por el momento) */
+        String termToAdd = pendingTerm.getTerm();
+        List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(termToAdd, Arrays.asList(specialConceptCategory));
+        for (Description description : descriptions) {
+
+            /* Y se compara el término con el que se desea agregar */
+            if (description.getTerm().equals(termToAdd)) {
+                throw new BusinessRuleException("BR-PEND-002", "El sistema deberá guarda sólo un formulario por Término Pendiente.");
+            }
+        }
+    }
 
     /**
      * BR-PEND-001: El valor del campo Término del Formulario de Solicitud quedará asociado a una descripción
