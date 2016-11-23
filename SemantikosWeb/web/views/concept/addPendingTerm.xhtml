@@ -11,41 +11,41 @@
                 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
                     <p:outputLabel id="termLabel" for="term" value="Término"/>
-                    <p:inputText id="term" value="#{pendingTerms.term}"/>
+                    <p:inputText id="term" value="#{pendingTerms.term}" required="true"/>
 
                     <p:outputLabel id="dateLabel" for="date" value="Fecha"/>
-                    <p:inputText type="date" id="date" value="#{pendingTerms.date}"/>
+                    <p:calendar id="date" value="#{pendingTerms.date}" required="true"/>
 
                     <p:outputLabel id="sensitiveLabel" for="sensibility" value="Sensibilidad"/>
-                    <p:selectOneRadio id="sensibility" value="#{pendingTerms.sensibility}">
+                    <p:selectOneRadio id="sensibility" value="#{pendingTerms.sensibility}" required="true">
                         <f:selectItem itemLabel="Si" itemValue="true"/>
                         <f:selectItem itemLabel="No" itemValue="false"/>
                     </p:selectOneRadio>
 
                     <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categiría propuesta"/>
-                    <p:selectOneMenu id="categoryMenu" value="#{pendingTerms.categoryId}">
+                    <p:selectOneMenu id="categoryMenu" value="#{pendingTerms.categoryId}" required="true">
                         <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
                                        itemLabel="#{category.name}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel id="nameProfessionLabel" for="nameProfessional" value="Lugar"/>
-                    <p:inputText type="text" id="nameProfessional" value="#{pendingTerms.nameProfessional}"/>
+                    <p:outputLabel id="nameProfessionLabel" for="nameProfessional" value="Nombre del Profesional"/>
+                    <p:inputText type="text" id="nameProfessional" value="#{pendingTerms.nameProfessional}" required="true"/>
 
-                    <p:outputLabel id="professionLabel" for="profession" value="Lugar"/>
-                    <p:inputText type="text" id="profession" value="#{pendingTerms.profession}"/>
+                    <p:outputLabel id="professionLabel" for="profession" value="Profesión"/>
+                    <p:inputText type="text" id="profession" value="#{pendingTerms.profession}" required="true"/>
 
-                    <p:outputLabel id="specialityLabel" for="speciality" value="Lugar"/>
+                    <p:outputLabel id="specialityLabel" for="speciality" value="Especialidad"/>
                     <p:inputText type="text" id="speciality" value="#{pendingTerms.speciality}"
-                                 placeholder="Escriba su especialidad"/>
+                                 placeholder="Escriba su especialidad" required="true"/>
 
-                    <p:outputLabel id="subspecialityLabel" for="subspeciality" value="Lugar"/>
-                    <p:inputText type="text" id="subspeciality" value="#{pendingTerms.subspeciality}"/>
+                    <p:outputLabel id="subspecialityLabel" for="subspeciality" value="Sub-especialidad"/>
+                    <p:inputText type="text" id="subspeciality" value="#{pendingTerms.subspeciality}" required="true"/>
 
-                    <p:outputLabel id="mailLabel" for="mail" value="Lugar"/>
-                    <p:inputText type="text" id="mail" value="#{pendingTerms.mail}"/>
+                    <p:outputLabel id="mailLabel" for="mail" value="Mail"/>
+                    <p:inputText type="mail" id="mail" value="#{pendingTerms.mail}" required="true" />
 
-                    <p:outputLabel id="observationLabel" for="observation" value="Lugar"/>
-                    <p:inputText type="text" id="observation" value="#{pendingTerms.observation}"/>
+                    <p:outputLabel id="observationLabel" for="observation" value="Observación"/>
+                    <p:inputText type="text" id="observation" value="#{pendingTerms.observation}" required="true"/>
 
                     <p:commandButton actionListener="#{pendingTerms.save}" icon="fa fa-check"
                                      styleClass="ui-priority-primary"

@@ -89,7 +89,7 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
-    public Category getCategoryById(int id) throws ParseException {
+    public Category getCategoryById(int id) {
         return categoryDAO.getCategoryById(id);
     }
 
