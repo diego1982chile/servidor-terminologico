@@ -347,7 +347,9 @@
 
 
                         <p:outputLabel endered="#{empty ispbean.mapKeys}" value="No se pudo recuperar datos del ISP" />
+
                         <p:commandButton rendered="#{not empty ispbean.mapKeys}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+
                         <p:commandButton value="Cancelar" type="button" onclick="PF('ispfetcheddialog').hide()" />
 
                     </p:panel>
