@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.CategoryDAO;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
+import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.Description;
@@ -29,6 +30,9 @@ public class PendingTermDAOImpl implements PendingTermDAO {
 
     @EJB
     private CategoryDAO categoryDAO;
+
+    @EJB
+    private DescriptionDAO descriptionDAO;
 
     @Override
     public void persist(PendingTerm pendingTerm) {
@@ -147,7 +151,11 @@ public class PendingTermDAOImpl implements PendingTermDAO {
         String mail = resultSet.getString("mail");
         String observation = resultSet.getString("observation");
         Timestamp submissionDate = resultSet.getTimestamp("submission_date");
+        Description description = descriptionDAO.getDescriptionBy(resultSet.getLong("id_description"));
 
-        return new PendingTerm(id, term, submissionDate, sensibility, categoryDAO.getCategoryById(idCategory), nameProfessional, profession, specialty, subSpecialty, mail, observation);
+        PendingTerm pendingTerm = new PendingTerm(id, term, submissionDate, sensibility, categoryDAO.getCategoryById(idCategory), nameProfessional, profession, specialty, subSpecialty, mail, observation);
+        pendingTerm.setRelatedDescription(description);
+
+        return pendingTerm;
     }
 }

@@ -8,44 +8,47 @@
                 template="/WEB-INF/template/template.xhtml">
 
     <ui:define name="content">
-
         <h:form>
-
             <p:panel>
-
-
-                <p:dataTable value="#{managerPendingTermsBean.conceptPending.descriptions}" var="descriptionPending">
-                    <p:column headerText="Categoría">
-                        <h:outputText value="#{managerPendingTermsBean.conceptPending.category.name}"/>
+                <p:dataTable widgetVar="pendingTermTable" value="#{managerPendingTermsBean.pendingTerms}" var="pendingTerm"  filteredValue="#{managerPendingTermsBean.pendingTermsListFilter}" >
+                    <p:column headerText="Categoría" filterBy="#{pendingTerm.category.name}" footerText="exact" filterMatchMode="exact" style="width: 400px;">
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('pendingTermTable').filter()" >
+                                <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{managerPendingTermsBean.categories}" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <h:outputText value="#{pendingTerm.category.name}"/>
                     </p:column>
-                    <p:column headerText="Término">
-                        <h:outputText value="#{descriptionPending.term}"/>
+                    <p:column headerText="Término" filterBy="#{pendingTerm.term}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pendingTerm.term}"/>
                     </p:column>
                     <p:column headerText="DESCID">
-                        <h:outputText value="#{descriptionPending.descriptionId}"/>
+                        <h:outputText value="#{pendingTerm.relatedDescription.descriptionId}"/>
                     </p:column>
-                    <p:column headerText="Usos">
-                        <h:outputText value="#{descriptionPending.uses}"/>
+                    <p:column headerText="Usos" sortBy="#{pendingTerm.relatedDescription.uses}">
+                        <h:outputText value="#{pendingTerm.relatedDescription.uses}"/>
                     </p:column>
                     <p:column headerText="Lugar">
                         <h:outputText value=""/>
                     </p:column>
                     <p:column headerText="Observación">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{pendingTerm.observation}"/>
                     </p:column>
                     <p:column headerText="Acción">
-                        <p:commandLink title="Trasladar a concepto" process="@this" oncomplete="PF('dialogTDP').show()">
+                        <p:commandLink title="Trasladar a concepto" oncomplete="PF('dialogTDP').show()" update="@(.pending-description)">
                             <i class="fa fa-external-link fa-lg"/>
+                            <f:setPropertyActionListener value="#{pendingTerm}"
+                                                         target="#{managerPendingTermsBean.termSelected}"/>
                         </p:commandLink>
 
-                        <p:commandLink title="Crear nuevo concepto">
+                        <p:commandLink title="Crear nuevo concepto" >
                             <i class="fa fa-plus fa-lg"/>
                         </p:commandLink>
 
-                        <p:commandLink title="Consultar">
+                        <p:commandLink title="Consultar" oncomplete="PF('dialogC').show()">
                             <i class="fa fa-search fa-lg"/>
                         </p:commandLink>
-
                     </p:column>
                 </p:dataTable>
             </p:panel>
@@ -53,16 +56,21 @@
             <!-- Trasladar descripciones a conceptos -->
             <p:dialog id="dialogTDP" header="Trasladar descripcion" widgetVar="dialogTDP" global="true"
                       showEffect="fade" hideEffect="fade">
+                <p:panel styleClass="pending-description">
 
-
-                <p:panel>
-                    Nada
                 </p:panel>
-
             </p:dialog>
 
-        </h:form>
+            <!-- Trasladar descripciones a conceptos -->
+            <p:dialog id="dialogC" header="Consulta termino pendiente" widgetVar="dialogC" global="true"
+                      showEffect="fade" hideEffect="fade">
+                <p:panel styleClass="query-pending-description">
 
+                </p:panel>
+            </p:dialog>
+
+
+        </h:form>
     </ui:define>
 
 </ui:composition>
