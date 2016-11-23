@@ -1,15 +1,20 @@
 package cl.minsal.semantikos.pendingterms;
 
+import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.PendingTermsManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.PendingTerm;
+import cl.minsal.semantikos.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.util.Date;
 
 /**
@@ -22,25 +27,28 @@ public class PendingTermsBean {
 
     static final Logger logger = LoggerFactory.getLogger(PendingTermsBean.class);
 
-    private String term;
-
-    private Date date;
-
-    private boolean sensibility;
-
-    private int categoryId;
-    private String nameProfessional;
-    private String profession;
-    private String speciality;
-    private String subspeciality;
-    private String mail;
-    private String observation;
-
     @EJB
     private PendingTermsManager pendingTermsManager;
 
     @EJB
     private CategoryManager categoryManager;
+
+    @ManagedProperty(value = "#{authenticationBean}")
+    private AuthenticationBean authenticationBean;
+
+    private String term;
+
+    private String mail;
+    private Date date;
+
+    private boolean sensibility;
+    private long categoryId;
+    private String nameProfessional;
+    private String profession;
+    private String speciality;
+    private String subspeciality;
+
+    private String observation;
 
     public PendingTermsBean() {
         this.term = "Un término";
@@ -106,7 +114,7 @@ public class PendingTermsBean {
         this.sensibility = sensibility;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -134,12 +142,27 @@ public class PendingTermsBean {
         this.observation = observation;
     }
 
+    public AuthenticationBean getAuthenticationBean() {
+        return authenticationBean;
+    }
+
+    public void setAuthenticationBean(AuthenticationBean authenticationBean) {
+        this.authenticationBean = authenticationBean;
+    }
+
     public void save(){
+
         logger.info("Se está grabando el término pendiente: " + this);
+        FacesContext context = FacesContext.getCurrentInstance();
 
         Category category = categoryManager.getCategoryById(categoryId);
         PendingTerm pendingTerm = new PendingTerm(term, date, sensibility, category, nameProfessional, profession, speciality, subspeciality, mail, observation);
-        pendingTermsManager.addPendingTerm(pendingTerm);
+
+        User loggedUser = authenticationBean.getLoggedUser();
+        pendingTermsManager.addPendingTerm(pendingTerm, loggedUser);
+
+        /* Se avisa */
+        context.addMessage(null, new FacesMessage("Éxito!", "Término '" + pendingTerm.getTerm() + "' guardado como Pendiente!"));
     }
 
     @Override

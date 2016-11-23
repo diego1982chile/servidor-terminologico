@@ -70,6 +70,9 @@ public class DescriptionManagerImpl implements DescriptionManager {
         /* Se aplican las reglas de negocio para crear la Descripción y se persiste y asocia al concepto */
         new DescriptionBindingBR().applyRules(concept, description, user);
         descriptionDAO.persist(description, user);
+        if (!concept.getDescriptions().contains(description)) {
+            concept.addDescription(description);
+        }
 
         /* Se retorna la descripción persistida */
         return description;
@@ -263,7 +266,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
     @Override
     public String generateDescriptionId() {
-        return UUID.randomUUID().toString().substring(0,10);
+        return UUID.randomUUID().toString().substring(0, 10);
     }
 
     @Override

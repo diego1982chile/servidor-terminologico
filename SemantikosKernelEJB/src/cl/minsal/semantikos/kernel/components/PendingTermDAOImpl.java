@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJBException;
+import javax.ejb.Stateless;
 import java.sql.*;
 
 import static java.sql.Types.TIMESTAMP;
@@ -13,6 +14,7 @@ import static java.sql.Types.TIMESTAMP;
 /**
  * @author Andrés Farías on 11/22/16.
  */
+@Stateless
 public class PendingTermDAOImpl implements PendingTermDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(PendingTermDAOImpl.class);
@@ -32,7 +34,7 @@ public class PendingTermDAOImpl implements PendingTermDAO {
          * param 9: id user
          * param 10: id concepto
          */
-        String sql = "{call semantikos.create_pending_term(?,?,?,?,?,?,?,?,?,?,?)}";
+        String sql = "{call semantikos.create_pending_term(?,?,?,?,?,?,?,?,?,?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 

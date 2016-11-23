@@ -79,4 +79,14 @@ public class PendingTerm extends PersistentEntity {
     public String getObservation() {
         return observation;
     }
+
+    @Override
+    public String toString() {
+        return "PendingTerm{" +
+                "term='" + term + '\'' +
+                ", enviado el " + date +
+                " por '" + nameProfessional + '\'' +
+                "('" + mail + "\')" +
+                '}';
+    }
 }
