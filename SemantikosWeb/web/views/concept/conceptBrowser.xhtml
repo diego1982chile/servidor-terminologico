@@ -50,7 +50,18 @@
                                             </p:column>
 
                                             <p:column headerText="Etiqueta">
-                                                <h:outputText value="#{conceptBrowserBean.stringifyList(concept.tags)}"/>
+                                                <p:repeat
+                                                        offset="0"
+                                                        size="#{concept.tags.size()}"
+                                                        step="1"
+                                                        varStatus="var"
+                                                        value="#{concept.tags}"
+                                                        var="tag">
+
+                                                    <h:outputText rendered="#{var.index>0}" value=", " />
+                                                    <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter};"  />
+
+                                                </p:repeat>
                                             </p:column>
 
                                             <p:column headerText="Está en">

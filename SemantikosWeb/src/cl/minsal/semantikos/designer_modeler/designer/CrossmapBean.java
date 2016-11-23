@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
+import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -18,6 +19,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -36,12 +38,16 @@ public class CrossmapBean implements Serializable {
 
     private List<CrossmapSet> crossmapSets;
 
+    private List<IndirectCrossmap> indirectCrossmaps;
+
     @EJB
     private CrossmapsManager crossmapsManager;
+
 
     @PostConstruct
     public void init() {
         crossmapSets = crossmapsManager.getCrossmapSets();
+        indirectCrossmaps=new ArrayList<>();
     }
 
     public List<CrossmapSetMember> getCrossmapSearchInput(String patron) {
@@ -58,6 +64,10 @@ public class CrossmapBean implements Serializable {
         List<CrossmapSetMember> someCrossmapSetMembers = crossmapsManager.findByPattern(crossmapSet, patron);
 
         return someCrossmapSetMembers;
+    }
+
+    public void refreshCrossmapIndirect(ConceptSMTK conceptSMTK){
+        indirectCrossmaps= crossmapsManager.getIndirectCrossmaps(conceptSMTK);
     }
 
 
@@ -93,4 +103,11 @@ public class CrossmapBean implements Serializable {
         this.crossmapSets = crossmapSets;
     }
 
+    public List<IndirectCrossmap> getIndirectCrossmaps() {
+        return indirectCrossmaps;
+    }
+
+    public void setIndirectCrossmaps(List<IndirectCrossmap> indirectCrossmaps) {
+        this.indirectCrossmaps = indirectCrossmaps;
+    }
 }

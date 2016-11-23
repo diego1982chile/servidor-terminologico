@@ -22,6 +22,7 @@ public class HelperTableSearchBR {
      * @throws cl.minsal.semantikos.model.exceptions.BusinessRuleException Si alguna regla de negocio no se cumple.
      */
     public void validatePreConditions(HelperTable helperTable, String columnName, String pattern) {
+
         /* El patrón de búsqueda sobre la columna debe ser mayor a dos caracteres */
         precondition03(pattern);
     }
