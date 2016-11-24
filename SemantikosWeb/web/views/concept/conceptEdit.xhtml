@@ -193,6 +193,16 @@
                                    icon="ui-icon-alert"/>
                     </p:commandButton>
 
+                    <!-- Botón para Trasladar el concepto modelado -->
+                    <p:commandButton actionListener="#{conceptBean.transferConcept}" icon="fa fa-ban"
+                                     styleClass="ui-priority-primary"
+                                     value="Trasladar" type="submit" process="mainForm"
+                                     rendered="#{conceptBean.concept.persistent and conceptBean.concept.modeled}"
+                                     update="growl, mainForm">
+                        <p:confirm header="Confirmation" message="¿Desea trasladar este concepto a otra categoría?"
+                                   icon="ui-icon-alert"/>
+                    </p:commandButton>
+
                     <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
                                      styleClass="ui-priority-primary"
                                      value="Deshacer" type="submit" process="mainForm"

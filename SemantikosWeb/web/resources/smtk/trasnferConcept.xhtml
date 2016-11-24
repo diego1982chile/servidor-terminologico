@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+        >
+
+<composite:interface>
+    <composite:attribute name="editable" type="java.lang.Boolean"/>
+    <composite:attribute name="descriptions" type="java.util.List"/>
+    <composite:attribute name="otherTermino" type="java.lang.String"/>
+    <composite:attribute name="otherSensibilidad" type="java.lang.Boolean"/>
+    <composite:attribute name="otherDescriptionType" type="cl.minsal.semantikos.model.DescriptionType"/>
+    <composite:attribute name="descriptionTypes" type="java.util.List"/>
+</composite:interface>
+
+<composite:implementation>
+
+    <p:dialog id="dialogTC" header="Trasladar concepto" widgetVar="dialogTC" global="true" showEffect="fade" hideEffect="fade">
+
+
+        <p:panel id="conceptTranslate" style="width: 100%; border: hidden;">
+
+            <p:panel style="width: 100%;">
+
+                <h3>Trasladar Concepto a...</h3>
+
+            </p:panel>
+        </p:panel>
+
+
+    </p:dialog>
+
+    <h:outputStylesheet id="_customCSS">
+
+        .ui-row-editor span.ui-icon.ui-icon-pencil {
+            width: 18px !important;
+            height: 18px !important;
+            margin-right: 10px !important;
+        }
+
+        .ui-row-editor span.ui-icon.ui-icon-check {
+            width: 18px !important;
+            height: 18px !important;
+            margin-right: 10px !important;
+        }
+
+        .ui-row-editor span.ui-icon.ui-icon-close {
+            width: 18px !important;
+            height: 18px !important;
+            margin-right: 10px !important;
+        }
+
+    </h:outputStylesheet>
+
+</composite:implementation>
+</html>
