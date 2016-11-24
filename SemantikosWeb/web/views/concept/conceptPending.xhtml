@@ -9,7 +9,7 @@
 
     <ui:define name="content">
         <h:form>
-            <p:panel>
+            <p:panel styleClass="tableTermPending">
                 <p:dataTable widgetVar="pendingTermTable" value="#{managerPendingTermsBean.pendingTerms}"
                              var="pendingTerm" filteredValue="#{managerPendingTermsBean.pendingTermsListFilter}">
                     <p:column headerText="Categoría" filterBy="#{pendingTerm.category.name}" footerText="exact"
@@ -38,7 +38,7 @@
                     <p:column headerText="Observación">
                         <h:outputText value="#{pendingTerm.observation}"/>
                     </p:column>
-                    <p:column headerText="Acción">
+                    <p:column headerText="Acción" style="width: 100px;">
                         <p:commandLink title="Trasladar a concepto" oncomplete="PF('dialogTDP').show()"
                                        update="@(.pending-description)">
                             <i class="fa fa-external-link fa-lg"/>
@@ -48,12 +48,12 @@
                                                          target="#{managerPendingTermsBean.conceptSMTKSelected}"/>
                         </p:commandLink>
 
-                        <p:commandLink title="Crear nuevo concepto">
+                        <p:commandLink title="Crear nuevo concepto" actionListener="#{managerPendingTermsBean.createNewConcept(pendingTerm)}">
                             <i class="fa fa-plus fa-lg"/>
                         </p:commandLink>
 
                         <p:commandLink title="Consultar" oncomplete="PF('dialogC').show()"
-                                       update="@(.query-pending-description)">
+                                       update="@(.query-pending-description)" >
                             <i class="fa fa-search fa-lg"/>
                             <f:setPropertyActionListener value="#{pendingTerm}"
                                                          target="#{managerPendingTermsBean.termSelected}"/>
@@ -66,6 +66,7 @@
             <p:dialog id="dialogTDP" header="Trasladar descripcion" widgetVar="dialogTDP" global="true"
                       showEffect="fade" hideEffect="fade">
                 <p:panel styleClass="pending-description">
+                    <p:growl id="msgs" showDetail="true"/>
                     <h3>Descripcion a trasladar</h3>
                     <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
 
@@ -78,7 +79,7 @@
                                       value="#{managerPendingTermsBean.termSelected.relatedDescription.term}"/>
 
                     </h:panelGrid>
-
+                    <h3>Concepto Destino</h3>
                     <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6">
 
                         <p:autoComplete id="inputFindConcept" scrollHeight="200" size="5"
@@ -127,12 +128,17 @@
                                       value="#{managerPendingTermsBean.conceptSMTKSelected.category.name}"/>
 
                     </h:panelGrid>
-
-                    <p:commandButton rendered="#{managerPendingTermsBean.conceptSMTKSelected!=null}"
-                                     update=":#{cc.clientId}:conceptTranslate"
-                                     value="Cambiar Concepto"><f:setPropertyActionListener value=""
-                                                                                           target="#{conceptBean.conceptSMTKTranslateDes}"/></p:commandButton>
-
+                    <div style="text-align: center">
+                        <p:commandButton rendered="#{managerPendingTermsBean.conceptSMTKSelected!=null}"
+                                         update="@(.pending-description),@(.tableTermPending)"
+                                         value="Trasladar Concepto"
+                                         oncomplete="PF('dialogTDP').hide()"
+                                         icon="fa fa-exchange"
+                                         actionListener="#{managerPendingTermsBean.translateDescription}">
+                            <f:setPropertyActionListener value=""
+                                                         target="#{managerPendingTermsBean.conceptSMTKSelected}"/>
+                        </p:commandButton>
+                    </div>
 
                 </p:panel>
             </p:dialog>
@@ -187,7 +193,10 @@
             </p:dialog>
 
 
+
+
         </h:form>
+
     </ui:define>
 
 </ui:composition>

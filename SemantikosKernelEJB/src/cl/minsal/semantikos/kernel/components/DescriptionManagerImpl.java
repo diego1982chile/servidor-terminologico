@@ -296,4 +296,9 @@ public class DescriptionManagerImpl implements DescriptionManager {
     public List<ObservationNoValid> getObservationsNoValid() {
         return descriptionDAO.getObservationsNoValid();
     }
+
+    @Override
+    public Description getDescriptionByID(long id) {
+        return descriptionDAO.getDescriptionBy(id);
+    }
 }
