@@ -62,6 +62,10 @@ public class PendingTerm extends PersistentEntity {
         return sensibility;
     }
 
+    public void setSensibility(boolean sensibility) {
+        this.sensibility = sensibility;
+    }
+
     public Category getCategory() {
         return category;
     }

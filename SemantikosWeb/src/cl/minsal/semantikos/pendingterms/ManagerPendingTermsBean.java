@@ -42,6 +42,16 @@ public class ManagerPendingTermsBean {
 
     private List<Category> categories;
 
+    private ConceptSMTK conceptSMTKSelected;
+
+
+    public ConceptSMTK getConceptSMTKSelected() {
+        return conceptSMTKSelected;
+    }
+
+    public void setConceptSMTKSelected(ConceptSMTK conceptSMTKSelected) {
+        this.conceptSMTKSelected = conceptSMTKSelected;
+    }
 
     public List<Category> getCategories() {
         return categories;
@@ -50,7 +60,6 @@ public class ManagerPendingTermsBean {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
-
 
     public ConceptSMTK getConceptPending() {
         return conceptPending;
@@ -83,6 +92,7 @@ public class ManagerPendingTermsBean {
     public void setPendingTerms(List<PendingTerm> pendingTerms) {
         this.pendingTerms = pendingTerms;
     }
+
 
     @PostConstruct
     public void init(){
