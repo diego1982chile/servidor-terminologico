@@ -50,4 +50,6 @@ public interface RefSetDAO {
      * @return Lista de refsets
      */
     public List<RefSet> getReftsets();
+
+    public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK);
 }
