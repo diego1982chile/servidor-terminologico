@@ -29,7 +29,7 @@
 
                         <f:selectItem itemLabel="Seleccione el refset" itemDisabled="true"/>
                         <f:selectItems value="#{refsetsBean.refSetList}" var="refset"
-                                       itemLabel="#{refset.name}" itemValue="#{refset}"/>
+                                       itemLabel="#{refset.name}" itemValue="#{refset}" itemDisabled="#{!refset.valid}"/>
                         <p:column>
                             <h:outputText value="#{r.name}"/>
                         </p:column>
