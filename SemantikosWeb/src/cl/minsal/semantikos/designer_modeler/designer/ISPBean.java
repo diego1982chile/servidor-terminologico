@@ -25,7 +25,7 @@ import java.util.*;
 public class ISPBean {
 
 
-    private Boolean existe = true;
+    private Boolean existe;
     private String regnum;
     private int ano;
 
