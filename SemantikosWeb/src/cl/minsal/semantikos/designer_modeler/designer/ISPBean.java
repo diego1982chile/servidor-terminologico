@@ -29,6 +29,8 @@ public class ISPBean {
     private String regnum;
     private int ano;
 
+    private HelperTable ht;
+
 
     private Map<String,String> fetchedData;
 
@@ -179,15 +181,21 @@ public class ISPBean {
 
     public HelperTable getISPHelperTable(){
 
-        Collection<HelperTable> tablas = helperTableManager.getHelperTables();
+        if(ht == null) {
 
 
-        for (HelperTable ht: tablas) {
-            if(ht.getName().equals("smtk_helper_table_isp"))
-                return ht;
+            Collection<HelperTable> tablas = helperTableManager.getHelperTables();
+
+
+            for (HelperTable ht1 : tablas) {
+                if (ht1.getName().equals("smtk_helper_table_isp")) {
+                    ht = ht1;
+                    break;
+                }
+            }
         }
 
-        return null;
+        return ht;
     }
 
     public UserManager getUserManager() {
@@ -196,6 +204,18 @@ public class ISPBean {
 
     public void setUserManager(UserManager userManager) {
         this.userManager = userManager;
+    }
+
+/*
+verifica si el registro ya existe en la base de datos
+ */
+    public boolean getExisteRegistroISP(){
+        if(fetchedData==null || fetchedData.size()==0)
+            return false;
+
+        List<HelperTableRecord> records = helperTableManager.searchRecords(getISPHelperTable(),"description",fetchedData.get("Registro"),true);
+
+        return  records.size() >0;
     }
 
 }

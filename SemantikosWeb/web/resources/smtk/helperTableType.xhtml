@@ -303,7 +303,7 @@
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.ISP}">
 
         <h3>#{cc.attrs.relationshipDefinition.name}</h3>
-
+        <p:outputLabel value="concept.id: #{conceptBean.concept.id}" />
         <p:spacer />
 
         <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherexisteinputs" rendered="#{conceptBean.concept.id == -1}">
@@ -349,7 +349,8 @@
 
 
                         <p:outputLabel rendered="#{empty ispbean.mapKeys}" value="No se pudo recuperar datos del ISP" />
-                        <p:commandButton rendered="#{not empty ispbean.mapKeys}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:outputLabel rendered="#{ispbean.existeRegistroISP}" value="Registro ya existe en la Base de Datos. No puede guardarse" />
+                        <p:commandButton rendered="#{not empty ispbean.mapKeys  and not ispbean.existeRegistroISP}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                         <p:commandButton value="Cancelar" type="button" onclick="PF('ispfetcheddialog').hide()" />
 
                     </p:panel>
