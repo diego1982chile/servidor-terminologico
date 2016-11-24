@@ -313,6 +313,10 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         return someRelationships;
     }
 
+    public boolean isRelationshipsLoaded() {
+        return relationshipsLoaded;
+    }
+
     /**
      * Este método es responsable de retornar todas las relaciones de tipo atributo.
      *
