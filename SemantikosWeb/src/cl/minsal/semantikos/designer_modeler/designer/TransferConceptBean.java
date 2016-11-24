@@ -19,4 +19,9 @@ public class TransferConceptBean {
     public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
     }
+
+    public String getTransferConcept() {
+        //TODO: Implement me!
+        return null;
+    }
 }

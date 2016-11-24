@@ -15,13 +15,18 @@
 
 <composite:implementation>
 
+    <p:commandButton value="Trasladar" type="submit" process="mainForm" rendered="#{conceptBean.concept.persistent and conceptBean.concept.modeled}"
+                     update="growl, mainForm" oncomplete="PF('dialogTC').show()" icon="fa fa-ban" styleClass="ui-priority-primary" >
+
+        <p:confirm header="Confirmation" message="¿Desea trasladar este concepto a otra categoría?"
+                   icon="ui-icon-alert"/>
+    </p:commandButton>
+
+
+    <!-- Diálogo para buscar la categoría y aceptar -->
     <p:dialog id="dialogTC" header="Trasladar concepto" widgetVar="dialogTC" global="true" showEffect="fade" hideEffect="fade">
 
-
         <p:panel id="conceptTranslate" style="width: 100%; border: hidden;">
-
-            <p:panel style="width: 100%;">
-
                 <h3>Trasladar Concepto a...</h3>
                 <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categiría propuesta"/>
                 <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.categoryId}" required="true">
@@ -29,19 +34,15 @@
                                    itemLabel="#{category.name}"/>
                 </p:selectOneMenu>
 
-                <p:commandButton actionListener="#{transferConceptBean.transferConcept}" icon="fa fa-ban"
-                                 styleClass="ui-priority-primary"
-                                 value="Trasladar" type="submit" process="mainForm"
-                                 rendered="#{conceptBean.concept.persistent and conceptBean.concept.modeled}"
-                                 update="growl, mainForm">
-                    <p:confirm header="Confirmation" message="¿Desea trasladar este concepto a otra categoría?"
-                               icon="ui-icon-alert"/>
-                </p:commandButton>
+            <p:commandButton value="Trasladar" type="submit" process="mainForm"
+                             actionListener="#{transferConceptBean.transferConcept}"
+                             update="growl, mainForm" icon="fa fa-ban" styleClass="ui-priority-primary" >
 
-            </p:panel>
+                <p:confirm header="Confirmation" message="¿Desea realmente trasladar este concepto?"
+                           icon="ui-icon-alert"/>
+            </p:commandButton>
+
         </p:panel>
-
-
     </p:dialog>
 
     <h:outputStylesheet id="_customCSS">
