@@ -306,7 +306,7 @@
 
         <p:spacer />
 
-        <div class="ui-g">
+        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherexisteinputs" rendered="#{conceptBean.concept.id == -1}">
 
             <div class="ui-g-12 ui-md-6 ui-lg-2">
                 <p:outputLabel for="ispexistebooleanbutton">Existe ISP</p:outputLabel>
@@ -320,8 +320,8 @@
                 </p:selectBooleanButton>
             </div>
 
-        </div>
-        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherinputs">
+        </p:outputPanel>
+        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherinputs" rendered="#{conceptBean.concept.id == -1}">
             <p:outputPanel  rendered="#{ispbean.existe}">
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <p:outputLabel for="ispregnum">RegNum</p:outputLabel>
@@ -360,13 +360,14 @@
         </p:outputPanel>
         <div class="ui-g">
             <div class="ui-g-12 ui-md-6 ui-lg-12">
+                <p:outputLabel value="No tiene registro ISP" rendered="#{conceptBean.concept.id != -1 and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}" />
                 <p:dataTable id="collectionValues123"
                              styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
                              var="relationship"
                              value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                              style="width: 100%"
                              reflow="true"
-                             rendered="#{ispbean.existe}" >
+                             rendered="#{ispbean.existe or  (conceptBean.concept.id != -1 and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)) }" >
 
                     <p:column headerText="Registro">
                         <div style="text-align: center;">
