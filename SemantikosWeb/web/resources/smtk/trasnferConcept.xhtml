@@ -35,7 +35,7 @@
                 </p:selectOneMenu>
 
             <p:commandButton value="Trasladar" type="submit" process="mainForm"
-                             actionListener="#{transferConceptBean.transferConcept}"
+                             actionListener="#{transferConceptBean.transferConcept(cc.attrs.conceptSMTK)}"
                              update="mainForm" icon="fa fa-ban" styleClass="ui-priority-primary" >
 
                 <p:confirm header="Confirmation" message="¿Desea realmente trasladar este concepto?"

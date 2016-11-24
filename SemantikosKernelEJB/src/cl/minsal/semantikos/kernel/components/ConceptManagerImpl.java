@@ -386,7 +386,9 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Acciones de negocio */
         conceptSMTK.setCategory(category);
+        conceptDAO.update(conceptSMTK);
 
+        logger.info("Se ha trasladado un concepto de categoría.");
         return conceptSMTK;
     }
 

@@ -91,7 +91,26 @@
                                                     <f:param name="editMode" value="#{true}" />
                                                     <f:param name="idConcept" value="#{concept.id}" />
                                                 </p:button>
-                                                <p:commandButton icon="fa fa-exchange" />
+                                                <p:commandButton icon="fa fa-exchange" oncomplete="PF('dialogTC2').show()"/>
+
+                                                <!-- Diálogo para buscar la categoría y aceptar -->
+                                                <p:dialog id="dialogTC2" header="Trasladar concepto" widgetVar="dialogTC2" showEffect="fade" hideEffect="fade">
+
+                                                    <p:panel id="conceptTranslate" style="width: 100%; border: hidden;">
+                                                        <h3>Trasladar Concepto a...</h3>
+                                                        <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categiría propuesta"/>
+                                                        <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.categoryId}" required="true">
+                                                            <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
+                                                                           itemLabel="#{category.name}"/>
+                                                        </p:selectOneMenu>
+
+                                                        <p:commandButton value="Trasladar" type="submit" process="@this" immediate="true"
+                                                                         actionListener="#{transferConceptBean.transferConcept(concept)}"
+                                                                          icon="fa fa-ban" styleClass="ui-priority-primary" />
+
+                                                    </p:panel>
+                                                </p:dialog>
+
                                                 <p:commandButton actionListener="#{conceptBrowserBean.deleteConcept(concept)}"
                                                                  ajax="true"
                                                                  icon="fa fa-trash"
