@@ -34,7 +34,7 @@ public interface CategoryManager {
      *
      * @return La categoría buscada.
      */
-    public Category getCategoryById(int idCategory) throws ParseException;
+    public Category getCategoryById(long idCategory);
 
     /**
      * Este método responsable de recuperar toda la meta-data que consituye la definición de una categoría, en

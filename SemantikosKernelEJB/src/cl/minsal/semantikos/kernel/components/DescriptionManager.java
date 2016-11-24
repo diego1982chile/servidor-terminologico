@@ -134,4 +134,7 @@ public interface DescriptionManager {
 
 
     public List<ObservationNoValid> getObservationsNoValid();
+
+
+    public Description getDescriptionByID(long id);
 }

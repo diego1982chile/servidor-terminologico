@@ -16,6 +16,16 @@ import java.util.List;
  */
 public interface HelperTableManager {
 
+
+    /**
+     * Este método es responsable de insertar un registro en la tabla auxiliar.
+     *
+     * @param helperTable La tabla auxiliar donde se cargará el registro.
+     * @param record      El registro que se desea insertar.
+     * @param user        El usuario que realiza la carga.
+     */
+    public HelperTableRecord insertRecord(HelperTable helperTable, HelperTableRecord record, User user);
+
     /**
      * Este método es responsable de proveer una lista de objetos que representan las Tablas Auxiliares.
      *
@@ -58,6 +68,21 @@ public interface HelperTableManager {
      * búsqueda.
      */
     public List<HelperTableRecord> searchRecords(HelperTable helperTable, String columnName, String pattern, boolean validity);
+
+    /**
+     * Este método es responsable de recuperar registros de una tabla auxiliar de acuerdo a un patrón de búsqueda sobre
+     * una de sus columnas, y su validez.
+     *
+     * @param helperTable   La tabla sobre la cual se realiza la búsqueda.
+     * @param searchColumns Las columnas sobre la cuales se realiza la búsqueda.
+     * @param pattern       El patrón utilizado para la búsqueda.
+     * @param validity      <code>true</code> si se quieren recuperar registros válidos y <code>false</code> si se
+     *                      quiere recuperar todos los registros.
+     *
+     * @return La lista de registros en la tabla <code>helperTable</code> que cumplen con el <code>pattern</code> de
+     * búsqueda.
+     */
+    public List<HelperTableRecord> searchRecords(HelperTable helperTable, List<String> searchColumns, String pattern, boolean validity);
 
     public HelperTableRecord getRecord(long recordId);
 

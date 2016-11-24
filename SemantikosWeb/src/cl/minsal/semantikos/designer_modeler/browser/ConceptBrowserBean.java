@@ -161,15 +161,22 @@ public class ConceptBrowserBean implements Serializable {
      */
     public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
-        try {
-            this.category = categoryManager.getCategoryById(idCategory);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        this.category = categoryManager.getCategoryById(idCategory);
     }
 
-    public String stringifyList(List<Object> objects){
-        return Arrays.toString(objects.toArray());
+    public List<Tag> getRecordSearchInput(String patron) {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+
+        List<Tag> someTags = new ArrayList<Tag>();
+
+        for (Tag tag : getTags()) {
+            if(tag.getName().toLowerCase().contains(patron.trim().toLowerCase()))
+                someTags.add(tag);
+        }
+
+        return someTags;
     }
 
     public LazyDataModel<ConceptSMTK> getConcepts() {
@@ -337,7 +344,17 @@ public class ConceptBrowserBean implements Serializable {
         eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + idCategory +"&idConcept=0&favoriteDescription=" + query);
     }
 
+    public String stringifyTags(List<Tag> tags){
+        if(tags.isEmpty())
+            return "Etiquetas...";
 
+        String stringTags= "";
+
+        for (Tag tag : tags) {
+            stringTags= stringTags.concat(tag.getName()).concat(", ");
+        }
+        return  stringTags;
+    }
 
 }
 

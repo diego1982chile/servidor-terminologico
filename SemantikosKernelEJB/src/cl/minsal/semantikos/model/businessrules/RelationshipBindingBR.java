@@ -11,6 +11,7 @@ import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.List;
 
 import static cl.minsal.semantikos.model.ProfileFactory.MODELER_PROFILE;
@@ -36,13 +37,79 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
         brRelationshipBinding001(relationship, user);
 
         /* Que no se agreguen dos Snomed de tipo "ES UN MAPEDO DE" */
-        if(concept.isFullyDefined())brRelationshipBinding002(concept, relationship);
+        brRelationshipBinding002(concept, relationship);
 
         /* Las relaciones de semantikos con Snomed CT son 1-1 */
-        if(concept.isFullyDefined())brRelationshipBinding003(concept, relationship);
+        brRelationshipBinding003(concept, relationship);
 
         /* BR-SCT-003: ES MAPEO DE, es una relación exclusiva de Snomed CT */
-        if(concept.isFullyDefined())brRelationshipBinding004(concept, relationship);
+        brRelationshipBinding004(concept, relationship);
+
+        /* BR-SCT-004: Un concepto con una relación "ES UN" no debe grabarse si existe otro concepto con las mismas relaciones */
+        brRelationshipBinding005(concept, relationship);
+
+    }
+
+    /**
+     * BR-SCT-004: Un concepto con una relación "ES UN" no debe grabarse si existe otro concepto con las mismas
+     * relaciones.
+     *
+     * @param concept      El concepto cuyas relaciones están cambiando.
+     * @param theRelationship La relacion que se agrega, que quizas ya esta.
+     */
+    private void brRelationshipBinding005(ConceptSMTK concept, Relationship theRelationship) {
+
+        /* Esta arregla aplica sólo a conceptos con una relación ES UN */
+        if (!concept.contains(SnomedCTRelationship.ES_UN)) {
+            return;
+        }
+
+        boolean added = false;
+        if (!concept.getRelationshipsSnomedCT().contains(theRelationship)) {
+            concept.addRelationship(theRelationship);
+            added = true;
+        }
+
+        /* Se revisa cada una de las relaciones Snomed del concepto */
+        List<SnomedCTRelationship> relationshipsSnomedCT = concept.getRelationshipsSnomedCT();
+        for (SnomedCTRelationship snomedCTRelationship : relationshipsSnomedCT) {
+
+            /*
+             * Se recuperan todas las relaciones similares.
+             * Se verifica si cada concepto origen de la relacion tiene las mismas relacioens snomed
+             */
+            List<Relationship> relationshipsLike = relationshipManager.getRelationshipsLike(snomedCTRelationship.getRelationshipDefinition(), snomedCTRelationship.getTarget());
+            for (Relationship relationship : relationshipsLike) {
+
+
+                /* Se recupera el concepto origen y se cargan sus relaciones */
+                ConceptSMTK sourceConcept = relationship.getSourceConcept();
+                if(sourceConcept.getId()!=concept.getId()) {
+                    List<Relationship> relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(sourceConcept);
+                    sourceConcept.setRelationships(relationshipsBySourceConcept);
+
+                /* Se pregunta si ambos conceptos tienen las mismas relaciones SnomedCT */
+
+                /* Primero se ve si el concepto origen tiene las relaciones Snomed del concepto en cuestion */
+                    SnomedCTRelationship[] relationships = relationshipsSnomedCT.toArray(new SnomedCTRelationship[relationshipsSnomedCT.size()]);
+                    boolean contains1 = sourceConcept.containsLike(relationships);
+
+                    List<SnomedCTRelationship> relationshipsSnomedCT1 = sourceConcept.getRelationshipsSnomedCT();
+                    boolean contains2 = concept.containsLike(relationshipsSnomedCT1.toArray(new SnomedCTRelationship[relationshipsSnomedCT1.size()]));
+
+                    if (contains1 && contains2) {
+                        if (added) {
+                            concept.removeRelationship(theRelationship);
+                        }
+                        throw new BusinessRuleException("BR-SCT-004", "Un concepto [" + sourceConcept.toString() + "] con una relación \"ES UN\" no debe grabarse si existe otro concepto con las mismas relaciones.");
+                    }
+                }
+            }
+        }
+
+        if (added){
+            concept.removeRelationship(theRelationship);
+        }
 
     }
 
@@ -66,7 +133,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      */
     public void brRelationshipBinding001(Relationship relationship, User user) {
         if (relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType() && !user.getProfiles().contains(MODELER_PROFILE)) {
-            throw new BusinessRuleException("Solo el usuario con rol Modelador puede agregar relaciones de tipo Snomed CT.");
+            throw new BusinessRuleException("BR-CON-004", "Solo el usuario con rol Modelador puede agregar relaciones de tipo Snomed CT.");
         }
     }
 
@@ -111,7 +178,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
 
             /* Si la relación es del tipo ES UN MAPEO, viola la regla */
             if (ctRelationship.isES_UN_MAPEO_DE()) {
-                throw new BusinessRuleException("BR-SCT-002: Si la relación que se agrega es de tipo “Es un Mapeo”, el " +
+                throw new BusinessRuleException("BR-SCT-002", "Si la relación que se agrega es de tipo “Es un Mapeo”, el " +
                         "sistema valida que el concepto no tenga otra relación de tipo “Es un Mapeo”. Si la tuviese, " +
                         "debe indicar esto al usuario, y no se agrega la relación ingresada.");
             }
@@ -157,7 +224,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
                 continue;
             }
 
-            throw new BusinessRuleException("La Relación de Tipo “Es un Mapeo de” que asocia un Concepto de Semantikos " +
+            throw new BusinessRuleException("BR-UNK", "La Relación de Tipo “Es un Mapeo de” que asocia un Concepto de Semantikos " +
                     "con un Concepto de SNOMED-CT; esta relación es uno a uno y es la que hereda el grado de definición " +
                     "de la tabla del Snapshot conceptos de SNOMED CT.");
         }
@@ -177,12 +244,20 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
             return;
         }
 
+          /* Se transforma a una relación Snomed CT */
+        SnomedCTRelationship snomedCTRelationship = SnomedCTRelationship.createSnomedCT(relationship);
+
+        /* Y se verifica que sup tipo sea "ES_UN_MAPEO DE" */
+        if (!snomedCTRelationship.isES_UN_MAPEO_DE()) {
+            return;
+        }
+
         /* Si la relación es Snomed, se debe validar que el concepto no tenga otras relaciones */
         List<SnomedCTRelationship> relationshipsSnomedCT = concept.getRelationshipsSnomedCT();
 
             /* Si tiene una relación verificamos que sea la misma que se está validando (podría ya estar agregada) */
         if (relationshipsSnomedCT.size() == 1 && !relationship.equals(relationshipsSnomedCT.get(0))) {
-            throw new BusinessRuleException("BR-SCT-003: Si un concepto Semantikos tiene una relación SnomedCT de tipo “Es un Mapeo el concepto no puede tener ninguna otra relación de tipo SnomedCT.");
+            throw new BusinessRuleException("BR-SCT-003", "Si un concepto Semantikos tiene una relación SnomedCT de tipo “Es un Mapeo el concepto no puede tener ninguna otra relación de tipo SnomedCT.");
         }
     }
 

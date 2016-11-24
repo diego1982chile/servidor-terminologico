@@ -23,44 +23,8 @@ public class HelperTableSearchBR {
      */
     public void validatePreConditions(HelperTable helperTable, String columnName, String pattern) {
 
-        /* La columna debe existir */
-        precondition01(helperTable, columnName);
-
-        /* La columna debe ser buscable */
-        precondition02(helperTable, columnName);
-
         /* El patrón de búsqueda sobre la columna debe ser mayor a dos caracteres */
         precondition03(pattern);
-    }
-
-    /**
-     * La tabla debe tener una columna con el nombre dado.
-     *
-     * @param helperTable La tabla auxiliar sobre la cual se realiza la validación.
-     * @param columnName  El nombre de la columna que debe contener.
-     */
-    protected void precondition01(HelperTable helperTable, String columnName) {
-
-        if (!helperTable.getAllColumnsNames().contains(columnName)) {
-            throw new BusinessRuleException("HelperTable BR-PC01: La tabla auxiliar " + helperTable + " no posee una columna de nombre " + columnName + " sobre la cual realizar las búsquedas");
-        }
-    }
-
-    /**
-     * La tabla debe tener una columna con el nombre dado que sea buscable.
-     *
-     * @param helperTable La tabla auxiliar sobre la cual se realiza la validación.
-     * @param columnName  El nombre de la columna que debe contener.
-     */
-    protected void precondition02(HelperTable helperTable, String columnName) {
-
-        /* Se recupera la columna de la tabla auxiliar */
-        HelperTableColumn helperTableColumn = helperTable.getColumnByName(columnName);
-
-        /* Se valida que la columna sea buscable */
-        if (!helperTableColumn.isSearchable()) {
-            throw new BusinessRuleException("HelperTable BR-PC02: La columna " + columnName + " no está definida como buscable para la tabla auxiliar " + helperTable);
-        }
     }
 
     /**
@@ -70,7 +34,7 @@ public class HelperTableSearchBR {
      */
     protected void precondition03(String pattern) {
         if ((pattern == null) || pattern.length() < MINIMUM_PATTERN_LENGTH) {
-            throw new BusinessRuleException("HelperTable BR-PC03: El patrón de búsqueda sobre tablas auxiliares debe tener un largo mínimo de " + MINIMUM_PATTERN_LENGTH + " caracteres.");
+            throw new BusinessRuleException("BR-HT-PC03", "El patrón de búsqueda sobre tablas auxiliares debe tener un largo mínimo de " + MINIMUM_PATTERN_LENGTH + " caracteres.");
         }
     }
 }

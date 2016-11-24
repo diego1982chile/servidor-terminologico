@@ -9,6 +9,7 @@ import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.*;
 
+import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -197,7 +198,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public List<Relationship> getRelationships() {
 
         if (!relationshipsLoaded) {
-            throw new BusinessRuleException("Las relaciones de este concepto no han sido cargadas aun.");
+            throw new EJBException("Las relaciones de este concepto no han sido cargadas aun.");
         }
 
         return relationships;
@@ -550,7 +551,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         /* En este punto, no se encontró una descripción preferida, y se arroja una excepción */
-        throw new BusinessRuleException("Concepto sin descripción preferida");
+        throw new BusinessRuleException("BR-UNK", "Concepto sin descripción preferida");
     }
 
     /**
@@ -592,7 +593,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         /* En este punto, no se encontró una descripción preferida, y se arroja una excepción */
-        throw new BusinessRuleException("Concepto sin descripción FSN");
+        throw new BusinessRuleException("BR-UNK", "Concepto sin descripción FSN");
     }
 
     @Override
@@ -655,7 +656,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @return <code>true</code> si el concepto contiene estas relaciones y <code>false</code> sino.
      */
-    public boolean contains(List<Relationship> relationships) {
+    public boolean contains(Relationship[] relationships) {
 
         for (Relationship relationship : relationships) {
             if (!this.contains(relationship)) {
@@ -728,11 +729,52 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     @Override
     public Target copy() {
         ConceptSMTK conceptSMTK = new ConceptSMTK(this.getCategory());
+
         conceptSMTK.setId(this.getId());
         conceptSMTK.setConceptID(this.getConceptID());
+        conceptSMTK.setCategory(this.getCategory());
+        conceptSMTK.setToBeReviewed(this.isToBeReviewed());
+        conceptSMTK.setToBeConsulted(this.isToBeConsulted());
+        conceptSMTK.setModeled(this.isModeled());
+        conceptSMTK.setFullyDefined(this.isFullyDefined());
+        conceptSMTK.setInherited(this.isInherited());
+        conceptSMTK.setPublished(this.isPublished());
+        conceptSMTK.setObservation(this.getObservation());
+        conceptSMTK.setTagSMTK(this.getTagSMTK());
         conceptSMTK.setDescriptions(this.getDescriptions());
         conceptSMTK.setRelationships(this.relationships);
+
         return conceptSMTK;
     }
 
+    public boolean contains(String snomedRelationshipType) {
+        for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
+            if (snomedCTRelationship.getSnomedCTRelationshipType().equalsIgnoreCase(snomedRelationshipType)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean containsLike(SnomedCTRelationship[] relationships) {
+
+        for (SnomedCTRelationship relationship : relationships) {
+            if (!this.containsLike(relationship)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean containsLike(SnomedCTRelationship theSnomedRelationship) {
+        for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
+            if (theSnomedRelationship.equalsButConceptSource(snomedCTRelationship)){
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }

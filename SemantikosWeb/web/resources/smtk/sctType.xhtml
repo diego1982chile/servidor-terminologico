@@ -122,7 +122,7 @@
                         <f:selectItems value="#{sctBean.relationshipGroups}" var="relationshipGroup"
                                        itemLabel="#{relationshipGroup}"
                                        itemValue="#{relationshipGroup}" />
-                        <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
+                        <p:ajax event="itemSelect" process="@this" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
                     </p:selectOneMenu>
                 </div>
 
@@ -195,7 +195,7 @@
                     <p:commandButton
                             process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                             action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
-                            update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                            update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader),@(.crossmapindirect)"
                             disabled="#{conceptBean.existRelationshipISAMapping()}"
                             value="Agregar">
                     </p:commandButton>
@@ -229,9 +229,7 @@
                     <h:outputText value="#{rel.target.idSnomedCT}"/>
                 </p:column>
 
-                <p:column headerText="Descripción">
-                    <h:outputText value="#{rel.target.descriptionFSN.term}"/>
-                </p:column>
+
 
                 <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
                            var="attribute"
@@ -245,10 +243,14 @@
                     </p:outputPanel>
                 </p:columns>
 
+                <p:column headerText="Descripción">
+                    <h:outputText value="#{rel.target.descriptionFSN.term}"/>
+                </p:column>
+
                 <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
                     <p:commandButton icon="fa fa-trash" title="Eliminar"
                                      action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
-                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes)"
+                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes),@(.crossmapindirect)"
                                      process="@this">
                     </p:commandButton>
                 </p:column>
