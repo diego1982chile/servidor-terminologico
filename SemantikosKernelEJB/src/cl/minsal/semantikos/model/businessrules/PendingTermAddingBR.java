@@ -49,6 +49,9 @@ public class PendingTermAddingBR {
 
         /* El concepto fue asociado al concepto especial 'Pendientes' */
         postCondition001(pendingTerm);
+
+        /* El término pendiente debe tener una descripción asociada */
+        postCondition002(pendingTerm);
     }
 
     /**
@@ -92,5 +95,19 @@ public class PendingTermAddingBR {
 
         /* En este punto, no se encontró el término en las descripcioens del concepto */
         throw new BusinessRuleException("BR-PEND-001", "El término pendiente " + pendingTerm + " no fue agregado como descripción al concepto 'Pendientes'.");
+    }
+
+    /**
+     * BR-PEND-003: El sistema registra la relación del Formulario de Solicitud con la Descripción que contiene el
+     * Término Pendiente.
+     *
+     * @param pendingTerm El término pendiente sobre el cual se verifican las reglas de negocio.
+     */
+    private void postCondition002(PendingTerm pendingTerm) {
+
+        Description relatedDescription = pendingTerm.getRelatedDescription();
+        if (relatedDescription == null || !relatedDescription.isPersistent()) {
+            throw new BusinessRuleException("BR-PEND-003", "El sistema registra la relación del Formulario de Solicitud con la Descripción que contiene el Término Pendiente.");
+        }
     }
 }
