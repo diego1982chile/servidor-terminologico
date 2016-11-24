@@ -109,6 +109,7 @@ public interface ConceptDAO {
 
     /**
      * Metodo  que retorna los conceptos en borrador
+     *
      * @return lista de conceptos en borrador
      */
 
@@ -129,9 +130,13 @@ public interface ConceptDAO {
     public ConceptSMTK getNoValidConcept();
 
     /**
-     * Este método es responsable de obtener los conceptos que se relacionan con el concepto indicado como parametro
-     * @param conceptSMTK concepto que se relaciona con otros
-     * @return Lista de conceptos relacionados
+     * Este método es responsable de obtener los conceptos que se relacionan con el concepto <code>conceptSMTK</code> a
+     * través de relaciones, donde <code>conceptSMTK</code> es el concepto de origen y los conceptos relacionados con
+     * esto son el destino en la relación.
+     *
+     * @param conceptSMTK El concepto origen cuyos objetos relacionados se piden.
+     *
+     * @return Lista de conceptos relacionados (concepto --> relacionados)
      */
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
 

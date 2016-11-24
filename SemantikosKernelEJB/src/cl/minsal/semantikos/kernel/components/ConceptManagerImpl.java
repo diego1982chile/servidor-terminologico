@@ -58,6 +58,9 @@ public class ConceptManagerImpl implements ConceptManager {
     @EJB
     private CrossmapsManager crossmapsManager;
 
+    @EJB
+    private ConceptTransferBR conceptTransferBR;
+
 
     @Override
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptId) {
@@ -355,10 +358,13 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public List<Relationship> loadRelationships(ConceptSMTK concept) {
         List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
-        concept.setRelationships(relationships);
         List<IndirectCrossmap> relationshipsCrossMapIndirect = crossmapsManager.getIndirectCrossmaps(concept);
         relationships.addAll(relationshipsCrossMapIndirect);
 
+        /* Se agregan las relaciones al componente */
+        concept.setRelationships(relationships);
+
+        /* Se retorna la lista de relaciones agregadas al concepto */
         return relationships;
     }
 
@@ -370,6 +376,18 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public ConceptSMTK getNoValidConcept() {
         return conceptDAO.getNoValidConcept();
+    }
+
+    @Override
+    public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category) {
+
+        /* Validacion de pre-condiciones */
+        conceptTransferBR.validatePreConditions(conceptSMTK);
+
+        /* Acciones de negocio */
+        conceptSMTK.setCategory(category);
+
+        return conceptSMTK;
     }
 
     @Override

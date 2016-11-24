@@ -673,16 +673,14 @@ public class ConceptDAOImpl implements ConceptDAO {
 
     @Override
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK) {
+
         List<ConceptSMTK> concepts = new ArrayList<>();
 
+
         ConnectionBD connect = new ConnectionBD();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call= connection.prepareCall("{call semantikos.get_related_concept(?)}")) {
 
-
-        CallableStatement call;
-
-        try (Connection connection = connect.getConnection();) {
-
-            call = connection.prepareCall("{call semantikos.get_related_concept(?)}");
             call.setLong(1,conceptSMTK.getId());
             call.execute();
 
@@ -693,7 +691,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             rs.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new EJBException(e);
         }
 
         return concepts;
