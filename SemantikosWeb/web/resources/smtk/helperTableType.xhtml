@@ -23,11 +23,12 @@
              rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
                           and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }">
 
-        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-
-                <p:outputLabel for="findHTRecords1" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
-
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <p:outputLabel for="findHTRecords1" value="#{cc.attrs.relationshipDefinition.name}"/>
+                <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-2">
                 <p:autoComplete id="findHTRecords1" scrollHeight="200"
                                 style="width: 90%;"
                                 inputStyle="width: 90%;"
@@ -65,7 +66,8 @@
 
                 </p:autoComplete>
                 <i class="fa fa-search fa-lg"  />
-        </h:panelGrid>
+            </div>
+        </div>
     </p:panel>
 
     <!-- Multiplicidad 1 + Relacion existente + Sin atributos -->
