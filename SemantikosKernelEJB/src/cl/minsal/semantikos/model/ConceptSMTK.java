@@ -9,6 +9,7 @@ import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.*;
 
+import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -197,7 +198,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public List<Relationship> getRelationships() {
 
         if (!relationshipsLoaded) {
-            throw new BusinessRuleException("Las relaciones de este concepto no han sido cargadas aun.");
+            throw new EJBException("Las relaciones de este concepto no han sido cargadas aun.");
         }
 
         return relationships;
@@ -555,7 +556,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         /* En este punto, no se encontró una descripción preferida, y se arroja una excepción */
-        throw new BusinessRuleException("Concepto sin descripción preferida");
+        throw new BusinessRuleException("BR-UNK", "Concepto sin descripción preferida");
     }
 
     /**
@@ -597,22 +598,23 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         /* En este punto, no se encontró una descripción preferida, y se arroja una excepción */
-        throw new BusinessRuleException("Concepto sin descripción FSN");
+        throw new BusinessRuleException("BR-UNK", "Concepto sin descripción FSN");
     }
 
     @Override
     public String toString() {
 
+        String toString = "CONCEPT_ID=" + this.conceptID;
         if (descriptions.isEmpty()) {
-            return "ID=" + this.getId() + " - ConceptID=" + this.getConceptID();
+            return toString;
         }
 
         if (this.hasFavouriteDescription()) {
             Description descriptionFavorite = getDescriptionFavorite();
-            return "Preferida: " + descriptionFavorite.getTerm();
+            return toString + " - [Pref]: " + descriptionFavorite.getTerm();
         }
         Description aDescription = this.descriptions.get(1);
-        return aDescription.getDescriptionType().getName() + ": " + aDescription.getTerm();
+        return toString + " - " + aDescription.getDescriptionType().getName() + ": " + aDescription.getTerm();
     }
 
     /**
@@ -720,9 +722,15 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     @Override
     public boolean equals(Object other) {
-        return (other instanceof ConceptSMTK) && (String.valueOf(conceptID) != null)
-                ? String.valueOf(conceptID).equals(String.valueOf(((ConceptSMTK) other).conceptID))
-                : (other == this);
+
+        /* Si son el mismo objeto */
+        if (other == this) return true;
+
+        if (!(other instanceof ConceptSMTK)) return false;
+
+        String otherConceptID = ((ConceptSMTK) other).conceptID;
+        boolean areEquals = this.conceptID.equals(otherConceptID);
+        return areEquals;
     }
 
     @Override

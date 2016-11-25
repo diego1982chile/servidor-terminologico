@@ -120,4 +120,9 @@ public class RefSetManagerImpl implements RefSetManager {
 
         return refsetDAO.getReftsets();
     }
+
+    @Override
+    public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK) {
+        return refsetDAO.getRefsetsBy(conceptSMTK);
+    }
 }

@@ -115,4 +115,10 @@ public class SnomedCTRelationship extends Relationship {
     public static boolean isSnomedCTRelationship(Relationship relationship) {
         return relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType();
     }
+
+    @Override
+    public String toString() {
+        return this.getSourceConcept() + " --SCT["+getSnomedCTRelationshipType() + "]--> " + getTarget();
+
+    }
 }

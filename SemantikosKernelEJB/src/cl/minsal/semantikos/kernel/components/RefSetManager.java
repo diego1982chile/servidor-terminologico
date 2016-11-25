@@ -73,4 +73,7 @@ public interface RefSetManager {
      * @return Una lista de RefSets.
      */
     public List<RefSet> getAllRefSets();
+
+
+    public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK);
 }
