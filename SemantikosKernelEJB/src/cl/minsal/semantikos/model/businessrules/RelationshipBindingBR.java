@@ -231,7 +231,9 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
             }
 
             /* En este punto, se tiene que la condición es violada y se arroja la excepción */
-            throw new BusinessRuleException("BR-SCT-001", "La Relación SnomedCT de Tipo '" + ES_UN_MAPEO_DE + "' es uno a uno. Ya existe una relación SnomedCT de este tipo que apunta al mismo concepto Snomed desde el concepto " + candidateConcept);
+            throw new BusinessRuleException("BR-SCT-001", "La Relación SnomedCT de Tipo '" + ES_UN_MAPEO_DE
+                    + "' es uno a uno. Ya existe una relación SnomedCT de este tipo que apunta al mismo concepto Snomed desde el concepto "
+                    + candidateConcept);
         }
     }
 
@@ -245,20 +247,24 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
     private void brRelationshipBinding004(ConceptSMTK concept, Relationship relationship) {
 
         /* Esta regla de negocio solo aplica a relaciones de tipo SnomedCT */
-        if (!isSnomedCTRelationship(relationship)) {
+        if (!isSnomedCTRelationship(relationship) || !concept.hasES_UN_MAPEO()) {
             return;
         }
 
-          /* Se transforma a una relación Snomed CT */
+        /* Se transforma a una relación Snomed CT */
         SnomedCTRelationship snomedCTRelationship = SnomedCTRelationship.createSnomedCT(relationship);
 
         /* Si la relación es Snomed, se debe validar que el concepto no tenga otras relaciones */
         List<SnomedCTRelationship> relationshipsSnomedCT = concept.getRelationshipsSnomedCT();
 
-            /* Si tiene una relación verificamos que sea la misma que se está validando (podría ya estar agregada) */
-        if (relationshipsSnomedCT.size() == 1 && !relationship.equals(relationshipsSnomedCT.get(0))) {
-            throw new BusinessRuleException("BR-SCT-004", "Si un concepto Semantikos tiene una relación SnomedCT de tipo “Es un Mapeo el concepto no puede tener ninguna otra relación de tipo SnomedCT.");
+        /* Si tiene una relación verificamos que sea la misma que se está validando (podría ya estar agregada) */
+        int size = relationshipsSnomedCT.size();
+
+        if (size == 0 || (size == 1 && relationship.equals(relationshipsSnomedCT.get(0)))){
+            return;
         }
+
+        throw new BusinessRuleException("BR-SCT-003", "Si un concepto Semantikos tiene una relación SnomedCT de tipo “Es un Mapeo el concepto no puede tener ninguna otra relación de tipo SnomedCT.");
     }
 
 
