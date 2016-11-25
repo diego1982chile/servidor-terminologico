@@ -25,6 +25,8 @@ public class HelperTableFactory {
 
     public static String ATC = "ATC";
 
+    public static String BIOEQUIVALENTE = "Bioequivalente";
+
     /**
      * Este método es responsable de crear una lista de relaciones a partir de un arreglo json de relaciones.
      * <code>

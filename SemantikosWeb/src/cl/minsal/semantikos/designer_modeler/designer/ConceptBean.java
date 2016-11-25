@@ -483,11 +483,21 @@ public class ConceptBean implements Serializable {
      * Definition. Este método es utilizado por el componente BasicType, el cual agrega relaciones con target sin valor
      */
     public void addRelationshipWithAttributes(RelationshipDefinition relationshipDefinition) {
+
         if (existRelationshipISAMapping()) {
-            messageError("Cuando existe una relación Es un mapeo, no se pueden agregar más relaciones.");
+            messageError("Cuando existe una relación 'Es un mapeo de', no se pueden agregar más relaciones.");
             return;
         }
+
         Relationship relationship = relationshipPlaceholders.get(relationshipDefinition.getId());
+
+        // Validar placeholders de targets de relacion
+        if (relationship.getTarget() == null) {
+            messageError("Debe seleccionar un valor para el atributo " + relationshipDefinition.getName());
+            relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
+            resetPlaceHolders();
+            return;
+        }
 
         if (existRelationshipToSCT()) crossmapBean.refreshCrossmapIndirect(concept);
 
@@ -500,14 +510,6 @@ public class ConceptBean implements Serializable {
             concept.setInherited(false);
         }
 
-        // Validar placeholders de targets de relacion
-        if (relationship.getTarget() == null) {
-            messageError("Debe seleccionar un valor para el atributo " + relationshipDefinition.getName());
-            relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
-            resetPlaceHolders();
-            return;
-        }
-
         try {
             if (relationship.getClass().equals(RelationshipWeb.class)) {
                 relationship = ((RelationshipWeb) relationship).toRelationship();
@@ -515,13 +517,15 @@ public class ConceptBean implements Serializable {
             relationshipBindingBR.verifyPreConditions(concept, relationship, user);
         } catch (EJBException EJB) {
             messageError(EJB.getMessage());
+            relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
+            resetPlaceHolders();
             return;
         }
 
         for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
             if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
                 messageError("Información incompleta para agregar " + relationshipDefinition.getName());
-                relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
+                relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
                 resetPlaceHolders();
                 return;
             }
@@ -538,7 +542,7 @@ public class ConceptBean implements Serializable {
         // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
         // Resetear placeholder relacion
-        relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
+        relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
         // Resetear placeholder targets
         resetPlaceHolders();
 
@@ -550,6 +554,13 @@ public class ConceptBean implements Serializable {
         conceptSelected = null;
         conceptSCTSelected = null;
         crossmapSetMemberSelected = null;
+    }
+
+    public Relationship resetRelationship(Relationship r){
+        if(r.getRelationshipDefinition().getTargetDefinition().isCrossMapType())
+            return new Relationship(r.getSourceConcept(), null, r.getRelationshipDefinition(), r.getRelationshipAttributes(), null);
+        else
+            return new Relationship(r.getSourceConcept(), null, r.getRelationshipDefinition(), new ArrayList<RelationshipAttribute>(), null);
     }
 
     /**
