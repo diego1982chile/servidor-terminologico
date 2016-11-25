@@ -211,19 +211,26 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
 
         /*
          * Ahora que sabemos que es una relación Snomed y de tipo ES UN MAPEO DE, se verifica que no exista otra
+         * relación Snomed, del mismo tipo, desde otro concepto al mismo concepto destino.
          *
-         * relación Snomed desde otro concepto al mismo concepto destino
+         * Se recuperan todas las relaciones del mismo tipo de relación y que se dirigen al mismo concepto SCT
          */
-        /* Se recuperan todas las relaciones del mismo tipo de relación y que se dirigen al mismo concepto SCT */
         List<Relationship> relationshipsLike = relationshipManager.getRelationshipsLike(snomedCTRelationship.getRelationshipDefinition(), snomedCTRelationship.getTarget());
         for (Relationship relationshipCandidate : relationshipsLike) {
             ConceptSMTK candidateConcept = relationshipCandidate.getSourceConcept();
 
-                /* Si es el mismo concepto, no importa */
+            /* Si es el mismo concepto, no importa porque está bien :D */
             if (candidateConcept.equals(concept)) {
                 continue;
             }
 
+            /* Si la relación no es del tipo ES UN MAPEO DE, no importa tanpoco */
+            SnomedCTRelationship snomedCandidate = (SnomedCTRelationship) relationshipCandidate;
+            if (!snomedCandidate.isES_UN_MAPEO_DE()){
+                continue;
+            }
+
+            /* En este punto, se tiene que la condición es violada y se arroja la excepción */
             throw new BusinessRuleException("BR-UNK", "La Relación de Tipo “Es un Mapeo de” que asocia un Concepto de Semantikos " +
                     "con un Concepto de SNOMED-CT; esta relación es uno a uno y es la que hereda el grado de definición " +
                     "de la tabla del Snapshot conceptos de SNOMED CT.");
