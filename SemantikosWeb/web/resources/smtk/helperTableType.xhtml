@@ -337,7 +337,7 @@
 
         <p:spacer />
 
-        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherexisteinputs" rendered="#{conceptBean.concept.id == -1}">
+        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherexisteinputs" rendered="#{cc.attrs.concept.editable}">
 
             <div class="ui-g-12 ui-md-6 ui-lg-2">
                 <p:outputLabel for="ispexistebooleanbutton">Existe ISP</p:outputLabel>
