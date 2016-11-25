@@ -247,7 +247,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
     private void brRelationshipBinding004(ConceptSMTK concept, Relationship relationship) {
 
         /* Esta regla de negocio solo aplica a relaciones de tipo SnomedCT */
-        if (!isSnomedCTRelationship(relationship)) {
+        if (!isSnomedCTRelationship(relationship) || !concept.hasES_UN_MAPEO()) {
             return;
         }
 
@@ -259,7 +259,8 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
 
         /* Si tiene una relación verificamos que sea la misma que se está validando (podría ya estar agregada) */
         int size = relationshipsSnomedCT.size();
-        if (size == 0 || (size == 1 && relationship.equals(relationshipsSnomedCT.get(0)))) {
+
+        if (size == 0 || (size == 1 && relationship.equals(relationshipsSnomedCT.get(0)))){
             return;
         }
 
