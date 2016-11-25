@@ -231,7 +231,9 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
             }
 
             /* En este punto, se tiene que la condición es violada y se arroja la excepción */
-            throw new BusinessRuleException("BR-SCT-001", "La Relación SnomedCT de Tipo '" + ES_UN_MAPEO_DE + "' es uno a uno. Ya existe una relación SnomedCT de este tipo que apunta al mismo concepto Snomed desde el concepto " + candidateConcept);
+            throw new BusinessRuleException("BR-SCT-001", "La Relación SnomedCT de Tipo '" + ES_UN_MAPEO_DE
+                    + "' es uno a uno. Ya existe una relación SnomedCT de este tipo que apunta al mismo concepto Snomed desde el concepto "
+                    + candidateConcept);
         }
     }
 
