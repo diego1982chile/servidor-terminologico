@@ -332,7 +332,7 @@
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.ISP}">
 
         <h3>#{cc.attrs.relationshipDefinition.name}</h3>
-        <p:outputLabel value="concept.id: #{conceptBean.concept.id}" />
+
         <p:spacer />
 
         <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherexisteinputs" rendered="#{conceptBean.concept.id == -1}">
