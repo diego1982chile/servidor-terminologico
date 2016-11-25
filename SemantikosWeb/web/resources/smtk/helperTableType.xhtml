@@ -352,7 +352,7 @@
             </div>
 
         </p:outputPanel>
-        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherinputs" rendered="#{conceptBean.concept.id == -1}">
+        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherinputs" rendered="#{cc.attrs.concept.editable}">
             <p:outputPanel  rendered="#{ispbean.existe}">
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <p:outputLabel for="ispregnum">RegNum</p:outputLabel>
