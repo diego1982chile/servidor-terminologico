@@ -355,7 +355,7 @@ public class ConceptBean implements Serializable {
                             HelperTable helperTable = (HelperTable) attDef.getTargetDefinition();
                             String[] columnNames = {HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()};
 
-                            List<HelperTableRecord> relationshipTypes = helperTableManager.searchRecords(helperTable, Arrays.asList(columnNames), HelperTableFactory.ES_UN_MAPEO_DE, true);
+                            List<HelperTableRecord> relationshipTypes = helperTableManager.searchRecords(helperTable, Arrays.asList(columnNames), ES_UN_MAPEO_DE, true);
                             RelationshipAttribute ra;
                             if (relationshipTypes.size() == 0) {
                                 logger.error("No hay datos en la tabla de TIPOS DE RELACIONES.");
