@@ -157,6 +157,7 @@ public class RelationshipFactory {
         Relationship relationship = createRelationshipByTargetType(relationshipDTO, sourceConceptSMTK, relationshipDefinition);
         relationship.setRelationshipAttributes(relationshipAttributes);
         relationship.setValidityUntil(relationshipDTO.getValidityUntil());
+        relationship.setCreationDate(relationshipDTO.getCreationDate());
         return relationship;
     }
 
