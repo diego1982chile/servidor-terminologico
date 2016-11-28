@@ -256,7 +256,7 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
 
     @Override
     public String toString() {
-        return relationshipDefinition.getName();
+        return this.sourceConcept + " --" +  relationshipDefinition.getName() + "--> " + this.getTarget();
     }
 
     public Crossmap toCrossMap() {

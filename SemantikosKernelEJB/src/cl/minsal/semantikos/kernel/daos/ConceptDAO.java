@@ -109,6 +109,7 @@ public interface ConceptDAO {
 
     /**
      * Metodo  que retorna los conceptos en borrador
+     *
      * @return lista de conceptos en borrador
      */
 
@@ -137,9 +138,17 @@ public interface ConceptDAO {
 
     /**
      * Este método es responsable de obtener los conceptos que se relacionan con el concepto indicado como parametro
+     *
      * @param conceptSMTK concepto que se relaciona con otros
+     *
      * @return Lista de conceptos relacionados
      */
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
 
+    /**
+     * Este método recupera todos los ID's de los conceptos exsitentes.
+     *
+     * @return Una lista con los ID's de los conceptos.
+     */
+    public List<Long> getAllConceptsId();
 }

@@ -1,16 +1,20 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
+import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.components.HelperTableManager;
 import cl.minsal.semantikos.kernel.components.ispfetcher.ISPFetcher;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import org.primefaces.context.RequestContext;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import java.util.*;
 
 /**
@@ -21,9 +25,11 @@ import java.util.*;
 public class ISPBean {
 
 
-    private Boolean existe = true;
+    private Boolean existe;
     private String regnum;
     private int ano;
+
+    private HelperTable ht;
 
 
     private Map<String,String> fetchedData;
@@ -44,6 +50,8 @@ public class ISPBean {
     @EJB
     HelperTableManager helperTableManager;
 
+    @EJB
+    UserManager userManager;
 
 
     @ManagedProperty(value = "#{authenticationBean}")
@@ -98,7 +106,11 @@ public class ISPBean {
     }
 
 
-    public void updateExiste(){
+    public void updateOptionality(RelationshipDefinition relationshipDefinition){
+        if(existe)
+            relationshipDefinition.getMultiplicity().setLowerBoundary(1);
+        else
+            relationshipDefinition.getMultiplicity().setLowerBoundary(0);
     }
 
 
@@ -123,6 +135,10 @@ public class ISPBean {
         HelperTableRecord refreshed = helperTableManager.getRecord(ispHT,inserted.getId());
 
         conceptBean.setSelectedHelperTableRecord(refreshed);
+
+        for (String s : fetchedData.keySet()) {
+            System.out.println(s);
+        }
 
         conceptBean.addRelationship(relationshipDefinition,refreshed);
 
@@ -165,15 +181,41 @@ public class ISPBean {
 
     public HelperTable getISPHelperTable(){
 
-        Collection<HelperTable> tablas = helperTableManager.getHelperTables();
+        if(ht == null) {
 
 
-        for (HelperTable ht: tablas) {
-            if(ht.getName().equals("smtk_helper_table_isp"))
-                return ht;
+            Collection<HelperTable> tablas = helperTableManager.getHelperTables();
+
+
+            for (HelperTable ht1 : tablas) {
+                if (ht1.getName().equals("smtk_helper_table_isp")) {
+                    ht = ht1;
+                    break;
+                }
+            }
         }
 
-        return null;
+        return ht;
+    }
+
+    public UserManager getUserManager() {
+        return userManager;
+    }
+
+    public void setUserManager(UserManager userManager) {
+        this.userManager = userManager;
+    }
+
+/*
+verifica si el registro ya existe en la base de datos
+ */
+    public boolean getExisteRegistroISP(){
+        if(fetchedData==null || fetchedData.size()==0)
+            return false;
+
+        List<HelperTableRecord> records = helperTableManager.searchRecords(getISPHelperTable(),"description",fetchedData.get("Registro"),true);
+
+        return  records.size() >0;
     }
 
 }

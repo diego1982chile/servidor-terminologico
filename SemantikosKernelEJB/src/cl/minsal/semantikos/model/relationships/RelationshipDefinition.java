@@ -187,4 +187,8 @@ public class RelationshipDefinition {
         return this.getName().equalsIgnoreCase(HelperTableFactory.ATC);
     }
 
+    public boolean isBioequivalente(){
+        return this.getName().equalsIgnoreCase(HelperTableFactory.BIOEQUIVALENTE);
+    }
+
 }
