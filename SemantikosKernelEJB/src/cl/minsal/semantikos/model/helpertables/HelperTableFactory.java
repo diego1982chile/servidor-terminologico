@@ -21,7 +21,7 @@ public class HelperTableFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(HelperTableFactory.class);
 
-    public static String ES_UN_MAPEO_DE = "Es un mapeo de";
+    public static String ES_UN_MAPEO_DE = "Es un mapeo";
 
     public static String ISP = "ISP";
 

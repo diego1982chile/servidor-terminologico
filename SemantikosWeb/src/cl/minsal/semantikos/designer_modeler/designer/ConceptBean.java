@@ -5,13 +5,9 @@ import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.businessrules.BusinessRulesContainer;
-import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
-import cl.minsal.semantikos.model.crossmaps.CrossMapType;
-import cl.minsal.semantikos.model.crossmaps.Crossmap;
+import cl.minsal.semantikos.model.businessrules.RelationshipBindingBRInterface;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
-import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableFactory;
@@ -177,8 +173,8 @@ public class ConceptBean implements Serializable {
 
     public void setIdTermPending(long idTermPending) {
         this.idTermPending = idTermPending;
-        descriptionPending= descriptionManager.getDescriptionByID(idTermPending);
-        if(descriptionPending!=null){
+        descriptionPending = descriptionManager.getDescriptionByID(idTermPending);
+        if (descriptionPending != null) {
             concept.addDescriptionWeb(new DescriptionWeb(descriptionPending));
         }
     }
@@ -350,14 +346,22 @@ public class ConceptBean implements Serializable {
 
             if (!relationshipDefinition.getRelationshipAttributeDefinitions().isEmpty()) {
                 relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
+
                 // Si esta definición de relación es de tipo CROSSMAP, Se agrega el atributo tipo de relacion = "ES_UN_MAPEO_DE" (por defecto)
-                if(relationshipDefinition.getTargetDefinition().isCrossMapType()){
+                if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
                     for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-                        if(attDef.isRelationshipTypeAttribute()) {
+                        if (attDef.isRelationshipTypeAttribute()) {
                             Relationship r = relationshipPlaceholders.get(relationshipDefinition.getId());
-                            HelperTable helperTable = (HelperTable)attDef.getTargetDefinition();
-                            String[] columnNames= {HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()};
-                            RelationshipAttribute ra = new RelationshipAttribute(attDef, r, helperTableManager.searchRecords(helperTable, Arrays.asList(columnNames), HelperTableFactory.ES_UN_MAPEO_DE, true).get(0));
+                            HelperTable helperTable = (HelperTable) attDef.getTargetDefinition();
+                            String[] columnNames = {HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()};
+
+                            List<HelperTableRecord> relationshipTypes = helperTableManager.searchRecords(helperTable, Arrays.asList(columnNames), HelperTableFactory.ES_UN_MAPEO_DE, true);
+                            RelationshipAttribute ra;
+                            if (relationshipTypes.size() == 0) {
+                                logger.error("No hay datos en la tabla de TIPOS DE RELACIONES.");
+                            }
+
+                            ra = new RelationshipAttribute(attDef, r, relationshipTypes.get(0));
                             r.getRelationshipAttributes().add(ra);
                         }
                     }
@@ -409,8 +413,6 @@ public class ConceptBean implements Serializable {
     /**
      * Este método se encarga de setear el idCategory. En ejecución este metodo es invocado al realizar el request
      * desde el conceptBrowser cuando se desea crear un nuevo concepto dentro de una categoria
-     *
-     * @param idCategory
      */
     public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
@@ -423,8 +425,6 @@ public class ConceptBean implements Serializable {
     /**
      * Este método se encarga de setear el idConcept. En ejecución este metodo es invocado al realizar el request
      * desde el conceptBrowser cuando se desea ver o editar un concepto existente
-     *
-     * @param idConcept
      */
     public void setIdConcept(int idConcept) {
         this.idConcept = idConcept;
@@ -838,9 +838,9 @@ public class ConceptBean implements Serializable {
             }
             // Si el concepto está persistido, actualizarlo. Si no, persistirlo
             if (concept.isPersistent()) {
-                try{
+                try {
                     updateConcept(context);
-                }catch (EJBException e){
+                } catch (EJBException e) {
                     messageError(e.getMessage());
                 }
             } else {
@@ -868,10 +868,10 @@ public class ConceptBean implements Serializable {
         try {
             conceptManager.persist(concept, user);
 
-            if(descriptionPending!=null){
-                ConceptSMTK conceptSource=descriptionPending.getConceptSMTK();
+            if (descriptionPending != null) {
+                ConceptSMTK conceptSource = descriptionPending.getConceptSMTK();
                 descriptionPending.setConceptSMTK(concept);
-                descriptionManager.moveDescriptionToConcept(conceptSource,descriptionPending,user);
+                descriptionManager.moveDescriptionToConcept(conceptSource, descriptionPending, user);
             }
             context.addMessage(null, new FacesMessage("Successful", "Concepto guardado "));
             // Se resetea el concepto, como el concepto está persistido, se le pasa su id
@@ -1665,6 +1665,7 @@ public class ConceptBean implements Serializable {
      * Metodo encargado de validar si la relacion que recibe por parametro es de tipo Es un Mapeo.
      *
      * @param relationship relacion a validar.
+     *
      * @return retorna true o false segun corresponda.
      */
     private boolean isMapping(Relationship relationship) {
