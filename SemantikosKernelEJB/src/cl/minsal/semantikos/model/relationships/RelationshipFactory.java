@@ -226,6 +226,7 @@ class RelationshipDTO {
     protected long idTarget;
     protected long idRelationshipDefinition;
     protected Timestamp validityUntil;
+    protected Timestamp creationDate;
 
     public RelationshipDTO() {
     }
@@ -270,5 +271,11 @@ class RelationshipDTO {
         this.validityUntil = validityUntil;
     }
 
+    public Timestamp getCreationDate() {
+        return creationDate;
+    }
 
+    public void setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
+    }
 }

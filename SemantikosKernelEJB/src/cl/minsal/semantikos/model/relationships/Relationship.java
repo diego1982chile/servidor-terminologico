@@ -6,11 +6,13 @@ import cl.minsal.semantikos.model.audit.AuditableEntity;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import com.sun.tools.corba.se.idl.constExpr.Times;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,6 @@ import java.util.List;
  */
 public class Relationship extends PersistentEntity implements AuditableEntity {
 
-    // TODO: Normalizar esta clase
     private static final Logger logger = LoggerFactory.getLogger(Relationship.class);
 
     /** El concepto origen de esta relación */
@@ -43,6 +44,9 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
 
     /** La relación es Vigente (valida) hasta la fecha... */
     private Timestamp validityUntil;
+
+    /** Fecha en que fue creada la relación */
+    private Timestamp creationDate;
 
     /** Indica si ha sufrido modificaciones que requieran un update */
     private boolean toBeUpdated = false;
@@ -140,6 +144,14 @@ public class Relationship extends PersistentEntity implements AuditableEntity {
 
     public void setToBeUpdated(boolean toBeUpdated) {
         this.toBeUpdated = toBeUpdated;
+    }
+
+    public Timestamp getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
     }
 
     /**
