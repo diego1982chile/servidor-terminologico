@@ -417,17 +417,17 @@
                     </p:column>
                     <p:column headerText="Usuario">
                         <div style="text-align: center;">
-                            <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>
+                            <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['idUser'])}"/>
                         </div>
                     </p:column>
                     <p:column headerText="Fecha ingreso">
                         <div style="text-align: center;">
-                            <h:outputText value="#{relationship.target.fields['creation_date']}"/>
+                            <h:outputText value="#{relationship.target.fields['creationDate']}"/>
                         </div>
                     </p:column>
                     <p:column headerText="Fecha modificación">
                         <div style="text-align: center;">
-                            <h:outputText value="#{relationship.target.fields['fecha_proxima_renovacion']}"/>
+                            <h:outputText value="#{relationship.target.fields['fechaProximaRenovacion']}"/>
                         </div>
                     </p:column>
 
