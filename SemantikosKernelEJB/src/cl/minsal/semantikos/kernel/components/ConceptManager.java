@@ -202,10 +202,13 @@ public interface ConceptManager {
      * @return El concepto con su categoría actualizada. Esto es necesario para cuando las llamadas al EJB sean remotas.
      */
     public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category);
+
     /**
      * Este método es responsable de retornar la instancia del concepto pendiente.
      *
      * @return La instancia (única) del concepto pendiente.
      */
     public ConceptSMTK getPendingConcept();
+
+
 }

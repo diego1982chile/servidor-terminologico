@@ -34,12 +34,12 @@
 
                                                 <!--p:messages autoUpdate="true"></p:messages-->
 
-                    <smtk:title concept="#{conceptBean.concept}"/>
-                    <p:separator />
-                    <p:panel id="conceptHeader" style="border: hidden;" styleClass="conceptHeader">
-                        <p:growl id="editMsgs2" showDetail="true"/>
-                        <smtk:conceptHeader concept="#{conceptBean.concept}"/>
-                    </p:panel>
+                                                <smtk:title concept="#{conceptBean.concept}"/>
+                                                <p:separator />
+                                                <p:panel id="conceptHeader" style="border: hidden;" styleClass="conceptHeader">
+                                                    <p:growl id="editMsgs2" showDetail="true"/>
+                                                    <smtk:conceptHeader concept="#{conceptBean.concept}"/>
+                                                </p:panel>
 
                                             </p:outputPanel>
 
@@ -66,9 +66,9 @@
                                                 <p:tab title="Atributos" rendered="#{not empty conceptBean.category.relationshipDefinitions}">
                                                     <!--Relaciones -->
                                                     <p:outputPanel id="atributos"
-                                                             widgetVar="panelAtributos"
-                                                             styleClass="attributes"
-                                                             rendered="#{conceptBean.category.hasRelationshipDefinitions}">
+                                                                   widgetVar="panelAtributos"
+                                                                   styleClass="attributes"
+                                                                   rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
                                                         <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
                                                                      var="relationshipDefinition">
@@ -76,10 +76,10 @@
                                                             <h:column>
 
                                                                 <p:outputPanel
-                                                                         id="panelRelationshipDefiniton"
-                                                                         style="border:0px; margin: 0px; padding: 0px;"
-                                                                         styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}"
-                                                                         rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
+                                                                        id="panelRelationshipDefiniton"
+                                                                        style="border:0px; margin: 0px; padding: 0px;"
+                                                                        styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}"
+                                                                        rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
 
                                                                     <smtk:smtkType
                                                                             rendered="#{relationshipDefinition.targetDefinition.SMTKType}"
@@ -108,9 +108,9 @@
                                                 <p:tab title="SNOMED-CT">
                                                     <!--Relaciones -->
                                                     <p:outputPanel id="atributoSCT"
-                                                             widgetVar="panelAtributoSCT"
-                                                             styleClass="attributes"
-                                                             rendered="#{conceptBean.category.hasRelationshipDefinitions}">
+                                                                   widgetVar="panelAtributoSCT"
+                                                                   styleClass="attributes"
+                                                                   rendered="#{conceptBean.category.hasRelationshipDefinitions}">
 
                                                         <h:dataTable style="width: 100%;" value="#{conceptBean.orderedRelationshipDefinitions}"
                                                                      var="relationshipDefinition">
@@ -133,6 +133,9 @@
                                                             </h:column>
                                                         </h:dataTable>
                                                     </p:outputPanel>
+                                                </p:tab>
+                                                <p:tab title="Refset" rendered="#{conceptBean.concept.modeled}">
+                                                    <smtk:refset/>
                                                 </p:tab>
                                                 <p:tab title="Crossmaps" rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
                                                     <!--Relaciones -->
@@ -201,18 +204,18 @@
                                                     <p:confirm header="Confirmation" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
                                                 </p:commandButton>
 
-                    <!-- Botón para Trasladar el concepto modelado -->
-                    <smtk:trasnferConcept rendered="#{conceptBean.concept.modeled}" conceptSMTK="#{conceptBean.concept}"/>
+                                                <!-- Botón para Trasladar el concepto modelado -->
+                                                <smtk:trasnferConcept rendered="#{conceptBean.concept.modeled}" conceptSMTK="#{conceptBean.concept}"/>
 
-                    <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
-                                     styleClass="ui-priority-primary"
-                                     value="Deshacer" type="submit" process="mainForm"
-                                     rendered="#{conceptBean.concept.editable}"
-                                     update="growl, mainForm">
-                        <p:confirm header="Confirmation"
-                                   message="¿Desea deshacer los cambios realizados en esta sesión?"
-                                   icon="ui-icon-alert"/>
-                    </p:commandButton>
+                                                <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
+                                                                 styleClass="ui-priority-primary"
+                                                                 value="Deshacer" type="submit" process="mainForm"
+                                                                 rendered="#{conceptBean.concept.editable}"
+                                                                 update="growl, mainForm">
+                                                    <p:confirm header="Confirmation"
+                                                               message="¿Desea deshacer los cambios realizados en esta sesión?"
+                                                               icon="ui-icon-alert"/>
+                                                </p:commandButton>
                                                 <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-ban"
                                                                  styleClass="ui-priority-primary"
                                                                  value="Invalidar" type="submit" process="mainForm"

@@ -137,6 +137,13 @@ public interface ConceptDAO {
     public ConceptSMTK getPendingConcept();
 
     /**
+     * Este método es responsable de recuperar el Concepto pendiente.
+     *
+     * @return El concepto pendiente.
+     */
+    public ConceptSMTK getPendingConcept();
+
+    /**
      /**
      * Este método es responsable de obtener los conceptos que se relacionan con el concepto <code>conceptSMTK</code> a
      * través de relaciones, donde <code>conceptSMTK</code> es el concepto de origen y los conceptos relacionados con
