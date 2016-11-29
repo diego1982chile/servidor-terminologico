@@ -226,8 +226,7 @@
                                 styleClass="fragments"
                                 inputStyle="width: 90%;"
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
-                                queryDelay="#{cc.attrs.relationshipDefinition.isISP()? 1000 : 0}"
-                                minQueryLength="#{cc.attrs.relationshipDefinition.isISP()? 3 : 0}"
+                                minQueryLength="2"
                                 forceSelection="true"
                                 var="helperTableRecord"
                                 placeholder="#{cc.attrs.relationshipDefinition.name}..."
@@ -246,6 +245,10 @@
                     <!---->
                     <p:column>
                         <h:outputText value="#{helperTableRecord.fields['description']}"/>
+                    </p:column>
+
+                    <p:column rendered="#{cc.attrs.relationshipDefinition.bioequivalente}" width="500px" style="width: 500px">
+                        <h:outputText value="#{helperTableRecord.fields['nombre']}"/>
                     </p:column>
 
                     <p:ajax event="itemSelect"
