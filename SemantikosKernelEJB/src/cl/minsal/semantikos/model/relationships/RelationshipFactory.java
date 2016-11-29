@@ -157,6 +157,7 @@ public class RelationshipFactory {
         Relationship relationship = createRelationshipByTargetType(relationshipDTO, sourceConceptSMTK, relationshipDefinition);
         relationship.setRelationshipAttributes(relationshipAttributes);
         relationship.setValidityUntil(relationshipDTO.getValidityUntil());
+        relationship.setCreationDate(relationshipDTO.getCreationDate());
         return relationship;
     }
 
@@ -226,6 +227,7 @@ class RelationshipDTO {
     protected long idTarget;
     protected long idRelationshipDefinition;
     protected Timestamp validityUntil;
+    protected Timestamp creationDate;
 
     public RelationshipDTO() {
     }
@@ -270,5 +272,11 @@ class RelationshipDTO {
         this.validityUntil = validityUntil;
     }
 
+    public Timestamp getCreationDate() {
+        return creationDate;
+    }
 
+    public void setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
+    }
 }

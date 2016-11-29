@@ -685,7 +685,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      *
      * @return <code>true</code> si contiene una relación asi y <code>false</code> sino.
      */
-    protected boolean contains(Relationship relationship) {
+    public boolean contains(Relationship relationship) {
         return this.getRelationships().contains(relationship);
     }
 
@@ -739,6 +739,11 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     @Override
     public TargetType getTargetType() {
         return TargetType.SMTK;
+    }
+
+    @Override
+    public String getRepresentation() {
+        return toString();
     }
 
     @Override

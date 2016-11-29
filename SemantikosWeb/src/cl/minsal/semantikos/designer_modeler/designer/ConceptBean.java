@@ -575,7 +575,13 @@ public class ConceptBean implements Serializable {
      * Este método es el encargado de agregar una nuva relacion con los parémetros que se indican.
      */
     public void addRelationship(RelationshipDefinition relationshipDefinition, Target target) {
+
         Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
+        if((relationshipDefinition.isISP() || relationshipDefinition.isBioequivalente()) && concept.contains(relationship)){
+            messageError("Ya existe la relación '"+relationshipDefinition.getName()+"' con el destino '"+target.getRepresentation()+"' para este concepto");
+            resetPlaceHolders();
+            return;
+        }
         // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
         // Resetear placeholder targets
@@ -1709,7 +1715,7 @@ public class ConceptBean implements Serializable {
      *
      * @param msg mensaje que se muestra.
      */
-    private void messageError(String msg) {
+    public void messageError(String msg) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
     }

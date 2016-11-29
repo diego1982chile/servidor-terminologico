@@ -75,6 +75,8 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
     @Override
     public Relationship createRelationship(Relationship relationship) {
+        // Se setea la fecha de creación de esta relación
+        relationship.setCreationDate(new Timestamp(currentTimeMillis()));
         relationship = relationshipDAO.persist(relationship);
         for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
             relationshipAttribute.setRelationship(relationship);
@@ -96,6 +98,8 @@ public class RelationshipManagerImpl implements RelationshipManager {
             /* Se validan las reglas de negocio */
             new ConceptCreationBR().apply(concept, user);
 
+            // Se setea la fecha de creación de esta relación
+            relationship.setCreationDate(new Timestamp(currentTimeMillis()));
             relationshipDAO.persist(relationship);
 
             /* Se persisten los atributos */
