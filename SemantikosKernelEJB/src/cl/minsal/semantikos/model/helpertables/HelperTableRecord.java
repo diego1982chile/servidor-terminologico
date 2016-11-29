@@ -165,4 +165,12 @@ public class HelperTableRecord extends PersistentEntity implements Target, Compa
     public void addField(String fieldName, String fieldValue) {
         this.fields.put(fieldName, fieldValue);
     }
+
+    public String getRepresentation(){
+        if (this.getFields() == null) {
+            return "";
+        } else {
+            return this.getFields().get(SYSTEM_COLUMN_DESCRIPTION.getColumnName());
+        }
+    }
 }

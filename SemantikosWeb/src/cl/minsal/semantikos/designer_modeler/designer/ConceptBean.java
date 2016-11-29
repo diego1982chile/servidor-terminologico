@@ -578,7 +578,8 @@ public class ConceptBean implements Serializable {
 
         Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
         if((relationshipDefinition.isISP() || relationshipDefinition.isBioequivalente()) && concept.contains(relationship)){
-            messageError("Ya existe una relación con estas mismas características para este concepto");
+            messageError("Ya existe la relación '"+relationshipDefinition.getName()+"' con el destino '"+target.getRepresentation()+"' para este concepto");
+            resetPlaceHolders();
             return;
         }
         // Se utiliza el constructor mínimo (sin id)

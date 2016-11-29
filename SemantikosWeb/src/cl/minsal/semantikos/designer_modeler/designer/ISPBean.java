@@ -119,7 +119,7 @@ public class ISPBean {
             return;
         }
 
-        clean();
+        ispRecord = null;
 
         for (HelperTableRecord helperTableRecord : helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true)) {
             ispRecord = helperTableRecord;

@@ -298,17 +298,17 @@
                     </p:column>
                     <p:column headerText="Usuario" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                         <div style="text-align: center;">
-                            <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['idUser'])}"/>
+                            <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>
                         </div>
                     </p:column>
                     <p:column headerText="Fecha ingreso" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                         <div style="text-align: center;">
-                            <h:outputText value="#{relationship.target.fields['creationDate']}"/>
+                            <h:outputText value="#{relationship.target.fields['creation_date']}"/>
                         </div>
                     </p:column>
                     <p:column headerText="Fecha modificación" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                         <div style="text-align: center;">
-                            <h:outputText value="#{relationship.target.fields['fechaProximaRenovacion']}"/>
+                            <h:outputText value="#{relationship.target.fields['fecha_proxima_renovacion']}"/>
                         </div>
                     </p:column>
 
