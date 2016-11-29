@@ -173,7 +173,7 @@ public class ISPBean {
     private void clean() {
        existe = true;
        regnum = "";
-       ano = 0;
+       ano = null;
        ispRecord = null;
     }
 
