@@ -179,6 +179,8 @@ public class ConceptBean implements Serializable {
         }
     }
 
+    private boolean refsetEditConcept;
+
     public Description getDescriptionPending() {
         return descriptionPending;
     }
@@ -906,6 +908,8 @@ public class ConceptBean implements Serializable {
         /* Se actualizan las relaciones */
         changes += updateConceptRelationships();
 
+        changes = (refsetEditConcept)?changes+1:changes;
+
         if (changes == 0)
             context.addMessage(null, new FacesMessage("Warning", "No se ha realizado ningún cambio al concepto!!"));
         else {
@@ -1336,6 +1340,14 @@ public class ConceptBean implements Serializable {
 
     public void setConceptSMTKTranslateDes(ConceptSMTK conceptSMTKTranslateDes) {
         this.conceptSMTKTranslateDes = conceptSMTKTranslateDes;
+    }
+
+    public boolean isRefsetEditConcept() {
+        return refsetEditConcept;
+    }
+
+    public void setRefsetEditConcept(boolean refsetEditConcept) {
+        this.refsetEditConcept = refsetEditConcept;
     }
 
     public boolean isEditable() {

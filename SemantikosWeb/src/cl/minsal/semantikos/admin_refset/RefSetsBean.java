@@ -50,6 +50,7 @@ public class RefSetsBean {
 
     private RefSet refSetSelect;
 
+
     @EJB
     private CategoryManager categoryManager;
 
@@ -145,6 +146,7 @@ public class RefSetsBean {
         }
         if(conceptRefSetList!=null){
             conceptRefSetList=refSetManager.getRefsetsBy(conceptBean.getConcept());
+            conceptBean.setRefsetEditConcept(true);
         }
     }
 
@@ -155,6 +157,7 @@ public class RefSetsBean {
         }
         if(conceptRefSetList!=null){
             conceptRefSetList=refSetManager.getRefsetsBy(conceptBean.getConcept());
+            conceptBean.setRefsetEditConcept(true);
         }
     }
 
