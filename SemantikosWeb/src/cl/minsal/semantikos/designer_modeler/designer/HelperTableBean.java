@@ -64,6 +64,9 @@ public class HelperTableBean implements Serializable {
         else if(relationshipDefinition.isISP()) {
             columnNames = new String[]{"registro"};
         }
+        else if(relationshipDefinition.isBioequivalente()) {
+            columnNames = new String[]{"registro","nombre"};
+        }
         else {
             columnNames = new String[]{HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()};
         }
