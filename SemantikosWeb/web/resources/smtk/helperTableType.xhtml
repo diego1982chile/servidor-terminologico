@@ -85,7 +85,7 @@
                     <p:outputLabel for="findHTRecords2" value="#{cc.attrs.relationshipDefinition.name}"/>
                     <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <div class="ui-g-12 ui-md-6 ui-lg-#{cc.attrs.relationshipDefinition.ATC? '6':'2'}">
                     <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.fields['description']}" style="width: 80%" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
                     <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.fields['dsc_completa_atc']}" style="width: 80%" rendered="#{cc.attrs.relationshipDefinition.ATC}" />
                     <p:commandLink process="@this"
@@ -298,17 +298,17 @@
                     </p:column>
                     <p:column headerText="Usuario" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                         <div style="text-align: center;">
-                            <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>
+                            <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['idUser'])}"/>
                         </div>
                     </p:column>
                     <p:column headerText="Fecha ingreso" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                         <div style="text-align: center;">
-                            <h:outputText value="#{relationship.target.fields['creation_date']}"/>
+                            <h:outputText value="#{relationship.target.fields['creationDate']}"/>
                         </div>
                     </p:column>
                     <p:column headerText="Fecha modificación" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
                         <div style="text-align: center;">
-                            <h:outputText value="#{relationship.target.fields['fecha_proxima_renovacion']}"/>
+                            <h:outputText value="#{relationship.target.fields['fechaProximaRenovacion']}"/>
                         </div>
                     </p:column>
 
@@ -375,13 +375,12 @@
 
                         <p:dataTable value="#{ispbean.mapKeys}" var="key" rendered="#{not empty ispbean.mapKeys}">
                             <p:column width="200">#{key}</p:column>
-                            <p:column width="300">#{ispbean.fetchedData[key]}</p:column>
+                            <p:column width="300">#{ispbean.ispRecord.fields[key]}</p:column>
                         </p:dataTable>
 
 
                         <p:outputLabel rendered="#{empty ispbean.mapKeys}" value="No se pudo recuperar datos del ISP" />
-                        <p:outputLabel rendered="#{ispbean.existeRegistroISP}" value="Registro ya existe en la Base de Datos. No puede guardarse" />
-                        <p:commandButton rendered="#{not empty ispbean.mapKeys  and not ispbean.existeRegistroISP}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                         <p:commandButton value="Cancelar" type="button" onclick="PF('ispfetcheddialog').hide()" />
 
                     </p:panel>
