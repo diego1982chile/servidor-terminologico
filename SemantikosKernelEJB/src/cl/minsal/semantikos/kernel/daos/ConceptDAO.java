@@ -109,7 +109,6 @@ public interface ConceptDAO {
 
     /**
      * Metodo  que retorna los conceptos en borrador
-     *
      * @return lista de conceptos en borrador
      */
 

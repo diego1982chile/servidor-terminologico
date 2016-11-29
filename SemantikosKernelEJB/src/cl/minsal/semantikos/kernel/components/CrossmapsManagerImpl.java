@@ -98,11 +98,10 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSMTK conceptSMTK) {
 
         /* Se valida si el concepto tiene cargada sus relaciones */
-        if (conceptSMTK.getRelationships().size() == 0) {
+        if (conceptSMTK.isRelationshipsLoaded()) {
             List<Relationship> relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(conceptSMTK);
             conceptSMTK.setRelationships(relationshipsBySourceConcept);
         }
-
 
         /* Se recuperan las relaciones a Snomed CT del tipo ES_UN o ES UN MAPEO DE */
         List<CrossmapSetMember> crossmapSetMembers = new ArrayList<>();
