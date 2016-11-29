@@ -718,12 +718,9 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         ConnectionBD connect = new ConnectionBD();
 
+        try (Connection connection = connect.getConnection();
+             CallableStatement call= connection.prepareCall("{call semantikos.get_related_concept(?)}")) {
 
-        CallableStatement call;
-
-        try (Connection connection = connect.getConnection();) {
-
-            call = connection.prepareCall("{call semantikos.get_related_concept(?)}");
             call.setLong(1, conceptSMTK.getId());
             call.execute();
 
@@ -734,9 +731,33 @@ public class ConceptDAOImpl implements ConceptDAO {
             rs.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error al buscar conceptos relacionados", e);
         }
 
         return concepts;
+    }
+
+    @Override
+    public List<Long> getAllConceptsId() {
+        List<Long> ids = new ArrayList<>();
+
+        ConnectionBD connect = new ConnectionBD();
+
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call= connection.prepareCall("{call semantikos.get_concepts_id()}")) {
+
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                ids.add(rs.getLong(1));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            logger.error("Error al buscar conceptos relacionados", e);
+        }
+
+        return ids;
     }
 }

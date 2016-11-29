@@ -5,22 +5,16 @@ import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.businessrules.BusinessRulesContainer;
-import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
-import cl.minsal.semantikos.model.crossmaps.CrossMapType;
-import cl.minsal.semantikos.model.crossmaps.Crossmap;
+import cl.minsal.semantikos.model.businessrules.RelationshipBindingBRInterface;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
-import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.util.Pair;
 import cl.minsal.semantikos.view.components.ViewAugmenter;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.ReorderEvent;
 import org.primefaces.event.RowEditEvent;
 import org.slf4j.Logger;
@@ -40,6 +34,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.*;
+
+import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_UN_MAPEO_DE;
 
 
 /**
@@ -177,8 +173,8 @@ public class ConceptBean implements Serializable {
 
     public void setIdTermPending(long idTermPending) {
         this.idTermPending = idTermPending;
-        descriptionPending= descriptionManager.getDescriptionByID(idTermPending);
-        if(descriptionPending!=null){
+        descriptionPending = descriptionManager.getDescriptionByID(idTermPending);
+        if (descriptionPending != null) {
             concept.addDescriptionWeb(new DescriptionWeb(descriptionPending));
         }
     }
@@ -321,12 +317,11 @@ public class ConceptBean implements Serializable {
     }
 
     /**
-     * Este método se ejecuta al inicio del proceso de creación de un concepto.
-     *
-     * @throws ParseException
+     * Este método se encarga de inicializar un concepto si es que se va a crear un concepto nuevo. Y si se va a editar
+     * invoca al getConceptByID.
      */
-    public void createConcept() throws ParseException {
-        RequestContext context = RequestContext.getCurrentInstance();
+    public void createConcept() {
+
         if (idConcept == 0) {
             setCategory(categoryManager.getCategoryById(idCategory));
             if (category.getId() == 34) changeMultiplicityToRequiredRelationshipDefinitionMC();
@@ -341,6 +336,7 @@ public class ConceptBean implements Serializable {
             getConceptById(idConcept);
             if (category.getId() == 34) changeMCSpecial();
         }
+
         // Una vez que se ha inicializado el concepto, inicializar los placeholders para las relaciones
         for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
             RelationshipDefinitionWeb relationshipDefinitionWeb = viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition);
@@ -350,14 +346,22 @@ public class ConceptBean implements Serializable {
 
             if (!relationshipDefinition.getRelationshipAttributeDefinitions().isEmpty()) {
                 relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
+
                 // Si esta definición de relación es de tipo CROSSMAP, Se agrega el atributo tipo de relacion = "ES_UN_MAPEO_DE" (por defecto)
-                if(relationshipDefinition.getTargetDefinition().isCrossMapType()){
+                if (relationshipDefinition.getTargetDefinition().isCrossMapType()) {
                     for (RelationshipAttributeDefinition attDef : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-                        if(attDef.isRelationshipTypeAttribute()) {
+                        if (attDef.isRelationshipTypeAttribute()) {
                             Relationship r = relationshipPlaceholders.get(relationshipDefinition.getId());
-                            HelperTable helperTable = (HelperTable)attDef.getTargetDefinition();
-                            String[] columnNames= {HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()};
-                            RelationshipAttribute ra = new RelationshipAttribute(attDef, r, helperTableManager.searchRecords(helperTable, Arrays.asList(columnNames), HelperTableFactory.ES_UN_MAPEO_DE, true).get(0));
+                            HelperTable helperTable = (HelperTable) attDef.getTargetDefinition();
+                            String[] columnNames = {HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()};
+
+                            List<HelperTableRecord> relationshipTypes = helperTableManager.searchRecords(helperTable, Arrays.asList(columnNames), ES_UN_MAPEO_DE, true);
+                            RelationshipAttribute ra;
+                            if (relationshipTypes.size() == 0) {
+                                logger.error("No hay datos en la tabla de TIPOS DE RELACIONES.");
+                            }
+
+                            ra = new RelationshipAttribute(attDef, r, relationshipTypes.get(0));
                             r.getRelationshipAttributes().add(ra);
                         }
                     }
@@ -409,8 +413,6 @@ public class ConceptBean implements Serializable {
     /**
      * Este método se encarga de setear el idCategory. En ejecución este metodo es invocado al realizar el request
      * desde el conceptBrowser cuando se desea crear un nuevo concepto dentro de una categoria
-     *
-     * @param idCategory
      */
     public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
@@ -423,17 +425,11 @@ public class ConceptBean implements Serializable {
     /**
      * Este método se encarga de setear el idConcept. En ejecución este metodo es invocado al realizar el request
      * desde el conceptBrowser cuando se desea ver o editar un concepto existente
-     *
-     * @param idConcept
      */
     public void setIdConcept(int idConcept) {
         this.idConcept = idConcept;
         if (idConcept != 0) {
-            try {
-                createConcept();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            createConcept();
         }
     }
 
@@ -495,11 +491,21 @@ public class ConceptBean implements Serializable {
      * Definition. Este método es utilizado por el componente BasicType, el cual agrega relaciones con target sin valor
      */
     public void addRelationshipWithAttributes(RelationshipDefinition relationshipDefinition) {
+
         if (existRelationshipISAMapping()) {
-            messageError("Cuando existe una relación Es un mapeo, no se pueden agregar más relaciones.");
+            messageError("Cuando existe una relación 'Es un mapeo de', no se pueden agregar más relaciones.");
             return;
         }
+
         Relationship relationship = relationshipPlaceholders.get(relationshipDefinition.getId());
+
+        // Validar placeholders de targets de relacion
+        if (relationship.getTarget() == null) {
+            messageError("Debe seleccionar un valor para el atributo " + relationshipDefinition.getName());
+            relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
+            resetPlaceHolders();
+            return;
+        }
 
         if (existRelationshipToSCT()) crossmapBean.refreshCrossmapIndirect(concept);
 
@@ -512,14 +518,6 @@ public class ConceptBean implements Serializable {
             concept.setInherited(false);
         }
 
-        // Validar placeholders de targets de relacion
-        if (relationship.getTarget() == null) {
-            messageError("Debe seleccionar un valor para el atributo " + relationshipDefinition.getName());
-            relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
-            resetPlaceHolders();
-            return;
-        }
-
         try {
             if (relationship.getClass().equals(RelationshipWeb.class)) {
                 relationship = ((RelationshipWeb) relationship).toRelationship();
@@ -527,13 +525,15 @@ public class ConceptBean implements Serializable {
             relationshipBindingBR.verifyPreConditions(concept, relationship, user);
         } catch (EJBException EJB) {
             messageError(EJB.getMessage());
+            relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
+            resetPlaceHolders();
             return;
         }
 
         for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
             if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
                 messageError("Información incompleta para agregar " + relationshipDefinition.getName());
-                relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
+                relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
                 resetPlaceHolders();
                 return;
             }
@@ -550,7 +550,7 @@ public class ConceptBean implements Serializable {
         // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
         // Resetear placeholder relacion
-        relationshipPlaceholders.put(relationshipDefinition.getId(), new Relationship(concept, null, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null));
+        relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
         // Resetear placeholder targets
         resetPlaceHolders();
 
@@ -562,6 +562,13 @@ public class ConceptBean implements Serializable {
         conceptSelected = null;
         conceptSCTSelected = null;
         crossmapSetMemberSelected = null;
+    }
+
+    public Relationship resetRelationship(Relationship r){
+        if(r.getRelationshipDefinition().getTargetDefinition().isCrossMapType())
+            return new Relationship(r.getSourceConcept(), null, r.getRelationshipDefinition(), r.getRelationshipAttributes(), null);
+        else
+            return new Relationship(r.getSourceConcept(), null, r.getRelationshipDefinition(), new ArrayList<RelationshipAttribute>(), null);
     }
 
     /**
@@ -838,9 +845,9 @@ public class ConceptBean implements Serializable {
             }
             // Si el concepto está persistido, actualizarlo. Si no, persistirlo
             if (concept.isPersistent()) {
-                try{
+                try {
                     updateConcept(context);
-                }catch (EJBException e){
+                } catch (EJBException e) {
                     messageError(e.getMessage());
                 }
             } else {
@@ -868,10 +875,10 @@ public class ConceptBean implements Serializable {
         try {
             conceptManager.persist(concept, user);
 
-            if(descriptionPending!=null){
-                ConceptSMTK conceptSource=descriptionPending.getConceptSMTK();
+            if (descriptionPending != null) {
+                ConceptSMTK conceptSource = descriptionPending.getConceptSMTK();
                 descriptionPending.setConceptSMTK(concept);
-                descriptionManager.moveDescriptionToConcept(conceptSource,descriptionPending,user);
+                descriptionManager.moveDescriptionToConcept(conceptSource, descriptionPending, user);
             }
             context.addMessage(null, new FacesMessage("Successful", "Concepto guardado "));
             // Se resetea el concepto, como el concepto está persistido, se le pasa su id
@@ -1240,11 +1247,7 @@ public class ConceptBean implements Serializable {
 
     public void setFavoriteDescription(String favoriteDescription) {
         this.favoriteDescription = favoriteDescription;
-        try {
-            createConcept();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        createConcept();
     }
 
     public HelperTableManager getHelperTableManager() {
@@ -1665,6 +1668,7 @@ public class ConceptBean implements Serializable {
      * Metodo encargado de validar si la relacion que recibe por parametro es de tipo Es un Mapeo.
      *
      * @param relationship relacion a validar.
+     *
      * @return retorna true o false segun corresponda.
      */
     private boolean isMapping(Relationship relationship) {
