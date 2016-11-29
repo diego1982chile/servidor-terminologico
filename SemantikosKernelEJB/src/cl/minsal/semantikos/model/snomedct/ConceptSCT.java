@@ -105,6 +105,11 @@ public class ConceptSCT extends PersistentEntity implements Target {
         return TargetType.SnomedCT;
     }
 
+    @Override
+    public String getRepresentation() {
+        return toString();
+    }
+
     /**
      * Este método es encargado de obtener la descripción favorita del concepto SCT
      *

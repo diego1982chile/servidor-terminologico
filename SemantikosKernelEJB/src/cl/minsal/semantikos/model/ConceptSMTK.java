@@ -738,6 +738,11 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     }
 
     @Override
+    public String getRepresentation() {
+        return toString();
+    }
+
+    @Override
     public Target copy() {
         ConceptSMTK conceptSMTK = new ConceptSMTK(this.getCategory());
 

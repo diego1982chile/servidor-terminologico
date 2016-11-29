@@ -119,7 +119,7 @@ public class ISPBean {
             return;
         }
 
-        clean();
+        ispRecord = null;
 
         for (HelperTableRecord helperTableRecord : helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true)) {
             ispRecord = helperTableRecord;
@@ -173,7 +173,7 @@ public class ISPBean {
     private void clean() {
        existe = true;
        regnum = "";
-       ano = 0;
+       ano = null;
        ispRecord = null;
     }
 
