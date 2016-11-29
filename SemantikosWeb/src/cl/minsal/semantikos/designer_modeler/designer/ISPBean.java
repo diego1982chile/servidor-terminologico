@@ -37,7 +37,7 @@ public class ISPBean {
 
     private Map<String,String> fetchedData;
 
-    private HelperTableRecord ispRecord;
+    private HelperTableRecord ispRecord = null;
 
     public Map<String, String> getFetchedData() {
         return fetchedData;
@@ -111,7 +111,11 @@ public class ISPBean {
 
     public void fetchData(){
         //fetchedData = helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true).get(0).getFields();
-        ispRecord = helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true).get(0);
+        for (HelperTableRecord helperTableRecord : helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true)) {
+            ispRecord = helperTableRecord;
+            break;
+        }
+
         if(ispRecord==null)
             //fetchedData = ispFetcher.getISPData(regnum+"/"+ano);
             ispRecord = new HelperTableRecord(getISPHelperTable(), ispFetcher.getISPData(regnum+"/"+ano));
@@ -140,12 +144,9 @@ public class ISPBean {
     public void agregarISP(RelationshipDefinition relationshipDefinition){
 
 
-        if(!relationshipManager.getRelationshipsLike(relationshipDefinition, ispRecord).isEmpty()){
-            return;
-        }
-
         if(!ispRecord.isPersistent()){
             HelperTable ispHT = getISPHelperTable();
+            ispRecord.setFields(mapFetchedData(ispRecord.getFields()));
             HelperTableRecord inserted = helperTableManager.insertRecord(ispHT,ispRecord,authenticationBean.getLoggedUser());
             ispRecord = helperTableManager.getRecord(ispHT,inserted.getId());
         }
@@ -161,6 +162,7 @@ public class ISPBean {
        existe = true;
        regnum = "";
        ano = 0;
+       ispRecord = null;
     }
 
     private Map<String, String> mapFetchedData(Map<String, String> fetchedData) {

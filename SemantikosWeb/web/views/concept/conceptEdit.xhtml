@@ -87,6 +87,8 @@
                                                                         styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}"
                                                                         rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
 
+                                                                    <p:growl id="growlAttributes" showDetail="true" showSummary="true"/>
+
                                                                     <smtk:smtkType
                                                                             rendered="#{relationshipDefinition.targetDefinition.SMTKType}"
                                                                             targetDefinition="#{relationshipDefinition.targetDefinition}"

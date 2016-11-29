@@ -576,11 +576,9 @@ public class ConceptBean implements Serializable {
      */
     public void addRelationship(RelationshipDefinition relationshipDefinition, Target target) {
 
-        FacesContext context = FacesContext.getCurrentInstance();
-
         Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
-        if((relationshipDefinition.isISP() || relationshipDefinition.isBioequivalente()) && !concept.getValidRelationshipsWebByRelationDefinition(relationshipDefinition).isEmpty()){
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ya existe una relación con estas mismas características para este concepto"));
+        if((relationshipDefinition.isISP() || relationshipDefinition.isBioequivalente()) && concept.contains(relationship)){
+            messageError("Ya existe una relación con estas mismas características para este concepto");
             return;
         }
         // Se utiliza el constructor mínimo (sin id)
