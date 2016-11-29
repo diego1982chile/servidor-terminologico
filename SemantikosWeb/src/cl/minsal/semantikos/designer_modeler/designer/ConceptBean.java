@@ -1714,7 +1714,7 @@ public class ConceptBean implements Serializable {
      *
      * @param msg mensaje que se muestra.
      */
-    private void messageError(String msg) {
+    public void messageError(String msg) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
     }

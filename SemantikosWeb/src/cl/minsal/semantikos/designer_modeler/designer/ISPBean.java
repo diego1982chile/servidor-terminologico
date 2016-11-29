@@ -30,7 +30,7 @@ public class ISPBean {
 
     private Boolean existe;
     private String regnum;
-    private int ano;
+    private Integer ano = null;
 
     private HelperTable ht;
 
@@ -101,16 +101,26 @@ public class ISPBean {
         this.regnum = regnum;
     }
 
-    public int getAno() {
+    public Integer getAno() {
         return ano;
     }
 
-    public void setAno(int ano) {
+    public void setAno(Integer ano) {
         this.ano = ano;
     }
 
     public void fetchData(){
+
+        RequestContext context = RequestContext.getCurrentInstance();
+
         //fetchedData = helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true).get(0).getFields();
+        if(regnum.trim().equals("") || ano == null || ano == 0) {
+            conceptBean.messageError("Debe ingresar un valor para el dato 'RegNum' y 'RegAño'");
+            return;
+        }
+
+        clean();
+
         for (HelperTableRecord helperTableRecord : helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true)) {
             ispRecord = helperTableRecord;
             break;
@@ -119,6 +129,8 @@ public class ISPBean {
         if(ispRecord==null)
             //fetchedData = ispFetcher.getISPData(regnum+"/"+ano);
             ispRecord = new HelperTableRecord(getISPHelperTable(), ispFetcher.getISPData(regnum+"/"+ano));
+
+        context.execute("PF('ispfetcheddialog').show();");
     }
 
 
