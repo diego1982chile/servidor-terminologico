@@ -12,6 +12,7 @@ import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.primefaces.context.RequestContext;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -69,9 +70,21 @@ public class ISPBean {
     private ConceptBean conceptBean;
 
 
+    @PostConstruct
+    public void init() {
+        // Se setea en duro la opcionalidad de la relación, esta debería ser opcional.
+        for (RelationshipDefinition rd : conceptBean.getCategory().getRelationshipDefinitions()) {
+            if(rd.isISP()) {
+                rd.getMultiplicity().setLowerBoundary(0);
+            }
+        }
+    }
+
+
     public AuthenticationBean getAuthenticationBean() {
         return authenticationBean;
     }
+
 
     public void setAuthenticationBean(AuthenticationBean authenticationBean) {
         this.authenticationBean = authenticationBean;

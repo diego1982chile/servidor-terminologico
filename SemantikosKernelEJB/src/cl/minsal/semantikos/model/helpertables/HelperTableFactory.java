@@ -47,7 +47,8 @@ public class HelperTableFactory {
         HelperTableRecordDTO dtoRecords;
         try {
 
-            dtoRecords = mapper.readValue(underScoreToCamelCaseJSON(jsonExpression), HelperTableRecordDTO.class);
+            //dtoRecords = mapper.readValue(underScoreToCamelCaseJSON(jsonExpression), HelperTableRecordDTO.class);
+            dtoRecords = mapper.readValue(jsonExpression, HelperTableRecordDTO.class);
         } catch (IOException e) {
             String errorMsg = "No se pudo parsear el RelationshipDefinition desde un JSON.";
             logger.error(errorMsg);
@@ -55,6 +56,7 @@ public class HelperTableFactory {
         }
 
         List<HelperTableRecord> helperTableRecords = new ArrayList<>();
+
         for (Map<String, String> mapRecord : dtoRecords.getRecords()) {
             HelperTableRecord helperTableRecord = new HelperTableRecord(helperTable, mapRecord);
             /**

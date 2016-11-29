@@ -217,7 +217,9 @@
 
     <!-- Multiplicidad N sin atributos-->
     <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.name != 'ISP'}">
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
+
+        <p:spacer />
 
         <div class="ui-g">
 
@@ -332,6 +334,8 @@
     <p:panel id="helperTableTypeCollectionISP" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.ISP}">
 
+        <p:spacer />
+
         <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherexisteinputs" rendered="#{cc.attrs.concept.editable}">
 
             <div class="ui-g-12 ui-md-6 ui-lg-2">
@@ -364,7 +368,7 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <p:commandButton id="buttonispcargadatos" action="#{ispbean.fetchData}" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" value="Cargar Data" process="@this, ispregnum, ispregano" />
                 </div>
-                <p:dialog id="ispfetcheddialog" widgetVar="ispfetcheddialog" header="Confirmar datos recuperados del Registro ISP" modal="true" width="600px" height="500px">
+                <p:dialog id="ispfetcheddialog" widgetVar="ispfetcheddialog" header="Confirmar datos recuperados del Registro ISP" modal="true" width="750px" height="500px">
                     <p:outputLabel rendered="#{ not empty ispbean.ispRecord.fields}">Se han recuperado los siguientes datos desde el ISP:</p:outputLabel>
                     <p:panel id="ispfetcheddialogcontent" >
 
@@ -411,17 +415,17 @@
             </p:column>
             <p:column headerText="Usuario">
                 <div style="text-align: center;">
-                    <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['idUser'])}"/>
+                    <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>
                 </div>
             </p:column>
             <p:column headerText="Fecha ingreso">
                 <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['creationDate']}"/>
+                    <h:outputText value="#{relationship.target.fields['creation_date']}"/>
                 </div>
             </p:column>
             <p:column headerText="Fecha modificación">
                 <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['fechaProximaRenovacion']}"/>
+                    <h:outputText value="#{relationship.target.fields['fecha_proxima_renovacion']}"/>
                 </div>
             </p:column>
 
@@ -446,6 +450,8 @@
 
     <p:panel id="helperTableTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500" collapsed="true"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
+
+        <p:spacer />
 
         <div class="ui-g">
 
