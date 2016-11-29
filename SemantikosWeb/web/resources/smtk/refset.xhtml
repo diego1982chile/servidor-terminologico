@@ -44,8 +44,14 @@
         </p:panel>
 
         <p:dataTable var="refset" value="#{refsetsBean.conceptRefSetList}">
+            <p:column headerText="ID Refset">
+                <h:outputText value="#{refset.id}"/>
+            </p:column>
             <p:column headerText="Nombre">
                 <h:outputText value="#{refset.name}"/>
+            </p:column>
+            <p:column headerText="Fecha creación">
+                <h:outputText value="#{refset.creationDate}"/>
             </p:column>
             <p:column>
                 <p:commandButton title="Eliminar RefSet" icon="fa fa-trash"
