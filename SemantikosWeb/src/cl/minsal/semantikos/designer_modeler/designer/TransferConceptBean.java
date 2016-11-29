@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.io.IOException;
  */
 
 @ManagedBean(name = "transferConceptBean")
+@ViewScoped
 public class TransferConceptBean {
 
     private static final Logger logger = LoggerFactory.getLogger(TransferConceptBean.class);
@@ -34,6 +36,16 @@ public class TransferConceptBean {
 
     @EJB
     private CategoryManager categoryManager;
+
+    private ConceptSMTK conceptSMTKSelected;
+
+    public ConceptSMTK getConceptSMTKSelected() {
+        return conceptSMTKSelected;
+    }
+
+    public void setConceptSMTKSelected(ConceptSMTK conceptSMTKSelected) {
+        this.conceptSMTKSelected = conceptSMTKSelected;
+    }
 
     public long getCategoryId() {
         return categoryId;
