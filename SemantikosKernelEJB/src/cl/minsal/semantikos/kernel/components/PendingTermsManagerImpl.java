@@ -40,6 +40,7 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
         ConceptSMTK pendingTermsConcept = conceptManager.getPendingConcept();
         Description description = descriptionManager.bindDescriptionToConcept(pendingTermsConcept, pendingTerm.getTerm(), DescriptionType.SYNONYMOUS, loggedUser);
         pendingTerm.setRelatedDescription(description);
+        pendingTermDAO.bindTerm2Description(pendingTerm, description);
 
         /* Validación de post-condiciones */
         pendingTermAddingBR.validatePostConditions(pendingTerm);
