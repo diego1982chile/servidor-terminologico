@@ -87,7 +87,7 @@
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.fields['description']}" style="width: 80%" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
-                    <p:inputText disabled="true" id="findHTRecords2_" value="#{relationship.target.fields['dsc_completa_atc']}" style="width: 80%" rendered="#{cc.attrs.relationshipDefinition.ATC}" />
+                    <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.fields['dsc_completa_atc']}" style="width: 80%" rendered="#{cc.attrs.relationshipDefinition.ATC}" />
                     <p:commandLink process="@this"
                                    update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                    action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
@@ -274,13 +274,44 @@
                              reflow="true">
                     <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
                                var="column"
-                               columnIndexVar="colIndex"
-                    >
+                               columnIndexVar="colIndex" rendered="#{ not cc.attrs.relationshipDefinition.bioequivalente}">
                         <f:facet name="header">
                             <h:outputText value="#{column.columnName}" />
                         </f:facet>
                         <h:outputText value="#{relationship.target.fields.get(column.columnName)}" />
                     </p:columns>
+
+                    <p:column headerText="Registro" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['registro']}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Nombre" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['nombre']}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Titular" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['titular']}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Usuario" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Fecha ingreso" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['creation_date']}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Fecha modificación" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['fecha_proxima_renovacion']}"/>
+                        </div>
+                    </p:column>
+
                     <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
                         <p:commandButton
                                 icon="fa fa-trash"
@@ -300,13 +331,13 @@
 
     <!-- ISP -->
     <p:panel id="helperTableTypeCollectionISP"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.name == 'ISP'}">
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.ISP}">
 
         <h3>#{cc.attrs.relationshipDefinition.name}</h3>
 
         <p:spacer />
 
-        <div class="ui-g">
+        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherexisteinputs" rendered="#{cc.attrs.concept.editable}">
 
             <div class="ui-g-12 ui-md-6 ui-lg-2">
                 <p:outputLabel for="ispexistebooleanbutton">Existe ISP</p:outputLabel>
@@ -314,12 +345,14 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-2">
                 <p:selectBooleanButton  id="ispexistebooleanbutton" value="#{ispbean.existe}" offLabel="No" onLabel="Si" onIcon="ui-icon-check" offIcon="ui-icon-close" >
-                    <p:ajax immediate="true" listener="#{ispbean.updateExiste}" update="ispfetcherinputs" process="ispexistebooleanbutton"></p:ajax>
+                    <p:ajax async="false" listener="#{ispbean.updateOptionality(cc.attrs.relationshipDefinition)}" update="ispfetcherinputs" process="ispexistebooleanbutton" />
+                    <!-- Parámetros del buscador -->
+
                 </p:selectBooleanButton>
             </div>
 
-        </div>
-        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherinputs">
+        </p:outputPanel>
+        <p:outputPanel style="display:block" styleClass="ui-g" id="ispfetcherinputs" rendered="#{cc.attrs.concept.editable}">
             <p:outputPanel  rendered="#{ispbean.existe}">
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     <p:outputLabel for="ispregnum">RegNum</p:outputLabel>
@@ -346,8 +379,9 @@
                         </p:dataTable>
 
 
-                        <p:outputLabel endered="#{empty ispbean.mapKeys}" value="No se pudo recuperar datos del ISP" />
-                        <p:commandButton rendered="#{not empty ispbean.mapKeys}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:outputLabel rendered="#{empty ispbean.mapKeys}" value="No se pudo recuperar datos del ISP" />
+                        <p:outputLabel rendered="#{ispbean.existeRegistroISP}" value="Registro ya existe en la Base de Datos. No puede guardarse" />
+                        <p:commandButton rendered="#{not empty ispbean.mapKeys  and not ispbean.existeRegistroISP}" value="Confirmar" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" process="@this" action="#{ispbean.agregarISP(cc.attrs.relationshipDefinition)}" onsuccess="PF('ispfetcheddialog').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                         <p:commandButton value="Cancelar" type="button" onclick="PF('ispfetcheddialog').hide()" />
 
                     </p:panel>
@@ -358,22 +392,45 @@
         </p:outputPanel>
         <div class="ui-g">
             <div class="ui-g-12 ui-md-6 ui-lg-12">
+                <p:outputLabel value="No tiene registro ISP" rendered="#{conceptBean.concept.id != -1 and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}" />
                 <p:dataTable id="collectionValues123"
                              styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
                              var="relationship"
                              value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                              style="width: 100%"
                              reflow="true"
-                             rendered="#{ispbean.existe}" >
-                    <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
-                               var="column"
-                               columnIndexVar="colIndex"
-                    >
-                        <f:facet name="header">
-                            <h:outputText value="#{column.columnName}" />
-                        </f:facet>
-                        <h:outputText value="#{relationship.target.fields.get(column.columnName)}" />
-                    </p:columns>
+                             rendered="#{ispbean.existe or  (conceptBean.concept.id != -1 and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)) }" >
+
+                    <p:column headerText="Registro">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['registro']}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['nombre']}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Titular">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['titular']}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Usuario">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Fecha ingreso">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['creation_date']}"/>
+                        </div>
+                    </p:column>
+                    <p:column headerText="Fecha modificación">
+                        <div style="text-align: center;">
+                            <h:outputText value="#{relationship.target.fields['fecha_proxima_renovacion']}"/>
+                        </div>
+                    </p:column>
 
                     <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
                         <p:commandButton
