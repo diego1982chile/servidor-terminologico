@@ -117,9 +117,8 @@
     </p:panel>
 
     <p:panel id="multiplicityN"
-             style="margin:20px;"
+             style="margin:20px;" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
-        <h3>#{cc.attrs.relationshipDefinition.name}</h3>
 
         <div class="ui-g">
 
@@ -193,12 +192,8 @@
 
     </p:panel>
 
-    <p:panel id="multiplicityN_with_attributes"
+    <p:panel id="multiplicityN_with_attributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
-
-        <h3>#{cc.attrs.relationshipDefinition.name}</h3>
-
-        <p:spacer />
 
         <div class="ui-g">
 

@@ -216,12 +216,8 @@
     </p:panel>
 
     <!-- Multiplicidad N sin atributos-->
-    <p:panel id="helperTableTypeCollection"
+    <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.name != 'ISP'}">
-
-        <h3>#{cc.attrs.relationshipDefinition.name}</h3>
-
-        <p:spacer />
 
         <div class="ui-g">
 
