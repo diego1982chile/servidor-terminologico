@@ -56,6 +56,8 @@ public class HelperTableDAOImpl implements HelperTableDAO {
 
             /* Se preparan los parámetros de la función */
             Map<String, String> recordFields = record.getFields();
+            recordFields.put("id_user", Long.toString(user.getIdUser()));
+
             Array column_names = connection.createArrayOf("text", recordFields.keySet().toArray(new String[recordFields.size()]));
             Array column_values = connection.createArrayOf("text", recordFields.values().toArray(new String[recordFields.size()]));
 

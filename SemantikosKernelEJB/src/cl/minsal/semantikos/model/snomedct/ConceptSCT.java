@@ -105,23 +105,6 @@ public class ConceptSCT extends PersistentEntity implements Target {
         return TargetType.SnomedCT;
     }
 
-    @Override
-    public String toString() {
-        String toString = "Concepto " + this.idSnomedCT;
-
-        /* Si el concepto tiene FSN se retorna esa descripción */
-        if (this.getDescriptionFSN() != null) {
-            return toString + " - " + this.getDescriptionFSN();
-        }
-
-        /* Si no tiene FSN se intenta con la preferida */
-        else if (this.getDescriptionFavouriteSynonymous() != null) {
-            return toString + " - " + this.getDescriptionFavouriteSynonymous();
-        }
-
-        return toString + " - Sin descripción FSN o Preferida";
-    }
-
     /**
      * Este método es encargado de obtener la descripción favorita del concepto SCT
      *
@@ -200,10 +183,25 @@ public class ConceptSCT extends PersistentEntity implements Target {
         return this.definitionStatusId == COMPLETELY_DEFINED;
     }
 
-
     @Override
     public boolean equals(Object o) {
         return this.getId() ==((ConceptSCT)o).getId();
     }
 
+    @Override
+    public String toString() {
+        String toString = "SnomedCT( " + this.idSnomedCT + ")";
+
+        /* Si el concepto tiene FSN se retorna esa descripción */
+        if (this.getDescriptionFSN() != null) {
+            return toString + " - " + this.getDescriptionFSN();
+        }
+
+        /* Si no tiene FSN se intenta con la preferida */
+        else if (this.getDescriptionFavouriteSynonymous() != null) {
+            return toString + " - " + this.getDescriptionFavouriteSynonymous();
+        }
+
+        return toString + " - Sin descripción FSN o Preferida";
+    }
 }

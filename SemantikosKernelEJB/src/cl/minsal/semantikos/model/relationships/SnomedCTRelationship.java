@@ -19,8 +19,8 @@ import static cl.minsal.semantikos.model.helpertables.HelperTable.SYSTEM_COLUMN_
  */
 public class SnomedCTRelationship extends Relationship {
 
-    public static final String ES_UN_MAPEO_DE = "es un mapeo de";
-    public static final String ES_UN = "es un";
+    public static final String ES_UN_MAPEO_DE = "es un mapeo";
+    public static final String ES_UN = "es un[a]";
 
     public SnomedCTRelationship(ConceptSMTK sourceConcept, ConceptSCT conceptSCT, RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes, Timestamp validityUntil) {
         super(sourceConcept, conceptSCT, relationshipDefinition, relationshipAttributes, validityUntil);
@@ -114,5 +114,11 @@ public class SnomedCTRelationship extends Relationship {
      */
     public static boolean isSnomedCTRelationship(Relationship relationship) {
         return relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType();
+    }
+
+    @Override
+    public String toString() {
+        return this.getSourceConcept() + " --SCT["+getSnomedCTRelationshipType() + "]--> " + getTarget();
+
     }
 }
