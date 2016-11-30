@@ -20,7 +20,7 @@
     <!-- Multiplicidad 1 + Nueva relacion + Sin atributos -->
     <p:panel
             id="basicTypeSimpleNew"
-            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                          and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
             <div class="ui-g">
