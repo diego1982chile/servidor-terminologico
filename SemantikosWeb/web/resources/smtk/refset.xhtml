@@ -18,7 +18,7 @@
 
     <p:panel id="refset" styleClass="refsetClass">
 
-        <p:panel>
+        <p:panel rendered="#{conceptBean.editable}">
             <div class="ui-g">
 
                 <div class="ui-g-12 ui-md-6 ui-lg-6">
@@ -53,7 +53,7 @@
             <p:column headerText="Fecha creación">
                 <h:outputText value="#{refset.creationDate}"/>
             </p:column>
-            <p:column>
+            <p:column rendered="#{conceptBean.editable}">
                 <p:commandButton title="Eliminar RefSet" icon="fa fa-trash"
                                  actionListener="#{refsetsBean.removeConcept(refset,conceptBean.concept)}"
                                  update="@(.refsetClass)"></p:commandButton>
