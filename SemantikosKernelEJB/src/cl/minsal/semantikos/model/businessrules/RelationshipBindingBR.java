@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.model.businessrules;
 
+import cl.minsal.semantikos.kernel.components.AuditManager;
+import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
@@ -27,6 +29,8 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
 
     @EJB
     private RelationshipManager relationshipManager;
+    @EJB
+    private ConceptManager conceptManager;
 
     /**
      * Este método es responsabled de realizar las validaciones de reglas de negocio.
@@ -120,8 +124,9 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      * @param relationship La relación que se asoció.
      * @param conceptDAO   El DAO para realizar las acciones.
      */
-    public void postActions(Relationship relationship, @NotNull ConceptDAO conceptDAO) {
-        publishConceptBySCT(relationship, conceptDAO);
+    @Override
+    public void postActions(Relationship relationship, @NotNull ConceptDAO conceptDAO, User user) {
+        publishConceptBySCT(relationship, conceptDAO, user);
     }
 
     /**
@@ -275,7 +280,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      * @param relationship La relación que se agregó al concepto.
      * @param conceptDAO   El DAO para actualizar el estado.
      */
-    private void publishConceptBySCT(Relationship relationship, ConceptDAO conceptDAO) {
+    private void publishConceptBySCT(Relationship relationship, ConceptDAO conceptDAO, User user) {
 
         ConceptSMTK sourceConcept = relationship.getSourceConcept();
         boolean isSnomedCTType = relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType();
@@ -291,6 +296,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
         SnomedCTRelationship sctRelationship = SnomedCTRelationship.createSnomedCT(relationship);
         if (sctRelationship.isDefinitional()) {
             sourceConcept.setModeled(true);
+            conceptManager.publish(sourceConcept,user);
             conceptDAO.update(sourceConcept);
         }
     }
