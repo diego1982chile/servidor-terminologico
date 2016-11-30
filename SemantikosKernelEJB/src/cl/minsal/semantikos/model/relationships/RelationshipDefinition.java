@@ -184,7 +184,7 @@ public class RelationshipDefinition {
     }
 
     public boolean isATC(){
-        return this.getName().equalsIgnoreCase(HelperTableFactory.ATC);
+        return this.getName().equalsIgnoreCase(HelperTableFactory.HT_ATC_NAME);
     }
 
     public boolean isBioequivalente(){
