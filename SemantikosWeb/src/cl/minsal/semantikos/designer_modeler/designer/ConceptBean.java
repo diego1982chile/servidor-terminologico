@@ -666,7 +666,6 @@ public class ConceptBean implements Serializable {
 
         // Si no se encuentra la relación, se crea una nueva relación con el atributo y target vacio
         if (!isRelationshipFound) {
-            ;
             Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
             RelationshipAttribute attribute = new RelationshipAttribute(relationshipAttributeDefinition, relationship, target);
             if (relationshipDefinition.getTargetDefinition().isSMTKType())
@@ -678,17 +677,7 @@ public class ConceptBean implements Serializable {
             relationship.getRelationshipAttributes().add(attribute);
             this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes())); //  new ArrayList<RelationshipAttribute>()));
         }
-        //Autogenerado MCCE
-        if (relationshipAttributeDefinition.getId() == 16) {
-            autogenerateMCCE.setPackUnidad(((HelperTableRecord) target).getValueColumn("description"));
-            concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-            concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-        }
-        if (relationshipAttributeDefinition.getId() == 17) {
-            autogenerateMCCE.setVolumenUnidad(((HelperTableRecord) target).getValueColumn("description"));
-            concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-            concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-        }
+
         // Se resetean los placeholder para los target de las relaciones
         resetPlaceHolders();
     }
@@ -1517,6 +1506,7 @@ public class ConceptBean implements Serializable {
                 concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
+
         }
     }
 
