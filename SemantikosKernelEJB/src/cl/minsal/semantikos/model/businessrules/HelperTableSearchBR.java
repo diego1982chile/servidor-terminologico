@@ -10,7 +10,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
 public class HelperTableSearchBR {
 
     /** Mínima cantidad de caracteres en el patrón de búsqueda en tablas auxiliares */
-    public static final short MINIMUM_PATTERN_LENGTH = 2;
+    public static final short MINIMUM_PATTERN_LENGTH = 1;
 
     /**
      * Método para realizar las validaciones.

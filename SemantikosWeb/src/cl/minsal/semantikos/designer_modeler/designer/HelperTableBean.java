@@ -44,19 +44,14 @@ public class HelperTableBean implements Serializable {
 
     public List<HelperTableRecord> getRecordSearchInput(String patron) {
 
-        /* Si el patrón viene vacío o es menor a tres caracteres, no se hace nada */
-         if ( patron == null || patron.length() <= 1 ) {
-            return emptyList();
-        }
-
         FacesContext context = FacesContext.getCurrentInstance();
         RequestContext context2 = RequestContext.getCurrentInstance();
 
         HelperTable helperTable = (HelperTable) UIComponent.getCurrentComponent(context).getAttributes().get("helperTable");
         RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinition");
 
-        List<HelperTableRecord> someRecords = new ArrayList<>();
-        String[] columnNames = new String[]{};
+        List<HelperTableRecord> someRecords;
+        String[] columnNames;
 
         if(relationshipDefinition.isATC()) {
             columnNames = new String[]{"codigo_atc", "dsc_completa_atc"};
