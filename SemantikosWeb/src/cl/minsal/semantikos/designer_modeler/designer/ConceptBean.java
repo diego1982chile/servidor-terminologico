@@ -707,6 +707,7 @@ public class ConceptBean implements Serializable {
      */
     public void removeRelationship(RelationshipDefinition rd, Relationship r) {
         concept.removeRelationshipWeb(r);
+        concept.removeRelationship(r);
         crossmapBean.refreshCrossmapIndirect(concept);
     }
 
@@ -1702,14 +1703,15 @@ public class ConceptBean implements Serializable {
      * @return retorna true o false segun corresponda.
      */
     public boolean existRelationshipISAMapping() {
-        for (Relationship relationship : concept.getValidRelationships()) {
+        for (Relationship relationship : concept.getRelationshipsWeb()) {
             return isMapping(relationship);
         }
         return false;
     }
 
+
     private boolean existRelationshipToSCT() {
-        for (Relationship relationship : concept.getValidRelationships()) {
+        for (Relationship relationship : concept.getRelationshipsWeb()) {
             if (!relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType() && (relationship.getRelationshipDefinition().getId() == ID_RELATIONSHIP_DEFINITION_SNOMED_CT)) {
                 return true;
             }
