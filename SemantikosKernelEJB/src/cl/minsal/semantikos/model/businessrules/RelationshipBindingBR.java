@@ -31,6 +31,8 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
     private RelationshipManager relationshipManager;
     @EJB
     private ConceptManager conceptManager;
+    @EJB
+    private ConceptDAO conceptDAO;
 
     /**
      * Este método es responsabled de realizar las validaciones de reglas de negocio.
@@ -122,11 +124,10 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      * Un concepto que se elimina siempre es invalidado. Sólo si satisface una regla de negocio (BR-
      *
      * @param relationship La relación que se asoció.
-     * @param conceptDAO   El DAO para realizar las acciones.
      */
     @Override
-    public void postActions(Relationship relationship, @NotNull ConceptDAO conceptDAO, User user) {
-        publishConceptBySCT(relationship, conceptDAO, user);
+    public void postActions(Relationship relationship,  User user) {
+        publishConceptBySCT(relationship, user);
     }
 
     /**
@@ -278,9 +279,8 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      * ﻿<p>BR-CON-003: Concepto pasa de Borrador a Modelado cuando se mapea a SnomedCT.</p>
      *
      * @param relationship La relación que se agregó al concepto.
-     * @param conceptDAO   El DAO para actualizar el estado.
      */
-    private void publishConceptBySCT(Relationship relationship, ConceptDAO conceptDAO, User user) {
+    private void publishConceptBySCT(Relationship relationship, User user) {
 
         ConceptSMTK sourceConcept = relationship.getSourceConcept();
         boolean isSnomedCTType = relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType();

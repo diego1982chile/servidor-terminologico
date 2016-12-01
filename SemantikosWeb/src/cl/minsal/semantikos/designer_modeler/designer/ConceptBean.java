@@ -13,6 +13,9 @@ import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model.snomedct.RelationshipSCT;
+import cl.minsal.semantikos.model.snomedct.SnomedCT;
+import cl.minsal.semantikos.model.snomedct.SnomedCTRelationships;
 import cl.minsal.semantikos.util.Pair;
 import cl.minsal.semantikos.view.components.ViewAugmenter;
 import org.primefaces.event.ReorderEvent;
@@ -520,17 +523,6 @@ public class ConceptBean implements Serializable {
             concept.setInherited(false);
         }
 
-        try {
-            if (relationship.getClass().equals(RelationshipWeb.class)) {
-                relationship = ((RelationshipWeb) relationship).toRelationship();
-            }
-            relationshipBindingBR.verifyPreConditions(concept, relationship, user);
-        } catch (EJBException EJB) {
-            messageError(EJB.getMessage());
-            relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
-            resetPlaceHolders();
-            return;
-        }
 
         for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
             if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
@@ -566,8 +558,8 @@ public class ConceptBean implements Serializable {
         crossmapSetMemberSelected = null;
     }
 
-    public Relationship resetRelationship(Relationship r){
-        if(r.getRelationshipDefinition().getTargetDefinition().isCrossMapType())
+    public Relationship resetRelationship(Relationship r) {
+        if (r.getRelationshipDefinition().getTargetDefinition().isCrossMapType())
             return new Relationship(r.getSourceConcept(), null, r.getRelationshipDefinition(), r.getRelationshipAttributes(), null);
         else
             return new Relationship(r.getSourceConcept(), null, r.getRelationshipDefinition(), new ArrayList<RelationshipAttribute>(), null);
@@ -579,8 +571,8 @@ public class ConceptBean implements Serializable {
     public void addRelationship(RelationshipDefinition relationshipDefinition, Target target) {
 
         Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
-        if((relationshipDefinition.isISP() || relationshipDefinition.isBioequivalente()) && concept.contains(relationship)){
-            messageError("Ya existe la relación '"+relationshipDefinition.getName()+"' con el destino '"+target.getRepresentation()+"' para este concepto");
+        if ((relationshipDefinition.isISP() || relationshipDefinition.isBioequivalente()) && concept.contains(relationship)) {
+            messageError("Ya existe la relación '" + relationshipDefinition.getName() + "' con el destino '" + target.getRepresentation() + "' para este concepto");
             resetPlaceHolders();
             return;
         }
@@ -897,7 +889,7 @@ public class ConceptBean implements Serializable {
         /* Se actualizan las relaciones */
         changes += updateConceptRelationships();
 
-        changes = (refsetEditConcept)?changes+1:changes;
+        changes = (refsetEditConcept) ? changes + 1 : changes;
 
         if (changes == 0)
             context.addMessage(null, new FacesMessage("Warning", "No se ha realizado ningún cambio al concepto!!"));
@@ -915,11 +907,25 @@ public class ConceptBean implements Serializable {
     private int updateConceptRelationships() {
 
         List<RelationshipWeb> relationshipsForPersist = concept.getUnpersistedRelationshipsWeb();
+
+
         /* Se persisten las nuevas relaciones */
         for (RelationshipWeb relationshipWeb : relationshipsForPersist) {
             relationshipWeb.setSourceConcept(concept);
-            relationshipManager.bindRelationshipToConcept(concept, relationshipWeb.toRelationship(), user);
+            try {
+                relationshipManager.bindRelationshipToConcept(concept, relationshipWeb.toRelationship(), user);
+            } catch (EJBException EJB) {
+                messageError(EJB.getMessage());
+                return 0;
+            }
         }
+        for (RelationshipWeb relationshipWeb : relationshipsForPersist) {
+            relationshipWeb.setSourceConcept(concept);
+            if(existRelationshipToSCT()){
+                relationshipBindingBR.postActions(relationshipWeb.toRelationship(), user);
+            }
+        }
+
 
         /* Se elimina las relaciones eliminadas */
         List<RelationshipWeb> relationshipsForDelete = concept.getRemovedRelationshipsWeb(_concept);
@@ -1676,7 +1682,6 @@ public class ConceptBean implements Serializable {
      * Metodo encargado de validar si la relacion que recibe por parametro es de tipo Es un Mapeo.
      *
      * @param relationship relacion a validar.
-     *
      * @return retorna true o false segun corresponda.
      */
     private boolean isMapping(Relationship relationship) {

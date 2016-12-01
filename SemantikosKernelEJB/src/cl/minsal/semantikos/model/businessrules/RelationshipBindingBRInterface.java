@@ -17,5 +17,5 @@ public interface RelationshipBindingBRInterface {
 
     public void verifyPreConditions(ConceptSMTK concept, Relationship relationship, User user);
 
-    public void postActions(Relationship relationship, @NotNull ConceptDAO conceptDAO, User user);
+    public void postActions(Relationship relationship, User user);
 }
