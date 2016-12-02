@@ -65,6 +65,5 @@ public class ConceptTransferBR {
             throw new BusinessRuleException("BR-TRANS-002", "El Concepto “Pendientes” y el Concepto “No Válidos” " +
                     "Modelados de categoría Concepto Especial no se pueden Trasladar.");
         }
-
     }
 }
