@@ -366,6 +366,7 @@ public class ConceptBean implements Serializable {
                                 logger.error("No hay datos en la tabla de TIPOS DE RELACIONES.");
                             }
 
+
                             ra = new RelationshipAttribute(attDef, r, relationshipTypes.get(0));
                             r.getRelationshipAttributes().add(ra);
                         }
