@@ -615,7 +615,7 @@ public class ConceptBean implements Serializable {
                     if (attribute.getRelationAttributeDefinition().equals(relationshipAttributeDefinition)) {
                         attribute.setTarget(target);
                         isAttributeFound = true;
-                        autogenerateAttributeDefinition(relationshipAttributeDefinition, target, attribute);
+                        autogenerateBeans.autogenerateAttributeDefinition(relationshipAttributeDefinition, target, attribute,concept, autogenerateMC, autogenerateMCCE);
                         break;
                     }
                 }
@@ -623,7 +623,7 @@ public class ConceptBean implements Serializable {
                 if (!isAttributeFound) {
                     RelationshipAttribute attribute = new RelationshipAttribute(relationshipAttributeDefinition, relationship, target);
                     relationship.getRelationshipAttributes().add(attribute);
-                    autogenerateAttributeDefinition(relationshipAttributeDefinition, target, attribute);
+                    autogenerateBeans.autogenerateAttributeDefinition(relationshipAttributeDefinition, target, attribute,concept, autogenerateMC, autogenerateMCCE);
                 }
             }
         }
@@ -970,7 +970,6 @@ public class ConceptBean implements Serializable {
         att2.setTarget(new BasicTypeValue(sourceOrder));
 
         RelationshipDefinition relationshipDefinitionRowEdit = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinitionRowEdit");
-        List<Relationship> relationshipList = concept.getRelationshipsByRelationDefinition(relationshipDefinitionRowEdit);
         autogenerateBeans.autogenerateOrder(concept,autoGenerateList,relationshipDefinitionRowEdit,autogenerateMC,event);
     }
 
@@ -1301,50 +1300,7 @@ public class ConceptBean implements Serializable {
         }
         return orderedRelationshipDefinitionsList;
     }
-
     //TODO: Metodos de autogenerado del Preferido y FSN (Refactorizar)
-
-    public String autogenerate() {
-        String autogenerateString = "";
-        for (int i = 0; i < autoGenerateList.size(); i++) {
-            if (i == 0) {
-                autogenerateString = autoGenerateList.get(i);
-            } else {
-                autogenerateString = autogenerateString + " + " + autoGenerateList.get(i);
-            }
-        }
-        return autogenerateString;
-    }
-
-    public String autogenerateMCCE() {
-        return autogenerateMCCE.toString();
-    }
-
-    public void autogenerateAttributeDefinition(RelationshipAttributeDefinition relationshipAttributeDefinition, Target target, RelationshipAttribute attribute) {
-        if (!concept.isPersistent()) {
-            if (relationshipAttributeDefinition.getId() == 16) {
-                autogenerateMCCE.setPackUnidad(((HelperTableRecord) target).getValueColumn("description"));
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipAttributeDefinition.getId() == 17) {
-                autogenerateMCCE.setVolumenUnidad(((HelperTableRecord) target).getValueColumn("description"));
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipAttributeDefinition.getId() == 12) {
-                autogenerateMC.setUnidadVolumen(attribute);
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipAttributeDefinition.getId() == 15) {
-                autogenerateMCCE.setUnidadMedidaCantidad(((HelperTableRecord) target).getValueColumn("description"));
-                concept.getDescriptionFavorite().setTerm(autogenerateMCCE());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-        }
-    }
-
 
     public void changeMultiplicityNotRequiredRelationshipDefinitionMC() {
         for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {

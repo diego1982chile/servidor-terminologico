@@ -2,9 +2,8 @@ package cl.minsal.semantikos.beans.description;
 
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.relationships.Target;
+import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.relationships.*;
 import org.primefaces.event.ReorderEvent;
 
 import javax.ejb.EJB;
@@ -113,6 +112,31 @@ public class AutogenerateBeans {
             if (relationshipDefinitionRowEdit.getId() == 58) {
                 autogenerateMC.setFfa(newOrderList(autogenerateMC.getFfa(), event));
                 concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+        }
+    }
+
+    public void autogenerateAttributeDefinition(RelationshipAttributeDefinition relationshipAttributeDefinition, Target target, RelationshipAttribute attribute, ConceptSMTKWeb concept,AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE) {
+        if (!concept.isPersistent()) {
+            if (relationshipAttributeDefinition.getId() == 16) {
+                autogenerateMCCE.setPackUnidad(((HelperTableRecord) target).getValueColumn("description"));
+                concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+            if (relationshipAttributeDefinition.getId() == 17) {
+                autogenerateMCCE.setVolumenUnidad(((HelperTableRecord) target).getValueColumn("description"));
+                concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+            if (relationshipAttributeDefinition.getId() == 12) {
+                autogenerateMC.setUnidadVolumen(attribute);
+                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+            if (relationshipAttributeDefinition.getId() == 15) {
+                autogenerateMCCE.setUnidadMedidaCantidad(((HelperTableRecord) target).getValueColumn("description"));
+                concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
         }
