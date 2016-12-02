@@ -71,7 +71,7 @@
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                             icon="fa fa-plus"
                             title="Agregar"
-                            disabled="#{conceptBean.limitRelationship(cc.attrs.relationshipDefinition)}"
+                            disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
                     >
 
                     </p:commandButton>
@@ -132,7 +132,7 @@
                                 converter="conceptConverter"
                                 styleClass="fragments"
                                 var="concept"
-                                disabled="#{conceptBean.limitRelationship(cc.attrs.relationshipDefinition)}"
+                                disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
                                 rendered="#{cc.attrs.concept.editable}"
                                 value="#{conceptBean.conceptSelected}"
                                 itemLabel="#{concept.descriptionFavorite.term}"
@@ -213,7 +213,7 @@
                                 placeholder="Buscar..."
                                 converter="conceptConverter"
                                 var="concept"
-                                disabled="#{conceptBean.limitRelationship(cc.attrs.relationshipDefinition)}"
+                                disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
                                 value="#{conceptBean.conceptSelected}"
                                 itemLabel="#{concept.descriptionFavorite.term}"
                                 itemValue="#{concept}">
