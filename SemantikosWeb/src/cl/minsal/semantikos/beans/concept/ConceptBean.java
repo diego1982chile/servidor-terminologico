@@ -1369,8 +1369,6 @@ public class ConceptBean implements Serializable {
         this.fullyDefined = fullyDefined;
     }
 
-
-
     public MessageBean getMessageBean() {
         return messageBean;
     }
