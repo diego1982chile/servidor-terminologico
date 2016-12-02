@@ -2,17 +2,13 @@ package cl.minsal.semantikos.beans.description;
 
 import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.beans.messages.MessageBean;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.DescriptionWeb;
-import cl.minsal.semantikos.model.NoValidDescription;
+import cl.minsal.semantikos.model.*;
+import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 
 /**
@@ -29,6 +25,8 @@ public class DescriptionBeans {
     @ManagedProperty( value="#{messageBean}")
     MessageBean messageBean;
 
+    DescriptionTypeFactory descriptionTypeFactory = DescriptionTypeFactory.getInstance();
+
     public ConceptBean getConceptBean() {
         return conceptBean;
     }
@@ -42,6 +40,7 @@ public class DescriptionBeans {
         this.messageBean = messageBean;
     }
 
+    private static long SYNONYMOUS_ID = 3;
 
     @PostConstruct
     public void init(){
@@ -119,6 +118,23 @@ public class DescriptionBeans {
             conceptBean.setConceptSMTKTranslateDes(null);
             conceptBean.setDescriptionToTranslate(null);
             messageBean.messageSuccess("Acción exitosa", "La descripción se trasladará al momento de guardar el concepto");
+        }
+    }
+
+    /**
+     * Metodo encargado de hacer el "enroque" con la preferida.
+     */
+    public void descriptionEditRow(RowEditEvent event) {
+        DescriptionWeb descriptionWeb = (DescriptionWeb) event.getObject();
+        for (DescriptionWeb descriptionRowEdit : conceptBean.getConcept().getDescriptionsWeb()) {
+            if (descriptionRowEdit.equals(descriptionWeb)) {
+                if (descriptionRowEdit.getDescriptionType().equals(descriptionTypeFactory.getFavoriteDescriptionType())) {
+                    descriptionRowEdit.setDescriptionType(descriptionTypeFactory.getDescriptionTypeByID(SYNONYMOUS_ID));
+                    DescriptionWeb descriptionFavorite = conceptBean.getConcept().getValidDescriptionFavorite();
+                    descriptionFavorite.setDescriptionType(descriptionTypeFactory.getDescriptionTypeByID(SYNONYMOUS_ID));
+                    descriptionRowEdit.setDescriptionType(descriptionTypeFactory.getFavoriteDescriptionType());
+                }
+            }
         }
     }
 

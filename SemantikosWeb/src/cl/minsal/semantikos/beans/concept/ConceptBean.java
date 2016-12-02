@@ -48,6 +48,9 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
 public class ConceptBean implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(ConceptBean.class);
+    private static final long ID_RELATIONSHIP_DEFINITION_SNOMED_CT = 101;
+    private static final long ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT = 25;
+    private static final long ID_TYPE_IS_MAPPING = 2;
 
     @EJB
     ConceptManager conceptManager;
@@ -70,19 +73,66 @@ public class ConceptBean implements Serializable {
     @EJB
     AuditManager auditManager;
 
+    @EJB
+    private ViewAugmenter viewAugmenter;
+
+    @EJB
+    private RelationshipBindingBRInterface relationshipBindingBR;
+
     @ManagedProperty(value = "#{smtkBean}")
     private SMTKTypeBean smtkTypeBean;
 
     @ManagedProperty(value = "#{compositeAditionalBean}")
     private CompositeAditional compositeAditionalBean;
 
-    DescriptionTypeFactory descriptionTypeFactory = DescriptionTypeFactory.getInstance();
+    @ManagedProperty(value = "#{conceptExport}")
+    private ConceptExportMBean conceptBeanExport;
 
-    public User user;
+    @ManagedProperty(value = "#{authenticationBean}")
+    private AuthenticationBean authenticationBean;
+
+    @ManagedProperty(value = "#{changeMarketedBean}")
+    private ChangeMarketedBean changeMarketedBean;
+
+    @ManagedProperty(value = "#{crossmapBean}")
+    private CrossmapBean crossmapBean;
+
+    @ManagedProperty(value = "#{messageBean}")
+    MessageBean messageBean;
 
     private List<Category> categoryList;
 
+    private List<DescriptionWeb> descriptionsToTraslate;
+
+    private List<DescriptionType> descriptionTypes = new ArrayList<>();
+
+    private List<DescriptionType> descriptionTypesEdit = new ArrayList<DescriptionType>();
+
+    private List<Description> selectedDescriptions = new ArrayList<Description>();
+
+    private List<TagSMTK> tagSMTKs = new ArrayList<TagSMTK>();
+
+    private List<RelationshipDefinitionWeb> orderedRelationshipDefinitionsList;
+
+    private List<ConceptAuditAction> auditAction;
+
+    private List<String> autoGenerateList = new ArrayList<>();
+
+    private List<NoValidDescription> noValidDescriptions;
+
+    private List<ConceptSMTK> conceptSuggestedList;
+
+    private List<ObservationNoValid> observationNoValids;
+
+    public List<ObservationNoValid> getObservationNoValids() {
+        return observationNoValids;
+    }
+
     private Category categorySelected;
+
+    DescriptionTypeFactory descriptionTypeFactory = DescriptionTypeFactory.getInstance();
+
+    public User user;
 
     private boolean editable;
 
@@ -94,24 +144,11 @@ public class ConceptBean implements Serializable {
 
     private ConceptSMTKWeb concept;
 
-    private List<DescriptionWeb> descriptionsToTraslate;
-
-    public List<DescriptionWeb> getDescriptionsToTraslate() {
-        return descriptionsToTraslate;
-    }
     /** El concepto original */
     private ConceptSMTKWeb _concept;
 
     /** La categoría asociada a la vista, de la cual se crea un nuevo concepto */
     private Category category;
-
-    private List<DescriptionType> descriptionTypes = new ArrayList<>();
-
-    private List<DescriptionType> descriptionTypesEdit = new ArrayList<DescriptionType>();
-
-    private List<Description> selectedDescriptions = new ArrayList<Description>();
-
-    private List<TagSMTK> tagSMTKs = new ArrayList<TagSMTK>();
 
     // Placeholder para las descripciones
     private String otherTermino;
@@ -145,7 +182,6 @@ public class ConceptBean implements Serializable {
 
     private Map<RelationshipDefinition, List<RelationshipAttribute>> relationshipAttributesPlaceholder = new HashMap<RelationshipDefinition, List<RelationshipAttribute>>();
 
-
     //Parametros del formulario
 
     private String FSN;
@@ -156,26 +192,12 @@ public class ConceptBean implements Serializable {
 
     private int categorySelect;
 
-    private List<ConceptAuditAction> auditAction;
-
     //para tipo helpertable
     private int helperTableValuePlaceholder;
 
     private long idTermPending;
 
     private Description descriptionPending;
-
-    public long getIdTermPending() {
-        return idTermPending;
-    }
-
-    public void setIdTermPending(long idTermPending) {
-        this.idTermPending = idTermPending;
-        descriptionPending = descriptionManager.getDescriptionByID(idTermPending);
-        if (descriptionPending != null) {
-            concept.addDescriptionWeb(new DescriptionWeb(descriptionPending));
-        }
-    }
 
     private boolean refsetEditConcept;
 
@@ -187,18 +209,6 @@ public class ConceptBean implements Serializable {
         this.descriptionPending = descriptionPending;
     }
 
-    @ManagedProperty(value = "#{conceptExport}")
-    private ConceptExportMBean conceptBeanExport;
-
-    @ManagedProperty(value = "#{authenticationBean}")
-    private AuthenticationBean authenticationBean;
-
-    @ManagedProperty(value = "#{changeMarketedBean}")
-    private ChangeMarketedBean changeMarketedBean;
-
-    @EJB
-    private ViewAugmenter viewAugmenter;
-
     private AutogenerateMCCE autogenerateMCCE;
 
     private AutogenerateMC autogenerateMC;
@@ -208,8 +218,6 @@ public class ConceptBean implements Serializable {
     /**
      * Un map para almacenar localmente las relaciones aumentadas
      */
-    private List<RelationshipDefinitionWeb> orderedRelationshipDefinitionsList;
-
     public AuthenticationBean getAuthenticationBean() {
         return authenticationBean;
     }
@@ -217,7 +225,6 @@ public class ConceptBean implements Serializable {
     public void setAuthenticationBean(AuthenticationBean authenticationBean) {
         this.authenticationBean = authenticationBean;
     }
-
     public ConceptExportMBean getConceptBeanExport() {
         return conceptBeanExport;
     }
@@ -226,26 +233,11 @@ public class ConceptBean implements Serializable {
         this.conceptBeanExport = conceptBean;
     }
 
-    private List<String> autoGenerateList = new ArrayList<>();
+    private ObservationNoValid observationNoValid;
 
     private ConceptSMTK conceptSMTKNotValid;
 
-    private List<NoValidDescription> noValidDescriptions;
-
-    private ObservationNoValid observationNoValid;
-
-    private List<ConceptSMTK> conceptSuggestedList;
-
     private ConceptSMTK conceptSuggested;
-
-    private List<ObservationNoValid> observationNoValids;
-
-    @EJB
-    private RelationshipBindingBRInterface relationshipBindingBR;
-
-    public List<ObservationNoValid> getObservationNoValids() {
-        return observationNoValids;
-    }
 
     public void setObservationNoValids(List<ObservationNoValid> observationNoValids) {
         this.observationNoValids = observationNoValids;
@@ -259,7 +251,9 @@ public class ConceptBean implements Serializable {
         return noValidDescriptions;
     }
 
-
+    public List<DescriptionWeb> getDescriptionsToTraslate() {
+        return descriptionsToTraslate;
+    }
     public ObservationNoValid getObservationNoValid() {
         return observationNoValid;
     }
@@ -268,9 +262,6 @@ public class ConceptBean implements Serializable {
         this.observationNoValid = observationNoValid;
     }
 
-    @ManagedProperty(value = "#{crossmapBean}")
-    private CrossmapBean crossmapBean;
-
     public CrossmapBean getCrossmapBean() {
         return crossmapBean;
     }
@@ -278,10 +269,6 @@ public class ConceptBean implements Serializable {
     public void setCrossmapBean(CrossmapBean crossmapBean) {
         this.crossmapBean = crossmapBean;
     }
-
-    private static final long ID_RELATIONSHIP_DEFINITION_SNOMED_CT = 101;
-    private static final long ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT = 25;
-    private static final long ID_TYPE_IS_MAPPING = 2;
 
     //Inicializacion del Bean
     @PostConstruct
@@ -298,23 +285,14 @@ public class ConceptBean implements Serializable {
         autogeneratePCCE = new AutogeneratePCCE();
 
         noValidDescriptions = new ArrayList<>();
-
         observationNoValids = descriptionManager.getObservationsNoValid();
-
         categoryList = categoryManager.getCategories();
-
         descriptionTypes = descriptionTypeFactory.getDescriptionTypesButFSNandFavorite();
-
         descriptionTypesEdit = descriptionTypeFactory.getDescriptionTypesButFSN();
-
         tagSMTKs = tagSMTKManager.getAllTagSMTKs();
-
         orderedRelationshipDefinitionsList = new ArrayList<>();
-
         descriptionsToTraslate = new ArrayList<>();
-
         conceptSMTKNotValid = conceptManager.getNoValidConcept();
-
         conceptSuggestedList = new ArrayList<>();
     }
 
@@ -347,7 +325,6 @@ public class ConceptBean implements Serializable {
             getConceptById(idConcept);
             if (category.getId() == 34) changeMCSpecial();
         }
-
         // Una vez que se ha inicializado el concepto, inicializar los placeholders para las relaciones
         for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
             RelationshipDefinitionWeb relationshipDefinitionWeb = viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition);
@@ -986,25 +963,6 @@ public class ConceptBean implements Serializable {
         return false;
     }
 
-    /**
-     * Metodo encargado de hacer el "enroque" con la preferida.
-     */
-
-    public void descriptionEditRow(RowEditEvent event) {
-        long SYNONYMOUS_ID = 3;
-        DescriptionWeb descriptionWeb = (DescriptionWeb) event.getObject();
-        for (DescriptionWeb descriptionRowEdit : concept.getDescriptionsWeb()) {
-            if (descriptionRowEdit.equals(descriptionWeb) /*|| descriptionRowEdit.getId() == ((DescriptionWeb) event.getObject()).getId()*/) {
-                if (descriptionRowEdit.getDescriptionType().equals(descriptionTypeFactory.getFavoriteDescriptionType())) {
-                    descriptionRowEdit.setDescriptionType(descriptionTypeFactory.getDescriptionTypeByID(SYNONYMOUS_ID));
-                    DescriptionWeb descriptionFavorite = concept.getValidDescriptionFavorite();
-                    descriptionFavorite.setDescriptionType(descriptionTypeFactory.getDescriptionTypeByID(SYNONYMOUS_ID));
-                    descriptionRowEdit.setDescriptionType(descriptionTypeFactory.getFavoriteDescriptionType());
-                }
-            }
-        }
-    }
-
     public void onRowReorder(ReorderEvent event) {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -1067,6 +1025,18 @@ public class ConceptBean implements Serializable {
 
 
     // Getter and Setter
+
+    public long getIdTermPending() {
+        return idTermPending;
+    }
+
+    public void setIdTermPending(long idTermPending) {
+        this.idTermPending = idTermPending;
+        descriptionPending = descriptionManager.getDescriptionByID(idTermPending);
+        if (descriptionPending != null) {
+            concept.addDescriptionWeb(new DescriptionWeb(descriptionPending));
+        }
+    }
 
     public String getFSN() {
         return FSN;
@@ -1618,11 +1588,11 @@ public class ConceptBean implements Serializable {
         }
         return false;
     }
-    @ManagedProperty(value = "#{messageBean}")
-    MessageBean messageBean;
+
     public MessageBean getMessageBean() {
         return messageBean;
     }
+
     public void setMessageBean(MessageBean messageBean) {
         this.messageBean = messageBean;
     }
