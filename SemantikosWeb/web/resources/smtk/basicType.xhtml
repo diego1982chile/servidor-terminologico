@@ -336,7 +336,7 @@
                             value="Agregar"
                             process="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                            action="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition)}"
+                            action="#{relationshipBean.addRelationship(cc.attrs.relationshipDefinition)}"
                             rendered="#{cc.attrs.concept.editable}"
                             disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition).size())}">
                     </p:commandButton>

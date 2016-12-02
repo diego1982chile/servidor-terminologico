@@ -1,11 +1,16 @@
 package cl.minsal.semantikos.beans.snomed;
 
+import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.model.ConceptSMTKWeb;
+import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 
+import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 /**
@@ -18,6 +23,21 @@ public class SnomedBeans {
     private static final long ID_RELATIONSHIP_DEFINITION_SNOMED_CT = 101;
     private static final long ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT = 25;
     private static final long ID_TYPE_IS_MAPPING = 2;
+
+    @ManagedProperty( value="#{messageBean}")
+    MessageBean messageBean;
+
+    public MessageBean getMessageBean() {
+        return messageBean;
+    }
+
+    public void setMessageBean(MessageBean messageBean) {
+        this.messageBean = messageBean;
+    }
+
+    @EJB
+    private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR;
+
 
     /**
      * Metodo encargado de validar si la relacion que recibe por parametro es de tipo Es un Mapeo.
@@ -56,5 +76,15 @@ public class SnomedBeans {
             }
         }
         return false;
+    }
+
+    public void changeFullyDefined(ConceptSMTKWeb concept,boolean fullyDefined) {
+        try {
+            concept.setFullyDefined((fullyDefined) ? true : false);
+            if (concept.isFullyDefined()) conceptDefinitionalGradeBR.apply(concept);
+        } catch (EJBException e) {
+            concept.setFullyDefined(false);
+            messageBean.messageError("No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT");
+        }
     }
 }

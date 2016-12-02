@@ -2,10 +2,12 @@ package cl.minsal.semantikos.beans.concept;
 
 import cl.minsal.semantikos.beans.description.AutogenerateBeans;
 import cl.minsal.semantikos.beans.messages.MessageBean;
+import cl.minsal.semantikos.beans.relationship.RelationshipBeans;
 import cl.minsal.semantikos.beans.snomed.SnomedBeans;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.designer_modeler.designer.*;
 import cl.minsal.semantikos.kernel.components.*;
+import cl.minsal.semantikos.kernel.daos.RelationshipDAOImpl;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
@@ -20,7 +22,6 @@ import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.util.Pair;
 import cl.minsal.semantikos.view.components.ViewAugmenter;
 import org.primefaces.event.ReorderEvent;
-import org.primefaces.event.RowEditEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,6 +105,17 @@ public class ConceptBean implements Serializable {
 
     @ManagedProperty( value = "#{snomedBean}")
     private SnomedBeans snomedBeans;
+
+    @ManagedProperty( value = "#{relationshipBean}")
+    private RelationshipBeans relationshipBeans;
+
+    public RelationshipBeans getRelationshipBeans() {
+        return relationshipBeans;
+    }
+
+    public void setRelationshipBeans(RelationshipBeans relationshipBeans) {
+        this.relationshipBeans = relationshipBeans;
+    }
 
     public SnomedBeans getSnomedBeans() {
         return snomedBeans;
@@ -470,28 +482,6 @@ public class ConceptBean implements Serializable {
         conceptBeanExport.loadConcept();
     }
 
-
-    public ConceptSMTK getTargetForRD(RelationshipDefinition relationshipDefinition, ConceptSMTK conceptSel) {
-        if (targetSelected == null) {
-            targetSelected = new HashMap<Long, ConceptSMTK>();
-        }
-        if (!targetSelected.containsKey(relationshipDefinition.getId())) {
-            targetSelected.put(relationshipDefinition.getId(), conceptSel);
-        }
-        return targetSelected.get(relationshipDefinition.getId());
-    }
-
-    /**
-     * Este método es el encargado de agregar relaciones al concepto recibiendo como parámetro un Relationship
-     * Definition. Este método es utilizado por el componente BasicType, el cual agrega relaciones con target sin valor
-     */
-    public void addRelationship(RelationshipDefinition relationshipDefinition) {
-        Target target = new BasicTypeValue(null);
-        Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
-        // Se utiliza el constructor mínimo (sin id)
-        this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
-    }
-
     /**
      * Este método es el encargado de agregar relaciones al concepto recibiendo como parámetro un Relationship
      * Definition. Este método es utilizado por el componente BasicType, el cual agrega relaciones con target sin valor
@@ -521,7 +511,7 @@ public class ConceptBean implements Serializable {
         }
 
         for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-            if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
+            if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) ||  relationshipBeans.changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
                 messageBean.messageError("Información incompleta para agregar " + relationshipDefinition.getName());
                 relationshipPlaceholders.put(relationshipDefinition.getId(), resetRelationship(relationship));
                 resetPlaceHolders();
@@ -722,7 +712,7 @@ public class ConceptBean implements Serializable {
                 messageBean.messageError("El atributo " + relationshipDefinition.getName() + " no cumple con el minimo requerido");
                 return false;
             }
-            if (changeDirectMultiplicity(relationshipDefinition)) {
+            if (relationshipBeans.changeDirectMultiplicity(relationshipDefinition)) {
                 messageBean.messageError("Información incompleta Cantidad y Unidad en " + relationshipDefinition.getName());
                 return false;
             }
@@ -1325,49 +1315,7 @@ public class ConceptBean implements Serializable {
         }
     }
 
-    public boolean changeDirectMultiplicity(RelationshipDefinition relationshipDefinition) {
-        //MCCE Pack Multi
-        if (relationshipDefinition.getId() == 77) return changeDirectMultiplicity(relationshipDefinition, 16L);
-        //MCCE Volumen total
-        if (relationshipDefinition.getId() == 93) return changeDirectMultiplicity(relationshipDefinition, 17L);
-        //MC Cantidad Volumen total
-        if (relationshipDefinition.getId() == 69) return changeDirectMultiplicity(relationshipDefinition, 12L);
-        return false;
-    }
 
-    public boolean changeDirectMultiplicity(RelationshipDefinition relationshipDefinition, Long idAttributeDefinition) {
-        for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-            if (relationshipAttributeDefinition.getId() == idAttributeDefinition) {
-                if (!concept.getRelationshipsByRelationDefinition(relationshipDefinition).isEmpty()) {
-                    for (Relationship relationship : concept.getRelationshipsByRelationDefinition(relationshipDefinition)) {
-                        return relationship.getAttributesByAttributeDefinition(relationshipAttributeDefinition).isEmpty();
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean changeIndirectMultiplicity(Relationship relation, RelationshipDefinition relationshipDefinition, RelationshipAttributeDefinition relationshipAttributeDefinition) {
-        if (relationshipAttributeDefinition.getId() == 8 && relation.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size() > 0) {
-            return isEmpty(relation, relationshipDefinition, relationshipAttributeDefinition, 9L);
-        }
-        if (relationshipAttributeDefinition.getId() == 10 && relation.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size() > 0) {
-            return isEmpty(relation, relationshipDefinition, relationshipAttributeDefinition, 11L);
-        }
-        return false;
-    }
-
-    public boolean isEmpty(Relationship relation, RelationshipDefinition relationshipDefinition, RelationshipAttributeDefinition relationshipAttributeDefinition, Long idAttributeDefinition) {
-        if (relation.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size() != 0) {
-            for (RelationshipAttributeDefinition rAD : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-                if (rAD.getId() == idAttributeDefinition) {
-                    return relation.getAttributesByAttributeDefinition(rAD).isEmpty();
-                }
-            }
-        }
-        return true;
-    }
 
     public boolean isFullyDefined() {
         if (concept != null) {
@@ -1376,28 +1324,16 @@ public class ConceptBean implements Serializable {
         return this.fullyDefined;
     }
 
-    @EJB
-    private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR;
-
     public void setFullyDefined(boolean fullyDefined) {
         this.fullyDefined = fullyDefined;
     }
 
-    public void changeFullyDefined() {
-        try {
-            concept.setFullyDefined((fullyDefined) ? true : false);
-            if (concept.isFullyDefined()) conceptDefinitionalGradeBR.apply(concept);
-        } catch (EJBException e) {
-            concept.setFullyDefined(false);
-            messageBean.messageError("No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT");
-        }
-    }
-
-
     public MessageBean getMessageBean() {
         return messageBean;
     }
+
     public void setMessageBean(MessageBean messageBean) {
         this.messageBean = messageBean;
     }
+
 }
