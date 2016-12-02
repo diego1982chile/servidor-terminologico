@@ -52,4 +52,6 @@ public interface RefSetDAO {
     public List<RefSet> getReftsets();
 
     public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK);
+
+    public RefSet getRefsetBy(long id);
 }

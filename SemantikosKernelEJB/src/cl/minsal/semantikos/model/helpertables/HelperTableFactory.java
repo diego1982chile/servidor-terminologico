@@ -23,7 +23,7 @@ public class HelperTableFactory {
 
     public static String ISP = "ISP";
 
-    public static String ATC = "ATC";
+    public static String HT_ATC_NAME = "HT_ATC_NAME";
 
     public static String BIOEQUIVALENTE = "Bioequivalente";
 

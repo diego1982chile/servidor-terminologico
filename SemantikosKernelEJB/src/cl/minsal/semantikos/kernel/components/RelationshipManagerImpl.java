@@ -66,9 +66,6 @@ public class RelationshipManagerImpl implements RelationshipManager {
             auditManager.recordRelationshipCreation(relationship, user);
         }
 
-        /* Se realizan las acciones asociadas a la asociación */
-        new RelationshipBindingBR().postActions(relationship, conceptDAO);
-
         /* Se retorna persistida */
         return relationship;
     }

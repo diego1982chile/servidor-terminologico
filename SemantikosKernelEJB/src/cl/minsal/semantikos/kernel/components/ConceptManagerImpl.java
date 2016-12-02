@@ -61,6 +61,8 @@ public class ConceptManagerImpl implements ConceptManager {
     @EJB
     private ConceptTransferBR conceptTransferBR;
 
+     @EJB
+     private RelationshipBindingBRInterface relationshipBindingBR;
 
     @Override
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptId) {
@@ -227,7 +229,7 @@ public class ConceptManagerImpl implements ConceptManager {
         for (Relationship relationship : conceptSMTK.getRelationships()) {
             relationshipManager.createRelationship(relationship);
             /* Se realizan las acciones asociadas a la asociación */
-            new RelationshipBindingBR().postActions(relationship, conceptDAO);
+            relationshipBindingBR.postActions(relationship, user);
         }
 
         /* Y sus tags */
