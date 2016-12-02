@@ -26,13 +26,13 @@
                                         <h2 class="TexAlCenter BigTopic">Navegador Fármacos</h2>
 
                                         <p:spacer />
-                                        <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                                        <h:panelGrid  columns="2"  columnClasses="ui-grid-col-11,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
                                             <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
                                                             placeholder="Buscar fármaco..."
                                                             forceSelection="true"
                                                             id="findConceptSMTK" scrollHeight="200" size="5" style="width: 90%;"
                                                             inputStyle="width: 90%;"
-                                                            completeMethod="#{smtkBean.getConceptSearchInput}"
+                                                            completeMethod="#{drugsBrowserBean.getConceptSearchInput}"
                                                             converter="conceptConverter"
                                                             var="concept"
                                                             value="#{drugsBrowserBean.conceptSelected}"
@@ -46,6 +46,12 @@
                                                 <p:column>
                                                     <h:outputText value="#{concept.descriptionFavorite.term}"/>
                                                 </p:column>
+
+                                                <p:column>
+                                                    <h:outputText value="#{concept.category.name}"/>
+                                                </p:column>
+
+                                                <p:ajax event="itemSelect" update="@this" process="@this" />
 
                                             </p:autoComplete>
                                             <i class="fa fa-search fa-lg"  />

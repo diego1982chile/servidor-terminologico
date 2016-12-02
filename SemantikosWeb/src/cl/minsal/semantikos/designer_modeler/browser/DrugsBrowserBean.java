@@ -25,11 +25,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,9 +57,14 @@ public class DrugsBrowserBean implements Serializable {
     /**
      * Lista de conceptos para el despliegue del resultado de la consulta
      */
-    private LazyDataModel<ConceptSMTK> concepts;
+    private List<ConceptSMTK> concepts;
 
     private ConceptSMTK conceptSelected = null;
+
+    private Long[] drugsCategories;
+
+    @EJB
+    private ConceptQueryManager conceptQueryManager;
 
     @EJB
     private CategoryManager categoryManager;
@@ -67,6 +74,7 @@ public class DrugsBrowserBean implements Serializable {
 
     @PostConstruct
     public void init(){
+        drugsCategories = getCategoryValues(drugsManager.getDrugsCategories());
     }
 
     public ConceptSMTK getConceptSelected() {
@@ -84,6 +92,29 @@ public class DrugsBrowserBean implements Serializable {
 
     public void setDrugsManager(DrugsManager drugsManager) {
         this.drugsManager = drugsManager;
+    }
+
+    public List<ConceptSMTK> getConceptSearchInput(String patron) {
+
+        concepts = conceptManager.findConceptBy(patron, drugsCategories, 0, 30);
+
+        return concepts;
+    }
+
+    public Long[] getCategoryValues(List<Category> drugsCategories){
+
+        List<Long> categoryValues = new ArrayList<>();
+
+        for (Category category : drugsCategories)
+            categoryValues.add(category.getId());
+
+        if(categoryValues.isEmpty())
+            return null;
+
+        else {
+            Long[] array = new Long[categoryValues.size()];
+            return categoryValues.toArray(array);
+        }
     }
 
 }
