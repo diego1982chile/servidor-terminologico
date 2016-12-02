@@ -2,6 +2,7 @@ package cl.minsal.semantikos.beans.concept;
 
 import cl.minsal.semantikos.beans.description.AutogenerateBeans;
 import cl.minsal.semantikos.beans.messages.MessageBean;
+import cl.minsal.semantikos.beans.snomed.SnomedBeans;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.designer_modeler.designer.*;
 import cl.minsal.semantikos.kernel.components.*;
@@ -49,9 +50,6 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
 public class ConceptBean implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(ConceptBean.class);
-    private static final long ID_RELATIONSHIP_DEFINITION_SNOMED_CT = 101;
-    private static final long ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT = 25;
-    private static final long ID_TYPE_IS_MAPPING = 2;
 
     @EJB
     ConceptManager conceptManager;
@@ -103,6 +101,17 @@ public class ConceptBean implements Serializable {
 
     @ManagedProperty( value = "#{autogenerateBeans}")
     private AutogenerateBeans autogenerateBeans;
+
+    @ManagedProperty( value = "#{snomedBean}")
+    private SnomedBeans snomedBeans;
+
+    public SnomedBeans getSnomedBeans() {
+        return snomedBeans;
+    }
+
+    public void setSnomedBeans(SnomedBeans snomedBeans) {
+        this.snomedBeans = snomedBeans;
+    }
 
     public AutogenerateBeans getAutogenerateBeans() {
         return autogenerateBeans;
@@ -280,6 +289,14 @@ public class ConceptBean implements Serializable {
 
     public void setCrossmapBean(CrossmapBean crossmapBean) {
         this.crossmapBean = crossmapBean;
+    }
+
+    public Map<RelationshipDefinition, List<RelationshipAttribute>> getRelationshipAttributesPlaceholder() {
+        return relationshipAttributesPlaceholder;
+    }
+
+    public void setRelationshipAttributesPlaceholder(Map<RelationshipDefinition, List<RelationshipAttribute>> relationshipAttributesPlaceholder) {
+        this.relationshipAttributesPlaceholder = relationshipAttributesPlaceholder;
     }
 
     //Inicializacion del Bean
@@ -480,7 +497,7 @@ public class ConceptBean implements Serializable {
      * Definition. Este método es utilizado por el componente BasicType, el cual agrega relaciones con target sin valor
      */
     public void addRelationshipWithAttributes(RelationshipDefinition relationshipDefinition) {
-        if (existRelationshipISAMapping()) {
+        if (snomedBeans.existRelationshipISAMapping(concept)) {
             messageBean.messageError("Cuando existe una relación 'Es un mapeo de', no se pueden agregar más relaciones.");
             return;
         }
@@ -493,8 +510,8 @@ public class ConceptBean implements Serializable {
             resetPlaceHolders();
             return;
         }
-        if (existRelationshipToSCT()) crossmapBean.refreshCrossmapIndirect(concept);
-        if (isMapping(relationship)) {
+        if (snomedBeans.existRelationshipToSCT(concept)) crossmapBean.refreshCrossmapIndirect(concept);
+        if (snomedBeans.isMapping(relationship)) {
             ConceptSCT conceptSCT = (ConceptSCT) relationship.getTarget();
             fullyDefined = (conceptSCT.isCompletelyDefined()) ? true : false;
             concept.setFullyDefined(fullyDefined);
@@ -722,30 +739,10 @@ public class ConceptBean implements Serializable {
         return false;
     }
 
-    public List<RelationshipAttribute> getRelationshipAttributesByRelationshipDefinition(RelationshipDefinition definition) {
-
-        if (definition == null)
-            return new ArrayList<RelationshipAttribute>();
-        if (!relationshipAttributesPlaceholder.containsKey(definition)) {
-
-            List<RelationshipAttribute> attributes = new ArrayList<RelationshipAttribute>(definition.getRelationshipAttributeDefinitions().size());
-
-            for (RelationshipAttributeDefinition attributeDefinition : definition.getRelationshipAttributeDefinitions()) {
-                RelationshipAttribute attribute = new RelationshipAttribute();
-                attribute.setRelationAttributeDefinition(attributeDefinition);
-                Target t = new TargetFactory().createPlaceholderTargetFromTargetDefinition(definition.getTargetDefinition());
-                attribute.setTarget(t);
-                attributes.add(attribute);
-            }
-            relationshipAttributesPlaceholder.put(definition, attributes);
-        }
-        return relationshipAttributesPlaceholder.get(definition);
-    }
-
     public void saveConcept() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (validateRelationships()) {
-            if (concept.isModeled() && !existRelationshipToSCT()) {
+            if (concept.isModeled() && !snomedBeans.existRelationshipToSCT(concept)) {
                 messageBean.messageError("No es posible guardar el concepto, debe tener al menos una relación a SNOMED CT cuando se encuentra modelado");
                 return;
             }
@@ -832,7 +829,7 @@ public class ConceptBean implements Serializable {
         }
         for (RelationshipWeb relationshipWeb : relationshipsForPersist) {
             relationshipWeb.setSourceConcept(concept);
-            if (existRelationshipToSCT()) {
+            if (snomedBeans.existRelationshipToSCT(concept)) {
                 relationshipBindingBR.postActions(relationshipWeb.toRelationship(), user);
             }
         }
@@ -1301,7 +1298,6 @@ public class ConceptBean implements Serializable {
         }
         return orderedRelationshipDefinitionsList;
     }
-    //TODO: Metodos de autogenerado del Preferido y FSN (Refactorizar)
 
     public void changeMultiplicityNotRequiredRelationshipDefinitionMC() {
         for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
@@ -1396,44 +1392,7 @@ public class ConceptBean implements Serializable {
             messageBean.messageError("No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT");
         }
     }
-    /**
-     * Metodo encargado de validar si la relacion que recibe por parametro es de tipo Es un Mapeo.
-     *
-     * @param relationship relacion a validar.
-     * @return retorna true o false segun corresponda.
-     */
-    private boolean isMapping(Relationship relationship) {
-        if (relationship.getRelationshipDefinition().getId() == ID_RELATIONSHIP_DEFINITION_SNOMED_CT) {
-            for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
-                if (relationshipAttribute.getRelationAttributeDefinition().getId() == ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT) {
-                    HelperTableRecord typeRelationship = (HelperTableRecord) relationshipAttribute.getTarget();
-                    if (typeRelationship.getId() == ID_TYPE_IS_MAPPING) return true;
-                }
-            }
-        }
-        return false;
-    }
 
-    /**
-     * Metodo encargado de ver si existe una relacion Es un mapeo en el concepto que se esta creando o editando.
-     *
-     * @return retorna true o false segun corresponda.
-     */
-    public boolean existRelationshipISAMapping() {
-        for (Relationship relationship : concept.getRelationshipsWeb()) {
-            return isMapping(relationship);
-        }
-        return false;
-    }
-
-    private boolean existRelationshipToSCT() {
-        for (Relationship relationship : concept.getRelationshipsWeb()) {
-            if (!relationship.getRelationshipDefinition().getTargetDefinition().isCrossMapType() && (relationship.getRelationshipDefinition().getId() == ID_RELATIONSHIP_DEFINITION_SNOMED_CT)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public MessageBean getMessageBean() {
         return messageBean;

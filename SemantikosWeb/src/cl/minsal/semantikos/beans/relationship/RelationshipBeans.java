@@ -1,11 +1,13 @@
 package cl.minsal.semantikos.beans.relationship;
 
 import cl.minsal.semantikos.beans.concept.ConceptBean;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.*;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by des01c7 on 02-12-16.
@@ -39,5 +41,26 @@ public class RelationshipBeans {
             }
         }
         return false;
+    }
+
+
+    public List<RelationshipAttribute> getRelationshipAttributesByRelationshipDefinition(RelationshipDefinition definition) {
+
+        if (definition == null)
+            return new ArrayList<RelationshipAttribute>();
+        if (!conceptBean.getRelationshipAttributesPlaceholder().containsKey(definition)) {
+
+            List<RelationshipAttribute> attributes = new ArrayList<RelationshipAttribute>(definition.getRelationshipAttributeDefinitions().size());
+
+            for (RelationshipAttributeDefinition attributeDefinition : definition.getRelationshipAttributeDefinitions()) {
+                RelationshipAttribute attribute = new RelationshipAttribute();
+                attribute.setRelationAttributeDefinition(attributeDefinition);
+                Target t = new TargetFactory().createPlaceholderTargetFromTargetDefinition(definition.getTargetDefinition());
+                attribute.setTarget(t);
+                attributes.add(attribute);
+            }
+            conceptBean.getRelationshipAttributesPlaceholder().put(definition, attributes);
+        }
+        return conceptBean.getRelationshipAttributesPlaceholder().get(definition);
     }
 }
