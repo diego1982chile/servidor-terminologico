@@ -5,10 +5,12 @@ import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
+import org.primefaces.event.ReorderEvent;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,8 +55,6 @@ public class AutogenerateBeans {
         }
     }
 
-
-
     public void autogenerateRelationship(RelationshipDefinition relationshipDefinition, Relationship relationship, Target target, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE) {
         if (!concept.isPersistent()) {
             if (relationshipDefinition.getId() == 48) {
@@ -95,5 +95,47 @@ public class AutogenerateBeans {
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
         }
+    }
+
+    public void autogenerateOrder(ConceptSMTKWeb concept,List<String> autoGenerateList, RelationshipDefinition relationshipDefinitionRowEdit, AutogenerateMC autogenerateMC, ReorderEvent event){
+        if (!concept.isPersistent()) {
+
+            if (relationshipDefinitionRowEdit.getId() == 45) {
+                autoGenerateList = newOrderList(autoGenerateList, event);
+                concept.getDescriptionFavorite().setTerm(autogenerate(autoGenerateList));
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+            if (relationshipDefinitionRowEdit.getId() == 47) {
+                autogenerateMC.setSustancias(newOrderList(autogenerateMC.getSustancias(), event));
+                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+            if (relationshipDefinitionRowEdit.getId() == 58) {
+                autogenerateMC.setFfa(newOrderList(autogenerateMC.getFfa(), event));
+                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+        }
+    }
+
+    public List<String> newOrderList(List<String> list, ReorderEvent event) {
+        List<String> autoNuevoOrden = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (i != event.getFromIndex()) {
+                if (i == event.getToIndex()) {
+                    if (event.getFromIndex() < event.getToIndex()) {
+                        autoNuevoOrden.add(list.get(i));
+                        autoNuevoOrden.add(list.get(event.getFromIndex()));
+                    } else {
+
+                        autoNuevoOrden.add(list.get(event.getFromIndex()));
+                        autoNuevoOrden.add(list.get(i));
+                    }
+                } else {
+                    autoNuevoOrden.add(list.get(i));
+                }
+            }
+        }
+        return autoNuevoOrden;
     }
 }

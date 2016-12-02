@@ -516,7 +516,6 @@ public class ConceptBean implements Serializable {
             RelationshipAttribute attribute = new RelationshipAttribute(relationshipDefinition.getOrderAttributeDefinition(), relationship, new BasicTypeValue(concept.getValidRelationshipsByRelationDefinition(relationshipDefinition).size() + 1));
             relationship.getRelationshipAttributes().add(attribute);
         }
-
         autogenerateBeans.autogenerateRelationshipWithAttributes(relationshipDefinition, relationship,concept,autoGenerateList,autogenerateMC);
         // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
@@ -972,49 +971,8 @@ public class ConceptBean implements Serializable {
 
         RelationshipDefinition relationshipDefinitionRowEdit = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinitionRowEdit");
         List<Relationship> relationshipList = concept.getRelationshipsByRelationDefinition(relationshipDefinitionRowEdit);
-
-        if (!concept.isPersistent()) {
-
-            if (relationshipDefinitionRowEdit.getId() == 45) {
-                autoGenerateList = newOrderList(autoGenerateList, event);
-                concept.getDescriptionFavorite().setTerm(autogenerate());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinitionRowEdit.getId() == 47) {
-                autogenerateMC.setSustancias(newOrderList(autogenerateMC.getSustancias(), event));
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-            if (relationshipDefinitionRowEdit.getId() == 58) {
-                autogenerateMC.setFfa(newOrderList(autogenerateMC.getFfa(), event));
-                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
-                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
-            }
-        }
-
+        autogenerateBeans.autogenerateOrder(concept,autoGenerateList,relationshipDefinitionRowEdit,autogenerateMC,event);
     }
-
-    public List<String> newOrderList(List<String> list, ReorderEvent event) {
-        List<String> autoNuevoOrden = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (i != event.getFromIndex()) {
-                if (i == event.getToIndex()) {
-                    if (event.getFromIndex() < event.getToIndex()) {
-                        autoNuevoOrden.add(list.get(i));
-                        autoNuevoOrden.add(list.get(event.getFromIndex()));
-                    } else {
-
-                        autoNuevoOrden.add(list.get(event.getFromIndex()));
-                        autoNuevoOrden.add(list.get(i));
-                    }
-                } else {
-                    autoNuevoOrden.add(list.get(i));
-                }
-            }
-        }
-        return autoNuevoOrden;
-    }
-
 
     // Getter and Setter
 
@@ -1523,7 +1481,6 @@ public class ConceptBean implements Serializable {
     public MessageBean getMessageBean() {
         return messageBean;
     }
-
     public void setMessageBean(MessageBean messageBean) {
         this.messageBean = messageBean;
     }
