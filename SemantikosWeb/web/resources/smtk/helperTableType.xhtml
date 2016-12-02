@@ -20,7 +20,7 @@
 
     <p:panel id="helperTableTypeSimpleNew"
              widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
-             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                           and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }">
 
         <div class="ui-g">
@@ -74,7 +74,7 @@
 
     <p:panel id="helperTableTypeSimple"
              widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                          and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }">
 
         <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
@@ -102,7 +102,7 @@
 
     <p:panel id="helperTableTypeSimpleNewWithAttributes"
              widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
-             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                           and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }">
 
         <div class="ui-g">
@@ -169,7 +169,7 @@
 
     <p:panel id="helperTableTypeSimpleWithAttributes"
              widgetVar="panelHelperTableTypeSimple#{cc.attrs.relationshipDefinition.id}"
-             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
+             rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                          and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }">
 
         <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"

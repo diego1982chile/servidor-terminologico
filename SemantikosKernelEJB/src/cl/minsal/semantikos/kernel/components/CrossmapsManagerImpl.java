@@ -98,7 +98,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     public List<IndirectCrossmap> getIndirectCrossmaps(ConceptSMTK conceptSMTK) {
 
         /* Se valida si el concepto tiene cargada sus relaciones */
-        if (conceptSMTK.isRelationshipsLoaded()) {
+        if (!conceptSMTK.isRelationshipsLoaded()) {
             List<Relationship> relationshipsBySourceConcept = relationshipManager.getRelationshipsBySourceConcept(conceptSMTK);
             conceptSMTK.setRelationships(relationshipsBySourceConcept);
         }

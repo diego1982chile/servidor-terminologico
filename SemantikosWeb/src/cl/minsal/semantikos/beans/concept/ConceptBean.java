@@ -425,7 +425,7 @@ public class ConceptBean implements Serializable {
      */
     public void setIdConcept(int idConcept) {
         this.idConcept = idConcept;
-        if (idConcept != 0) {
+        if (idConcept != 0 && concept == null) {
             createConcept();
         }
     }
@@ -1081,7 +1081,8 @@ public class ConceptBean implements Serializable {
 
     public void setFavoriteDescription(String favoriteDescription) {
         this.favoriteDescription = favoriteDescription;
-        createConcept();
+        if(concept==null)
+            createConcept();
     }
 
     public HelperTableManager getHelperTableManager() {
