@@ -9,10 +9,6 @@
 
     <ui:define name="content">
 
-        <f:metadata>
-            <f:viewParam name="idCategory" value="#{conceptBrowserBean.idCategory}" />
-            <f:event type="preRenderView" listener="#{conceptBrowserBean.executeQuery}" />
-        </f:metadata>
 
         <div class="Container100">
             <div class="ContainerIndent">
@@ -51,7 +47,7 @@
                                                     <h:outputText value="#{concept.category.name}"/>
                                                 </p:column>
 
-                                                <p:ajax event="itemSelect" update="@this" process="@this" />
+                                                <p:ajax event="itemSelect" listener="#{drugsBrowserBean.setConceptSelected(concept)}" update="@this" process="@this" />
 
                                             </p:autoComplete>
                                             <i class="fa fa-search fa-lg"  />

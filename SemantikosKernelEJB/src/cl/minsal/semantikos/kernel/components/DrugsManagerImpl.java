@@ -58,7 +58,6 @@ public class DrugsManagerImpl implements DrugsManager {
     private List<ConceptSMTK> _getDrugsConceptChains(ConceptSMTK concept, List<ConceptSMTK> chains){
         if(conceptManager.getRelatedConcepts(concept).isEmpty()) {
             chains.add(concept);
-            return chains;
         }
         else{
             for (ConceptSMTK parentConcept : conceptManager.getRelatedConcepts(concept)) {
