@@ -43,9 +43,7 @@ public class RelationshipBeans {
         conceptBean.getConcept().addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
     }
 
-public List<RelationshipDefinitionWeb> getOrderedRelationshipDefinitions(){
-    return null;
-}
+
 
     /**
      * Este método es el responsable de retornar verdadero en caso que se cumpla el UpperBoundary de la multiplicidad,
@@ -62,50 +60,6 @@ public List<RelationshipDefinitionWeb> getOrderedRelationshipDefinitions(){
             }
         }
         return false;
-    }
-
-    public boolean changeDirectMultiplicity(RelationshipDefinition relationshipDefinition) {
-        //MCCE Pack Multi
-        if (relationshipDefinition.getId() == 77) return changeDirectMultiplicity(relationshipDefinition, 16L);
-        //MCCE Volumen total
-        if (relationshipDefinition.getId() == 93) return changeDirectMultiplicity(relationshipDefinition, 17L);
-        //MC Cantidad Volumen total
-        if (relationshipDefinition.getId() == 69) return changeDirectMultiplicity(relationshipDefinition, 12L);
-        return false;
-    }
-
-    public boolean changeDirectMultiplicity(RelationshipDefinition relationshipDefinition, Long idAttributeDefinition) {
-        for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-            if (relationshipAttributeDefinition.getId() == idAttributeDefinition) {
-                if (!conceptBean.getConcept().getRelationshipsByRelationDefinition(relationshipDefinition).isEmpty()) {
-                    for (Relationship relationship : conceptBean.getConcept().getRelationshipsByRelationDefinition(relationshipDefinition)) {
-                        return relationship.getAttributesByAttributeDefinition(relationshipAttributeDefinition).isEmpty();
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean changeIndirectMultiplicity(Relationship relation, RelationshipDefinition relationshipDefinition, RelationshipAttributeDefinition relationshipAttributeDefinition) {
-        if (relationshipAttributeDefinition.getId() == 8 && relation.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size() > 0) {
-            return isEmpty(relation, relationshipDefinition, relationshipAttributeDefinition, 9L);
-        }
-        if (relationshipAttributeDefinition.getId() == 10 && relation.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size() > 0) {
-            return isEmpty(relation, relationshipDefinition, relationshipAttributeDefinition, 11L);
-        }
-        return false;
-    }
-
-    public boolean isEmpty(Relationship relation, RelationshipDefinition relationshipDefinition, RelationshipAttributeDefinition relationshipAttributeDefinition, Long idAttributeDefinition) {
-        if (relation.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size() != 0) {
-            for (RelationshipAttributeDefinition rAD : relationshipDefinition.getRelationshipAttributeDefinitions()) {
-                if (rAD.getId() == idAttributeDefinition) {
-                    return relation.getAttributesByAttributeDefinition(rAD).isEmpty();
-                }
-            }
-        }
-        return true;
     }
 
     public List<RelationshipAttribute> getRelationshipAttributesByRelationshipDefinition(RelationshipDefinition definition) {
