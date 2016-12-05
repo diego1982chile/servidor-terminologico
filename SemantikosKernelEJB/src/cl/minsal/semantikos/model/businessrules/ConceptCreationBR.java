@@ -12,7 +12,6 @@ import static cl.minsal.semantikos.model.ProfileFactory.MODELER_PROFILE;
 
 /**
  * Este componente es responsable de almacenar las reglas de negocio relacionadas a la persistencia de conceptos.
- * Para esto, recupera reglas de nego
  *
  * @author Andrés Farías
  */
