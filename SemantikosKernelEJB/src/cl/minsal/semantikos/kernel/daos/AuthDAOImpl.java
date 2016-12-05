@@ -164,6 +164,8 @@ public class AuthDAOImpl implements AuthDAO {
 
         u.setRut(rs.getString(21));
 
+        u.setProfiles(getUserProfiles(u.getIdUser()));
+
         return u;
     }
 
