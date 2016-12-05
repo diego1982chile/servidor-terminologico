@@ -16,6 +16,7 @@ import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -51,23 +52,30 @@ public class DrugsManagerImpl implements DrugsManager {
     @Override
     public List<ConceptSMTK> getDrugsConceptChains(ConceptSMTK concept) {
 
-        return _getDrugsConceptChains(concept, new ArrayList<ConceptSMTK>());
+        return _getDrugsConceptChains(Arrays.asList(concept));
 
     }
 
-    private List<ConceptSMTK> _getDrugsConceptChains(ConceptSMTK concept, List<ConceptSMTK> chains){
-        if(conceptManager.getRelatedConcepts(concept).isEmpty()) {
-            chains.add(concept);
-        }
-        else{
-            for (ConceptSMTK parentConcept : conceptManager.getRelatedConcepts(concept)) {
-                RelationshipDefinition rd = new RelationshipDefinition(concept.getCategory().getName(),concept.getCategory().getName(),MultiplicityFactory.ONE_TO_ONE,concept.getCategory());
-                Relationship r = new Relationship(parentConcept, concept, rd, new ArrayList<RelationshipAttribute>(), null);
-                parentConcept.addRelationship(r);
-                return _getDrugsConceptChains(parentConcept, chains);
+    private List<ConceptSMTK> _getDrugsConceptChains(List<ConceptSMTK> nodes){
+
+        for (ConceptSMTK node : nodes) {
+
+            List<ConceptSMTK> parentNodes = new ArrayList<>();
+
+            if(conceptManager.getRelatedConcepts(node).isEmpty()) {
+                nodes.add(node);
+                return nodes;
             }
+
+            for (ConceptSMTK parentNode : conceptManager.getRelatedConcepts(node)) {
+                RelationshipDefinition rd = new RelationshipDefinition(parentNode.getCategory().getName(),parentNode.getCategory().getName(),MultiplicityFactory.ONE_TO_ONE,parentNode.getCategory());
+                Relationship r = new Relationship(parentNode, node, rd, new ArrayList<RelationshipAttribute>(), null);
+                parentNode.addRelationship(r);
+                parentNodes.add(parentNode);
+            }
+            return _getDrugsConceptChains(parentNodes);
         }
-        return chains;
+        return nodes;
     }
 
 }

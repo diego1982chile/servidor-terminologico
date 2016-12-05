@@ -83,7 +83,7 @@ public class DrugsBrowserBean implements Serializable {
 
     public void setConceptSelected(ConceptSMTK conceptSelected) {
         this.conceptSelected = conceptSelected;
-        drugsManager.getDrugsConceptChains(this.conceptSelected);
+        concepts = drugsManager.getDrugsConceptChains(this.conceptSelected);
     }
 
     public DrugsManager getDrugsManager() {
