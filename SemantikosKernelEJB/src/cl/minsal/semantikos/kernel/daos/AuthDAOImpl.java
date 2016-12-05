@@ -269,7 +269,6 @@ public class AuthDAOImpl implements AuthDAO {
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, user.getIdUser());
-
             call.execute();
 
 
@@ -281,7 +280,6 @@ public class AuthDAOImpl implements AuthDAO {
 
 
         for (Profile p : user.getProfiles()) {
-
             addProfileToUser(user, p);
 
         }
@@ -449,10 +447,11 @@ public class AuthDAOImpl implements AuthDAO {
         ConnectionBD connect = new ConnectionBD();
         Profile profile = null;
 
-        String sql = "{call semantikos.get_profile_by_id()}";
+        String sql = "{call semantikos.get_profile_by_id(?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
+            call.setLong(1,id);
             call.execute();
 
             ResultSet rs = call.getResultSet();
