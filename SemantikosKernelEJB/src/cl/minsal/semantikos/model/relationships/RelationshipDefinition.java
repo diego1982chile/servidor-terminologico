@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.model.Multiplicity;
+import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableFactory;
 
 import java.util.List;
@@ -184,7 +185,12 @@ public class RelationshipDefinition {
     }
 
     public boolean isATC(){
-        return this.getName().equalsIgnoreCase(HelperTableFactory.HT_ATC_NAME);
+        if (!this.getTargetDefinition().isHelperTable()){
+            return false;
+        }
+
+        HelperTable helperTable = (HelperTable) this.targetDefinition;
+        return helperTable.getName().equals(HelperTableFactory.HT_ATC_NAME);
     }
 
     public boolean isBioequivalente(){
