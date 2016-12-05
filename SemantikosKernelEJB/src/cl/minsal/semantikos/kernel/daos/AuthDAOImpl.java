@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.Profile;
 import cl.minsal.semantikos.model.User;
 import org.slf4j.Logger;
@@ -9,11 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.math.BigInteger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
