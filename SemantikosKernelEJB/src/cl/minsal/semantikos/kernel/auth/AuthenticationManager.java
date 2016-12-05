@@ -45,7 +45,7 @@ public class AuthenticationManager {
     }
 
 
-    @RolesAllowed("Administrador")
+    // TODO: @RolesAllowed("Administrador")
     public void setUserPassword(String username, String password) throws PasswordChangeException {
         getAuthenticationMethod().setUserPassword(username, password);
     }
