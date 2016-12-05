@@ -184,13 +184,12 @@ public class RelationshipDefinition {
         return this.getName().equalsIgnoreCase(HelperTableFactory.ISP);
     }
 
-    public boolean isATC() {
-
-        if (!targetDefinition.isHelperTable()) {
+    public boolean isATC(){
+        if (!this.getTargetDefinition().isHelperTable()){
             return false;
         }
 
-        HelperTable helperTable = (HelperTable) targetDefinition;
+        HelperTable helperTable = (HelperTable) this.targetDefinition;
         return helperTable.getName().equals(HelperTableFactory.HT_ATC_NAME);
     }
 
