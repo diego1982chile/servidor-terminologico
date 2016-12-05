@@ -231,7 +231,6 @@ public class AuthDAOImpl implements AuthDAO {
 
     }
 
-
     @Override
     public void updateUser(User user) {
 
@@ -249,14 +248,11 @@ public class AuthDAOImpl implements AuthDAO {
             call.setLong(6, user.getIdUser());
 
             call.execute();
-
-
         } catch (SQLException e) {
             String errorMsg = "Error al actualizar usuario de la BDD.";
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
-
 
         sql = "{call semantikos.delete_user_profiles(?)}";
         try (Connection connection = connect.getConnection();
@@ -264,21 +260,15 @@ public class AuthDAOImpl implements AuthDAO {
 
             call.setLong(1, user.getIdUser());
             call.execute();
-
-
         } catch (SQLException e) {
             String errorMsg = "Error al eliminar perfiles de la BDD.";
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
 
-
         for (Profile p : user.getProfiles()) {
             addProfileToUser(user, p);
-
         }
-
-
     }
 
     private void addProfileToUser(User user, Profile p) {
@@ -458,7 +448,6 @@ public class AuthDAOImpl implements AuthDAO {
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
-
         return profile;
     }
 
