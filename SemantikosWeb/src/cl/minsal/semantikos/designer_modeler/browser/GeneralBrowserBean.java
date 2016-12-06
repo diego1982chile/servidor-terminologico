@@ -9,8 +9,6 @@ import cl.minsal.semantikos.model.browser.ConceptQuery;
 import cl.minsal.semantikos.model.browser.ConceptQueryFilter;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
-import org.omnifaces.util.Ajax;
-import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.slf4j.Logger;
@@ -26,9 +24,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -39,12 +35,12 @@ import java.util.Map;
 
 @ManagedBean(name = "conceptBrowserBean")
 @ViewScoped
-public class ConceptBrowserBean implements Serializable {
+public class GeneralBrowserBean implements Serializable {
 
-    static final Logger logger = LoggerFactory.getLogger(ConceptBrowserBean.class);
+    static final Logger logger = LoggerFactory.getLogger(GeneralBrowserBean.class);
 
     @EJB
-    ConceptQueryManager conceptQueryManager;
+    QueryManager queryManager;
 
     @EJB
     TagManager tagManager;
@@ -124,7 +120,7 @@ public class ConceptBrowserBean implements Serializable {
          * Si el objeto de consulta no está inicializado, inicializarlo
          */
         if(conceptQuery == null)
-            conceptQuery = conceptQueryManager.getDefaultQueryByCategory(category);
+            conceptQuery = queryManager.getDefaultQueryByCategory(category);
 
         /**
          * Ejecutar la consulta
@@ -144,8 +140,8 @@ public class ConceptBrowserBean implements Serializable {
                 else
                     conceptQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
 
-                List<ConceptSMTK> conceptSMTKs = conceptQueryManager.executeQuery(conceptQuery);
-                this.setRowCount(conceptQueryManager.countConceptQuery(conceptQuery));
+                List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(conceptQuery);
+                this.setRowCount(queryManager.countConceptQuery(conceptQuery));
 
                 return conceptSMTKs;
             }

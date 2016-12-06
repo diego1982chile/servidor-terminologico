@@ -1,17 +1,16 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.components.ConceptManager;
+import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.Tag;
 import cl.minsal.semantikos.model.browser.ConceptQuery;
-import cl.minsal.semantikos.model.browser.ConceptQueryFilter;
-import cl.minsal.semantikos.model.browser.ConceptQueryParameter;
-import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.browser.DescriptionQuery;
+import cl.minsal.semantikos.model.browser.QueryParameter;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.relationships.Target;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,12 +25,15 @@ import java.util.List;
  * Created by BluePrints Developer on 22-09-2016.
  */
 @Stateless
-public class ConceptQueryDAOImpl implements ConceptQueryDAO {
+public class QueryDAOImpl implements QueryDAO {
 
-    private static final Logger logger = LoggerFactory.getLogger(ConceptQueryDAOImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(QueryDAOImpl.class);
 
     @EJB
     ConceptManager conceptManager;
+
+    @EJB
+    DescriptionManager descriptionManager;
 
     @Override
     public List<ConceptSMTK> executeQuery(ConceptQuery query) {
@@ -64,8 +66,8 @@ public class ConceptQueryDAOImpl implements ConceptQueryDAO {
 
             int paramNumber = 1;
 
-            for (ConceptQueryParameter conceptQueryParameter : query.getConceptQueryParameters()) {
-                bindParameter(paramNumber, call, connect.getConnection(), conceptQueryParameter);
+            for (QueryParameter queryParameter : query.getQueryParameters()) {
+                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
                 paramNumber++;
             }
 
@@ -88,7 +90,55 @@ public class ConceptQueryDAOImpl implements ConceptQueryDAO {
     }
 
     @Override
-    public long countConceptByQuery(ConceptQuery query) {
+    public List<Description> executeQuery(DescriptionQuery query) {
+
+        List<Description> descriptions = new ArrayList<Description>();
+
+        ConnectionBD connect = new ConnectionBD();
+
+        //TODO: hacer funcion en pg
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.get_description_by_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}" )){
+
+            /*
+                1. p_id_category integer, --static
+                2. p_pattern text, --static
+                3. p_refset integer, --static
+                4. p_refset integer, --static
+                11. p_orden text, --static
+                12. p_page integer, --static
+                13. p_page_size integer --static
+            */
+
+            //bindParameter();
+
+            int paramNumber = 1;
+
+            for (QueryParameter queryParameter : query.getQueryParameters()) {
+                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
+                paramNumber++;
+            }
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+
+                Description recoveredDescription =  descriptionManager.getDescriptionByID(rs.getLong(1));
+                descriptions.add(recoveredDescription);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return descriptions;
+    }
+
+    @Override
+    public long countByQuery(ConceptQuery query) {
 
         long conceptsNumber = 0;
 
@@ -100,8 +150,8 @@ public class ConceptQueryDAOImpl implements ConceptQueryDAO {
 
             int paramNumber = 1;
 
-            for (ConceptQueryParameter conceptQueryParameter : query.getConceptQueryParameters()) {
-                bindParameter(paramNumber, call, connect.getConnection(), conceptQueryParameter);
+            for (QueryParameter queryParameter : query.getQueryParameters()) {
+                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
                 paramNumber++;
             }
 
@@ -120,6 +170,40 @@ public class ConceptQueryDAOImpl implements ConceptQueryDAO {
         }
 
         return conceptsNumber;
+    }
+
+    @Override
+    public long countByQuery(DescriptionQuery query) {
+        long descriptionsNumber = 0;
+
+        ConnectionBD connect = new ConnectionBD();
+
+        //TODO: hacer funcion en pg
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.count_description_by_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}" )){
+
+            int paramNumber = 1;
+
+            for (QueryParameter queryParameter : query.getQueryParameters()) {
+                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
+                paramNumber++;
+            }
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+
+                descriptionsNumber = rs.getLong(1);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return descriptionsNumber;
     }
 
     @Override
@@ -367,7 +451,7 @@ public class ConceptQueryDAOImpl implements ConceptQueryDAO {
         return multipleFilteringValue;
     }
 
-    private void bindParameter(int paramNumber, CallableStatement call, Connection connection, ConceptQueryParameter param)
+    private void bindParameter(int paramNumber, CallableStatement call, Connection connection, QueryParameter param)
             throws SQLException {
 
 

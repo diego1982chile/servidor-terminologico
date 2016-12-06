@@ -166,6 +166,15 @@ public interface ConceptManager {
      */
     public List<Relationship> loadRelationships(ConceptSMTK concept);
 
+    /**
+     * Este método es responsable de obtener las relaciones del concepto.
+     *
+     * @param concept El concepto cuyas relaciones son obtenidas.
+     *
+     * @return La lista de relaciones obtenidas.
+     */
+    public List<Relationship> getRelationships(ConceptSMTK concept);
+
     public List<ConceptSMTK> getConceptBy(RefSet refSet);
 
     /**

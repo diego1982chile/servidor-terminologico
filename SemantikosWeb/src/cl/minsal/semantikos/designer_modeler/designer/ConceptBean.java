@@ -1012,7 +1012,7 @@ public class ConceptBean implements Serializable {
             conceptManager.delete(concept, user);
             context.addMessage(null, new FacesMessage("Successful", "Concepto eliminado"));
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptBrowser.xhtml?idCategory=" + category.getId());
+            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/generalBrowser.xhtml?idCategory=" + category.getId());
         } else {
             conceptManager.invalidate(concept, user);
             context.addMessage(null, new FacesMessage("Successful", "Concepto invalidado"));

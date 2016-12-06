@@ -1,6 +1,9 @@
 package cl.minsal.semantikos.designer_modeler.browser;
 
-import cl.minsal.semantikos.kernel.components.*;
+import cl.minsal.semantikos.kernel.components.CategoryManager;
+import cl.minsal.semantikos.kernel.components.ConceptManager;
+import cl.minsal.semantikos.kernel.components.QueryManager;
+import cl.minsal.semantikos.kernel.components.DrugsManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.User;
@@ -25,9 +28,9 @@ import java.util.List;
 
 @ManagedBean(name = "drugsBrowserBean")
 @ViewScoped
-public class DrugsBrowserBean implements Serializable {
+public class DescriptionsBrowserBean implements Serializable {
 
-    static final Logger logger = LoggerFactory.getLogger(DrugsBrowserBean.class);
+    static final Logger logger = LoggerFactory.getLogger(DescriptionsBrowserBean.class);
 
     @EJB
     DrugsManager drugsManager;

@@ -1,14 +1,9 @@
 package cl.minsal.semantikos.kernel.components;
 
-import cl.minsal.semantikos.kernel.daos.ConceptQueryDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.MultiplicityFactory;
-import cl.minsal.semantikos.model.browser.ConceptQuery;
-import cl.minsal.semantikos.model.browser.ConceptQueryColumn;
-import cl.minsal.semantikos.model.browser.ConceptQueryFilter;
-import cl.minsal.semantikos.model.browser.Sort;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -50,32 +45,74 @@ public class DrugsManagerImpl implements DrugsManager {
     }
 
     @Override
-    public List<ConceptSMTK> getDrugsConceptChains(ConceptSMTK concept) {
-
-        return _getDrugsConceptChains(Arrays.asList(concept));
+    public List<ConceptSMTK> getDrugsConceptHierarchies(ConceptSMTK concept) {
+        concept.setRelationships(new ArrayList<Relationship>());
+        traverseDown(concept);
+        return traverseUp(Arrays.asList(traverseDown(concept)));
 
     }
 
-    private List<ConceptSMTK> _getDrugsConceptChains(List<ConceptSMTK> nodes){
+    private ConceptSMTK traverseDown(ConceptSMTK node){
+
+        List<Relationship> relationships = conceptManager.getRelationships(node);
+        List<Relationship> edges = new ArrayList<>();
+
+
+        for (Relationship relationship : relationships) {
+            if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType())
+                edges.add(relationship);
+        }
+
+        if(edges.isEmpty()) {
+            return node;
+        }
+        else {
+            node.setRelationships(edges);
+
+            for (Relationship edge : edges) {
+                ConceptSMTK childNode = (ConceptSMTK) edge.getTarget();
+                childNode.setRelationships(new ArrayList<Relationship>());
+                traverseDown(childNode);
+            }
+        }
+        return node;
+    }
+
+    private List<ConceptSMTK> traverseUp(List<ConceptSMTK> nodes){
+
+        List<ConceptSMTK> allNodesParentNodes = new ArrayList<>();
+        int parents = 0;
 
         for (ConceptSMTK node : nodes) {
 
-            List<ConceptSMTK> parentNodes = new ArrayList<>();
+            if(node == null)
+                break;
 
-            if(conceptManager.getRelatedConcepts(node).isEmpty()) {
-                nodes.add(node);
-                return nodes;
+            List<ConceptSMTK> parentNodes = conceptManager.getRelatedConcepts(node);
+
+            parents = parents + parentNodes.size();
+
+            List<ConceptSMTK> thisNodeParentNodes = new ArrayList<>();
+
+            if(conceptManager.getRelatedConcepts(node).isEmpty() && !allNodesParentNodes.contains(node)) {
+                allNodesParentNodes.add(node);
             }
 
-            for (ConceptSMTK parentNode : conceptManager.getRelatedConcepts(node)) {
-                RelationshipDefinition rd = new RelationshipDefinition(parentNode.getCategory().getName(),parentNode.getCategory().getName(),MultiplicityFactory.ONE_TO_ONE,parentNode.getCategory());
+            for (ConceptSMTK parentNode : parentNodes) {
+                RelationshipDefinition rd = new RelationshipDefinition(node.getCategory().getName(), node.getCategory().getName(),MultiplicityFactory.ONE_TO_ONE, node.getCategory());
                 Relationship r = new Relationship(parentNode, node, rd, new ArrayList<RelationshipAttribute>(), null);
-                parentNode.addRelationship(r);
-                parentNodes.add(parentNode);
+                parentNode.setRelationships(Arrays.asList(r));
+                thisNodeParentNodes.add(parentNode);
             }
-            return _getDrugsConceptChains(parentNodes);
+
+            allNodesParentNodes.addAll(thisNodeParentNodes);
+
         }
-        return nodes;
+
+        if(parents==0)
+            return  allNodesParentNodes;
+        else
+            return traverseUp(allNodesParentNodes);
     }
 
 }

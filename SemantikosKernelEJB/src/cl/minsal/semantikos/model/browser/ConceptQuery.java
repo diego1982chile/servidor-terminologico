@@ -348,31 +348,31 @@ public class ConceptQuery {
             return getUser().getIdUser();
     }
 
-    public List<ConceptQueryParameter> getConceptQueryParameters(){
+    public List<QueryParameter> getQueryParameters(){
 
-        List<ConceptQueryParameter> conceptQueryParameters = new ArrayList<>();
+        List<QueryParameter> queryParameters = new ArrayList<>();
 
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getCategoryValues(), true)); /** ids categorias **/
-        conceptQueryParameters.add(new ConceptQueryParameter(String.class, getQuery(), false)); /** patrón de búsqueda **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getModeled(), false)); /** está modelado? **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getToBeReviewed(), false)); /** para revisar? **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getToBeConsulted(), false)); /** para consultar? **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getTagValues(), true)); /** etiquetas **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getConceptCategoryValues(), true));
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getConceptValues(), true));
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getBasicTypeDefinitionValues(), true)); /** ids basicTypeDefinitionValues **/
-        conceptQueryParameters.add(new ConceptQueryParameter(String.class, getBasicTypeValues(), true)); /** ids basicTypeValues **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getHelperTableValues(), true)); /** ids helperTableValues **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getHelperTableRecordValues(), true)); /** ids helperTableRecordValues **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Timestamp.class, getCreationDateSince(), false));
-        conceptQueryParameters.add(new ConceptQueryParameter(Timestamp.class, getCreationDateTo(), false));
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getUserValue(), false));
-        conceptQueryParameters.add(new ConceptQueryParameter(Integer.class, getOrder(), false));
-        conceptQueryParameters.add(new ConceptQueryParameter(String.class, getAsc(), false));
-        conceptQueryParameters.add(new ConceptQueryParameter(Integer.class, getPageNumber(), false));
-        conceptQueryParameters.add(new ConceptQueryParameter(Integer.class, getPageSize(), false));
+        queryParameters.add(new QueryParameter(Long.class, getCategoryValues(), true)); /** ids categorias **/
+        queryParameters.add(new QueryParameter(String.class, getQuery(), false)); /** patrón de búsqueda **/
+        queryParameters.add(new QueryParameter(Boolean.class, getModeled(), false)); /** está modelado? **/
+        queryParameters.add(new QueryParameter(Boolean.class, getToBeReviewed(), false)); /** para revisar? **/
+        queryParameters.add(new QueryParameter(Boolean.class, getToBeConsulted(), false)); /** para consultar? **/
+        queryParameters.add(new QueryParameter(Long.class, getTagValues(), true)); /** etiquetas **/
+        queryParameters.add(new QueryParameter(Long.class, getConceptCategoryValues(), true));
+        queryParameters.add(new QueryParameter(Long.class, getConceptValues(), true));
+        queryParameters.add(new QueryParameter(Long.class, getBasicTypeDefinitionValues(), true)); /** ids basicTypeDefinitionValues **/
+        queryParameters.add(new QueryParameter(String.class, getBasicTypeValues(), true)); /** ids basicTypeValues **/
+        queryParameters.add(new QueryParameter(Long.class, getHelperTableValues(), true)); /** ids helperTableValues **/
+        queryParameters.add(new QueryParameter(Long.class, getHelperTableRecordValues(), true)); /** ids helperTableRecordValues **/
+        queryParameters.add(new QueryParameter(Timestamp.class, getCreationDateSince(), false));
+        queryParameters.add(new QueryParameter(Timestamp.class, getCreationDateTo(), false));
+        queryParameters.add(new QueryParameter(Long.class, getUserValue(), false));
+        queryParameters.add(new QueryParameter(Integer.class, getOrder(), false));
+        queryParameters.add(new QueryParameter(String.class, getAsc(), false));
+        queryParameters.add(new QueryParameter(Integer.class, getPageNumber(), false));
+        queryParameters.add(new QueryParameter(Integer.class, getPageSize(), false));
         //conceptQueryParameters.add(new ConceptQueryParameter(String.class, getOrder(), false));
 
-        return conceptQueryParameters;
+        return queryParameters;
     }
 }

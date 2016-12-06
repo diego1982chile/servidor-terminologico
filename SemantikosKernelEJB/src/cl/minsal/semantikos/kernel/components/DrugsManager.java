@@ -16,6 +16,6 @@ public interface DrugsManager {
 
     public List<Category> getDrugsCategories();
 
-    public List<ConceptSMTK> getDrugsConceptChains(ConceptSMTK concept);
+    public List<ConceptSMTK> getDrugsConceptHierarchies(ConceptSMTK concept);
 
 }

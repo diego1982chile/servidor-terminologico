@@ -1,14 +1,12 @@
 package cl.minsal.semantikos.kernel.components;
 
-import cl.minsal.semantikos.kernel.daos.ConceptQueryDAO;
+import cl.minsal.semantikos.kernel.daos.QueryDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.MultiplicityFactory;
-import cl.minsal.semantikos.model.browser.ConceptQuery;
-import cl.minsal.semantikos.model.browser.ConceptQueryColumn;
-import cl.minsal.semantikos.model.browser.ConceptQueryFilter;
-import cl.minsal.semantikos.model.browser.Sort;
+import cl.minsal.semantikos.model.browser.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -22,11 +20,11 @@ import java.util.List;
  * Created by BluePrints Developer on 21-09-2016.
  */
 @Stateless
-public class ConceptQueryManagerImpl implements ConceptQueryManager{
+public class QueryManagerImpl implements QueryManager {
 
 
     @EJB
-    ConceptQueryDAO conceptQueryDAO;
+    QueryDAO queryDAO;
 
     @EJB
     private ConceptManager conceptManager;
@@ -94,7 +92,7 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
     public List<ConceptSMTK> executeQuery(ConceptQuery query) {
 
         //return conceptQueryDAO.callQuery(query);
-        List<ConceptSMTK> conceptSMTKs = conceptQueryDAO.executeQuery(query);
+        List<ConceptSMTK> conceptSMTKs = queryDAO.executeQuery(query);
 
         for (ConceptSMTK conceptSMTK : conceptSMTKs) {
             if(!query.getColumns().isEmpty()) {
@@ -128,17 +126,25 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
     }
 
     @Override
+    public List<Description> executeQuery(DescriptionQuery query) {
+
+        //return conceptQueryDAO.callQuery(query);
+        return queryDAO.executeQuery(query);
+
+    }
+
+    @Override
     public int countConceptQuery(ConceptQuery query) {
-        return (int)conceptQueryDAO.countConceptByQuery(query);
+        return (int)queryDAO.countByQuery(query);
     }
 
     @Override
     public List<RelationshipDefinition> getShowableAttributesByCategory(Category category) {
-        return conceptQueryDAO.getShowableAttributesByCategory(category);
+        return queryDAO.getShowableAttributesByCategory(category);
     }
 
     public List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category){
-        return conceptQueryDAO.getSecondOrderShowableAttributesByCategory(category);
+        return queryDAO.getSecondOrderShowableAttributesByCategory(category);
     }
 
     public List<RelationshipDefinition> getSourceSecondOrderShowableAttributesByCategory(Category category){
@@ -155,22 +161,22 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
 
     @Override
     public List<RelationshipDefinition> getSearchableAttributesByCategory(Category category) {
-        return conceptQueryDAO.getSearchableAttributesByCategory(category);
+        return queryDAO.getSearchableAttributesByCategory(category);
     }
 
     private boolean getCustomFilteringValue(Category category){
-        return conceptQueryDAO.getCustomFilteringValue(category);
+        return queryDAO.getCustomFilteringValue(category);
     }
 
     private boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition){
-        return conceptQueryDAO.getMultipleFilteringValue(category, relationshipDefinition);
+        return queryDAO.getMultipleFilteringValue(category, relationshipDefinition);
     }
 
     private boolean getShowableRelatedConceptsValue(Category category){
-        return conceptQueryDAO.getShowableRelatedConceptsValue(category);
+        return queryDAO.getShowableRelatedConceptsValue(category);
     }
 
     private boolean getShowableValue(Category category){
-        return conceptQueryDAO.getShowableValue(category);
+        return queryDAO.getShowableValue(category);
     }
 }
