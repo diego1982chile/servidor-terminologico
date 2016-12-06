@@ -683,6 +683,7 @@ public class ConceptBean implements Serializable {
     public void removeRelationship(RelationshipDefinition rd, Relationship r) {
         concept.removeRelationshipWeb(r);
         concept.removeRelationship(r);
+        autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC);
         crossmapBean.refreshCrossmapIndirect(concept);
     }
 

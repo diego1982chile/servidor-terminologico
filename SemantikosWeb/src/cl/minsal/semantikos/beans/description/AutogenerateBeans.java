@@ -53,6 +53,15 @@ public class AutogenerateBeans {
             }
         }
     }
+    public void autogenerateRemoveRelationshipWithAttributes(RelationshipDefinition relationshipDefinition, Relationship relationship, ConceptSMTKWeb concept, List<String> autoGenerateList, AutogenerateMC autogenerateMC) {
+        if (!concept.isPersistent()) {
+            if (relationshipDefinition.getId() == 45) {
+                autoGenerateList.remove(((ConceptSMTK) relationship.getTarget()).getDescriptionFavorite().getTerm());
+                concept.getDescriptionFavorite().setTerm(autogenerate(autoGenerateList));
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+        }
+    }
 
     public void autogenerateRelationship(RelationshipDefinition relationshipDefinition, Relationship relationship, Target target, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE) {
         if (!concept.isPersistent()) {
