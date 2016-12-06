@@ -78,13 +78,5 @@ public class SnomedBeans {
         return false;
     }
 
-    public void changeFullyDefined(ConceptSMTKWeb concept,boolean fullyDefined) {
-        try {
-            concept.setFullyDefined((fullyDefined) ? true : false);
-            if (concept.isFullyDefined()) conceptDefinitionalGradeBR.apply(concept);
-        } catch (EJBException e) {
-            concept.setFullyDefined(false);
-            messageBean.messageError("No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT");
-        }
-    }
+
 }

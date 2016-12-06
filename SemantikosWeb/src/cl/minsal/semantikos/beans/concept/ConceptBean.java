@@ -1357,15 +1357,29 @@ public class ConceptBean implements Serializable {
 
     public boolean isFullyDefined() {
         if (concept != null) {
+            concept.setFullyDefined(fullyDefined);
             return (concept.isFullyDefined()) ? true : false;
         }
         return this.fullyDefined;
     }
 
+    public void changeFullyDefined(ConceptSMTKWeb concept) {
+        try {
+            concept.setFullyDefined((fullyDefined) ? true : false);
+            if (concept.isFullyDefined()) conceptDefinitionalGradeBR.apply(concept);
+        } catch (EJBException e) {
+            concept.setFullyDefined(false);
+            fullyDefined=false;
+            messageBean.messageError("No es posible establecer este grado de definición, porque existen otros conceptos con las relaciones a SNOMED CT");
+        }
+    }
 
     public void setFullyDefined(boolean fullyDefined) {
         this.fullyDefined = fullyDefined;
     }
+
+    @EJB
+    private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR;
 
     public MessageBean getMessageBean() {
         return messageBean;
