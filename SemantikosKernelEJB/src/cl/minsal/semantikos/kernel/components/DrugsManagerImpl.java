@@ -48,7 +48,7 @@ public class DrugsManagerImpl implements DrugsManager {
     public List<ConceptSMTK> getDrugsConceptHierarchies(ConceptSMTK concept) {
         concept.setRelationships(new ArrayList<Relationship>());
         traverseDown(concept);
-        return traverseUp(Arrays.asList(traverseDown(concept)));
+        return traverseUp(Arrays.asList(concept));
 
     }
 
@@ -99,9 +99,28 @@ public class DrugsManagerImpl implements DrugsManager {
             }
 
             for (ConceptSMTK parentNode : parentNodes) {
+
+
                 RelationshipDefinition rd = new RelationshipDefinition(node.getCategory().getName(), node.getCategory().getName(),MultiplicityFactory.ONE_TO_ONE, node.getCategory());
                 Relationship r = new Relationship(parentNode, node, rd, new ArrayList<RelationshipAttribute>(), null);
                 parentNode.setRelationships(Arrays.asList(r));
+
+
+                /*
+                List<Relationship> relationships = conceptManager.getRelationships(parentNode);
+                parentNode.setRelationships(new ArrayList<Relationship>());
+
+
+                for (Relationship relationship : relationships) {
+                    if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
+                        ConceptSMTK conceptSMTK = (ConceptSMTK) relationship.getTarget();
+                        conceptSMTK.setRelationships(new ArrayList<Relationship>());
+                        relationship.setTarget(conceptSMTK);
+                        parentNode.addRelationship(relationship);
+                    }
+                }
+                */
+
                 thisNodeParentNodes.add(parentNode);
             }
 
