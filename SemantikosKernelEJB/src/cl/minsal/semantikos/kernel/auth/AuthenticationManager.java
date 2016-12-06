@@ -31,7 +31,6 @@ public class AuthenticationManager {
 
     @PermitAll
     public boolean authenticate(String username, String password, HttpServletRequest request) throws AuthenticationException {
-
         return getAuthenticationMethod().authenticate(username, password, request);
     }
 
@@ -45,7 +44,7 @@ public class AuthenticationManager {
     }
 
 
-    @RolesAllowed("Administrador")
+    // TODO: @RolesAllowed("Administrador")
     public void setUserPassword(String username, String password) throws PasswordChangeException {
         getAuthenticationMethod().setUserPassword(username, password);
     }

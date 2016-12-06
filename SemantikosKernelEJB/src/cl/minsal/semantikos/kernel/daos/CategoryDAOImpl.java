@@ -152,13 +152,11 @@ public class CategoryDAOImpl implements CategoryDAO {
         String nameCategory = resultSet.getString("namecategory");
         String nameAbbreviated = resultSet.getString("nameabbreviated");
         boolean restriction = resultSet.getBoolean("restriction");
-        boolean active = resultSet.getBoolean("active");
         String color = resultSet.getString("nameabbreviated");
-
         long idTagSMTK = resultSet.getLong("tag");
         TagSMTK tagSMTKByID = tagSMTKDAO.findTagSMTKByID(idTagSMTK);
 
-        return new Category(idCategory, nameCategory, nameAbbreviated, restriction, active, color, tagSMTKByID);
+        return new Category(idCategory, nameCategory, nameAbbreviated, restriction, color, tagSMTKByID);
     }
 
     @Override
@@ -169,7 +167,7 @@ public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public void persist(Category category) {
         ConnectionBD connect = new ConnectionBD();
-        String CREATE_CATEGORY = "{call semantikos.create_category(?, ?, ?, ?, ?, ?)}";
+        String CREATE_CATEGORY = "{call semantikos.create_category(?, ?, ?, ?, ?)}";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(CREATE_CATEGORY)) {
@@ -178,8 +176,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             call.setString(2, category.getNameAbbreviated());
             call.setBoolean(3, category.isRestriction());
             call.setLong(4, category.getTagSemantikos().getId());
-            call.setBoolean(5, category.isValid());
-            call.setString(6, category.getColor());
+            call.setString(5, category.getColor());
             call.execute();
 
             ResultSet rs = call.getResultSet();
