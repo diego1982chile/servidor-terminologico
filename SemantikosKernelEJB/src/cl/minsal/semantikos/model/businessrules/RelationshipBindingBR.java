@@ -50,7 +50,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
         brSCT003(concept, relationship);
 
         /* BR-SCT-004: Un concepto con una relación "ES UN" no debe grabarse si existe otro concepto con las mismas relaciones */
-        brRelationshipBinding005(concept, relationship);
+        brSCT004(concept, relationship);
 
     }
 
@@ -214,7 +214,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
      * @param concept         El concepto cuyas relaciones están cambiando.
      * @param theRelationship La relacion que se agrega, que quizas ya esta.
      */
-    private void brRelationshipBinding005(ConceptSMTK concept, Relationship theRelationship) {
+    private void brSCT004(ConceptSMTK concept, Relationship theRelationship) {
 
         /* Esta arregla aplica sólo a conceptos con una relación ES UN */
         if (!concept.contains(SnomedCTRelationship.ES_UN)) {
