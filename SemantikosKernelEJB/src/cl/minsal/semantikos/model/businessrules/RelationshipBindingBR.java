@@ -227,7 +227,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
 
         /* Es una relación SCT. Se realiza el cast y se validan las otras dos condiciones para la BR. */
         SnomedCTRelationship sctRel = (SnomedCTRelationship) theRelationship;
-        if (!sctRel.isES_UN_MAPEO() || !sctRel.getTarget().isCompletelyDefined()){
+        if (sctRel.isES_UN_MAPEO() || !sctRel.getTarget().isCompletelyDefined()){
             return;
         }
 
