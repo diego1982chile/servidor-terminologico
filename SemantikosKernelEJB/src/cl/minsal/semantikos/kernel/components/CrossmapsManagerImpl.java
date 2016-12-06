@@ -2,13 +2,11 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.CrossmapsDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.MultiplicityFactory;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.businessrules.CrossMapCreationBR;
 import cl.minsal.semantikos.model.businessrules.CrossMapRemovalBR;
 import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 
 import javax.ejb.EJB;
@@ -109,7 +107,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
         List<SnomedCTRelationship> relationshipsSnomedCT = conceptSMTK.getRelationshipsSnomedCT();
         List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
         for (SnomedCTRelationship snomedCTRelationship : relationshipsSnomedCT) {
-            if (snomedCTRelationship.isES_UN_MAPEO_DE() || snomedCTRelationship.isES_UN()) {
+            if (snomedCTRelationship.isES_UN_MAPEO() || snomedCTRelationship.isES_UN()) {
                 indirectCrossmaps = crossmapsDAO.getCrossmapsBySCT(snomedCTRelationship.getTarget().getId(), conceptSMTK);
             }
         }
