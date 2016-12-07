@@ -92,7 +92,7 @@
                                                     <f:param name="editMode" value="#{true}" />
                                                     <f:param name="idConcept" value="#{concept.id}" />
                                                 </p:button>
-                                                <p:commandButton icon="fa fa-exchange" oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)">
+                                                <p:commandButton icon="fa fa-exchange" oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)" rendered="#{concept.modeled}">
                                                     <f:setPropertyActionListener value="#{concept}" target="#{transferConceptBean.conceptSMTKSelected}" />
                                                 </p:commandButton>
 
@@ -123,7 +123,9 @@
 
                                                 <p:outputLabel value="id concepto: #{transferConceptBean.conceptSMTKSelected.id}" />
                                                 <p:commandButton value="Trasladar" actionListener="#{transferConceptBean.transferConcept(transferConceptBean.conceptSMTKSelected)}"
-                                                                 icon="fa fa-ban" styleClass="ui-priority-primary" />
+                                                                 icon="fa fa-ban" styleClass="ui-priority-primary" >
+                                                    <p:confirm header="Confirmation" message="¿Está seguro de trasladar este concepto?" icon="ui-icon-alert"/>
+                                                </p:commandButton>
 
                                             </p:panel>
                                         </p:dialog>

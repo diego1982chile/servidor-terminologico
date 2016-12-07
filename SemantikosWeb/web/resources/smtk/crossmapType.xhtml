@@ -295,7 +295,7 @@
 
     <!-- Multiplicidad N con atributos-->
 
-    <p:outputPanel id="crossmapTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
+    <p:panel id="crossmapTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
         <div class="ui-g">
@@ -447,7 +447,7 @@
                 </p:column>
             </p:dataTable>
         </div>
-    </p:outputPanel>
+    </p:panel>
 
     <script type="text/javascript">
         /*

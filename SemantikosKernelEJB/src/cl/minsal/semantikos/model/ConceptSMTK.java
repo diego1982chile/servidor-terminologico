@@ -586,9 +586,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * <p>
      * Este método es responsable de retornar la <i>descripción FSN</i>. Basados en la regla de negocio que dice
      * que un concepto debe siempre tener una y solo una descripción FSN.</p>
-     * <p>
-     * Si el concepto no tuviera descripción preferida, se retorna una descripción "sin tipo".
-     * </p>
      *
      * @return La descripción preferida.
      */
@@ -600,8 +597,8 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
             }
         }
 
-        /* En este punto, no se encontró una descripción preferida, y se arroja una excepción */
-        throw new BusinessRuleException("BR-UNK", "Concepto sin descripción FSN");
+        /* Nunca debiera alcanzar esta parte del código */
+        return null;
     }
 
     @Override
@@ -806,7 +803,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public boolean hasES_UN_MAPEO() {
 
         for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
-            if (snomedCTRelationship.isES_UN_MAPEO_DE()) return true;
+            if (snomedCTRelationship.isES_UN_MAPEO()) return true;
         }
 
         return false;

@@ -52,8 +52,7 @@ public class ConceptSCT extends PersistentEntity implements Target {
 
     /**
      * <p>Specifies if the concept version is primitive or fully defined. Set to a child of | Definition status | in
-     * the
-     * metadata hierarchy.</p>
+     * the metadata hierarchy.</p>
      */
     private long definitionStatusId;
 
@@ -184,13 +183,22 @@ public class ConceptSCT extends PersistentEntity implements Target {
         return conceptSCT;
     }
 
-    public boolean isCompletelyDefined(){
+    public boolean isCompletelyDefined() {
         return this.definitionStatusId == COMPLETELY_DEFINED;
+    }
+
+    /**
+     * Este método es responsable de determinar si el concepto tiene el grado de definición primitivo.
+     *
+     * @return <code>true</code> si es primitivo y <code>false</code> sino.
+     */
+    public boolean isPrimitive() {
+        return this.definitionStatusId == PRIMITIVE;
     }
 
     @Override
     public boolean equals(Object o) {
-        return this.getId() ==((ConceptSCT)o).getId();
+        return this.getId() == ((ConceptSCT) o).getId();
     }
 
     @Override
