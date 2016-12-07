@@ -66,6 +66,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         /* Se crea la descripción */
         Description description = new Description(concept, term, descriptionType);
+        //TODO: AL implementar los webservices este se podria encargar de asignar el description ID
+        description.setDescriptionId(generateDescriptionId());
 
         /* Se aplican las reglas de negocio para crear la Descripción y se persiste y asocia al concepto */
         new DescriptionBindingBR().applyRules(concept, description, user);
