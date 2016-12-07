@@ -12,7 +12,7 @@
             <p:panel styleClass="tableTermPending">
                 <p:dataTable widgetVar="pendingTermTable" value="#{managerPendingTermsBean.pendingTerms}"
                              var="pendingTerm" filteredValue="#{managerPendingTermsBean.pendingTermsListFilter}">
-                    <p:column headerText="Categoría" filterBy="#{pendingTerm.category.name}" footerText="exact"
+                    <p:column headerText="Categoría" filterBy="#{pendingTerm.category.name}"
                               filterMatchMode="exact" style="width: 400px;">
                         <f:facet name="filter">
                             <p:selectOneMenu onchange="PF('pendingTermTable').filter()">
@@ -22,8 +22,8 @@
                         </f:facet>
                         <h:outputText value="#{pendingTerm.category.name}"/>
                     </p:column>
-                    <p:column headerText="Término" filterBy="#{pendingTerm.term}" footerText="contains"
-                              filterMatchMode="contains">
+                    <p:column headerText="Término" filterBy="#{pendingTerm.term}"
+                              filterMatchMode="contains" sortBy="#{pendingTerm.term}">
                         <h:outputText value="#{pendingTerm.term}"/>
                     </p:column>
                     <p:column headerText="DESCID">
