@@ -100,26 +100,23 @@ public class DrugsManagerImpl implements DrugsManager {
 
             for (ConceptSMTK parentNode : parentNodes) {
 
-
                 RelationshipDefinition rd = new RelationshipDefinition(node.getCategory().getName(), node.getCategory().getName(),MultiplicityFactory.ONE_TO_ONE, node.getCategory());
                 Relationship r = new Relationship(parentNode, node, rd, new ArrayList<RelationshipAttribute>(), null);
                 parentNode.setRelationships(Arrays.asList(r));
 
-
-                /*
                 List<Relationship> relationships = conceptManager.getRelationships(parentNode);
-                parentNode.setRelationships(new ArrayList<Relationship>());
-
+                //parentNode.setRelationships(new ArrayList<Relationship>());
 
                 for (Relationship relationship : relationships) {
                     if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
                         ConceptSMTK conceptSMTK = (ConceptSMTK) relationship.getTarget();
-                        conceptSMTK.setRelationships(new ArrayList<Relationship>());
-                        relationship.setTarget(conceptSMTK);
-                        parentNode.addRelationship(relationship);
+                        if(!node.equals(conceptSMTK)) {
+                            conceptSMTK.setRelationships(new ArrayList<Relationship>());
+                            relationship.setTarget(conceptSMTK);
+                            parentNode.addRelationship(relationship);
+                        }
                     }
                 }
-                */
 
                 thisNodeParentNodes.add(parentNode);
             }
