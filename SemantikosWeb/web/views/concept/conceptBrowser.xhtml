@@ -117,7 +117,7 @@
                                                 <h3>Trasladar Concepto a...</h3>
                                                 <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categiría propuesta"/>
                                                 <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.categoryId}" required="true">
-                                                    <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
+                                                    <f:selectItems itemDisabled="#{category.equals(conceptBrowserBean.category)}" value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
                                                                    itemLabel="#{category.name}"/>
                                                 </p:selectOneMenu>
 
