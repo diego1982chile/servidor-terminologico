@@ -236,10 +236,8 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public void updateUser(User user) {
 
-        ConnectionBD connect = new ConnectionBD();
-
         String sql = "{call semantikos.update_user(?,?,?,?,?,?)}";
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = (new ConnectionBD()).getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setString(1, user.getName());
@@ -257,7 +255,7 @@ public class AuthDAOImpl implements AuthDAO {
         }
 
         sql = "{call semantikos.delete_user_profiles(?)}";
-        try (Connection connection = connect.getConnection();
+        try (Connection connection = (new ConnectionBD()).getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, user.getIdUser());
