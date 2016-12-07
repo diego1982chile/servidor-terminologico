@@ -37,14 +37,23 @@ public class AutogenerateBeans {
     public void autogenerateRelationshipWithAttributes(RelationshipDefinition relationshipDefinition, Relationship relationship, ConceptSMTKWeb concept, List<String> autoGenerateList, AutogenerateMC autogenerateMC) {
         if (!concept.isPersistent()) {
             if (relationshipDefinition.getId() == 45) {
-                autoGenerateList.add(((ConceptSMTK) relationship.getTarget()).getDescriptionFavorite().getTerm());
+                ConceptSMTK conceptRelationship =((ConceptSMTK) relationship.getTarget());
+                autoGenerateList.add(conceptRelationship.getDescriptionFavorite().getTerm());
                 concept.getDescriptionFavorite().setTerm(autogenerate(autoGenerateList));
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+                if(conceptRelationship.getDescriptionFSN().isCaseSensitive()){
+                    concept.getDescriptionFSN().setCaseSensitive(conceptRelationship.getDescriptionFSN().isCaseSensitive());
+                }
             }
             if (relationshipDefinition.getId() == 47) {
+                ConceptSMTK conceptRelationship =((ConceptSMTK) relationship.getTarget());
                 autogenerateMC.addSustancia(relationship);
                 concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+                if(conceptRelationship.getDescriptionFavorite().isCaseSensitive()){
+                    concept.getDescriptionFSN().setCaseSensitive(conceptRelationship.getDescriptionFavorite().isCaseSensitive());
+                    concept.getDescriptionFavorite().setCaseSensitive(conceptRelationship.getDescriptionFavorite().isCaseSensitive());
+                }
             }
             if (relationshipDefinition.getId() == 58) {
                 autogenerateMC.addFFA(relationship);
@@ -56,9 +65,23 @@ public class AutogenerateBeans {
     public void autogenerateRemoveRelationshipWithAttributes(RelationshipDefinition relationshipDefinition, Relationship relationship, ConceptSMTKWeb concept, List<String> autoGenerateList, AutogenerateMC autogenerateMC) {
         if (!concept.isPersistent()) {
             if (relationshipDefinition.getId() == 45) {
-                autoGenerateList.remove(((ConceptSMTK) relationship.getTarget()).getDescriptionFavorite().getTerm());
+                ConceptSMTK conceptRelationship =((ConceptSMTK) relationship.getTarget());
+                autoGenerateList.remove(conceptRelationship.getDescriptionFavorite().getTerm());
                 concept.getDescriptionFavorite().setTerm(autogenerate(autoGenerateList));
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+                if(conceptRelationship.getDescriptionFSN().isCaseSensitive()){
+                    concept.getDescriptionFSN().setCaseSensitive(false);
+                }
+            }
+            if (relationshipDefinition.getId() == 47) {
+                ConceptSMTK conceptRelationship =((ConceptSMTK) relationship.getTarget());
+                autogenerateMC.getSustancias().remove(autogenerateMC.generateNameSustancia(relationship));
+                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+                if(conceptRelationship.getDescriptionFavorite().isCaseSensitive()){
+                    concept.getDescriptionFSN().setCaseSensitive(false);
+                    concept.getDescriptionFavorite().setCaseSensitive(false);
+                }
             }
         }
     }
