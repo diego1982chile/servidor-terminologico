@@ -69,6 +69,15 @@ public class ManagerPendingTermsBean {
 
     private ConceptSMTK conceptSMTKSelected;
 
+    private Category categorySelected;
+
+    public Category getCategorySelected() {
+        return categorySelected;
+    }
+
+    public void setCategorySelected(Category categorySelected) {
+        this.categorySelected = categorySelected;
+    }
 
     public ConceptSMTK getConceptSMTKSelected() {
         return conceptSMTKSelected;
