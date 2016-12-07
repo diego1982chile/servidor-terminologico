@@ -304,8 +304,6 @@ public class ConceptBean implements Serializable {
 
         // TODO: Terminar esto o cambiar en el futuro
         user = authenticationBean.getLoggedUser();
-        Profile designerProfile = new Profile(2, "Diseñador", "Usuario Diseñador");
-        user.getProfiles().add(designerProfile);
         autogenerateMCCE = new AutogenerateMCCE();
         autogenerateMC = new AutogenerateMC();
         autogeneratePCCE = new AutogeneratePCCE();
