@@ -7,7 +7,7 @@ import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.Tag;
-import cl.minsal.semantikos.model.browser.ConceptQuery;
+import cl.minsal.semantikos.model.browser.GeneralQuery;
 import cl.minsal.semantikos.model.browser.DescriptionQuery;
 import cl.minsal.semantikos.model.browser.QueryParameter;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -36,7 +36,7 @@ public class QueryDAOImpl implements QueryDAO {
     DescriptionManager descriptionManager;
 
     @Override
-    public List<ConceptSMTK> executeQuery(ConceptQuery query) {
+    public List<ConceptSMTK> executeQuery(GeneralQuery query) {
 
         List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
 
@@ -138,7 +138,7 @@ public class QueryDAOImpl implements QueryDAO {
     }
 
     @Override
-    public long countByQuery(ConceptQuery query) {
+    public long countByQuery(GeneralQuery query) {
 
         long conceptsNumber = 0;
 

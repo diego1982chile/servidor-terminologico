@@ -19,7 +19,7 @@
                          autoWidth="false"
                          style="margin-right:10px; width: 60%">
             <f:selectItem itemLabel="Usuario..." itemValue="#{null}"/>
-            <f:selectItems value="#{conceptBrowserBean.users}" var="user"
+            <f:selectItems value="#{generalBrowserBean.users}" var="user"
                            itemLabel="#{user.username}" itemValue="#{user}"/>
             <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
         </p:selectOneMenu>

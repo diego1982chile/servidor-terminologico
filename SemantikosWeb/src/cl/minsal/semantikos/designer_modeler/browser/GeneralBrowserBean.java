@@ -5,8 +5,8 @@ import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.browser.ConceptQuery;
-import cl.minsal.semantikos.model.browser.ConceptQueryFilter;
+import cl.minsal.semantikos.model.browser.GeneralQuery;
+import cl.minsal.semantikos.model.browser.QueryFilter;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
 import org.primefaces.model.LazyDataModel;
@@ -33,7 +33,7 @@ import java.util.Map;
  * Created by diego on 26/06/2016.
  */
 
-@ManagedBean(name = "conceptBrowserBean")
+@ManagedBean(name = "generalBrowserBean")
 @ViewScoped
 public class GeneralBrowserBean implements Serializable {
 
@@ -54,7 +54,7 @@ public class GeneralBrowserBean implements Serializable {
     /**
      * Objeto de consulta: contiene todos los filtros y columnas necesarios para el despliegue de los resultados en el navegador
      */
-    private ConceptQuery conceptQuery;
+    private GeneralQuery generalQuery;
 
     /**
      * Lista de tags para el despliegue del filtro por tags
@@ -119,8 +119,10 @@ public class GeneralBrowserBean implements Serializable {
         /**
          * Si el objeto de consulta no está inicializado, inicializarlo
          */
-        if(conceptQuery == null)
-            conceptQuery = queryManager.getDefaultQueryByCategory(category);
+        if(generalQuery == null)
+            generalQuery = queryManager.getDefaultQueryByCategory(category);
+
+
 
         /**
          * Ejecutar la consulta
@@ -131,17 +133,17 @@ public class GeneralBrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
-                conceptQuery.setPageNumber(first);
-                conceptQuery.setPageSize(pageSize);
-                conceptQuery.setOrder(new Integer(sortField));
+                generalQuery.setPageNumber(first);
+                generalQuery.setPageSize(pageSize);
+                generalQuery.setOrder(new Integer(sortField));
 
                 if(sortOrder.name().substring(0,3).toLowerCase().equals("asc"))
-                    conceptQuery.setAsc(sortOrder.name().substring(0,3).toLowerCase());
+                    generalQuery.setAsc(sortOrder.name().substring(0,3).toLowerCase());
                 else
-                    conceptQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
+                    generalQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
 
-                List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(conceptQuery);
-                this.setRowCount(queryManager.countConceptQuery(conceptQuery));
+                List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(generalQuery);
+                this.setRowCount(queryManager.countConceptQuery(generalQuery));
 
                 return conceptSMTKs;
             }
@@ -199,12 +201,12 @@ public class GeneralBrowserBean implements Serializable {
         this.category = category;
     }
 
-    public ConceptQuery getConceptQuery() {
-        return conceptQuery;
+    public GeneralQuery getGeneralQuery() {
+        return generalQuery;
     }
 
-    public void setConceptQuery(ConceptQuery conceptQuery) {
-        this.conceptQuery = conceptQuery;
+    public void setGeneralQuery(GeneralQuery generalQuery) {
+        this.generalQuery = generalQuery;
     }
 
     public List<Tag> getTags() {
@@ -284,12 +286,12 @@ public class GeneralBrowserBean implements Serializable {
             return;
 
         // Se busca el filtro
-        for (ConceptQueryFilter conceptQueryFilter : conceptQuery.getFilters()) {
-            if (conceptQueryFilter.getDefinition().equals(relationshipDefinition)) {
-                if(conceptQueryFilter.getTargets().isEmpty()) //Si la lista de targets está vacía, se agrega el target
-                    conceptQueryFilter.getTargets().add(target);
+        for (QueryFilter queryFilter : generalQuery.getFilters()) {
+            if (queryFilter.getDefinition().equals(relationshipDefinition)) {
+                if(queryFilter.getTargets().isEmpty()) //Si la lista de targets está vacía, se agrega el target
+                    queryFilter.getTargets().add(target);
                 else //Si no, se modifica
-                    conceptQueryFilter.getTargets().set(0, target);
+                    queryFilter.getTargets().set(0, target);
                 break;
             }
         }
@@ -305,9 +307,9 @@ public class GeneralBrowserBean implements Serializable {
             return;
 
         // Se busca el filtro
-        for (ConceptQueryFilter conceptQueryFilter : conceptQuery.getFilters()) {
-            if (conceptQueryFilter.getDefinition().equals(relationshipDefinition)) {
-                conceptQueryFilter.getTargets().remove(target);
+        for (QueryFilter queryFilter : generalQuery.getFilters()) {
+            if (queryFilter.getDefinition().equals(relationshipDefinition)) {
+                queryFilter.getTargets().remove(target);
                 break;
             }
         }
@@ -335,7 +337,7 @@ public class GeneralBrowserBean implements Serializable {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
         String query = "";
         if(concepts.getRowCount()==0)
-            query=conceptQuery.getQuery();
+            query=generalQuery.getQuery();
         eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + idCategory +"&idConcept=0&favoriteDescription=" + query);
     }
 

@@ -3,7 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.browser.ConceptQuery;
+import cl.minsal.semantikos.model.browser.GeneralQuery;
 import cl.minsal.semantikos.model.browser.DescriptionQuery;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
@@ -17,13 +17,11 @@ import java.util.List;
 @Local
 public interface QueryDAO {
 
-    //public List<ConceptSMTK> callQuery(ConceptQuery query);
-
-    List<ConceptSMTK> executeQuery(ConceptQuery query);
+    List<ConceptSMTK> executeQuery(GeneralQuery query);
 
     List<Description> executeQuery(DescriptionQuery query);
 
-    long countByQuery(ConceptQuery query);
+    long countByQuery(GeneralQuery query);
 
     long countByQuery(DescriptionQuery query);
 

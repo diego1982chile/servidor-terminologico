@@ -26,7 +26,7 @@ import java.util.List;
  * Created by diego on 26/06/2016.
  */
 
-@ManagedBean(name = "drugsBrowserBean")
+@ManagedBean(name = "descriptionsBrowserBean")
 @ViewScoped
 public class DescriptionsBrowserBean implements Serializable {
 

@@ -111,6 +111,7 @@ public class DrugsManagerImpl implements DrugsManager {
                     if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
                         ConceptSMTK conceptSMTK = (ConceptSMTK) relationship.getTarget();
                         if(!node.equals(conceptSMTK)) {
+                            traverseDown(conceptSMTK);
                             conceptSMTK.setRelationships(new ArrayList<Relationship>());
                             relationship.setTarget(conceptSMTK);
                             parentNode.addRelationship(relationship);

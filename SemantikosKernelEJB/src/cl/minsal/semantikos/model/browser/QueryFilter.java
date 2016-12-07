@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
-public class ConceptQueryFilter {
+public class QueryFilter {
 
     RelationshipDefinition definition;
 
@@ -29,7 +29,7 @@ public class ConceptQueryFilter {
 
     boolean secondOrder;
 
-    public ConceptQueryFilter(RelationshipDefinition definition) {
+    public QueryFilter(RelationshipDefinition definition) {
         this.definition = definition;
     }
 

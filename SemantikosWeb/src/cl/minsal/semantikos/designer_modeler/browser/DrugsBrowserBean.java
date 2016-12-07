@@ -75,7 +75,7 @@ public class DrugsBrowserBean implements Serializable {
         this.conceptSelected = conceptSelected;
         conceptHierarchies = drugsManager.getDrugsConceptHierarchies(this.conceptSelected);
         root = new DefaultTreeNode(new ConceptSMTK(categoryManager.getCategoryById(39)), null);
-        mapConcepts(conceptHierarchies, root);
+        mapConcepts(conceptHierarchies, root, true);
         //this.conceptSelected = null;
     }
 
@@ -83,14 +83,14 @@ public class DrugsBrowserBean implements Serializable {
         conceptSelected= null;
     }
 
-    public TreeNode mapConcepts(List<ConceptSMTK> concepts, TreeNode treeNode) {
+    public TreeNode mapConcepts(List<ConceptSMTK> concepts, TreeNode treeNode, boolean expanded) {
 
         ConceptSMTK conceptData = (ConceptSMTK)treeNode.getData();
 
         if(conceptData.equals(conceptSelected))
-            treeNode.setExpanded(false);
-        else
-            treeNode.setExpanded(true);
+            expanded = false;
+
+        treeNode.setExpanded(expanded);
 
         for (ConceptSMTK concept : concepts) {
 
@@ -105,7 +105,7 @@ public class DrugsBrowserBean implements Serializable {
                 childConcepts.add((ConceptSMTK)relationship.getTarget());
             }
 
-            mapConcepts(childConcepts, childTreeNode);
+            mapConcepts(childConcepts, childTreeNode, expanded);
         }
 
         return root;

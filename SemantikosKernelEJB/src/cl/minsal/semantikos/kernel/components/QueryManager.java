@@ -3,7 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.browser.ConceptQuery;
+import cl.minsal.semantikos.model.browser.GeneralQuery;
 import cl.minsal.semantikos.model.browser.DescriptionQuery;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -17,13 +17,13 @@ import java.util.List;
 @Local
 public interface QueryManager {
 
-    public ConceptQuery getDefaultQueryByCategory(Category category);
+    public GeneralQuery getDefaultQueryByCategory(Category category);
 
-    public List<ConceptSMTK> executeQuery(ConceptQuery query);
+    public List<ConceptSMTK> executeQuery(GeneralQuery query);
 
     public List<Description> executeQuery(DescriptionQuery query);
 
-    public int countConceptQuery(ConceptQuery query);
+    public int countConceptQuery(GeneralQuery query);
 
     public List<RelationshipDefinition> getSearchableAttributesByCategory(Category category);
 

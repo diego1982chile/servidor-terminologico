@@ -51,7 +51,7 @@ form#mainForm table tbody tr td div.relationshipDefinitionError {
 }
 
 .matchedConcept {
-    background: #ffff91 !important;
+    color: #3bba18 !important;
 }
 
 .fullyDefined .ui-panelgrid-cell {

@@ -36,15 +36,15 @@ public class QueryManagerImpl implements QueryManager {
     private RelationshipDAO relationshipDAO;
 
     @Override
-    public ConceptQuery getDefaultQueryByCategory(Category category) {
+    public GeneralQuery getDefaultQueryByCategory(Category category) {
 
-        ConceptQuery query = new ConceptQuery();
+        GeneralQuery query = new GeneralQuery();
 
         List<Category> categories = new ArrayList<Category>();
         categories.add(category);
         query.setCategories(categories);
 
-        List<ConceptQueryFilter> filters = new ArrayList<ConceptQueryFilter>();
+        List<QueryFilter> filters = new ArrayList<QueryFilter>();
         query.setFilters(filters);
 
         // Stablishing custom filtering value
@@ -52,7 +52,7 @@ public class QueryManagerImpl implements QueryManager {
 
         // Adding dynamic columns
         for (RelationshipDefinition relationshipDefinition : getShowableAttributesByCategory(category)) {
-            query.getColumns().add(new ConceptQueryColumn(relationshipDefinition.getName(), new Sort(null, false), relationshipDefinition));
+            query.getColumns().add(new QueryColumn(relationshipDefinition.getName(), new Sort(null, false), relationshipDefinition));
 
         }
 
@@ -61,7 +61,7 @@ public class QueryManagerImpl implements QueryManager {
             if(relationshipDefinition.getTargetDefinition().isSMTKType()){
                 Category categoryDestination = (Category) relationshipDefinition.getTargetDefinition();
                 for (RelationshipDefinition relationshipDefinitionDestination : getSecondOrderShowableAttributesByCategory(categoryDestination)) {
-                    ConceptQueryColumn secondOrderColumn = new ConceptQueryColumn(relationshipDefinitionDestination.getName(), new Sort(null, false), relationshipDefinitionDestination);
+                    QueryColumn secondOrderColumn = new QueryColumn(relationshipDefinitionDestination.getName(), new Sort(null, false), relationshipDefinitionDestination);
                     query.getColumns().add(secondOrderColumn);
                     secondOrderColumn.setSecondOrder(true);
                 }
@@ -73,23 +73,23 @@ public class QueryManagerImpl implements QueryManager {
             for (Category relatedCategory : categoryManager.getRelatedCategories(category)) {
                 if(getShowableValue(relatedCategory)) {
                     RelationshipDefinition rd = new RelationshipDefinition(relatedCategory.getId(), relatedCategory.getName(), relatedCategory.getName(), relatedCategory, MultiplicityFactory.ONE_TO_ONE);
-                    query.getColumns().add(new ConceptQueryColumn(rd.getName(), new Sort(null, false), rd));
+                    query.getColumns().add(new QueryColumn(rd.getName(), new Sort(null, false), rd));
                 }
             }
         }
 
         // Adding dynamic filters
         for (RelationshipDefinition relationshipDefinition : getSearchableAttributesByCategory(category)) {
-            ConceptQueryFilter conceptQueryFilter = new ConceptQueryFilter(relationshipDefinition);
-            conceptQueryFilter.setMultiple(getMultipleFilteringValue(category, relationshipDefinition));
-            query.getFilters().add(conceptQueryFilter);
+            QueryFilter queryFilter = new QueryFilter(relationshipDefinition);
+            queryFilter.setMultiple(getMultipleFilteringValue(category, relationshipDefinition));
+            query.getFilters().add(queryFilter);
         }
 
         return query;
     }
 
     @Override
-    public List<ConceptSMTK> executeQuery(ConceptQuery query) {
+    public List<ConceptSMTK> executeQuery(GeneralQuery query) {
 
         //return conceptQueryDAO.callQuery(query);
         List<ConceptSMTK> conceptSMTKs = queryDAO.executeQuery(query);
@@ -134,7 +134,7 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
-    public int countConceptQuery(ConceptQuery query) {
+    public int countConceptQuery(GeneralQuery query) {
         return (int)queryDAO.countByQuery(query);
     }
 

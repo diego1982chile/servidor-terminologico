@@ -10,8 +10,8 @@
     <ui:define name="content">
 
         <f:metadata>
-            <f:viewParam name="idCategory" value="#{conceptBrowserBean.idCategory}" />
-            <f:event type="preRenderView" listener="#{conceptBrowserBean.executeQuery}" />
+            <f:viewParam name="idCategory" value="#{generalBrowserBean.idCategory}" />
+            <f:event type="preRenderView" listener="#{generalBrowserBean.executeQuery}" />
         </f:metadata>
 
         <div class="Container100">
@@ -23,12 +23,12 @@
                                 <div class="ui-grid-col-12">
                                     <h:form id="browserForm">
                                         <p:messages autoUpdate="true" />
-                                        <h2 class="TexAlCenter BigTopic">Navegador General [#{conceptBrowserBean.category.name}]</h2>
-                                        <smtk:browserFilter conceptQuery="#{conceptBrowserBean.conceptQuery}" />
+                                        <h2 class="TexAlCenter BigTopic">Navegador General [#{generalBrowserBean.category.name}]</h2>
+                                        <smtk:browserFilter generalQuery="#{generalBrowserBean.generalQuery}" />
                                         <p:spacer />
                                         <p:dataTable id="conceptTable"
                                                      styleClass="conceptBrowserTable"
-                                                     value="#{conceptBrowserBean.concepts}"
+                                                     value="#{generalBrowserBean.concepts}"
                                                      var="concept"
                                                      rows="30"
                                                      sortBy="#{1}"
@@ -70,7 +70,7 @@
                                                 <h:outputText value="Modelado" rendered="#{concept.modeled}"/>
                                             </p:column>
 
-                                            <p:columns value="#{conceptBrowserBean.conceptQuery.columns}"
+                                            <p:columns value="#{generalBrowserBean.generalQuery.columns}"
                                                        var="column"
                                                        columnIndexVar="colIndex">
                                                 <f:facet name="header">
@@ -98,7 +98,7 @@
 
 
 
-                                                <p:commandButton action="#{conceptBrowserBean.deleteConcept(concept)}"
+                                                <p:commandButton action="#{generalBrowserBean.deleteConcept(concept)}"
                                                                  ajax="true"
                                                                  icon="fa fa-trash"
                                                                  process="@this"
