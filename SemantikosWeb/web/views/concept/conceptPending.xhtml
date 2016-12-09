@@ -50,8 +50,11 @@
                                                          target="#{findConceptBean.categorySelected}"/>
                         </p:commandLink>
 
-                        <p:commandLink title="Crear nuevo concepto" actionListener="#{managerPendingTermsBean.createNewConcept(pendingTerm)}">
+                        <p:commandLink oncomplete="PF('dialogNC').show()" title="Crear nuevo concepto">
                             <i class="fa fa-plus fa-lg"/>
+                            <f:setPropertyActionListener value="#{pendingTerm}"
+                                                         target="#{managerPendingTermsBean.termSelected}"/>
+                            <f:setPropertyActionListener value="" target="#{managerPendingTermsBean.categorySelected}" />
                         </p:commandLink>
 
                         <p:commandLink title="Consultar" oncomplete="PF('dialogC').show()"
@@ -197,7 +200,30 @@
             </p:dialog>
 
 
+            <!-- Crear nuevo concepto -->
+            <p:dialog id="dialogNC" header="Consulta termino pendiente" widgetVar="dialogNC" global="true"
+                      showEffect="fade" hideEffect="fade">
+                <p:panel styleClass="query-pending-description">
 
+
+                    <p:selectOneMenu id="parentTag" value="#{managerPendingTermsBean.categorySelected}"
+                                     converter="omnifaces.SelectItemsConverter" panelStyle="width:60%"
+                                     effect="fade" var="c" style="width:90%" filter="true"
+                                     filterMatchMode="startsWith" >
+                        <p:ajax/>
+                        <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
+                        <f:selectItems value="#{managerPendingTermsBean.categories}" var="category"
+                                       itemLabel="#{category.name}" itemValue="#{category}"/>
+                        <p:column>
+                            <h:outputText value="#{c.name}"/>
+                        </p:column>
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Crear concepto" actionListener="#{managerPendingTermsBean.createNewConcept(managerPendingTermsBean.termSelected)}"/>
+
+
+                </p:panel>
+            </p:dialog>
 
         </h:form>
 
