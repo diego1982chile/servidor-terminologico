@@ -120,7 +120,7 @@ public class GeneralBrowserBean implements Serializable {
          * Si el objeto de consulta no está inicializado, inicializarlo
          */
         if(generalQuery == null)
-            generalQuery = queryManager.getDefaultQueryByCategory(category);
+            generalQuery = queryManager.getDefaultGeneralQuery(category);
 
 
 
@@ -143,7 +143,7 @@ public class GeneralBrowserBean implements Serializable {
                     generalQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
 
                 List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(generalQuery);
-                this.setRowCount(queryManager.countConceptQuery(generalQuery));
+                this.setRowCount(queryManager.countQueryResults(generalQuery));
 
                 return conceptSMTKs;
             }

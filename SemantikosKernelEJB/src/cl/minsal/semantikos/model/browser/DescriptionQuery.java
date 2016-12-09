@@ -16,7 +16,7 @@ public class DescriptionQuery {
     /**
      * Static filters
      */
-    private List<Category> categories;
+    private List<Category> categories = new ArrayList<>();
 
     private String query;
 
@@ -92,7 +92,10 @@ public class DescriptionQuery {
     }
 
     public void setCategories(List<Category> categories) {
-        this.categories = categories;
+        if(categories == null)
+            this.categories.clear();
+        else
+            this.categories = categories;
     }
 
     public Long[] getCategoryValues(){

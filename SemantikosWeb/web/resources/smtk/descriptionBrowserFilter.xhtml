@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+
+<composite:interface>
+    <composite:attribute name="descriptionQuery" type="cl.minsal.semantikos.model.browser.DescriptionQuery" />
+</composite:interface>
+<composite:implementation>
+
+    <p:outputPanel id="descriptionFilters" styleClass="descriptionFilters">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <p:inputText value="#{cc.attrs.descriptionQuery.query}" style="margin-right:10px; width: 80%" placeholder="Buscar...">
+                    <p:ajax event="keyup" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
+                </p:inputText>
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-5">
+
+                <p:autoComplete id="findCategories"
+                                scrollHeight="200"
+                                completeMethod="#{descriptionsBrowserBean.getCategoriesSearchInput}"
+                                forceSelection="true"
+                                minQueryLength="0"
+                                var="category"
+                                placeholder="#{ empty cc.attrs.descriptionQuery.categories ? 'Categorías...': ''}"
+                                converter="CategoryConverter"
+                                value="#{ cc.attrs.descriptionQuery.categories }"
+                                multiple="true"
+                                itemLabel="#{category.name}"
+                                itemValue="#{category}"
+                                widgetVar="foo" onmousedown="PF('foo').search(PF('foo').input.val())">
+
+                    <p:column>
+                        <p:outputLabel value="#{category.name}"/>
+                    </p:column>
+
+                    <p:ajax event="itemSelect" update="@(.descriptionBrowserTable),@(.descriptionFilters)" />
+                    <p:ajax event="itemUnselect" update="@(.descriptionBrowserTable),@(.descriptionFilters)" />
+
+                </p:autoComplete>
+
+            </div>
+        </div>
+    </p:outputPanel>
+
+    <script type="text/javascript">
+
+        $(document).on("itemSelect", "input[id$=findCategories_input]", function (event) {
+            alert("me llamaron");
+        });
+
+
+    </script>
+
+</composite:implementation>
+</html>

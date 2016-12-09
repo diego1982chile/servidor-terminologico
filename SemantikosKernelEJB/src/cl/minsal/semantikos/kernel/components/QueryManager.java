@@ -17,13 +17,17 @@ import java.util.List;
 @Local
 public interface QueryManager {
 
-    public GeneralQuery getDefaultQueryByCategory(Category category);
+    public GeneralQuery getDefaultGeneralQuery(Category category);
+
+    public DescriptionQuery getDefaultDescriptionQuery();
 
     public List<ConceptSMTK> executeQuery(GeneralQuery query);
 
     public List<Description> executeQuery(DescriptionQuery query);
 
-    public int countConceptQuery(GeneralQuery query);
+    public int countQueryResults(GeneralQuery query);
+
+    public int countQueryResults(DescriptionQuery query);
 
     public List<RelationshipDefinition> getSearchableAttributesByCategory(Category category);
 

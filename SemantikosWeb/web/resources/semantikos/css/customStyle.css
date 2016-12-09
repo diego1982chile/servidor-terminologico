@@ -73,3 +73,24 @@ form#mainForm .ui-grid-col-1, .ui-grid-col-2, .ui-grid-col-3, .ui-grid-col-4, .u
 form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 }
+/*
+.descriptionFilters .ui-inputfield {
+    padding: 0px !important
+}
+*/
+.descriptionFilters .ui-autocomplete-multiple-container {
+    width: 500px !important;
+}
+
+.descriptionFilters .ui-autocomplete-input-token input{
+    margin: 0px !important;
+}
+
+.descriptionFilters .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token {
+    padding: 2px !important;
+}
+
+.descriptionFilters .ui-autocomplete-token {
+    margin: 0px !important;
+    margin-right: 2px !important;
+}

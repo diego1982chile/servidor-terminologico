@@ -1,10 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.Institution;
-import cl.minsal.semantikos.model.RefSet;
+import cl.minsal.semantikos.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -171,6 +168,32 @@ public class RefSetDAOImpl implements RefSetDAO {
         }
 
         return refSet;
+    }
+
+    @Override
+    public List<RefSet> getRefsetsBy(List<Long> categories, String pattern) {
+        List<RefSet> refSets= new ArrayList<>();
+
+        ConnectionBD connect = new ConnectionBD();
+        String ALL_REFSETS_BY_CONCEPT = "{call semantikos.get_refsets_by_categories_and_pattern(?,?)}";
+
+        try (Connection connection = connect.getConnection();
+
+             CallableStatement call = connection.prepareCall(ALL_REFSETS_BY_CONCEPT)) {
+            Array categoryIds = connection.createArrayOf("long", categories.toArray(new Long[categories.size()]));
+            call.setArray(1,categoryIds);
+            call.setString(2,pattern);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                refSets.add(createRefsetFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            logger.error("Error al al obtener los RefSets ", e);
+        }
+
+        return refSets;
     }
 
     private RefSet createRefsetFromResultSet(ResultSet rs) throws SQLException {

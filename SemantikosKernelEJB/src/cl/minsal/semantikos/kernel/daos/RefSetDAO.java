@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.RefSet;
@@ -54,4 +55,6 @@ public interface RefSetDAO {
     public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK);
 
     public RefSet getRefsetBy(long id);
+
+    public List<RefSet> getRefsetsBy(List<Long> categories, String pattern);
 }

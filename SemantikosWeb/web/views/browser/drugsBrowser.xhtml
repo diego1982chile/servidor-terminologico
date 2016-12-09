@@ -71,7 +71,8 @@
                                                 <h:outputText value="#{concept.descriptionFavorite.term}" />
                                             </p:column>
 
-                                            <p:column headerText="ConceptId" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}">
+                                            <p:column headerText="ConceptId" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}"
+                                                        style="width: 20%">
                                                 <h:outputText value="#{concept.conceptID}" />
                                             </p:column>
 
@@ -79,8 +80,9 @@
                                                 <h:outputText value="#{concept.category.name}" />
                                             </p:column>
 
-                                            <p:column headerText="Acciones" exportable="false" style="text-align: center" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}">
-                                                <p:button outcome="conceptEdit" icon="fa fa-eye">
+                                            <p:column headerText="Acciones" exportable="false" style="text-align: center;width: 10%"
+                                                      styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}">
+                                                <p:button outcome="/views/concept/conceptEdit" icon="fa fa-eye">
                                                     <f:param name="editMode" value="#{false}" />
                                                     <f:param name="idConcept" value="#{concept.id}" />
                                                 </p:button>

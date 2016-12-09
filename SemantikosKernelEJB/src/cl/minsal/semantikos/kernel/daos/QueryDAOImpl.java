@@ -98,7 +98,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         //TODO: hacer funcion en pg
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.get_concept_by_description_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}" )){
+             CallableStatement call = connection.prepareCall("{call semantikos.get_description_by_description_query(?,?,?,?,?,?,?,?)}" )){
 
             /*
                 1. p_id_category integer, --static
@@ -180,7 +180,7 @@ public class QueryDAOImpl implements QueryDAO {
 
         //TODO: hacer funcion en pg
         try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall("{call semantikos.count_concept_by_description_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}" )){
+             CallableStatement call = connection.prepareCall("{call semantikos.count_description_by_description_query(?,?,?,?,?,?,?,?)}" )){
 
             int paramNumber = 1;
 

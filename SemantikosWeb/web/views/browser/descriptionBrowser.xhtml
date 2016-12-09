@@ -10,8 +10,7 @@
     <ui:define name="content">
 
         <f:metadata>
-            <f:viewParam name="idCategory" value="#{generalBrowserBean.idCategory}" />
-            <f:event type="preRenderView" listener="#{generalBrowserBean.executeQuery}" />
+            <f:event type="preRenderView" listener="#{descriptionsBrowserBean.executeQuery}" />
         </f:metadata>
 
         <div class="Container100">
@@ -23,13 +22,13 @@
                                 <div class="ui-grid-col-12">
                                     <h:form id="browserForm">
                                         <p:messages autoUpdate="true" />
-                                        <h2 class="TexAlCenter BigTopic">Navegador General [#{generalBrowserBean.category.name}]</h2>
-                                        <smtk:browserFilter generalQuery="#{generalBrowserBean.generalQuery}" />
+                                        <h2 class="TexAlCenter BigTopic">Navegador de descripciones</h2>
+                                        <smtk:descriptionBrowserFilter descriptionQuery="#{descriptionsBrowserBean.descriptionQuery}" />
                                         <p:spacer />
-                                        <p:dataTable id="conceptTable"
-                                                     styleClass="conceptBrowserTable"
-                                                     value="#{generalBrowserBean.concepts}"
-                                                     var="concept"
+                                        <p:dataTable id="descriptionTable"
+                                                     styleClass="descriptionBrowserTable"
+                                                     value="#{descriptionsBrowserBean.descriptions}"
+                                                     var="description"
                                                      rows="30"
                                                      sortBy="#{1}"
                                                      paginator="true" lazy="true" dynamic="true"
@@ -38,74 +37,50 @@
 
                                             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-                                            <p:column headerText="ConceptID" sortBy="#{1}" style="width:7%">
-                                                <h:outputText value="#{concept.id}"/>
+                                            <p:column headerText="Categoría" sortBy="#{1}" style="width:7%">
+                                                <h:outputText value="#{description.conceptSMTK.category.name}"/>
                                             </p:column>
 
                                             <p:column headerText="Término" sortBy="#{2}">
-                                                <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                                <h:outputText value="#{description.term}"/>
                                             </p:column>
 
-                                            <p:column headerText="Observación">
-                                                <h:outputText value="#{concept.observation}"/>
+                                            <p:column headerText="Tipo">
+                                                <h:outputText value="#{description.descriptionType.name}"/>
                                             </p:column>
 
-                                            <p:column headerText="Etiqueta">
-                                                <p:repeat
-                                                        offset="0"
-                                                        size="#{concept.tags.size()}"
-                                                        step="1"
-                                                        varStatus="var"
-                                                        value="#{concept.tags}"
-                                                        var="tag">
-
-                                                    <h:outputText rendered="#{var.index>0}" value=", " />
-                                                    <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter};"  />
-
-                                                </p:repeat>
+                                            <p:column headerText="STK_ID">
+                                                <h:outputText value="#{description.conceptSMTK.conceptID}"/>
                                             </p:column>
 
-                                            <p:column headerText="Está en">
-                                                <h:outputText value="Borrador" rendered="#{not concept.modeled}"/>
-                                                <h:outputText value="Modelado" rendered="#{concept.modeled}"/>
-                                            </p:column>
-
-                                            <p:columns value="#{generalBrowserBean.generalQuery.columns}"
-                                                       var="column"
+                                            <p:columns value="#{description.conceptSMTK.relationships}"
+                                                       var="relationship"
                                                        columnIndexVar="colIndex">
                                                 <f:facet name="header">
-                                                    <h:outputText value="#{column.relationshipDefinition.name}" />
+                                                    <h:outputText value="#{relationship.relationshipDefinition.name}" />
                                                 </f:facet>
                                                 <p:outputPanel>
-                                                    <smtk:basicTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.basicType}" />
-                                                    <smtk:helperTableTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.helperTable}" />
-                                                    <smtk:smtkTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.SMTKType}" />
+                                                    <smtk:smtkTypeCell relationshipDefinition="#{relationship.relationshipDefinition}"
+                                                                       concept="#{description.conceptSMTK}"
+                                                                       rendered="#{relationship.relationshipDefinition.targetDefinition.SCTType}"
+                                                    />
                                                 </p:outputPanel>
                                             </p:columns>
 
+                                            <p:column headerText="FSN_DSC">
+                                                <h:outputText value="#{description.conceptSMTK.descriptionFSN.term}"/>
+                                            </p:column>
+
                                             <p:column headerText="Acciones" exportable="false" style="text-align: center">
-                                                <p:button outcome="conceptEdit" icon="fa fa-eye">
+                                                <p:button outcome="concept/conceptEdit" icon="fa fa-eye">
                                                     <f:param name="editMode" value="#{false}" />
-                                                    <f:param name="idConcept" value="#{concept.id}" />
+                                                    <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
                                                 </p:button>
-                                                <p:button outcome="conceptEdit" icon="fa fa-edit">
+                                                <p:button outcome="concept/conceptEdit" icon="fa fa-edit">
                                                     <f:param name="editMode" value="#{true}" />
-                                                    <f:param name="idConcept" value="#{concept.id}" />
+                                                    <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
                                                 </p:button>
-                                                <p:commandButton icon="fa fa-exchange" oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)">
-                                                    <f:setPropertyActionListener value="#{concept}" target="#{transferConceptBean.conceptSMTKSelected}" />
-                                                </p:commandButton>
 
-
-
-                                                <p:commandButton action="#{generalBrowserBean.deleteConcept(concept)}"
-                                                                 ajax="true"
-                                                                 icon="fa fa-trash"
-                                                                 process="@this"
-                                                                 rendered="#{not concept.modeled}"
-                                                                 update="@(.conceptBrowserTable), growl">
-                                                    <p:confirm header="Confirmation" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
-                                                </p:commandButton>
                                             </p:column>
 
                                         </p:dataTable>

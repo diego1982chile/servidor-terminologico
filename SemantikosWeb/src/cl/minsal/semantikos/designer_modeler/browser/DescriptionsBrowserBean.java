@@ -1,25 +1,25 @@
 package cl.minsal.semantikos.designer_modeler.browser;
 
-import cl.minsal.semantikos.kernel.components.CategoryManager;
-import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.kernel.components.QueryManager;
-import cl.minsal.semantikos.kernel.components.DrugsManager;
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.User;
-import cl.minsal.semantikos.model.relationships.Relationship;
-import org.primefaces.model.DefaultTreeNode;
-import org.primefaces.model.TreeNode;
+import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
+import cl.minsal.semantikos.kernel.auth.UserManager;
+import cl.minsal.semantikos.kernel.components.*;
+import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.browser.DescriptionQuery;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -33,7 +33,26 @@ public class DescriptionsBrowserBean implements Serializable {
     static final Logger logger = LoggerFactory.getLogger(DescriptionsBrowserBean.class);
 
     @EJB
-    DrugsManager drugsManager;
+    QueryManager queryManager;
+
+    @EJB
+    RefSetManager refSetManager;
+
+    @EJB
+    HelperTableManager helperTableManager;
+
+    @EJB
+    UserManager userManager;
+
+    /**
+     * Objeto de consulta: contiene todos los filtros y columnas necesarios para el despliegue de los resultados en el navegador
+     */
+    private DescriptionQuery descriptionQuery;
+
+    /**
+     * Lista de tags para el despliegue del filtro por tags
+     */
+    private List<Category> categories = new ArrayList<Category>();
 
     /**
      * Lista de usuarios para el despliegue del filtro por usuarios
@@ -43,18 +62,11 @@ public class DescriptionsBrowserBean implements Serializable {
     /**
      * Lista de conceptos para el despliegue del resultado de la consulta
      */
-    private List<ConceptSMTK> concepts;
+    private LazyDataModel<Description> descriptions;
 
-    private List<ConceptSMTK> conceptHierarchies;
 
-    private ConceptSMTK conceptSelected = null;
-
-    private Long[] drugsCategories;
-
-    private TreeNode root;
-
-    @EJB
-    private QueryManager queryManager;
+    @ManagedProperty(value = "#{authenticationBean}")
+    private AuthenticationBean authenticationBean;
 
     @EJB
     private CategoryManager categoryManager;
@@ -64,92 +76,130 @@ public class DescriptionsBrowserBean implements Serializable {
 
     @PostConstruct
     public void init(){
-        root = new DefaultTreeNode(new ConceptSMTK(categoryManager.getCategoryById(39)), null);
-        drugsCategories = getCategoryValues(drugsManager.getDrugsCategories());
+        categories = categoryManager.getCategories();
     }
 
-    public ConceptSMTK getConceptSelected() {
-        return conceptSelected;
-    }
+    /**
+     * Este método es el responsable de ejecutar la consulta
+     */
+    public void executeQuery() {
 
-    public void setConceptSelected(ConceptSMTK conceptSelected) {
-        if(conceptSelected==null)
-            return;
-        this.conceptSelected = conceptSelected;
-        conceptHierarchies = drugsManager.getDrugsConceptHierarchies(this.conceptSelected);
-        root = new DefaultTreeNode(new ConceptSMTK(categoryManager.getCategoryById(39)), null);
-        mapConcepts(conceptHierarchies, root);
-        //this.conceptSelected = null;
-    }
+        /**
+         * Si el objeto de consulta no está inicializado, inicializarlo
+         */
+        if(descriptionQuery == null)
+            descriptionQuery = queryManager.getDefaultDescriptionQuery();
 
-    public void resetConceptSelected(){
-        conceptSelected= null;
-    }
+        /**
+         * Ejecutar la consulta
+         */
+        descriptions = new LazyDataModel<Description>() {
+            @Override
+            public List<Description> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
-    public TreeNode mapConcepts(List<ConceptSMTK> concepts, TreeNode treeNode) {
+                //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
-        treeNode.setExpanded(true);
+                descriptionQuery.setPageNumber(first);
+                descriptionQuery.setPageSize(pageSize);
+                descriptionQuery.setOrder(new Integer(sortField));
 
-        for (ConceptSMTK concept : concepts) {
+                if(sortOrder.name().substring(0,3).toLowerCase().equals("asc"))
+                    descriptionQuery.setAsc(sortOrder.name().substring(0,3).toLowerCase());
+                else
+                    descriptionQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
 
-            if(!concept.isRelationshipsLoaded())
-                return treeNode;
+                List<Description> descriptions = queryManager.executeQuery(descriptionQuery);
 
-            TreeNode childTreeNode = new DefaultTreeNode(concept, treeNode);
+                this.setRowCount(queryManager.countQueryResults(descriptionQuery));
 
-            List<ConceptSMTK> childConcepts = new ArrayList<>();
-
-            for (Relationship relationship : concept.getRelationships()) {
-                childConcepts.add((ConceptSMTK)relationship.getTarget());
+                return descriptions;
             }
 
-            mapConcepts(childConcepts, childTreeNode);
+        };
+
+    }
+
+    public DescriptionQuery getDescriptionQuery() {
+        return descriptionQuery;
+    }
+
+    public List<RefSet> getRefSetsSearchInput(String patron) {
+
+        return refSetManager.getRefsetsBy(Arrays.asList(descriptionQuery.getCategoryValues()), patron);
+    }
+
+    public List<Category> getCategoriesSearchInput(String patron) {
+
+        List<Category> someCategories = new ArrayList<>();
+
+        for (Category category : categoryManager.getCategories()) {
+            if(category.getName().toLowerCase().contains(patron.toLowerCase()))
+                someCategories.add(category);
         }
 
-        return root;
+        return someCategories;
     }
 
-    public DrugsManager getDrugsManager() {
-        return drugsManager;
+
+    public LazyDataModel<Description> getDescriptions() {
+        return descriptions;
     }
 
-    public void setDrugsManager(DrugsManager drugsManager) {
-        this.drugsManager = drugsManager;
+    public void setDescriptions(LazyDataModel<Description> descriptions) {
+        this.descriptions = descriptions;
     }
 
-    public List<ConceptSMTK> getConceptSearchInput(String patron) {
-
-        concepts = conceptManager.findConceptBy(patron, drugsCategories, 0, 30);
-
-        return concepts;
+    public CategoryManager getCategoryManager() {
+        return categoryManager;
     }
 
-    public Long[] getCategoryValues(List<Category> drugsCategories){
+    public void setCategoryManager(CategoryManager categoryManager) {
+        this.categoryManager = categoryManager;
+    }
 
-        List<Long> categoryValues = new ArrayList<>();
+    public List<User> getUsers() {
+        return users;
+    }
 
-        for (Category category : drugsCategories)
-            categoryValues.add(category.getId());
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
-        if(categoryValues.isEmpty())
-            return null;
+    public HelperTableManager getHelperTableManager() {
+        return helperTableManager;
+    }
 
-        else {
-            Long[] array = new Long[categoryValues.size()];
-            return categoryValues.toArray(array);
+    public void setHelperTableManager(HelperTableManager helperTableManager) {
+        this.helperTableManager = helperTableManager;
+    }
+
+    public ConceptManager getConceptManager() {
+        return conceptManager;
+    }
+
+    public void setConceptManager(ConceptManager conceptManager) {
+        this.conceptManager = conceptManager;
+    }
+
+    public AuthenticationBean getAuthenticationBean() {
+        return authenticationBean;
+    }
+
+    public void setAuthenticationBean(AuthenticationBean authenticationBean) {
+        this.authenticationBean = authenticationBean;
+    }
+
+    public String stringifyCategories(List<Category> categories){
+        if(categories.isEmpty())
+            return "Categorías...";
+
+        String stringCategories= "";
+
+        for (Category category : categories) {
+            stringCategories= stringCategories.concat(category.getName()).concat(", ");
         }
-    }
 
-    public TreeNode getRoot() {
-        return root;
-    }
-
-    public List<ConceptSMTK> getConceptHierarchies() {
-        return conceptHierarchies;
-    }
-
-    public void setConceptHierarchies(List<ConceptSMTK> conceptHierarchies) {
-        this.conceptHierarchies = conceptHierarchies;
+        return  stringCategories;
     }
 }
 

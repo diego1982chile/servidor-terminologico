@@ -36,7 +36,7 @@ public class QueryManagerImpl implements QueryManager {
     private RelationshipDAO relationshipDAO;
 
     @Override
-    public GeneralQuery getDefaultQueryByCategory(Category category) {
+    public GeneralQuery getDefaultGeneralQuery(Category category) {
 
         GeneralQuery query = new GeneralQuery();
 
@@ -89,6 +89,14 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    public DescriptionQuery getDefaultDescriptionQuery() {
+
+        DescriptionQuery query = new DescriptionQuery();
+
+        return query;
+    }
+
+    @Override
     public List<ConceptSMTK> executeQuery(GeneralQuery query) {
 
         //return conceptQueryDAO.callQuery(query);
@@ -134,7 +142,12 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
-    public int countConceptQuery(GeneralQuery query) {
+    public int countQueryResults(GeneralQuery query) {
+        return (int)queryDAO.countByQuery(query);
+    }
+
+    @Override
+    public int countQueryResults(DescriptionQuery query) {
         return (int)queryDAO.countByQuery(query);
     }
 
