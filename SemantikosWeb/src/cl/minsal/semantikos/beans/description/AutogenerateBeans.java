@@ -40,6 +40,11 @@ public class AutogenerateBeans {
                 ConceptSMTK conceptRelationship = ((ConceptSMTK) relationship.getTarget());
                 concept.getDescriptionFSN().setCaseSensitive(conceptRelationship.getDescriptionFSN().isCaseSensitive());
             }
+            if (relationshipDefinition.getId() == 48) {
+                ConceptSMTK conceptRelationship = ((ConceptSMTK) relationship.getTarget());
+                concept.getDescriptionFSN().setCaseSensitive(conceptRelationship.getDescriptionFSN().isCaseSensitive());
+                concept.getDescriptionFavorite().setCaseSensitive(conceptRelationship.getDescriptionFSN().isCaseSensitive());
+            }
         }
     }
 
