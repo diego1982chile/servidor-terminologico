@@ -63,8 +63,12 @@ public class SnomedBeans {
      * @return retorna true o false segun corresponda.
      */
     public boolean existRelationshipISAMapping(ConceptSMTKWeb concept) {
+
         for (Relationship relationship : concept.getRelationshipsWeb()) {
-            return isMapping(relationship);
+            boolean isAMapping= isMapping(relationship);
+            if(isAMapping){
+                return true;
+            }
         }
         return false;
     }
