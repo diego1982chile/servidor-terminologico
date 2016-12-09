@@ -104,6 +104,17 @@ public class ConceptBean implements Serializable {
     @ManagedProperty( value = "#{snomedBean}")
     private SnomedBeans snomedBeans;
 
+    @ManagedProperty( value = "#{sensibilityBean}")
+    private SensibilityDescriptionDefaultBean sensibilityDescriptionDefaultBean;
+
+    public SensibilityDescriptionDefaultBean getSensibilityDescriptionDefaultBean() {
+        return sensibilityDescriptionDefaultBean;
+    }
+
+    public void setSensibilityDescriptionDefaultBean(SensibilityDescriptionDefaultBean sensibilityDescriptionDefaultBean) {
+        this.sensibilityDescriptionDefaultBean = sensibilityDescriptionDefaultBean;
+    }
+
     public SnomedBeans getSnomedBeans() {
         return snomedBeans;
     }
@@ -413,6 +424,9 @@ public class ConceptBean implements Serializable {
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = initConcept(conceptSMTK, term);
         concept.setEditable(editable);
+
+        concept.getDescriptionFSN().setCaseSensitive(sensibilityDescriptionDefaultBean.sensibility(category.getId()));
+        concept.getDescriptionFavorite().setCaseSensitive(sensibilityDescriptionDefaultBean.sensibility(category.getId()));
         // Se crea una copia con la imagen original del concepto
         _concept = initConcept(conceptSMTK, term);
 
