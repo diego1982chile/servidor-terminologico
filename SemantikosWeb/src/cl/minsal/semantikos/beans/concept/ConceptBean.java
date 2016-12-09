@@ -380,6 +380,7 @@ public class ConceptBean implements Serializable {
                 }
             }
         }
+        changeMCSpecial();
     }
 
     //Este método es responsable de a partir de un concepto SMTK y un término, devolver un concepto WEB con su FSN y su Preferida
@@ -1300,12 +1301,22 @@ public class ConceptBean implements Serializable {
         }
     }
 
+    public boolean isMCSpecial(RelationshipDefinition relationshipDefinition) {
+        if(relationshipDefinition.getId()==74){
+            return true;
+        }return false;
+    }
+
+
     public void changeMCSpecial() {
         for (Relationship relationship : concept.getValidRelationships()) {
             if (relationship.getRelationshipDefinition().getId() == 74) {
-                if (((BasicTypeValue<String>) relationship.getTarget()).getValue().equalsIgnoreCase("No"))
-                    changeMultiplicityToRequiredRelationshipDefinitionMC();
-                else changeMultiplicityNotRequiredRelationshipDefinitionMC();
+                if (((BasicTypeValue<String>) relationship.getTarget()).getValue().equalsIgnoreCase("No")){
+                    if(!concept.isModeled())changeMultiplicityToRequiredRelationshipDefinitionMC();
+                }
+                else{
+                    if(!concept.isModeled())changeMultiplicityNotRequiredRelationshipDefinitionMC();
+                }
             }
         }
     }
