@@ -33,7 +33,7 @@
                         <h:outputText value="#{pendingTerm.relatedDescription.uses}"/>
                     </p:column>
                     <p:column headerText="Lugar">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{pendingTerm.placeOrigin}"/>
                     </p:column>
                     <p:column headerText="Observación">
                         <h:outputText value="#{pendingTerm.observation}"/>
@@ -150,12 +150,12 @@
                 </p:panel>
             </p:dialog>
 
-            <!-- Trasladar descripciones a conceptos -->
+            <!-- Consulta término pendiente -->
             <p:dialog id="dialogC" header="Consulta termino pendiente" widgetVar="dialogC" global="true"
                       showEffect="fade" hideEffect="fade">
                 <p:panel styleClass="query-pending-description">
 
-                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6">
+                    <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
 
                         <p:outputLabel id="termLabel" for="term" value="Término"/>
                         <p:inputText id="term" value="#{managerPendingTermsBean.termSelected.term}" disabled="true"/>
@@ -190,10 +190,19 @@
                         <p:inputText type="mail" id="mail" value="#{managerPendingTermsBean.termSelected.mail}"
                                      disabled="true"/>
 
-                        <p:outputLabel id="observationLabel" for="observation" value="Observación"/>
-                        <p:inputText type="text" id="observation"
-                                     value="#{managerPendingTermsBean.termSelected.observation}" disabled="true"/>
 
+
+                        <p:outputLabel id="placeLabel" for="place" value="Lugar de origen"/>
+                        <p:inputTextarea type="text" id="place"
+                                         value="#{managerPendingTermsBean.termSelected.placeOrigin}" disabled="true"/>
+
+                        <p:outputLabel id="userLabel" for="uses" value="Usos"/>
+                        <p:inputText type="text" id="uses"
+                                     value="#{managerPendingTermsBean.termSelected.relatedDescription.uses}" disabled="true"/>
+
+                        <p:outputLabel id="observationLabel" for="observation" value="Observación"/>
+                        <p:inputTextarea type="text" id="observation"
+                                         value="#{managerPendingTermsBean.termSelected.observation}" disabled="true"/>
                     </h:panelGrid>
 
                 </p:panel>

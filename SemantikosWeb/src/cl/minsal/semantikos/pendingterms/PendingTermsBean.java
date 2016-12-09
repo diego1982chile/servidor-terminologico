@@ -51,6 +51,7 @@ public class PendingTermsBean {
     private String subspeciality;
 
     private String observation;
+    private String placeOrigin;
 
     public PendingTermsBean() {
         this.term = "Un término";
@@ -62,6 +63,7 @@ public class PendingTermsBean {
         this.subspeciality = "Cerebro";
         this.mail = "gustavo.punucura@gmail.com";
         this.observation = "Observación " + this.date;
+        this.placeOrigin= "Hospital Santiago";
     }
 
     public String getTerm() {
@@ -152,13 +154,21 @@ public class PendingTermsBean {
         this.authenticationBean = authenticationBean;
     }
 
+    public String getPlaceOrigin() {
+        return placeOrigin;
+    }
+
+    public void setPlaceOrigin(String placeOrigin) {
+        this.placeOrigin = placeOrigin;
+    }
+
     public void save() {
 
         logger.info("Se está grabando el término pendiente: " + this);
         FacesContext context = FacesContext.getCurrentInstance();
 
         Category category = categoryManager.getCategoryById(categoryId);
-        PendingTerm pendingTerm = new PendingTerm(term, date, sensibility, category, nameProfessional, profession, speciality, subspeciality, mail, observation);
+        PendingTerm pendingTerm = new PendingTerm(term, date, sensibility, category, nameProfessional, profession, speciality, subspeciality, mail, observation,placeOrigin);
 
         User loggedUser = authenticationBean.getLoggedUser();
         try {
