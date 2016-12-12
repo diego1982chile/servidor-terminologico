@@ -105,6 +105,9 @@ public class ConceptBean implements Serializable {
     @ManagedProperty( value = "#{snomedBean}")
     private SnomedBeans snomedBeans;
 
+    @ManagedProperty( value = "#{sctBean}")
+    private SCTTypeBean sctTypeBean;
+
     @ManagedProperty( value = "#{sensibilityBean}")
     private SensibilityDescriptionDefaultBean sensibilityDescriptionDefaultBean;
 
@@ -114,6 +117,14 @@ public class ConceptBean implements Serializable {
 
     public void setSensibilityDescriptionDefaultBean(SensibilityDescriptionDefaultBean sensibilityDescriptionDefaultBean) {
         this.sensibilityDescriptionDefaultBean = sensibilityDescriptionDefaultBean;
+    }
+
+    public SCTTypeBean getSctTypeBean() {
+        return sctTypeBean;
+    }
+
+    public void setSctTypeBean(SCTTypeBean sctTypeBean) {
+        this.sctTypeBean = sctTypeBean;
     }
 
     public SnomedBeans getSnomedBeans() {
@@ -502,6 +513,11 @@ public class ConceptBean implements Serializable {
             return;
         }
         Relationship relationship = relationshipPlaceholders.get(relationshipDefinition.getId());
+
+        if(relationshipDefinition.isSNOMEDCT()){
+           BasicTypeValue<Integer> targetGroup = new BasicTypeValue<Integer>(sctTypeBean.getRelationshipGroup());
+            relationship.getRelationshipAttributes().add(new RelationshipAttribute( relationshipDefinition.getGroupAttributeDefinition(),relationship,targetGroup));
+        }
 
         // Validar placeholders de targets de relacion
         if (relationship.getTarget() == null) {
