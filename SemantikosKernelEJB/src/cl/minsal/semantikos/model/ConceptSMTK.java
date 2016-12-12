@@ -255,7 +255,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
         List<SnomedCTRelationship> snomedRelationships = new ArrayList<>();
         for (Relationship relationship : relationships) {
-            if (SnomedCTRelationship.isSnomedCTRelationship(relationship)) {
+            if (SnomedCTRelationship.isSnomedCTRelationship(relationship) && relationship.isValid()) {
                 snomedRelationships.add(SnomedCTRelationship.createSnomedCT(relationship));
             }
         }

@@ -17,6 +17,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model.snomedct.RelationshipSCT;
 import cl.minsal.semantikos.util.Pair;
 import cl.minsal.semantikos.view.components.ViewAugmenter;
 import org.primefaces.event.ReorderEvent;
@@ -698,6 +699,7 @@ public class ConceptBean implements Serializable {
         concept.removeRelationship(r);
         autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC);
         crossmapBean.refreshCrossmapIndirect(concept);
+
     }
 
     /**
@@ -967,6 +969,7 @@ public class ConceptBean implements Serializable {
         att2.setTarget(new BasicTypeValue(sourceOrder));
 
         RelationshipDefinition relationshipDefinitionRowEdit = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinitionRowEdit");
+        if(relationshipDefinitionRowEdit==null)relationshipDefinitionRowEdit=relationshipDefinition;
         autogenerateBeans.autogenerateOrder(concept,autoGenerateList,relationshipDefinitionRowEdit,autogenerateMC,event);
     }
 
