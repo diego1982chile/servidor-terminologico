@@ -71,7 +71,7 @@
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                             icon="fa fa-plus"
                             title="Agregar"
-                            disabled="#{conceptBean.limitRelationship(cc.attrs.relationshipDefinition)}"
+                            disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
                     >
 
                     </p:commandButton>
@@ -107,7 +107,7 @@
                     <p:commandButton icon="fa fa-trash" title="Eliminar"
                                      action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                      update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                                     process="@this">
+                                     process="@this" >
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
@@ -132,7 +132,7 @@
                                 converter="conceptConverter"
                                 styleClass="fragments"
                                 var="concept"
-                                disabled="#{conceptBean.limitRelationship(cc.attrs.relationshipDefinition)}"
+                                disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
                                 rendered="#{cc.attrs.concept.editable}"
                                 value="#{conceptBean.conceptSelected}"
                                 itemLabel="#{concept.descriptionFavorite.term}"
@@ -213,7 +213,7 @@
                                 placeholder="Buscar..."
                                 converter="conceptConverter"
                                 var="concept"
-                                disabled="#{conceptBean.limitRelationship(cc.attrs.relationshipDefinition)}"
+                                disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
                                 value="#{conceptBean.conceptSelected}"
                                 itemLabel="#{concept.descriptionFavorite.term}"
                                 itemValue="#{concept}">
@@ -314,7 +314,7 @@
                 <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
                     <p:commandButton icon="fa fa-trash" title="Eliminar"
                                      action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
-                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})"
+                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                      process="@this">
                     </p:commandButton>
                 </p:column>

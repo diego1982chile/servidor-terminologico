@@ -12,7 +12,7 @@
             <p:panel styleClass="tableTermPending">
                 <p:dataTable widgetVar="pendingTermTable" value="#{managerPendingTermsBean.pendingTerms}"
                              var="pendingTerm" filteredValue="#{managerPendingTermsBean.pendingTermsListFilter}">
-                    <p:column headerText="Categoría" filterBy="#{pendingTerm.category.name}" footerText="exact"
+                    <p:column headerText="Categoría" filterBy="#{pendingTerm.category.name}"
                               filterMatchMode="exact" style="width: 400px;">
                         <f:facet name="filter">
                             <p:selectOneMenu onchange="PF('pendingTermTable').filter()">
@@ -22,8 +22,8 @@
                         </f:facet>
                         <h:outputText value="#{pendingTerm.category.name}"/>
                     </p:column>
-                    <p:column headerText="Término" filterBy="#{pendingTerm.term}" footerText="contains"
-                              filterMatchMode="contains">
+                    <p:column headerText="Término" filterBy="#{pendingTerm.term}"
+                              filterMatchMode="contains" sortBy="#{pendingTerm.term}">
                         <h:outputText value="#{pendingTerm.term}"/>
                     </p:column>
                     <p:column headerText="DESCID">
@@ -33,7 +33,7 @@
                         <h:outputText value="#{pendingTerm.relatedDescription.uses}"/>
                     </p:column>
                     <p:column headerText="Lugar">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{pendingTerm.placeOrigin}"/>
                     </p:column>
                     <p:column headerText="Observación">
                         <h:outputText value="#{pendingTerm.observation}"/>
@@ -46,10 +46,15 @@
                                                          target="#{managerPendingTermsBean.termSelected}"/>
                             <f:setPropertyActionListener value=""
                                                          target="#{managerPendingTermsBean.conceptSMTKSelected}"/>
+                            <f:setPropertyActionListener value=""
+                                                         target="#{findConceptBean.categorySelected}"/>
                         </p:commandLink>
 
-                        <p:commandLink title="Crear nuevo concepto" actionListener="#{managerPendingTermsBean.createNewConcept(pendingTerm)}">
+                        <p:commandLink oncomplete="PF('dialogNC').show()" title="Crear nuevo concepto">
                             <i class="fa fa-plus fa-lg"/>
+                            <f:setPropertyActionListener value="#{pendingTerm}"
+                                                         target="#{managerPendingTermsBean.termSelected}"/>
+                            <f:setPropertyActionListener value="" target="#{managerPendingTermsBean.categorySelected}" />
                         </p:commandLink>
 
                         <p:commandLink title="Consultar" oncomplete="PF('dialogC').show()"
@@ -96,20 +101,22 @@
 
                         </p:autoComplete>
 
-
-                        <p:selectCheckboxMenu style="width: 300px; margin: 10px;" id="menu"
-                                              value="#{findConceptBean.categoryArrayID}" label="Filtro categorías"
-                                              filter="true" filterMatchMode="startsWith"
-                                              disabled="#{managerPendingTermsBean.conceptSMTKSelected!=null}">
-
+                        <p:selectOneMenu  value="#{findConceptBean.categorySelected}"
+                                         converter="omnifaces.SelectItemsConverter" panelStyle="width:180px"
+                                         effect="fade" var="c" style="width:160px" filter="true"
+                                         filterMatchMode="startsWith"
+                                          disabled="#{managerPendingTermsBean.conceptSMTKSelected!=null}">
+                            <p:ajax event="itemSelect"></p:ajax>
+                            <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
                             <f:selectItems value="#{findConceptBean.categoryList}" var="category"
-                                           itemLabel="#{category.name}" itemValue="#{category.id}"/>
-                            <p:ajax event="toggleSelect"
-                                    listener="#{findConceptBean.getConceptSearchInputAndCategories}"
-                                    update="inputFindConcept"></p:ajax>
-                            <p:ajax listener="#{findConceptBean.getConceptSearchInputAndCategories}"
-                                    update="inputFindConcept"></p:ajax>
-                        </p:selectCheckboxMenu>
+                                           itemLabel="#{category.name}" itemValue="#{category}"/>
+                            <p:column>
+                                <h:outputText value="#{c.name}"/>
+                            </p:column>
+                        </p:selectOneMenu>
+
+
+
                     </h:panelGrid>
 
                     <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6">
@@ -143,12 +150,12 @@
                 </p:panel>
             </p:dialog>
 
-            <!-- Trasladar descripciones a conceptos -->
+            <!-- Consulta término pendiente -->
             <p:dialog id="dialogC" header="Consulta termino pendiente" widgetVar="dialogC" global="true"
                       showEffect="fade" hideEffect="fade">
                 <p:panel styleClass="query-pending-description">
 
-                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6">
+                    <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
 
                         <p:outputLabel id="termLabel" for="term" value="Término"/>
                         <p:inputText id="term" value="#{managerPendingTermsBean.termSelected.term}" disabled="true"/>
@@ -183,17 +190,47 @@
                         <p:inputText type="mail" id="mail" value="#{managerPendingTermsBean.termSelected.mail}"
                                      disabled="true"/>
 
-                        <p:outputLabel id="observationLabel" for="observation" value="Observación"/>
-                        <p:inputText type="text" id="observation"
-                                     value="#{managerPendingTermsBean.termSelected.observation}" disabled="true"/>
+                        <p:outputLabel id="placeLabel" for="place" value="Lugar de origen"/>
+                        <p:inputText type="text" id="place"
+                                         value="#{managerPendingTermsBean.termSelected.placeOrigin}" disabled="true"/>
 
+                        <p:outputLabel id="userLabel" for="uses" value="Usos"/>
+                        <p:inputText type="text" id="uses"
+                                     value="#{managerPendingTermsBean.termSelected.relatedDescription.uses}" disabled="true"/>
+
+                        <p:outputLabel id="observationLabel" for="observation" value="Observación"/>
+                        <p:inputTextarea type="text" id="observation"
+                                         value="#{managerPendingTermsBean.termSelected.observation}" disabled="true"/>
                     </h:panelGrid>
 
                 </p:panel>
             </p:dialog>
 
 
+            <!-- Crear nuevo concepto -->
+            <p:dialog id="dialogNC" header="Consulta termino pendiente" widgetVar="dialogNC" global="true"
+                      showEffect="fade" hideEffect="fade">
+                <p:panel styleClass="query-pending-description">
 
+
+                    <p:selectOneMenu id="parentTag" value="#{managerPendingTermsBean.categorySelected}"
+                                     converter="omnifaces.SelectItemsConverter" panelStyle="width:60%"
+                                     effect="fade" var="c" style="width:90%" filter="true"
+                                     filterMatchMode="startsWith" >
+                        <p:ajax/>
+                        <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
+                        <f:selectItems value="#{managerPendingTermsBean.categories}" var="category"
+                                       itemLabel="#{category.name}" itemValue="#{category}"/>
+                        <p:column>
+                            <h:outputText value="#{c.name}"/>
+                        </p:column>
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Crear concepto" actionListener="#{managerPendingTermsBean.createNewConcept(managerPendingTermsBean.termSelected)}"/>
+
+
+                </p:panel>
+            </p:dialog>
 
         </h:form>
 

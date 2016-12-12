@@ -76,7 +76,7 @@ public class ConceptCreationBR implements BusinessRulesContainer {
 
         /* Categorías restringidas para usuarios con rol diseñador */
         if (conceptSMTK.getCategory().isRestriction()) {
-            if (user.getProfiles().contains(MODELER_PROFILE)) {
+            if (!user.getProfiles().contains(MODELER_PROFILE)) {
                 logger.info("Se intenta violar la regla de negocio BR-SMTK-001 por el usuario " + user);
                 throw new BusinessRuleException("BR-SMTK-001", "El usuario " + user + " no tiene privilegios para crear conceptos de la categoría " + conceptSMTK.getCategory());
             }

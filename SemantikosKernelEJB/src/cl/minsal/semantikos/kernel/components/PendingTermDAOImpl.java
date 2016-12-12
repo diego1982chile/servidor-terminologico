@@ -49,7 +49,7 @@ public class PendingTermDAOImpl implements PendingTermDAO {
          * param 9: id user
          * param 10: id concepto
          */
-        String sql = "{call semantikos.create_pending_term(?,?,?,?,?,?,?,?,?,?)}";
+        String sql = "{call semantikos.create_pending_term(?,?,?,?,?,?,?,?,?,?,?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -63,6 +63,7 @@ public class PendingTermDAOImpl implements PendingTermDAO {
             call.setString(8, pendingTerm.getSubSpeciality());
             call.setString(9, pendingTerm.getMail());
             call.setString(10, pendingTerm.getObservation());
+            call.setString(11,pendingTerm.getPlaceOrigin());
 
             call.execute();
 
@@ -152,8 +153,9 @@ public class PendingTermDAOImpl implements PendingTermDAO {
         String observation = resultSet.getString("observation");
         Timestamp submissionDate = resultSet.getTimestamp("submission_date");
         Description description = descriptionDAO.getDescriptionBy(resultSet.getLong("id_description"));
+        String placeOrigin = resultSet.getString("place_origin");
 
-        PendingTerm pendingTerm = new PendingTerm(id, term, submissionDate, sensibility, categoryDAO.getCategoryById(idCategory), nameProfessional, profession, specialty, subSpecialty, mail, observation);
+        PendingTerm pendingTerm = new PendingTerm(id, term, submissionDate, sensibility, categoryDAO.getCategoryById(idCategory), nameProfessional, profession, specialty, subSpecialty, mail, observation, placeOrigin);
         pendingTerm.setRelatedDescription(description);
 
         return pendingTerm;

@@ -803,7 +803,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public boolean hasES_UN_MAPEO() {
 
         for (SnomedCTRelationship snomedCTRelationship : getRelationshipsSnomedCT()) {
-            if (snomedCTRelationship.isES_UN_MAPEO_DE()) return true;
+            if (snomedCTRelationship.isES_UN_MAPEO()) return true;
         }
 
         return false;

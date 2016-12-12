@@ -148,14 +148,14 @@ public class RelationshipDefinition {
         this.relationshipAttributeDefinitions = relationshipAttributeDefinitions;
     }
 
-    public boolean hasRelationshipAttributeDefinitions(){
+    public boolean hasRelationshipAttributeDefinitions() {
         return !relationshipAttributeDefinitions.isEmpty();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if(o!=null)if(this.id == ((RelationshipDefinition) o).getId()) return true;
+        if (o != null) if (this.id == ((RelationshipDefinition) o).getId()) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         RelationshipDefinition that = (RelationshipDefinition) o;
@@ -171,16 +171,16 @@ public class RelationshipDefinition {
     }
 
 
-    public RelationshipAttributeDefinition getOrderAttributeDefinition(){
+    public RelationshipAttributeDefinition getOrderAttributeDefinition() {
         for (RelationshipAttributeDefinition relationshipAttributeDefinition : getRelationshipAttributeDefinitions()) {
-            if(relationshipAttributeDefinition.isOrderAttribute()){
+            if (relationshipAttributeDefinition.isOrderAttribute()) {
                 return relationshipAttributeDefinition;
             }
         }
         return null;
     }
 
-    public boolean isISP(){
+    public boolean isISP() {
         return this.getName().equalsIgnoreCase(HelperTableFactory.ISP);
     }
 
@@ -193,7 +193,7 @@ public class RelationshipDefinition {
         return helperTable.getName().equals(HelperTableFactory.HT_ATC_NAME);
     }
 
-    public boolean isBioequivalente(){
+    public boolean isBioequivalente() {
         return this.getName().equalsIgnoreCase(HelperTableFactory.BIOEQUIVALENTE);
     }
 

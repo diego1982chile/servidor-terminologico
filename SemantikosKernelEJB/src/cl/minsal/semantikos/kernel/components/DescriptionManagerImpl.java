@@ -66,6 +66,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         /* Se crea la descripción */
         Description description = new Description(concept, term, descriptionType);
+        //TODO: AL implementar los webservices este se podria encargar de asignar el description ID
+        description.setDescriptionId(generateDescriptionId());
 
         /* Se aplican las reglas de negocio para crear la Descripción y se persiste y asocia al concepto */
         new DescriptionBindingBR().applyRules(concept, description, user);
@@ -166,14 +168,17 @@ public class DescriptionManagerImpl implements DescriptionManager {
         }
     }
 
+    @EJB
+    private DescriptionTranslationBR descriptionTranslationBR;
+
     @Override
     public void moveDescriptionToConcept(ConceptSMTK sourceConcept, Description description, User user) {
 
         ConceptSMTK targetConcept = description.getConceptSMTK();
 
         /* Se aplican las reglas de negocio para el traslado */
-        DescriptionTranslationBR descriptionTranslationBR = new DescriptionTranslationBR();
-        descriptionTranslationBR.validatePreConditions(description, targetConcept);
+
+        descriptionTranslationBR.validatePreConditions(sourceConcept, description, targetConcept);
 
         /* Se realiza la actualización a nivel del modelo lógico */
 
@@ -188,7 +193,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         description.setConceptSMTK(targetConcept);
 
         /* Se aplican las reglas de negocio asociadas al movimiento de un concepto */
-        descriptionTranslationBR.apply(targetConcept, description);
+        descriptionTranslationBR.apply(sourceConcept,targetConcept, description);
 
         /*Se cambia el estado de la descripción segun el concepto*/
 

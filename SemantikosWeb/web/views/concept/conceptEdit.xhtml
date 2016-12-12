@@ -202,13 +202,13 @@
                                                 <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
                                                                  styleClass="ui-priority-primary"
                                                                  value="Eliminar" type="submit" process="mainForm"
-                                                                 rendered="#{conceptBean.concept.persistent and not conceptBean.concept.modeled}"
+                                                                 rendered="#{conceptBean.concept.persistent and not conceptBean.concept.modeled and conceptBean.concept.editable}"
                                                                  update="growl, mainForm">
                                                     <p:confirm header="Confirmation" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
                                                 </p:commandButton>
 
                                                 <!-- Botón para Trasladar el concepto modelado -->
-                                                <smtk:trasnferConcept rendered="#{conceptBean.concept.modeled}" conceptSMTK="#{conceptBean.concept}"/>
+                                                <smtk:trasnferConcept rendered="#{conceptBean.concept.modeled and conceptBean.concept.editable}" conceptSMTK="#{conceptBean.concept}"/>
 
                                                 <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
                                                                  styleClass="ui-priority-primary"
@@ -219,24 +219,7 @@
                                                                message="¿Desea deshacer los cambios realizados en esta sesión?"
                                                                icon="ui-icon-alert"/>
                                                 </p:commandButton>
-                                                <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-ban"
-                                                                 styleClass="ui-priority-primary"
-                                                                 value="Invalidar" type="submit" process="mainForm"
-                                                                 rendered="#{conceptBean.concept.persistent and conceptBean.concept.modeled}"
-                                                                 update="growl, mainForm">
-                                                    <p:confirm header="Confirmation" message="¿Desea invalidar este concepto?"
-                                                               icon="ui-icon-alert"/>
-                                                </p:commandButton>
 
-                                                <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
-                                                                 styleClass="ui-priority-primary"
-                                                                 value="Deshacer" type="submit" process="mainForm"
-                                                                 rendered="#{conceptBean.concept.editable}"
-                                                                 update="growl, mainForm">
-                                                    <p:confirm header="Confirmation"
-                                                               message="¿Desea deshacer los cambios realizados en esta sesión?"
-                                                               icon="ui-icon-alert"/>
-                                                </p:commandButton>
 
                                                 <smtk:export-xls rendered="#{conceptBean.concept.modeled}" />
 

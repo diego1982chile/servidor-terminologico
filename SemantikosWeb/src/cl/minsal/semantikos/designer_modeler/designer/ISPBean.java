@@ -1,14 +1,15 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
+import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.components.HelperTableManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.components.ispfetcher.ISPFetcher;
+import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.primefaces.context.RequestContext;
 
@@ -17,8 +18,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import java.util.*;
 
 /**
@@ -76,8 +75,15 @@ public class ISPBean {
         for (RelationshipDefinition rd : conceptBean.getCategory().getRelationshipDefinitions()) {
             if(rd.isISP()) {
                 rd.getMultiplicity().setLowerBoundary(0);
+                if(conceptBean.getConcept().isPersistent()){
+                    List<Relationship> relationshipList =conceptBean.getConcept().getRelationshipsByRelationDefinition(rd);
+                    if(relationshipList.size()>0){
+                        existe=true;
+                    }
+                }
             }
         }
+
     }
 
 
@@ -128,7 +134,7 @@ public class ISPBean {
 
         //fetchedData = helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true).get(0).getFields();
         if(regnum.trim().equals("") || ano == null || ano == 0) {
-            conceptBean.messageError("Debe ingresar un valor para el dato 'RegNum' y 'RegAño'");
+            conceptBean.getMessageBean().messageError("Debe ingresar un valor para el dato 'RegNum' y 'RegAño'");
             return;
         }
 
@@ -280,5 +286,6 @@ verifica si el registro ya existe en la base de datos
 
         return  records.size() >0;
     }
+
 
 }

@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.pendingterms;
 
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
-import cl.minsal.semantikos.designer_modeler.designer.ConceptBean;
+import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
@@ -44,7 +44,7 @@ public class ManagerPendingTermsBean {
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
-    @ManagedProperty(value="#{conceptBean}")
+    @ManagedProperty(value = "#{conceptBean}")
     private ConceptBean conceptBean;
 
     public ConceptBean getConceptBean() {
@@ -69,6 +69,15 @@ public class ManagerPendingTermsBean {
 
     private ConceptSMTK conceptSMTKSelected;
 
+    private Category categorySelected;
+
+    public Category getCategorySelected() {
+        return categorySelected;
+    }
+
+    public void setCategorySelected(Category categorySelected) {
+        this.categorySelected = categorySelected;
+    }
 
     public ConceptSMTK getConceptSMTKSelected() {
         return conceptSMTKSelected;
@@ -125,6 +134,7 @@ public class ManagerPendingTermsBean {
     public void setAuthenticationBean(AuthenticationBean authenticationBean) {
         this.authenticationBean = authenticationBean;
     }
+
     @PostConstruct
     public void init() {
         conceptPending = conceptManager.getPendingConcept();
@@ -145,7 +155,7 @@ public class ManagerPendingTermsBean {
 
         try {
             descriptionManager.moveDescriptionToConcept(conceptPending, termSelected.getRelatedDescription(), user);
-        }catch (EJBException e){
+        } catch (EJBException e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
 
         }
@@ -157,8 +167,13 @@ public class ManagerPendingTermsBean {
     }
 
     public void createNewConcept(PendingTerm pendingT) throws IOException {
+
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-        eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + pendingT.getCategory().getId() +"&idConcept=0&favoriteDescription=&descriptionPending="+pendingT.getRelatedDescription().getId() );
+        if(categorySelected!=null){
+            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&descriptionPending="+pendingT.getRelatedDescription().getId() );
+        }else{
+            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + pendingT.getCategory().getId() +"&idConcept=0&favoriteDescription=&descriptionPending="+pendingT.getRelatedDescription().getId() );
+        }
     }
 
 
