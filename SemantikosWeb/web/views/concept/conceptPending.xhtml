@@ -8,6 +8,15 @@
                 template="/WEB-INF/template/template.xhtml">
 
     <ui:define name="content">
+
+        <p:panel>
+            <div style="text-align: center">
+                <h2>Navegador de conceptos pendientes</h2>
+            </div>
+
+        </p:panel>
+
+
         <h:form>
             <p:panel styleClass="tableTermPending">
                 <p:dataTable widgetVar="pendingTermTable" value="#{managerPendingTermsBean.pendingTerms}"
