@@ -10,10 +10,13 @@ import cl.minsal.semantikos.model.browser.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
+import sun.security.krb5.internal.crypto.Des;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -103,21 +106,29 @@ public class QueryManagerImpl implements QueryManager {
         List<ConceptSMTK> conceptSMTKs = queryDAO.executeQuery(query);
 
         for (ConceptSMTK conceptSMTK : conceptSMTKs) {
+
             if(!query.getColumns().isEmpty()) {
+
                 conceptSMTK.setRelationships(conceptManager.loadRelationships(conceptSMTK));
                 Category category = query.getCategories().get(0);
                 List<RelationshipDefinition> secondOrderAttributes = query.getSecondOrderDefinitions();
                 // Adding second order columns, if this apply
                 List<Relationship> secondOrderRelationships = new ArrayList<>();
+
                 for (RelationshipDefinition relationshipDefinition : getSourceSecondOrderShowableAttributesByCategory(category)) {
+
                     for (Relationship firstOrderRelationship : conceptSMTK.getRelationshipsByRelationDefinition(relationshipDefinition)) {
+
                         ConceptSMTK targetConcept = (ConceptSMTK)firstOrderRelationship.getTarget();
+
                         for (Relationship secondOrderRelationship : relationshipDAO.getRelationshipsBySourceConcept(targetConcept.getId())) {
+
                             if(secondOrderAttributes.contains(secondOrderRelationship.getRelationshipDefinition()))
                                 secondOrderRelationships.add(secondOrderRelationship);
                         }
                     }
                 }
+
                 conceptSMTK.getRelationships().addAll(secondOrderRelationships);
                 // Adding related concepts to relationships, if this apply
                 if(getShowableRelatedConceptsValue(category)){
@@ -136,8 +147,40 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public List<Description> executeQuery(DescriptionQuery query) {
 
-        //return conceptQueryDAO.callQuery(query);
-        return queryDAO.executeQuery(query);
+        List<Description> descriptions = queryDAO.executeQuery(query);
+
+        for (Description description : descriptions) {
+
+            Relationship otherThanFullyDefinitional = null;
+
+            for (Relationship relationship : conceptManager.getRelationships(description.getConceptSMTK()) ) {
+
+                if(relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()){
+
+                    if(otherThanFullyDefinitional == null)
+                        otherThanFullyDefinitional = relationship;
+
+                    // Si existe una relación ES_UN_MAPEO, se agrega esta relación y se detiene la búsqueda
+                    SnomedCTRelationship fullyDefinitional = (SnomedCTRelationship) relationship;
+
+                    if(fullyDefinitional.isES_UN_MAPEO()) {
+                        description.getConceptSMTK().setRelationships(Arrays.asList(relationship));
+                        break;
+                    }
+
+                }
+
+            }
+
+            // Si no se encontró una relación ES_UN_MAPEO, se agrega la primera relación a SNOMED_CT encontrada
+            if(!description.getConceptSMTK().isRelationshipsLoaded()){
+                description.getConceptSMTK().setRelationships(Arrays.asList(otherThanFullyDefinitional));
+            }
+
+        }
+
+        return descriptions;
+        //return queryDAO.executeQuery(query);
 
     }
 

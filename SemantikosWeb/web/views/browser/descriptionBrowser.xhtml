@@ -33,11 +33,11 @@
                                                      sortBy="#{1}"
                                                      paginator="true" lazy="true" dynamic="true"
                                                      paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                                     emptyMessage="No se han encontrado conceptos con los criterios utilizados">
+                                                     emptyMessage="No se han encontrado descripciones con los criterios utilizados">
 
                                             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-                                            <p:column headerText="Categoría" sortBy="#{1}" style="width:7%">
+                                            <p:column headerText="Categoría" sortBy="#{1}">
                                                 <h:outputText value="#{description.conceptSMTK.category.name}"/>
                                             </p:column>
 
@@ -45,38 +45,33 @@
                                                 <h:outputText value="#{description.term}"/>
                                             </p:column>
 
-                                            <p:column headerText="Tipo">
+                                            <p:column headerText="Tipo" style="width: 10%">
                                                 <h:outputText value="#{description.descriptionType.name}"/>
                                             </p:column>
 
-                                            <p:column headerText="STK_ID">
+                                            <p:column headerText="STK_ID" style="width: 10%">
                                                 <h:outputText value="#{description.conceptSMTK.conceptID}"/>
                                             </p:column>
 
-                                            <p:columns value="#{description.conceptSMTK.relationships}"
-                                                       var="relationship"
-                                                       columnIndexVar="colIndex">
-                                                <f:facet name="header">
-                                                    <h:outputText value="#{relationship.relationshipDefinition.name}" />
-                                                </f:facet>
+                                            <p:column headerText="SCT_ID" style="width: 10%">
                                                 <p:outputPanel>
-                                                    <smtk:smtkTypeCell relationshipDefinition="#{relationship.relationshipDefinition}"
+                                                    <smtk:sctTypeCell relationshipDefinition="#{description.conceptSMTK.relationships.get(0).relationshipDefinition}"
                                                                        concept="#{description.conceptSMTK}"
-                                                                       rendered="#{relationship.relationshipDefinition.targetDefinition.SCTType}"
+                                                                       rendered="#{description.conceptSMTK.relationships.get(0).relationshipDefinition.targetDefinition.snomedCTType}"
                                                     />
                                                 </p:outputPanel>
-                                            </p:columns>
+                                            </p:column>
 
                                             <p:column headerText="FSN_DSC">
                                                 <h:outputText value="#{description.conceptSMTK.descriptionFSN.term}"/>
                                             </p:column>
 
-                                            <p:column headerText="Acciones" exportable="false" style="text-align: center">
-                                                <p:button outcome="concept/conceptEdit" icon="fa fa-eye">
+                                            <p:column headerText="Acciones" exportable="false" style="width: 10%; text-align: center">
+                                                <p:button outcome="/views/concept/conceptEdit" icon="fa fa-eye">
                                                     <f:param name="editMode" value="#{false}" />
                                                     <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
                                                 </p:button>
-                                                <p:button outcome="concept/conceptEdit" icon="fa fa-edit">
+                                                <p:button outcome="/views/concept/conceptEdit" icon="fa fa-edit">
                                                     <f:param name="editMode" value="#{true}" />
                                                     <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
                                                 </p:button>
@@ -85,30 +80,7 @@
 
                                         </p:dataTable>
 
-                                        <!-- Diálogo para buscar la categoría y aceptar -->
-                                        <p:dialog id="dialogTC2-browser" header="Trasladar concepto" widgetVar="dialogTC2-browser" showEffect="fade" hideEffect="fade">
 
-                                            <p:panel id="conceptTranslate" styleClass="conceptTranslate" style="width: 100%; border: hidden;">
-                                                <h3>Trasladar Concepto a...</h3>
-                                                <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categiría propuesta"/>
-                                                <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.categoryId}" required="true">
-                                                    <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
-                                                                   itemLabel="#{category.name}"/>
-                                                </p:selectOneMenu>
-
-                                                <p:outputLabel value="id concepto: #{transferConceptBean.conceptSMTKSelected.id}" />
-                                                <p:commandButton value="Trasladar" actionListener="#{transferConceptBean.transferConcept(transferConceptBean.conceptSMTKSelected)}"
-                                                                 icon="fa fa-ban" styleClass="ui-priority-primary" />
-
-                                            </p:panel>
-                                        </p:dialog>
-
-                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes"
-                                                             icon="ui-icon-check"/>
-                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
-                                                             icon="ui-icon-close"/>
-                                        </p:confirmDialog>
                                     </h:form>
                                 </div>
                             </div>

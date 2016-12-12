@@ -98,6 +98,14 @@ public class DescriptionQuery {
             this.categories = categories;
     }
 
+    public List<DescriptionType> getDescriptionTypes() {
+        return descriptionTypes;
+    }
+
+    public void setDescriptionTypes(List<DescriptionType> descriptionTypes) {
+        this.descriptionTypes = descriptionTypes;
+    }
+
     public Long[] getCategoryValues(){
 
         List<Long> categoryValues = new ArrayList<>();

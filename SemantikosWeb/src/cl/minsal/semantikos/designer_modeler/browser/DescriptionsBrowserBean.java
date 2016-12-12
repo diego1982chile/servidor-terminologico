@@ -50,14 +50,14 @@ public class DescriptionsBrowserBean implements Serializable {
     private DescriptionQuery descriptionQuery;
 
     /**
-     * Lista de tags para el despliegue del filtro por tags
+     * Lista de categorías para el despliegue del filtro por categorías
      */
     private List<Category> categories = new ArrayList<Category>();
 
     /**
-     * Lista de usuarios para el despliegue del filtro por usuarios
+     * Lista de tipos de descripción para el despliegue del filtro por tipo
      */
-    private List<User> users = new ArrayList<User>();
+    private List<DescriptionType> descriptionTypes = new ArrayList<DescriptionType>();
 
     /**
      * Lista de conceptos para el despliegue del resultado de la consulta
@@ -77,6 +77,7 @@ public class DescriptionsBrowserBean implements Serializable {
     @PostConstruct
     public void init(){
         categories = categoryManager.getCategories();
+        descriptionTypes = DescriptionTypeFactory.getInstance().getDescriptionTypes();
     }
 
     /**
@@ -140,7 +141,6 @@ public class DescriptionsBrowserBean implements Serializable {
         return someCategories;
     }
 
-
     public LazyDataModel<Description> getDescriptions() {
         return descriptions;
     }
@@ -155,22 +155,6 @@ public class DescriptionsBrowserBean implements Serializable {
 
     public void setCategoryManager(CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public HelperTableManager getHelperTableManager() {
-        return helperTableManager;
-    }
-
-    public void setHelperTableManager(HelperTableManager helperTableManager) {
-        this.helperTableManager = helperTableManager;
     }
 
     public ConceptManager getConceptManager() {
@@ -201,5 +185,14 @@ public class DescriptionsBrowserBean implements Serializable {
 
         return  stringCategories;
     }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public List<DescriptionType> getDescriptionTypes() {
+        return descriptionTypes;
+    }
+
 }
 

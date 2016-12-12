@@ -17,37 +17,36 @@
 <composite:implementation>
 
     <p:outputPanel id="conceptFilters" styleClass="conceptFilters">
-        <div class="ui-g">
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+        <p:panelGrid  columns="6"  style="width: 100%"
+                      columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+                      layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+
                 <p:inputText value="#{cc.attrs.generalQuery.query}" style="margin-right:10px; width: 80%" placeholder="Buscar...">
                     <p:ajax event="keyup" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
                 </p:inputText>
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+
                 <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewed}" style="margin-right:10px; width: 60%">
                     <f:selectItem itemLabel="¿Revisar?" itemValue="#{null}"/>
                     <f:selectItem itemLabel="Sin Revisar" itemValue="#{false}"/>
                     <f:selectItem itemLabel="Revisar" itemValue="#{true}"/>
                     <p:ajax event="itemSelect" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
                 </p:selectOneMenu>
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+
                 <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeConsulted}" style="margin-right:10px; width: 60%">
                     <f:selectItem itemLabel="¿Consultar?" itemValue="#{null}"/>
                     <f:selectItem itemLabel="Sin Consultar" itemValue="#{false}"/>
                     <f:selectItem itemLabel="Consultar" itemValue="#{true}"/>
                     <p:ajax event="itemSelect" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
                 </p:selectOneMenu>
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+
                 <p:selectOneMenu value="#{cc.attrs.generalQuery.modeled}" style="margin-right:10px; width: 60%">
                     <f:selectItem itemLabel="Estado" itemValue="#{null}"/>
                     <f:selectItem itemLabel="Borrador" itemValue="#{false}"/>
                     <f:selectItem itemLabel="Modelado" itemValue="#{true}"/>
                     <p:ajax event="itemSelect" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
                 </p:selectOneMenu>
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
+
 
                 <p:selectCheckboxMenu id="tags"
                                       value="#{cc.attrs.generalQuery.tags}"
@@ -63,7 +62,14 @@
                     <f:selectItems value="#{generalBrowserBean.tags}" var="tag"
                                    itemLabel="#{tag.name}" itemValue="#{tag}"/>
                 </p:selectCheckboxMenu>
-            </div>
+
+            <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="fa fa-plus" styleClass="ui-priority-primary" value="Crear Nuevo" type="submit" process="browserForm" />
+
+        </p:panelGrid>
+
+        <p:panelGrid  columns="6"  style="width: 100%"
+                      columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+                      layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
             <p:repeat
                     offset="0"
                     size="#{cc.attrs.generalQuery.filters.size()}"
@@ -92,25 +98,8 @@
                                      multiple="#{filter.multiple}"
                                      rendered="#{filter.definition.targetDefinition.SMTKType}" />
             </p:repeat>
-            <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateSince}"
-                                 dateSince="#{true}"
-                                 rendered="#{cc.attrs.generalQuery.customFilterable}" />
-            <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateTo}"
-                                 dateSince="#{false}"
-                                 rendered="#{cc.attrs.generalQuery.customFilterable}" />
-            <smtk:userTypeFilter user="#{cc.attrs.generalQuery.user}"
-                                 rendered="#{cc.attrs.generalQuery.customFilterable}" />
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <!--p:button outcome="conceptEdit" icon="fa fa-plus" styleClass="ui-priority-primary" value="Crear Nuevo">
-                    <f:param name="editMode" value="#{true}" />
-                    <f:param name="idCategory" value="#{generalBrowserBean.idCategory}" />
-                    <f:param name="idConcept" value="#{0}" />
-                </p:button-->
+        </p:panelGrid>
 
-                <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="fa fa-plus" styleClass="ui-priority-primary" value="Crear Nuevo" type="submit" process="browserForm" />
-
-            </div>
-        </div>
     </p:outputPanel>
 
 </composite:implementation>

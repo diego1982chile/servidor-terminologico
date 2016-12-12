@@ -17,40 +17,51 @@
 <composite:implementation>
 
     <p:outputPanel id="descriptionFilters" styleClass="descriptionFilters">
-        <div class="ui-g">
-            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                <p:inputText value="#{cc.attrs.descriptionQuery.query}" style="margin-right:10px; width: 80%" placeholder="Buscar...">
-                    <p:ajax event="keyup" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
-                </p:inputText>
-            </div>
 
-            <div class="ui-g-12 ui-md-6 ui-lg-5">
+        <p:panelGrid  columns="6"  style="width: 100%"
+                      columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+                      layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
 
-                <p:autoComplete id="findCategories"
-                                scrollHeight="200"
-                                completeMethod="#{descriptionsBrowserBean.getCategoriesSearchInput}"
-                                forceSelection="true"
-                                minQueryLength="0"
-                                var="category"
-                                placeholder="#{ empty cc.attrs.descriptionQuery.categories ? 'Categorías...': ''}"
-                                converter="CategoryConverter"
-                                value="#{ cc.attrs.descriptionQuery.categories }"
-                                multiple="true"
-                                itemLabel="#{category.name}"
-                                itemValue="#{category}"
-                                widgetVar="foo" onmousedown="PF('foo').search(PF('foo').input.val())">
+            <p:inputText value="#{cc.attrs.descriptionQuery.query}" style="margin-right:10px; width: 80%" placeholder="Buscar...">
+                <p:ajax event="keyup" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
+            </p:inputText>
 
-                    <p:column>
-                        <p:outputLabel value="#{category.name}"/>
-                    </p:column>
+            <p:selectCheckboxMenu id="categories"
+                                  value="#{cc.attrs.descriptionQuery.categories}"
+                                  converter="omnifaces.SelectItemsConverter"
+                                  label="Categorías..."
+                                  filter="true"
+                                  filterMatchMode="startsWith"
+                                  style="margin-right:10px; width: 80%">
 
-                    <p:ajax event="itemSelect" update="@(.descriptionBrowserTable),@(.descriptionFilters)" />
-                    <p:ajax event="itemUnselect" update="@(.descriptionBrowserTable),@(.descriptionFilters)" />
+                <p:ajax event="change"
+                        update="@(.descriptionBrowserTable),@(.descriptionFilters)"
+                        process="@this" />
 
-                </p:autoComplete>
+                <f:selectItems value="#{descriptionsBrowserBean.categories}" var="category"
+                               itemLabel="#{category.name}" itemValue="#{category}"/>
 
-            </div>
-        </div>
+            </p:selectCheckboxMenu>
+
+            <p:selectCheckboxMenu id="descriptionTypes"
+                                  value="#{cc.attrs.descriptionQuery.descriptionTypes}"
+                                  converter="omnifaces.SelectItemsConverter"
+                                  label="Tipos..."
+                                  style="margin-right:10px; width: 80%">
+
+                <p:ajax event="change"
+                        update="@(.descriptionBrowserTable),@(.descriptionFilters)"
+                        process="@this" />
+
+                <f:selectItems value="#{descriptionsBrowserBean.descriptionTypes}" var="descriptionType"
+                               itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
+
+            </p:selectCheckboxMenu>
+
+        </p:panelGrid>
+        <p:spacer />
+        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.categories}" itemName="Categorías" />
+        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.descriptionTypes}" itemName="Tipo descriptor" />
     </p:outputPanel>
 
     <script type="text/javascript">
