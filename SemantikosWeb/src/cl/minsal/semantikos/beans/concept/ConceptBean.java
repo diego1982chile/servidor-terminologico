@@ -760,10 +760,6 @@ public class ConceptBean implements Serializable {
     public void saveConcept() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (validateRelationships()) {
-            if (concept.isModeled() && !snomedBeans.existRelationshipToSCT(concept)) {
-                messageBean.messageError("No es posible guardar el concepto, debe tener al menos una relación a SNOMED CT cuando se encuentra modelado");
-                return;
-            }
             try{
                 if (concept.isModeled())relationshipBindingBR.brSCT005(concept);
             }catch (EJBException e) {

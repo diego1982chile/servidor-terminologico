@@ -226,7 +226,7 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
         }
 
         /**
-         * Si el concepto es primitivo no valida
+         * Si el concepto es primitivo no válida
          */
         if(!concept.isFullyDefined()){
             return;
