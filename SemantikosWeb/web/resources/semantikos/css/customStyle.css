@@ -54,14 +54,6 @@ form#mainForm table tbody tr td div.relationshipDefinitionError {
     color: #3bba18 !important;
 }
 
-.fullyDefined .ui-panelgrid-cell {
-    padding: 0px !important;
-}
-
-.fullyDefined .ui-chkbox-label {
-    padding-left: 14px !important;
-}
-
 form#mainForm .ui-tabs .ui-tabs-panel {
     padding: 1px !important;
 }
@@ -93,4 +85,24 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 .descriptionFilters .ui-autocomplete-token {
     margin: 0px !important;
     margin-right: 2px !important;
+}
+
+.search {
+    position: relative;
+    color: #aaa;
+    font-size: 16px;
+}
+
+.search input { text-indent: 32px;}
+
+.search .fa-search {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.search .fa.fa-close.fa-lg {
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
