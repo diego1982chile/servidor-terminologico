@@ -34,6 +34,13 @@
 
                                                 <!--p:messages autoUpdate="true"></p:messages-->
 
+                                                <p:breadCrumb>
+                                                    <p:menuitem value="Inicio" url="/views/browser/mainMenu.xhtml" />
+                                                    <p:menuitem value="Categorías" url="/views/browser/mainMenu.xhtml" />
+                                                    <p:menuitem value="#{conceptBean.category}" url="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}" />
+                                                </p:breadCrumb>
+
+                                                <p:spacer />
                                                 <smtk:title concept="#{conceptBean.concept}"/>
                                                 <p:separator />
                                                 <p:panel id="conceptHeader" style="border: hidden;" styleClass="conceptHeader">

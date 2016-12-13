@@ -51,7 +51,8 @@ form#mainForm table tbody tr td div.relationshipDefinitionError {
 }
 
 .matchedConcept {
-    color: #3bba18 !important;
+    /*color: #3bba18 !important;*/
+    font-weight: bold;
 }
 
 form#mainForm .ui-tabs .ui-tabs-panel {

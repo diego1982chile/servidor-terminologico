@@ -12,11 +12,11 @@
 >
 
 <composite:interface>
-    <composite:attribute name="descriptionQuery" type="cl.minsal.semantikos.model.browser.DescriptionQuery" />
+    <composite:attribute name="noValidQuery" type="cl.minsal.semantikos.model.browser.NoValidQuery" />
 </composite:interface>
 <composite:implementation>
 
-    <p:outputPanel id="descriptionFilters" styleClass="descriptionFilters">
+    <p:outputPanel id="noValidFilters" styleClass="descriptionFilters">
 
         <div class="ui-fluid">
 
@@ -24,28 +24,12 @@
                           columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
                           layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
 
-                <p:inputText value="#{cc.attrs.descriptionQuery.query}" placeholder="Buscar...">
+                <p:inputText value="#{cc.attrs.noValidQuery.query}" placeholder="Buscar...">
                     <p:ajax event="keyup" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
                 </p:inputText>
 
-                <p:selectCheckboxMenu id="categories"
-                                      value="#{cc.attrs.descriptionQuery.categories}"
-                                      converter="omnifaces.SelectItemsConverter"
-                                      label="Categorías..."
-                                      filter="true"
-                                      filterMatchMode="startsWith">
-
-                    <p:ajax event="change"
-                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
-                            process="@this" />
-
-                    <f:selectItems value="#{descriptionsBrowserBean.categories}" var="category"
-                                   itemLabel="#{category.name}" itemValue="#{category}"/>
-
-                </p:selectCheckboxMenu>
-
                 <p:selectCheckboxMenu id="descriptionTypes"
-                                      value="#{cc.attrs.descriptionQuery.descriptionTypes}"
+                                      value="#{cc.attrs.noValidQuery.descriptionTypes}"
                                       converter="omnifaces.SelectItemsConverter"
                                       label="Tipos...">
 
@@ -53,26 +37,33 @@
                             update="@(.descriptionBrowserTable),@(.descriptionFilters)"
                             process="@this" />
 
-                    <f:selectItems value="#{descriptionsBrowserBean.descriptionTypes}" var="descriptionType"
+                    <f:selectItems value="#{noValidBrowserBean.descriptionTypes}" var="descriptionType"
                                    itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
 
                 </p:selectCheckboxMenu>
 
+                <p:selectCheckboxMenu id="observationTypes"
+                                      value="#{cc.attrs.noValidQuery.observationNoValids}"
+                                      converter="omnifaces.SelectItemsConverter"
+                                      label="Observación...">
+
+                    <p:ajax event="change"
+                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
+                            process="@this" />
+
+                    <f:selectItems value="#{noValidBrowserBean.observationTypes}" var="observationType"
+                                   itemLabel="#{observationType.description}" itemValue="#{observationType}"/>
+
+                </p:selectCheckboxMenu>
+
             </p:panelGrid>
+
         </div>
         <p:spacer />
-        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.categories}" itemName="Categorías" />
-        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.descriptionTypes}" itemName="Tipo descriptor" />
+        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.descriptionTypes}" itemName="Tipo descriptor" />
+        <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.observationNoValids}" itemName="Observación" />
     </p:outputPanel>
 
-    <script type="text/javascript">
-
-        $(document).on("itemSelect", "input[id$=findCategories_input]", function (event) {
-            alert("me llamaron");
-        });
-
-
-    </script>
 
 </composite:implementation>
 </html>

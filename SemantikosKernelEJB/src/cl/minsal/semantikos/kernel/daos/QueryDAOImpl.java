@@ -3,12 +3,10 @@ package cl.minsal.semantikos.kernel.daos;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.Tag;
+import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.GeneralQuery;
 import cl.minsal.semantikos.model.browser.DescriptionQuery;
+import cl.minsal.semantikos.model.browser.NoValidQuery;
 import cl.minsal.semantikos.model.browser.QueryParameter;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.slf4j.Logger;
@@ -138,6 +136,54 @@ public class QueryDAOImpl implements QueryDAO {
     }
 
     @Override
+    public List<NoValidDescription> executeQuery(NoValidQuery query) {
+
+        List<NoValidDescription> noValidDescriptions = new ArrayList<NoValidDescription>();
+
+        ConnectionBD connect = new ConnectionBD();
+
+        //TODO: hacer funcion en pg
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.get_description_by_no_valid_query(?,?,?,?,?,?,?)}" )){
+
+            /*
+                1. p_id_category integer, --static
+                2. p_pattern text, --static
+                3. p_refset integer, --static
+                4. p_refset integer, --static
+                11. p_orden text, --static
+                12. p_page integer, --static
+                13. p_page_size integer --static
+            */
+
+            //bindParameter();
+
+            int paramNumber = 1;
+
+            for (QueryParameter queryParameter : query.getQueryParameters()) {
+                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
+                paramNumber++;
+            }
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+
+                NoValidDescription noValidDescription =  descriptionManager.getNoValidDescriptionByID(rs.getLong(1));
+                noValidDescriptions.add(noValidDescription);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return noValidDescriptions;
+    }
+
+    @Override
     public long countByQuery(GeneralQuery query) {
 
         long conceptsNumber = 0;
@@ -181,6 +227,40 @@ public class QueryDAOImpl implements QueryDAO {
         //TODO: hacer funcion en pg
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.count_description_by_description_query(?,?,?,?,?,?,?,?)}" )){
+
+            int paramNumber = 1;
+
+            for (QueryParameter queryParameter : query.getQueryParameters()) {
+                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
+                paramNumber++;
+            }
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+
+                descriptionsNumber = rs.getLong(1);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return descriptionsNumber;
+    }
+
+    @Override
+    public long countByQuery(NoValidQuery query) {
+        long descriptionsNumber = 0;
+
+        ConnectionBD connect = new ConnectionBD();
+
+        //TODO: hacer funcion en pg
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.count_description_by_no_valid_query(?,?,?,?,?,?,?,?)}" )){
 
             int paramNumber = 1;
 

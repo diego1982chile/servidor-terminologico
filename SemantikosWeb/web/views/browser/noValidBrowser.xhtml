@@ -10,7 +10,7 @@
     <ui:define name="content">
 
         <f:metadata>
-            <f:event type="preRenderView" listener="#{descriptionsBrowserBean.executeQuery}" />
+            <f:event type="preRenderView" listener="#{noValidBrowserBean.executeQuery}" />
         </f:metadata>
 
         <div class="Container100">
@@ -25,14 +25,14 @@
                                         <p:breadCrumb>
                                             <p:menuitem value="Inicio" url="/views/browser/mainMenu.xhtml" />
                                             <p:menuitem value="Otros" url="/views/browser/mainMenu.xhtml" />
-                                            <p:menuitem value="Descripciones" url="#" />
+                                            <p:menuitem value="No Válidos" url="#" />
                                         </p:breadCrumb>
                                         <p:spacer />
-                                        <smtk:descriptionBrowserFilter descriptionQuery="#{descriptionsBrowserBean.descriptionQuery}" />
-                                        <p:dataTable id="descriptionTable"
-                                                     styleClass="descriptionBrowserTable"
-                                                     value="#{descriptionsBrowserBean.descriptions}"
-                                                     var="description"
+                                        <smtk:noValidBrowserFilter noValidQuery="#{noValidBrowserBean.noValidQuery}" />
+                                        <p:dataTable id="noValidTable"
+                                                     styleClass="noValidBrowserTable"
+                                                     value="#{noValidBrowserBean.noValidDescriptions}"
+                                                     var="noValidDescription"
                                                      rows="30"
                                                      sortBy="#{1}"
                                                      paginator="true" lazy="true" dynamic="true"
@@ -41,45 +41,48 @@
 
                                             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-                                            <p:column headerText="Categoría" sortBy="#{1}">
-                                                <h:outputText value="#{description.conceptSMTK.category.name}"/>
+                                            <p:column headerText="ID" sortBy="#{1}">
+                                                <h:outputText value="#{noValidDescription.noValidDescription.descriptionId}"/>
                                             </p:column>
 
                                             <p:column headerText="Término" sortBy="#{2}">
-                                                <h:outputText value="#{description.term}"/>
+                                                <h:outputText value="#{noValidDescription.noValidDescription.term}"/>
                                             </p:column>
 
                                             <p:column headerText="Tipo" style="width: 10%">
-                                                <h:outputText value="#{description.descriptionType.name}"/>
+                                                <h:outputText value="#{noValidDescription.noValidDescription.descriptionType.name}"/>
                                             </p:column>
 
-                                            <p:column headerText="STK_ID" style="width: 10%">
-                                                <h:outputText value="#{description.conceptSMTK.conceptID}"/>
+                                            <p:column headerText="Sensibilidad" style="width: 10%">
+                                                <h:outputText value="#{noValidDescription.noValidDescription.caseSensitive?'Sensible':'Insensible'}"/>
                                             </p:column>
 
-                                            <p:column headerText="SCT_ID" style="width: 10%">
-                                                <p:outputPanel>
-                                                    <smtk:sctTypeCell relationshipDefinition="#{description.conceptSMTK.relationships.get(0).relationshipDefinition}"
-                                                                       concept="#{description.conceptSMTK}"
-                                                                       rendered="#{description.conceptSMTK.relationships.get(0).relationshipDefinition.targetDefinition.snomedCTType}"
-                                                    />
-                                                </p:outputPanel>
+                                            <p:column headerText="Observación">
+                                                <h:outputText value="#{noValidDescription.observationNoValid.description}"/>
                                             </p:column>
 
-                                            <p:column headerText="FSN_DSC">
-                                                <h:outputText value="#{description.conceptSMTK.descriptionFSN.term}"/>
+                                            <p:column headerText="Conceptos Sugeridos">
+                                                <p:commandLink id="suggestedConceptsLink"
+                                                               rendered="#{not empty noValidDescription.suggestedConcepts}">
+                                                    <h:outputText value="#{noValidDescription.suggestedConcepts.size()}" />
+                                                </p:commandLink>
+                                                <p:overlayPanel id="suggestedConcepts" for="suggestedConcepts" hideEffect="fade" dynamic="true">
+                                                    <p:dataList value="#{noValidDescription.suggestedConcepts}" var="suggestedConcept" type="definition">
+                                                        <h:outputText value="#{suggestedConcept.descriptionFavorite.term}" />
+                                                    </p:dataList>
+
+                                                </p:overlayPanel>
+                                            </p:column>
+
+                                            <p:column headerText="Usos">
+                                                <h:outputText value="#{noValidDescription.noValidDescription.uses}"/>
                                             </p:column>
 
                                             <p:column headerText="Acciones" exportable="false" style="width: 10%; text-align: center">
                                                 <p:button outcome="/views/concept/conceptEdit" icon="fa fa-eye">
                                                     <f:param name="editMode" value="#{false}" />
-                                                    <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
+                                                    <f:param name="idConcept" value="#{noValidDescription.noValidDescription.conceptSMTK.id}" />
                                                 </p:button>
-                                                <p:button outcome="/views/concept/conceptEdit" icon="fa fa-edit">
-                                                    <f:param name="editMode" value="#{true}" />
-                                                    <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
-                                                </p:button>
-
                                             </p:column>
 
                                         </p:dataTable>

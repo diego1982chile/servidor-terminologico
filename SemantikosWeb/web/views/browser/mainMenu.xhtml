@@ -23,12 +23,13 @@
                     </p:link>
                 </p:dataList>
 
-                <p:panelGrid columns="1" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank">
+                <p:panelGrid columns="1" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank" style="padding: 0px 10px">
 
-                    <p:dataList type="definition">
+                    <p:dataList value="#{mainMenuBean.others}" type="definition" var="other">
                         <f:facet name="header">
                             Otros
                         </f:facet>
+                        <p:link outcome="#{other.value}" value="#{other.label}" style="margin-left: 20px" />
                     </p:dataList>
 
                     <p:dataList type="definition">

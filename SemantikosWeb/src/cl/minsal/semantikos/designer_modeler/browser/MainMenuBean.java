@@ -14,9 +14,11 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -31,16 +33,22 @@ public class MainMenuBean implements Serializable {
 
     static final Logger logger = LoggerFactory.getLogger(MainMenuBean.class);
 
-    private List<Category> categories;
+    private List<Category> categories = new ArrayList<>();
+
+    private List<SelectItem> others = new ArrayList<>();
 
     @EJB
     private CategoryManager categoryManager;
-
 
     @PostConstruct
     public void init() {
 
         categories = categoryManager.getCategories();
+
+        others.add(new SelectItem("descriptionBrowser","Descripciones"));
+        others.add(new SelectItem("drugsBrowser","Fármacos"));
+        others.add(new SelectItem("noValidBrowser","Pendientes"));
+        others.add(new SelectItem("noValidBrowser","No Válidos"));
 
     }
 
@@ -50,6 +58,10 @@ public class MainMenuBean implements Serializable {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public List<SelectItem> getOthers() {
+        return others;
     }
 
 }

@@ -2,10 +2,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.QueryDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.MultiplicityFactory;
+import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
@@ -100,6 +97,14 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    public NoValidQuery getDefaultNoValidQuery() {
+
+        NoValidQuery noValidQuery = new NoValidQuery();
+
+        return noValidQuery;
+    }
+
+    @Override
     public List<ConceptSMTK> executeQuery(GeneralQuery query) {
 
         //return conceptQueryDAO.callQuery(query);
@@ -185,12 +190,25 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    public List<NoValidDescription> executeQuery(NoValidQuery query) {
+
+        List<NoValidDescription> noValidDescriptions = queryDAO.executeQuery(query);
+
+        return noValidDescriptions;
+    }
+
+    @Override
     public int countQueryResults(GeneralQuery query) {
         return (int)queryDAO.countByQuery(query);
     }
 
     @Override
     public int countQueryResults(DescriptionQuery query) {
+        return (int)queryDAO.countByQuery(query);
+    }
+
+    @Override
+    public int countQueryResults(NoValidQuery query) {
         return (int)queryDAO.countByQuery(query);
     }
 

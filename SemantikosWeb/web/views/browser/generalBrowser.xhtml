@@ -23,7 +23,12 @@
                                 <div class="ui-grid-col-12">
                                     <h:form id="browserForm">
                                         <p:messages autoUpdate="true" />
-                                        <h2 class="TexAlCenter BigTopic">Navegador General [#{generalBrowserBean.category.name}]</h2>
+                                        <p:breadCrumb>
+                                            <p:menuitem value="Inicio" url="/views/browser/mainMenu.xhtml" />
+                                            <p:menuitem value="Categorías" url="/views/browser/mainMenu.xhtml" />
+                                            <p:menuitem value="#{generalBrowserBean.category.name}" url="#" />
+                                        </p:breadCrumb>
+                                        <p:spacer />
                                         <smtk:generalBrowserFilter generalQuery="#{generalBrowserBean.generalQuery}" />
                                         <p:spacer />
                                         <p:dataTable id="conceptTable"
