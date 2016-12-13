@@ -23,7 +23,6 @@
                               label="#{cc.attrs.relationshipDefinition.name}"
                               filter="true"
                               filterMatchMode="startsWith"
-                              style="margin-right:10px; width: 70%"
                               rendered="#{cc.attrs.targetDefinition.discreteDomain and cc.attrs.multiple }">
             <p:ajax event="change"
                     update="@(.conceptFilters)"
@@ -34,8 +33,7 @@
                            itemValue="#{domain}"/>
         </p:selectCheckboxMenu>
 
-        <p:autoComplete id="findHTRecords1" scrollHeight="200" style="width: 85%;"
-                        inputStyle="width: 90%;"
+        <p:autoComplete id="findHTRecords1" scrollHeight="200"
                         completeMethod="#{basicTypeBean.getRecordSearchInput}"
                         dropdown="true"
                         forceSelection="true"

@@ -21,8 +21,6 @@
         <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() }" styleClass="search">
 
             <p:autoComplete id="findHTRecords1" scrollHeight="200"
-                            style="width: 85%;"
-                            inputStyle="width: 90%;"
                             completeMethod="#{helperTableBean.getRecordSearchInput}"
                             forceSelection="true"
                             var="record"
@@ -61,7 +59,7 @@
                        var="target"
                        varStatus="var">
 
-                <p:inputText style="width: 75%;" disabled="true" id="itemSelected" value="#{target.fields['description']}" />
+                <p:inputText disabled="true" id="itemSelected" value="#{target.fields['description']}" />
                 <p:commandLink
                         process="@this"
                         update="@(.conceptFilters),@(.conceptBrowserTable)"

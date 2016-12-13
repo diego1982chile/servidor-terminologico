@@ -106,3 +106,7 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     top: 10px;
     left: 10px;
 }
+
+.conceptFilters .ui-menubar .ui-menubar-options {
+    float: left;
+}
