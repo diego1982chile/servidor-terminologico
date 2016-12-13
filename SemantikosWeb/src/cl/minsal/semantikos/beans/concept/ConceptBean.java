@@ -1342,6 +1342,12 @@ public class ConceptBean implements Serializable {
         }return false;
     }
 
+    public boolean isMCSpecialRendered(RelationshipDefinition relationshipDefinition) {
+        if(relationshipDefinition.getId()==74 && concept.isModeled()){
+            return true;
+        }return false;
+    }
+
 
     public void changeMCSpecial() {
         for (Relationship relationship : concept.getValidRelationships()) {

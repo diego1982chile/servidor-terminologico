@@ -13,12 +13,16 @@ public class SensibilityDescriptionDefaultBean {
 
     private final static long FAMILIA_PRODUCTOS= 37;
     private final static long GRUPO_FAMILIA_PRODUCTOS= 36;
+    private final static long PRODUCTO_COMERCIAL=38;
 
     public boolean sensibility(long idCategory){
         if(idCategory==GRUPO_FAMILIA_PRODUCTOS){
            return true;
         }
         if(idCategory==FAMILIA_PRODUCTOS){
+            return true;
+        }
+        if(idCategory==PRODUCTO_COMERCIAL){
             return true;
         }
         return false;
