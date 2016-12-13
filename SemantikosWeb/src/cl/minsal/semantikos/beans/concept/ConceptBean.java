@@ -508,7 +508,7 @@ public class ConceptBean implements Serializable {
      * Definition. Este método es utilizado por el componente BasicType, el cual agrega relaciones con target sin valor
      */
     public void addRelationshipWithAttributes(RelationshipDefinition relationshipDefinition) {
-        if (snomedBeans.existRelationshipISAMapping(concept)) {
+        if (snomedBeans.existRelationshipISAMapping(concept,relationshipDefinition) ) {
             messageBean.messageError("Cuando existe una relación 'Es un mapeo de', no se pueden agregar más relaciones.");
             return;
         }
