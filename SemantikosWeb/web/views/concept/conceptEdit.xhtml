@@ -38,8 +38,8 @@
                                                     <p:menuitem value="Inicio" url="/views/browser/mainMenu.xhtml" />
                                                     <p:menuitem value="Categorías" url="/views/browser/mainMenu.xhtml" />
                                                     <p:menuitem value="#{conceptBean.category}" url="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}" />
+                                                    <p:menuitem value="#{conceptBean.concept.persistent?conceptBean.concept.descriptionFSN:'Nuevo Concepto Borrador'}" url="#" />
                                                 </p:breadCrumb>
-
                                                 <p:spacer />
                                                 <smtk:title concept="#{conceptBean.concept}"/>
                                                 <p:separator />
