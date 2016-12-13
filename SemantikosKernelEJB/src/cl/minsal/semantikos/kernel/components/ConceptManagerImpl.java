@@ -382,14 +382,18 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category) {
+    public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category, User user) {
 
         /* Validacion de pre-condiciones */
         conceptTransferBR.validatePreConditions(conceptSMTK);
 
+        Category originalCategory= conceptSMTK.getCategory();
+
         /* Acciones de negocio */
         conceptSMTK.setCategory(category);
         conceptDAO.update(conceptSMTK);
+
+        auditManager.recordConceptCategoryChange(conceptSMTK,originalCategory,user);
 
         logger.info("Se ha trasladado un concepto de categoría.");
         return conceptSMTK;

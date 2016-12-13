@@ -58,7 +58,7 @@ public class TransferConceptBean {
 
     public void transferConcept(ConceptSMTK conceptSMTK) {
         Category categoryById = categoryManager.getCategoryById(categoryId);
-        conceptManager.transferConcept(conceptSMTK, categoryById);
+        conceptManager.transferConcept(conceptSMTK, categoryById, conceptBean.user);
 
         /* Se redirige a la página de edición */
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();

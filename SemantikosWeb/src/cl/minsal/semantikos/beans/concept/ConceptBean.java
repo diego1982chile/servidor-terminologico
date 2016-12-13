@@ -485,6 +485,7 @@ public class ConceptBean implements Serializable {
         // Se crea una copia con la imagen original del concepto
         _concept = new ConceptSMTKWeb(conceptSMTK);
 
+        fullyDefined=concept.isFullyDefined();
         concept.setEditable(editable);
         auditAction = auditManager.getConceptAuditActions(concept, true);
         category = concept.getCategory();
@@ -857,7 +858,7 @@ public class ConceptBean implements Serializable {
         /* Se elimina las relaciones eliminadas */
         List<RelationshipWeb> relationshipsForDelete = concept.getRemovedRelationshipsWeb(_concept);
         for (RelationshipWeb relationshipWeb : relationshipsForDelete) {
-            relationshipManager.removeRelationship(relationshipWeb, user);
+            relationshipManager.removeRelationship(concept,relationshipWeb, user);
             _concept.removeRelationship(relationshipWeb);
         }
 
