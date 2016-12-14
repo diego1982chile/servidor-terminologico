@@ -211,4 +211,14 @@ public class AutogenerateBeans {
         }
         return autoNuevoOrden;
     }
+
+    public void loadAutogenerate(ConceptSMTKWeb conceptSMTKWeb, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE, List<String> autogenerateList){
+        for (Relationship relationship :  conceptSMTKWeb.getRelationshipsWeb()) {
+            if(!relationship.getRelationshipAttributes().isEmpty()){
+                autogenerateRelationshipWithAttributes(relationship.getRelationshipDefinition(),relationship,conceptSMTKWeb,autogenerateList,autogenerateMC);
+            }else{
+                autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
+            }
+        }
+    }
 }
