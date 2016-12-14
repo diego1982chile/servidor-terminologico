@@ -9,38 +9,41 @@
 
     <ui:define name="content">
 
-        <h:form>
+        <h:form id="mainMenu">
             <p:growl id="messages"/>
 
-            <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+            <div class="Container100 ui-fluid">
+                <div class="ContainerIndent">
+                    <div class="Card ShadowEffect">
+                        <div class="Container100">
+                            <div class="ContainerIndent">
+                                <div class="ui-grid-responsive">
+                                    <h:form>
+                                        <p:breadCrumb>
+                                            <p:menuitem value="Inicio" url="/views/home.xhtml" />
+                                            <p:menuitem value="Menú Principal" url="/views/browser/mainMenu.xhtml" />
+                                        </p:breadCrumb>
+                                        <p:panelGrid layout="grid" columns="2" style="border:0px none; background-color:transparent;">
 
-                <p:dataList value="#{mainMenuBean.categories}" var="category" type="definition">
-                    <f:facet name="header">
-                        Categorías
-                    </f:facet>
-                    <p:link outcome="generalBrowser" value="#{category.name}" style="margin-left: 20px">
-                        <f:param name="idCategory" value="#{category.id}" />
-                    </p:link>
-                </p:dataList>
+                                            <p:menu toggleable="true" model="#{mainMenuBean.categoryMenuModel}" />
 
-                <p:panelGrid columns="1" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank" style="padding: 0px 10px">
+                                            <p:menu toggleable="true">
+                                                <p:submenu label="Otros">
+                                                    <p:menuitem value="Descripciones" icon="ui-icon-disk fa fa-list-alt Fs15" url="descriptionBrowser.xhtml" />
+                                                    <p:menuitem value="Fármacos" icon="ui-icon-disk fa fa-list-alt Fs15" url="drugsBrowser.xhtml" />
+                                                    <p:menuitem value="Pendientes" icon="ui-icon-disk fa fa-list-alt Fs15" url="noValidBrowser.xhtml" />
+                                                    <p:menuitem value="No Válidos" icon="ui-icon-disk fa fa-list-alt Fs15" url="noValidBrowser.xhtml" />
+                                                </p:submenu>
+                                            </p:menu>
 
-                    <p:dataList value="#{mainMenuBean.others}" type="definition" var="other">
-                        <f:facet name="header">
-                            Otros
-                        </f:facet>
-                        <p:link outcome="#{other.value}" value="#{other.label}" style="margin-left: 20px" />
-                    </p:dataList>
-
-                    <p:dataList type="definition">
-                        <f:facet name="header">
-                            Administración
-                        </f:facet>
-                    </p:dataList>
-
-                </p:panelGrid>
-
-            </p:panelGrid>
+                                        </p:panelGrid>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </h:form>
 

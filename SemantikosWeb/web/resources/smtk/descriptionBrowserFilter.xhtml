@@ -58,11 +58,26 @@
 
                 </p:selectCheckboxMenu>
 
+                <p:selectCheckboxMenu id="refsets"
+                                      value="#{cc.attrs.descriptionQuery.refSets}"
+                                      converter="omnifaces.SelectItemsConverter"
+                                      label="RefSets...">
+
+                    <p:ajax event="change"
+                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
+                            process="@this" />
+
+                    <f:selectItems value="#{descriptionsBrowserBean.refSets}" var="refSet"
+                                   itemLabel="#{refSet.name}" itemValue="#{refSet}"/>
+
+                </p:selectCheckboxMenu>
+
             </p:panelGrid>
         </div>
         <p:spacer />
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.categories}" itemName="Categorías" />
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.descriptionTypes}" itemName="Tipo descriptor" />
+        <p:spacer />
     </p:outputPanel>
 
     <script type="text/javascript">

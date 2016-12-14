@@ -60,6 +60,11 @@ public class DescriptionsBrowserBean implements Serializable {
     private List<DescriptionType> descriptionTypes = new ArrayList<DescriptionType>();
 
     /**
+     * Lista de RefSets para el despliegue del filtro por refsets
+     */
+    private List<RefSet> refSets = new ArrayList<RefSet>();
+
+    /**
      * Lista de conceptos para el despliegue del resultado de la consulta
      */
     private LazyDataModel<Description> descriptions;
@@ -78,6 +83,8 @@ public class DescriptionsBrowserBean implements Serializable {
     public void init(){
         categories = categoryManager.getCategories();
         descriptionTypes = DescriptionTypeFactory.getInstance().getDescriptionTypes();
+        refSets = refSetManager.getAllRefSets();
+
     }
 
     /**
@@ -192,6 +199,10 @@ public class DescriptionsBrowserBean implements Serializable {
 
     public List<DescriptionType> getDescriptionTypes() {
         return descriptionTypes;
+    }
+
+    public List<RefSet> getRefSets() {
+        return refSets;
     }
 
 }

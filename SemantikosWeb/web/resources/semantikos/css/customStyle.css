@@ -111,3 +111,7 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 .conceptFilters .ui-menubar .ui-menubar-options {
     float: left;
 }
+
+#mainMenu .ui-menu .ui-menuitem .ui-menuitem-link {
+    padding: 6px 0px;
+}
