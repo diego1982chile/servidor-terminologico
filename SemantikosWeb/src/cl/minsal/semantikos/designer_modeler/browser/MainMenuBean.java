@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.designer_modeler.browser;
 
+import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.text.ParseException;
@@ -61,8 +63,6 @@ public class MainMenuBean implements Serializable {
         }
 
         categoryMenuModel.addElement(categorySubmenu);
-
-        //Second submenu
 
     }
 

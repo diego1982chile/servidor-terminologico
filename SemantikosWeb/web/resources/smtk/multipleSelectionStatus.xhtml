@@ -14,27 +14,34 @@
     <composite:attribute name="selectedItems" type="java.util.List"/>
 </composite:interface>
 <composite:implementation>
-    <p:outputPanel id="display" rendered="#{not empty cc.attrs.selectedItems}">
-        <span class="ui-messages-icon fa fa-info-circle" style="color: #03A9F4">
-        </span>
-        <p:outputLabel style="font-size: small; color: #3A87AD">
-            <span class="ui-messages-detail">
-                <h:outputText value="#{'Filtros por '.concat(cc.attrs.itemName).concat(': ')}" />
+    <h:panelGrid  columns="2"  style="width: 100%"
+                  columnClasses="ui-grid-col-2,ui-grid-col-10"
+                  layout="grid" styleClass="ui-panelgrid-blank filterStatus"
+                  rendered="#{not empty cc.attrs.selectedItems}">
+        <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank">
+            <i class="fa  fa-info-circle fa-lg"/>
+            <h:outputText value="#{'Filtros por '.concat(cc.attrs.itemName).concat(': ')}" style="font-size: small;" />
+        </h:panelGrid>
+        <p:outputPanel>
+            <div class="ui-autocomplete ui-autocomplete-multiple">
+                <ul class="ui-autocomplete-multiple-container ui-widget ui-inputfield ui-state-default ui-corner-all">
+                    <p:repeat
+                            offset="0"
+                            size="#{cc.attrs.selectedItems.size()}"
+                            step="1"
+                            varStatus="var"
+                            value="#{cc.attrs.selectedItems}"
+                            var="selectedItem">
 
-                <p:repeat
-                        offset="0"
-                        size="#{cc.attrs.selectedItems.size()}"
-                        step="1"
-                        varStatus="var"
-                        value="#{cc.attrs.selectedItems}"
-                        var="selectedItem">
+                        <li style="display: list-item;" class="ui-autocomplete-token ui-state-active ui-corner-all ui-helper-hidden">
+                            <span class="ui-autocomplete-token-label">#{selectedItem}</span>
+                        </li>
+                    </p:repeat>
+                </ul>
+            </div>
+        </p:outputPanel>
+    </h:panelGrid>
 
-                    <h:outputText rendered="#{var.index>0}" value=", " />
-                    <h:outputText value="#{selectedItem}" />
-                </p:repeat>
-            </span>
-        </p:outputLabel>
-    </p:outputPanel>
     <h:outputStylesheet id="customCSS">
 
     </h:outputStylesheet>

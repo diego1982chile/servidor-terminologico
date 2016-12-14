@@ -13,9 +13,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,6 +62,11 @@ public class NoValidBrowserBean implements Serializable {
      */
     private LazyDataModel<NoValidDescription> noValidDescriptions;
 
+    NoValidDescription noValidDescriptionSelected = null;
+
+    ConceptSMTK conceptSelected = null;
+
+    private User user;
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
@@ -73,6 +81,7 @@ public class NoValidBrowserBean implements Serializable {
     public void init(){
         descriptionTypes = DescriptionTypeFactory.getInstance().getDescriptionTypes();
         observationTypes = descriptionManager.getObservationsNoValid();
+        user = authenticationBean.getLoggedUser();
     }
 
     /**
@@ -116,6 +125,25 @@ public class NoValidBrowserBean implements Serializable {
 
     }
 
+    public void translateDescription() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        noValidDescriptionSelected.getNoValidDescription().getConceptSMTK().removeDescription(noValidDescriptionSelected.getNoValidDescription());
+        noValidDescriptionSelected.getNoValidDescription().setConceptSMTK(conceptSelected);
+
+        try {
+            descriptionManager.moveDescriptionToConcept(conceptSelected, noValidDescriptionSelected.getNoValidDescription(), user);
+        } catch (EJBException e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+        }
+
+        //pendingTerms = pendingTermsManager.getAllPendingTerms();
+
+        conceptSelected = null;
+        noValidDescriptionSelected = null;
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successful", "La descripción fue trasladada exitosamente"));
+    }
+
     public NoValidQuery getNoValidQuery() {
         return noValidQuery;
     }
@@ -150,6 +178,22 @@ public class NoValidBrowserBean implements Serializable {
 
     public List<ObservationNoValid> getObservationTypes() {
         return observationTypes;
+    }
+
+    public NoValidDescription getNoValidDescriptionSelected() {
+        return noValidDescriptionSelected;
+    }
+
+    public void setNoValidDescriptionSelected(NoValidDescription noValidDescriptionSelected) {
+        this.noValidDescriptionSelected = noValidDescriptionSelected;
+    }
+
+    public ConceptSMTK getConceptSelected() {
+        return conceptSelected;
+    }
+
+    public void setConceptSelected(ConceptSMTK conceptSelected) {
+        this.conceptSelected = conceptSelected;
     }
 
 }
