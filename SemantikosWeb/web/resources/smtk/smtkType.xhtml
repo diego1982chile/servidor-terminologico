@@ -117,7 +117,7 @@
     </p:panel>
 
     <p:panel id="multiplicityN"
-             style="margin:20px;" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
+             style="margin:20px;" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500" collapsed="false"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
         <p:spacer />
@@ -208,7 +208,7 @@
 
     </p:panel>
 
-    <p:panel id="multiplicityN_with_attributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
+    <p:panel id="multiplicityN_with_attributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true"  toggleSpeed="500" collapsed="false"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
         <p:spacer />
@@ -224,7 +224,7 @@
             </p:outputPanel>
         </f:facet>
 
-        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id} fragments" style="width:100%" rendered="#{cc.attrs.concept.editable}">
+        <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%" rendered="#{cc.attrs.concept.editable}">
 
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 

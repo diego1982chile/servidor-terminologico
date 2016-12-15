@@ -181,7 +181,7 @@ public class QueryDAOImpl implements QueryDAO {
     }
 
     @Override
-    public List<PendingTerm> executeQuery(PendingTerm query) {
+    public List<PendingTerm> executeQuery(PendingQuery query) {
         return null;
     }
 
