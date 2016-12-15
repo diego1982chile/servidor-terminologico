@@ -22,6 +22,7 @@
             <div class="ui-g">
 
                 <div class="ui-g-12 ui-md-6 ui-lg-6">
+
                     <p:selectOneMenu id="parentTag" value="#{refsetsBean.refSetSelect}"
                                      converter="omnifaces.SelectItemsConverter" panelStyle="width:60%"
                                      effect="fade" var="r" style="width:90%" filter="true"
@@ -32,11 +33,9 @@
                                        itemLabel="#{refset.name}" itemValue="#{refset}" itemDisabled="#{!refset.valid}"/>
                         <p:column>
                             <h:outputText value="#{r.name}"/>
-                            <h:outputText value=" ("/>
-                            <h:outputText value="#{r.institution.name}"/>
-                            <h:outputText value=" )"/>
                         </p:column>
                     </p:selectOneMenu>
+
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <p:commandButton value="Agregar al refset"

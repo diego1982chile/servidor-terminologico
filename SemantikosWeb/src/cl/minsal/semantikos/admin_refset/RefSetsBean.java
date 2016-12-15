@@ -8,6 +8,7 @@ import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.Institution;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.audit.AuditAction;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
@@ -54,6 +55,10 @@ public class RefSetsBean {
     private RefSet refSetEdit;
 
     private RefSet refSetSelect;
+
+    private List<RefSet> refSetListInstitution;
+
+    private Institution institutionSelected;
 
     @EJB
     AuditManager auditManager;
@@ -300,5 +305,21 @@ public class RefSetsBean {
 
     public void setRefsetHistoryConcept(Map<Long, AuditAction> refsetHistoryConcept) {
         this.refsetHistoryConcept = refsetHistoryConcept;
+    }
+
+    public List<RefSet> getRefSetListInstitution() {
+        return refSetListInstitution;
+    }
+
+    public void setRefSetListInstitution(List<RefSet> refSetListInstitution) {
+        this.refSetListInstitution = refSetListInstitution;
+    }
+
+    public Institution getInstitutionSelected() {
+        return institutionSelected;
+    }
+
+    public void setInstitutionSelected(Institution institutionSelected) {
+        this.institutionSelected = institutionSelected;
     }
 }
