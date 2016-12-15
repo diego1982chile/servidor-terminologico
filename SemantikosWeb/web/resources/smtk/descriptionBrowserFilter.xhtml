@@ -25,7 +25,7 @@
                           layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
 
                 <p:inputText value="#{cc.attrs.descriptionQuery.query}" placeholder="Buscar...">
-                    <p:ajax event="keyup" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
+                    <p:ajax event="keyup" update="@(.descriptionBrowserTable),@(.descriptionQueryFilter)" process="@this" />
                 </p:inputText>
 
                 <p:selectCheckboxMenu id="categories"

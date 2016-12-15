@@ -18,10 +18,10 @@
                   columnClasses="ui-grid-col-2,ui-grid-col-10"
                   layout="grid" styleClass="ui-panelgrid-blank filterStatus"
                   rendered="#{not empty cc.attrs.selectedItems}">
-        <h:panelGrid  columns="2"  style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank">
-            <i class="fa  fa-info-circle fa-lg"/>
+        <p:outputPanel>
+            <i class="fa  fa-info-circle fa-lg" style="padding-right: 10px"/>
             <h:outputText value="#{'Filtros por '.concat(cc.attrs.itemName).concat(': ')}" style="font-size: small;" />
-        </h:panelGrid>
+        </p:outputPanel>
         <p:outputPanel>
             <div class="ui-autocomplete ui-autocomplete-multiple">
                 <ul class="ui-autocomplete-multiple-container ui-widget ui-inputfield ui-state-default ui-corner-all">

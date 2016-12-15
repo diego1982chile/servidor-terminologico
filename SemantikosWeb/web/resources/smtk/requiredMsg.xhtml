@@ -14,13 +14,13 @@
 
 <composite:implementation>
 
-<f:facet name="footer">
-    <i class="fa  fa-info-circle fa-lg" style="padding-right:10px" />
-    <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"
-                  rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}" />
-    <h:outputText value="Atributo opcional" style="font-size: small;"
-                  rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary eq 0}" />
-</f:facet>
+    <f:facet name="footer">
+        <i class="fa  fa-info-circle fa-lg" style="padding-right:10px" />
+        <h:outputText value="Son requeridos #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary} atributos" style="font-size: small;"
+                      rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}" />
+        <h:outputText value="Atributo opcional" style="font-size: small;"
+                      rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary eq 0}" />
+    </f:facet>
 
 </composite:implementation>
 </html>

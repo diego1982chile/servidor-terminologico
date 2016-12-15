@@ -27,21 +27,23 @@
     <p:dialog id="dialogTC" header="Trasladar concepto" widgetVar="dialogTC" global="true" showEffect="fade" hideEffect="fade">
 
         <p:panel id="conceptTranslate" style="width: 100%; border: hidden;">
-                <h3>Trasladar Concepto a...</h3>
-                <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categiría propuesta"/>
-                <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.categoryId}" required="true">
+            <h3 align="left">Trasladar Concepto a...</h3>
+            <h:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-4,ui-grid-col-2">
+
+                <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
+                <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.categoryId}" required="true" filter="true" filterMatchMode="startsWith">
                     <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
                                    itemLabel="#{category.name}"/>
                 </p:selectOneMenu>
 
-            <p:commandButton value="Trasladar" type="submit" process="mainForm"
-                             actionListener="#{transferConceptBean.transferConcept(cc.attrs.conceptSMTK)}"
-                             update="mainForm" icon="fa fa-ban" styleClass="ui-priority-primary" >
+                <p:commandButton value="Trasladar" type="submit" process="mainForm"
+                                 actionListener="#{transferConceptBean.transferConcept(cc.attrs.conceptSMTK)}"
+                                 update="mainForm" icon="fa fa-exchange">
 
-                <p:confirm header="Confirmation" message="¿Desea realmente trasladar este concepto?"
-                           icon="ui-icon-alert"/>
-            </p:commandButton>
-
+                    <p:confirm header="Confirmation" message="¿Desea realmente trasladar este concepto?"
+                               icon="ui-icon-alert"/>
+                </p:commandButton>
+            </h:panelGrid>
         </p:panel>
     </p:dialog>
 

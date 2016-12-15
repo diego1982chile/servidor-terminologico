@@ -1300,6 +1300,31 @@ public class ConceptBean implements Serializable {
         return orderedRelationshipDefinitionsList;
     }
 
+    /**
+     * Este método retorna una lista ordenada de definiciones propias de semantikos.
+     *
+     * @return Una lista ordenada de las relaciones de la categoría.
+     */
+    public List<RelationshipDefinitionWeb> getOrderedSMTKRelationshipDefinitions() {
+        if (orderedRelationshipDefinitionsList.isEmpty()) {
+            for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
+                RelationshipDefinitionWeb relationshipDefinitionWeb = viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition);
+                orderedRelationshipDefinitionsList.add(relationshipDefinitionWeb);
+            }
+            Collections.sort(orderedRelationshipDefinitionsList);
+        }
+
+        List<RelationshipDefinitionWeb> smtkRelationshipDefinitions = new ArrayList<>();
+
+        for (RelationshipDefinitionWeb relationshipDefinition : orderedRelationshipDefinitionsList) {
+            if(!relationshipDefinition.getTargetDefinition().isSnomedCTType() && !relationshipDefinition.getTargetDefinition().isCrossMapType()) {
+                smtkRelationshipDefinitions.add(relationshipDefinition);
+            }
+        }
+
+        return smtkRelationshipDefinitions;
+    }
+
     public void changeMultiplicityNotRequiredRelationshipDefinitionMC() {
         for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
             if (relationshipDefinition.getId() == 46) relationshipDefinition.getMultiplicity().setLowerBoundary(0);

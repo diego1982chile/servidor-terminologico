@@ -105,6 +105,11 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    public PendingQuery getDefaultPendingQuery() {
+        return null;
+    }
+
+    @Override
     public List<ConceptSMTK> executeQuery(GeneralQuery query) {
 
         //return conceptQueryDAO.callQuery(query);
@@ -198,6 +203,14 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    public List<PendingTerm> executeQuery(PendingQuery query) {
+
+        List<PendingTerm> pendingTerms = queryDAO.executeQuery(query);
+
+        return pendingTerms;
+    }
+
+    @Override
     public int countQueryResults(GeneralQuery query) {
         return (int)queryDAO.countByQuery(query);
     }
@@ -210,6 +223,11 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public int countQueryResults(NoValidQuery query) {
         return (int)queryDAO.countByQuery(query);
+    }
+
+    @Override
+    public int countQueryResults(PendingQuery query) {
+        return 0;
     }
 
     @Override

@@ -4,10 +4,7 @@ import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.browser.GeneralQuery;
-import cl.minsal.semantikos.model.browser.DescriptionQuery;
-import cl.minsal.semantikos.model.browser.NoValidQuery;
-import cl.minsal.semantikos.model.browser.QueryParameter;
+import cl.minsal.semantikos.model.browser.*;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -184,6 +181,12 @@ public class QueryDAOImpl implements QueryDAO {
     }
 
     @Override
+    public List<PendingTerm> executeQuery(PendingTerm query) {
+        return null;
+    }
+
+
+    @Override
     public long countByQuery(GeneralQuery query) {
 
         long conceptsNumber = 0;
@@ -284,6 +287,11 @@ public class QueryDAOImpl implements QueryDAO {
         }
 
         return descriptionsNumber;
+    }
+
+    @Override
+    public long countByQuery(PendingQuery query) {
+        return 0;
     }
 
     @Override
