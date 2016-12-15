@@ -25,6 +25,9 @@ public class RefSetDAOImpl implements RefSetDAO {
     @EJB
     private ConceptDAO conceptDAO;
 
+    @EJB
+    private InstitutionDAO institutionDAO;
+
     @Override
     public void persist(RefSet refSet) {
 
@@ -152,6 +155,29 @@ public class RefSetDAOImpl implements RefSetDAO {
     }
 
     @Override
+    public List<RefSet> getRefsetBy(Institution institution) {
+        List<RefSet> refSetsByInstitution= new ArrayList<>();
+        ConnectionBD connect = new ConnectionBD();
+        String ALL_REFSETS_BY_INSTITUTION = "{call semantikos.get_refset_by_institution(?)}";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(ALL_REFSETS_BY_INSTITUTION)) {
+
+            call.setLong(1,institution.getId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+                refSetsByInstitution.add(createRefsetFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            logger.error("Error al al obtener los RefSets ", e);
+        }
+        return refSetsByInstitution;
+    }
+
+    @Override
     public RefSet getRefsetBy(long id) {
         RefSet refSet=null;
         ConnectionBD connect = new ConnectionBD();
@@ -180,9 +206,7 @@ public class RefSetDAOImpl implements RefSetDAO {
         Timestamp timestamp= rs.getTimestamp("creation_date");
         Timestamp validity= rs.getTimestamp("validity_until");
 
-        Institution institution= new Institution();
-        institution.setId(1);
-        institution.setName("MINSAL");
+        Institution institution= institutionDAO.getInstitutionBy(rs.getLong("institution"));
 
         RefSet refSet= new RefSet(name,institution,timestamp);
         refSet.setId(id);

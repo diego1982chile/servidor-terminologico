@@ -32,6 +32,9 @@
                                        itemLabel="#{refset.name}" itemValue="#{refset}" itemDisabled="#{!refset.valid}"/>
                         <p:column>
                             <h:outputText value="#{r.name}"/>
+                            <h:outputText value=" ("/>
+                            <h:outputText value="#{r.institution.name}"/>
+                            <h:outputText value=" )"/>
                         </p:column>
                     </p:selectOneMenu>
                 </div>
@@ -49,6 +52,9 @@
             </p:column>
             <p:column headerText="Nombre">
                 <h:outputText value="#{refset.name}"/>
+            </p:column>
+            <p:column headerText="Tipo refset">
+                <h:outputText value="#{refset.institution.name}"/>
             </p:column>
             <p:column headerText="Fecha ingreso">
                 <h:outputText value="#{refsetsBean.refsetHistoryConcept.get(refset.id).actionDate}"/>
