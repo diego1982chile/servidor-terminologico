@@ -482,7 +482,7 @@ public class ConceptBean implements Serializable {
         this.conceptSMTK = conceptSMTK;
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = new ConceptSMTKWeb(conceptSMTK);
-        if(!concept.isModeled() && !autoGenerateList.isEmpty())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        if(!concept.isModeled() && autoGenerateList.isEmpty())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
         // Se crea una copia con la imagen original del concepto
         _concept = new ConceptSMTKWeb(conceptSMTK);
 

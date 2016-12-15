@@ -112,7 +112,6 @@ public class FindConcept implements Serializable{
     }
 
     public List<Category> getCategoryList() {
-        System.out.println("getCategoryList");
         return categoryList;
     }
 
