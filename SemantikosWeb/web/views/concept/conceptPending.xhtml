@@ -55,15 +55,16 @@
                                                          target="#{managerPendingTermsBean.termSelected}"/>
                             <f:setPropertyActionListener value=""
                                                          target="#{managerPendingTermsBean.conceptSMTKSelected}"/>
-                            <f:setPropertyActionListener value=""
+                            <f:setPropertyActionListener value="#{pendingTerm.category}"
                                                          target="#{findConceptBean.categorySelected}"/>
+
                         </p:commandLink>
 
-                        <p:commandLink oncomplete="PF('dialogNC').show()" title="Crear nuevo concepto">
+                        <p:commandLink oncomplete="PF('dialogNC').show()" title="Crear nuevo concepto" update="@(.create-concept)">
                             <i class="fa fa-plus fa-lg"/>
                             <f:setPropertyActionListener value="#{pendingTerm}"
                                                          target="#{managerPendingTermsBean.termSelected}"/>
-                            <f:setPropertyActionListener value="" target="#{managerPendingTermsBean.categorySelected}" />
+                            <f:setPropertyActionListener value="#{pendingTerm.category}" target="#{managerPendingTermsBean.categorySelected}" />
                         </p:commandLink>
 
                         <p:commandLink title="Consultar" oncomplete="PF('dialogC').show()"
@@ -228,9 +229,9 @@
 
 
             <!-- Crear nuevo concepto -->
-            <p:dialog id="dialogNC" header="Consulta termino pendiente" widgetVar="dialogNC" global="true"
+            <p:dialog id="dialogNC" header="Crear nuevo concepto" widgetVar="dialogNC" global="true"
                       showEffect="fade" hideEffect="fade">
-                <p:panel styleClass="query-pending-description">
+                <p:panel styleClass="create-concept">
 
 
                     <p:selectOneMenu id="parentTag" value="#{managerPendingTermsBean.categorySelected}"

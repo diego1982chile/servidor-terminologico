@@ -761,15 +761,15 @@ public class ConceptBean implements Serializable {
 
     public void saveConcept() {
         FacesContext context = FacesContext.getCurrentInstance();
+        if(descriptionPending!=null && concept.getRelationshipsSnomedCT().isEmpty()){
+            messageBean.messageError("Cuando se crea un concepto desde pendientes, este puede ser guardado, sólo si cumple las condiciones para ser un concepto Modelado.");
+            return;
+        }
         if (validateRelationships()) {
             try{
                 if (concept.isModeled())relationshipBindingBR.brSCT005(concept);
             }catch (EJBException e) {
                 messageBean.messageError(e.getMessage());
-                return;
-            }
-            if(descriptionPending==null){
-                messageBean.messageError("Cuando se crea un concepto desde pendientes, este puede ser guardado, sólo si cumple las condiciones para ser un concepto Modelado.");
                 return;
             }
             // Si el concepto está persistido, actualizarlo. Si no, persistirlo
@@ -1006,7 +1006,7 @@ public class ConceptBean implements Serializable {
     public void setIdTermPending(long idTermPending) {
         this.idTermPending = idTermPending;
         descriptionPending = descriptionManager.getDescriptionByID(idTermPending);
-        if (descriptionPending != null) {
+        if (descriptionPending != null && !containDescription(new DescriptionWeb(descriptionPending))) {
             concept.addDescriptionWeb(new DescriptionWeb(descriptionPending));
         }
     }
