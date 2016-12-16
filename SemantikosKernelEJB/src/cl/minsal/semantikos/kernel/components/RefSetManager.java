@@ -75,5 +75,7 @@ public interface RefSetManager {
     public List<RefSet> getAllRefSets();
 
 
+    public List<RefSet> getRefsetByInstitution(Institution institution);
+
     public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK);
 }

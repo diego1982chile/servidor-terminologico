@@ -768,6 +768,10 @@ public class ConceptBean implements Serializable {
                 messageBean.messageError(e.getMessage());
                 return;
             }
+            if(descriptionPending==null){
+                messageBean.messageError("Cuando se crea un concepto desde pendientes, este puede ser guardado, sólo si cumple las condiciones para ser un concepto Modelado.");
+                return;
+            }
             // Si el concepto está persistido, actualizarlo. Si no, persistirlo
             if (concept.isPersistent()) {
                 try {

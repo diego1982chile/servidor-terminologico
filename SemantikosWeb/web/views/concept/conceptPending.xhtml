@@ -207,6 +207,17 @@
                         <p:inputText type="text" id="uses"
                                      value="#{managerPendingTermsBean.termSelected.relatedDescription.uses}" disabled="true"/>
 
+                        <p:outputLabel id="sensibilityLabel" for="sensibility" value="Sensibilidad"
+                                       rendered="#{managerPendingTermsBean.termSelected.relatedDescription.caseSensitive}"/>
+                        <p:inputText type="text" id="sensibility" value="Si"
+                                     disabled="true" rendered="#{managerPendingTermsBean.termSelected.relatedDescription.caseSensitive}"/>
+
+                        <p:outputLabel id="noSensibilityLabel" for="noSensibility" value="Sensibilidad"
+                                       rendered="#{not managerPendingTermsBean.termSelected.relatedDescription.caseSensitive}"/>
+                        <p:inputText type="text" id="noSensibility" value="No"
+                                     disabled="true" rendered="#{not managerPendingTermsBean.termSelected.relatedDescription.caseSensitive}"/>
+
+
                         <p:outputLabel id="observationLabel" for="observation" value="Observación"/>
                         <p:inputTextarea type="text" id="observation"
                                          value="#{managerPendingTermsBean.termSelected.observation}" disabled="true"/>

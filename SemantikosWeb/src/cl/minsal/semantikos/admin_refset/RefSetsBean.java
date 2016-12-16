@@ -85,10 +85,26 @@ public class RefSetsBean {
     @PostConstruct
     public void init() {
         categories = categoryManager.getCategories();
-        //refSetToCreate = new RefSet(null, authenticationBean.getLoggedUser().getInstitutions().get(0), null);
         refSetList = refSetManager.getAllRefSets();
         refsetHistoryConcept= new HashMap<>();
+        selectInstitutionMINSAL();
+        refSetListInstitution = refSetManager.getRefsetByInstitution((institutionSelected==null)?new Institution():institutionSelected);
 
+    }
+
+    public void reloadRefsetByInstitution(){
+        refSetListInstitution = refSetManager.getRefsetByInstitution((institutionSelected==null)?new Institution():institutionSelected);
+
+    }
+
+    public void selectInstitutionMINSAL(){
+        for (Institution institution : authenticationBean.getLoggedUser().getInstitutions()) {
+            if(institution.getName().equals("MINSAL")){
+                institutionSelected=institution;
+                break;
+            }
+
+        }
     }
 
     public void createRefset() {

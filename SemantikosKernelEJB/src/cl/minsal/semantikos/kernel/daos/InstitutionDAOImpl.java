@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.Institution;
+import cl.minsal.semantikos.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +11,8 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by des01c7 on 15-12-16.
@@ -41,6 +44,27 @@ public class InstitutionDAOImpl implements InstitutionDAO {
         }
 
         return institution;
+    }
+
+    @Override
+    public List<Institution> getInstitutionBy(User user) {
+        ConnectionBD connect = new ConnectionBD();
+        String GET_INSTITUTION_BY_USER = "{call semantikos.get_institution_by_user(?)}";
+        List<Institution> institutions= new ArrayList<>();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(GET_INSTITUTION_BY_USER)) {
+            call.setLong(1, user.getIdUser());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                institutions.add(createInstitutionFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            logger.error("Error al al obtener los RefSets ", e);
+        }
+
+        return institutions;
     }
 
     private Institution createInstitutionFromResultSet(ResultSet resultSet) {
