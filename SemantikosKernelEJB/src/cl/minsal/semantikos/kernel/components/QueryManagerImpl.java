@@ -106,7 +106,9 @@ public class QueryManagerImpl implements QueryManager {
 
     @Override
     public PendingQuery getDefaultPendingQuery() {
-        return null;
+        PendingQuery pendingQuery = new PendingQuery();
+
+        return pendingQuery;
     }
 
     @Override
@@ -227,7 +229,7 @@ public class QueryManagerImpl implements QueryManager {
 
     @Override
     public int countQueryResults(PendingQuery query) {
-        return 0;
+        return (int)queryDAO.countByQuery(query);
     }
 
     @Override

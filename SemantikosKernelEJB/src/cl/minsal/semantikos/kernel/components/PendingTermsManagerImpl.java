@@ -50,4 +50,11 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
     public List<PendingTerm> getAllPendingTerms() {
         return pendingTermDAO.getAllPendingTerms();
     }
+
+    @Override
+    public PendingTerm getPendingTermById(long id) {
+        return pendingTermDAO.getPendingTermById(id);
+    }
+
+
 }

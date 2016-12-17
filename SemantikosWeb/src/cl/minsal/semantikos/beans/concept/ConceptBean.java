@@ -346,15 +346,22 @@ public class ConceptBean implements Serializable {
      */
     public void createConcept() {
 
+        String term = favoriteDescription;
+
+        /*
+        if(descriptionPending != null)
+            term = descriptionPending.getTerm();
+        */
+
         if (idConcept == 0) {
             setCategory(categoryManager.getCategoryById(idCategory));
             if (category.getId() == 34) changeMultiplicityToRequiredRelationshipDefinitionMC();
 
             /* Se valida que el término propuesto no exista previamente */
-            if (categoryManager.categoryContains(category, favoriteDescription)) {
+            if (categoryManager.categoryContains(category, term)) {
                 messageBean.messageError("La descripción " + favoriteDescription + " ya existe dentro de la categoría " + category.getName());
             } else {
-                newConcept(category, favoriteDescription);
+                newConcept(category, term);
             }
         } else {
             getConceptById(idConcept);
@@ -980,6 +987,7 @@ public class ConceptBean implements Serializable {
     public void setIdTermPending(long idTermPending) {
         this.idTermPending = idTermPending;
         descriptionPending = descriptionManager.getDescriptionByID(idTermPending);
+
         if (descriptionPending != null) {
             concept.addDescriptionWeb(new DescriptionWeb(descriptionPending));
         }

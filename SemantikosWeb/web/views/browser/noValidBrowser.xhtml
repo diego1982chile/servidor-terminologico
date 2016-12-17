@@ -78,15 +78,21 @@
                                             </p:column>
 
                                             <p:column headerText="Acciones" exportable="false" style="width: 10%; text-align: center">
-                                                <p:commandButton oncomplete="PF('dialogTDP').show()" icon="fa fa fa-external-link">
-                                                    <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}"/>
-                                                    <f:setPropertyActionListener value="" target="#{noValidBrowserBean.conceptSelected}"/>
-                                                    <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
-                                                </p:commandButton>
-                                                <p:button outcome="/views/concept/conceptEdit" icon="fa fa-eye">
-                                                    <f:param name="editMode" value="#{false}" />
-                                                    <f:param name="idConcept" value="#{noValidDescription.noValidDescription.conceptSMTK.id}" />
-                                                </p:button>
+                                                <div style="text-align: center;">
+
+                                                    <p:commandLink oncomplete="PF('dialogTDP').show()" title="Trasladar a concepto" style="padding: 5px">
+                                                        <i class="fa fa-external-link fa-lg"/>
+                                                        <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}"/>
+                                                        <f:setPropertyActionListener value="" target="#{noValidBrowserBean.conceptSelected}"/>
+                                                        <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
+                                                    </p:commandLink>
+
+                                                    <p:link outcome="/views/concept/conceptEdit" style="padding: 5px">
+                                                        <i class="fa fa-eye fa-lg"/>
+                                                        <f:param name="editMode" value="#{false}" />
+                                                        <f:param name="idConcept" value="#{noValidDescription.noValidDescription.conceptSMTK.id}" />
+                                                    </p:link>
+                                                </div>
                                             </p:column>
 
                                         </p:dataTable>

@@ -89,10 +89,16 @@
 
                                             <p:column headerText="Acciones" exportable="false" style="text-align: center;width: 10%"
                                                       styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}">
-                                                <p:button outcome="/views/concept/conceptEdit" icon="fa fa-eye">
-                                                    <f:param name="editMode" value="#{false}" />
-                                                    <f:param name="idConcept" value="#{concept.id}" />
-                                                </p:button>
+
+                                                <div style="text-align: center;">
+
+                                                    <p:link outcome="/views/concept/conceptEdit" title="Consultar" style="padding: 5px">
+                                                        <i class="fa fa-eye fa-lg"/>
+                                                        <f:param name="editMode" value="#{false}" />
+                                                        <f:param name="idConcept" value="#{concept.id}" />
+                                                    </p:link>
+
+                                                </div>
                                             </p:column>
 
                                         </p:treeTable>

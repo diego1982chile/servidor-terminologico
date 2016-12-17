@@ -100,8 +100,8 @@ public class PendingQuery {
 
         List<QueryParameter> queryParameters = new ArrayList<>();
 
-        queryParameters.add(new QueryParameter(Long.class, getCategoryValues(), true)); /** ids categorias **/
         queryParameters.add(new QueryParameter(String.class, getQuery(), false)); /** patrón de búsqueda **/
+        queryParameters.add(new QueryParameter(Long.class, getCategoryValues(), true)); /** ids categorias **/
         queryParameters.add(new QueryParameter(Integer.class, getOrder(), false));
         queryParameters.add(new QueryParameter(String.class, getAsc(), false));
         queryParameters.add(new QueryParameter(Integer.class, getPageNumber(), false));

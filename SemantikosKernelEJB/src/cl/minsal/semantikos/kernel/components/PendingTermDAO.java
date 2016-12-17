@@ -28,4 +28,6 @@ public interface PendingTermDAO {
     public void bindTerm2Description(PendingTerm pendingTerm, Description description);
 
     public List<PendingTerm> getAllPendingTerms();
+
+    public PendingTerm getPendingTermById(long id);
 }

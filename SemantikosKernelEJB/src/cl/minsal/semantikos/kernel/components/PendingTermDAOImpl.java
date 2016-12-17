@@ -139,6 +139,39 @@ public class PendingTermDAOImpl implements PendingTermDAO {
         return pendingTerms;
     }
 
+    @Override
+    public PendingTerm getPendingTermById(long id) {
+
+        PendingTerm pendingTerm = null;
+
+        ConnectionBD connect = new ConnectionBD();
+
+        String sql = "{call semantikos.get_pending_term_by_id(?)}";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setLong(1, id);
+            call.execute();
+
+            ResultSet resultSet = call.getResultSet();
+
+            ResultSet rs = call.getResultSet();
+
+            if (rs.next()) {
+                pendingTerm = createPendingTermFromResultSet(rs);
+            } else {
+                String errorMsg = "No existe un término pendiente con id=" + id;
+                logger.error(errorMsg);
+                throw new IllegalArgumentException(errorMsg);
+            }
+        } catch (SQLException e) {
+            throw new EJBException(e);
+        }
+
+        return pendingTerm;
+    }
+
     private PendingTerm createPendingTermFromResultSet(ResultSet resultSet) throws SQLException {
 
         long id = resultSet.getLong("id");

@@ -71,14 +71,22 @@
                                             </p:column>
 
                                             <p:column headerText="Acciones" exportable="false" style="width: 10%; text-align: center">
-                                                <p:button outcome="/views/concept/conceptEdit" icon="fa fa-eye">
-                                                    <f:param name="editMode" value="#{false}" />
-                                                    <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
-                                                </p:button>
-                                                <p:button outcome="/views/concept/conceptEdit" icon="fa fa-edit">
-                                                    <f:param name="editMode" value="#{true}" />
-                                                    <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
-                                                </p:button>
+
+                                                <div style="text-align: center;">
+
+                                                    <p:link outcome="/views/concept/conceptEdit" title="Consultar" style="padding: 5px">
+                                                        <i class="fa fa-eye fa-lg"/>
+                                                        <f:param name="editMode" value="#{false}" />
+                                                        <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
+                                                    </p:link>
+
+                                                    <p:link outcome="/views/concept/conceptEdit" title="Editar" style="padding: 5px">
+                                                        <i class="fa fa-edit fa-lg"/>
+                                                        <f:param name="editMode" value="#{true}" />
+                                                        <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
+                                                    </p:link>
+
+                                                </div>
 
                                             </p:column>
 

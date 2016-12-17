@@ -70,12 +70,12 @@
                                                     </smtk:descriptions>
                                                 </p:tab>
                                                 <br/>
-                                                <p:tab title="Atributos" rendered="#{not empty conceptBean.category.relationshipDefinitions}">
+                                                <p:tab title="Atributos" rendered="#{not empty conceptBean.orderedSMTKRelationshipDefinitions}">
                                                     <!--Relaciones -->
                                                     <p:outputPanel id="atributos"
                                                                    widgetVar="panelAtributos"
                                                                    styleClass="attributes"
-                                                                   rendered="#{conceptBean.category.hasRelationshipDefinitions}">
+                                                                   rendered="#{ not empty conceptBean.orderedSMTKRelationshipDefinitions}">
 
                                                         <h:dataTable style="width: 100%;" value="#{conceptBean.orderedSMTKRelationshipDefinitions}"
                                                                      var="relationshipDefinition">

@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
+import cl.minsal.semantikos.kernel.components.PendingTermsManager;
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.browser.*;
@@ -29,6 +30,9 @@ public class QueryDAOImpl implements QueryDAO {
 
     @EJB
     DescriptionManager descriptionManager;
+
+    @EJB
+    PendingTermsManager pendingTermsManager;
 
     @Override
     public List<ConceptSMTK> executeQuery(GeneralQuery query) {
@@ -182,7 +186,48 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public List<PendingTerm> executeQuery(PendingQuery query) {
-        return null;
+
+        List<PendingTerm> pendingTerms = new ArrayList<PendingTerm>();
+
+        ConnectionBD connect = new ConnectionBD();
+
+        //TODO: hacer funcion en pg
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.get_pending_term_by_pending_query(?,?,?,?,?,?)}" )){
+
+            /*
+                1. p_id_category integer, --static
+                2. p_pattern text, --static
+                11. p_orden text, --static
+                12. p_page integer, --static
+                13. p_page_size integer --static
+            */
+
+            //bindParameter();
+
+            int paramNumber = 1;
+
+            for (QueryParameter queryParameter : query.getQueryParameters()) {
+                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
+                paramNumber++;
+            }
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+
+                PendingTerm pendingTerm =  pendingTermsManager.getPendingTermById(rs.getLong(1));
+                pendingTerms.add(pendingTerm);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pendingTerms;
     }
 
 
@@ -257,6 +302,7 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public long countByQuery(NoValidQuery query) {
+
         long descriptionsNumber = 0;
 
         ConnectionBD connect = new ConnectionBD();
@@ -291,7 +337,37 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public long countByQuery(PendingQuery query) {
-        return 0;
+
+        long pendingTermNumber = 0;
+
+        ConnectionBD connect = new ConnectionBD();
+
+        //TODO: hacer funcion en pg
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.count_pending_term_by_no_pending_query(?,?,?,?,?,?)}" )){
+
+            int paramNumber = 1;
+
+            for (QueryParameter queryParameter : query.getQueryParameters()) {
+                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
+                paramNumber++;
+            }
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+
+                pendingTermNumber = rs.getLong(1);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pendingTermNumber;
     }
 
     @Override
