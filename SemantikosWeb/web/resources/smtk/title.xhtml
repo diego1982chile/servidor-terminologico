@@ -20,7 +20,7 @@
         <p:outputPanel>
             <h2>
                 <h:outputText value="Ver " rendered="#{not conceptBean.editable}"/>
-                <h:outputText value="Editar " rendered="#{conceptBean.editable and conceptBean.concept.persistent}"/>
+                <h:outputText value="Editar " rendered="#{conceptBean.editable and conceptBean.concept.persistent}" />
                 <h:outputText value="Crear " rendered="#{conceptBean.editable and not conceptBean.concept.persistent}"/>
 
                 <h:outputText value="Nuevo Concepto Borrador, #{cc.attrs.concept.category.name}" rendered="#{ not cc.attrs.concept.persistent}" />

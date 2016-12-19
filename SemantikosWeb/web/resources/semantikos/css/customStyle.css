@@ -80,21 +80,27 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     width: 95%;
 }
 
-.descriptionFilters .ui-autocomplete-multiple-container {
+.descriptionFilters .ui-autocomplete-multiple-container, .noValidFilters .ui-autocomplete-multiple-container {
     width: 100% !important;
 }
 
-.descriptionFilters .ui-autocomplete-input-token input{
+.descriptionFilters .ui-autocomplete-input-token input, .noValidFilters .ui-autocomplete-input-token input {
     margin: 0px !important;
 }
 
-.descriptionFilters .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token {
+.descriptionFilters .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token, .noValidFilters .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token {
     padding: 2px !important;
 }
 
-.descriptionFilters .ui-autocomplete-token {
+.descriptionFilters .ui-autocomplete-token, .noValidFilters .ui-autocomplete-token {
     margin: 0px !important;
     margin-right: 2px !important;
+}
+
+.descriptionFilters .ui-autocomplete-multiple-container, .noValidFilters .ui-autocomplete-multiple-container {
+    opacity:100;
+    background-color: #FFF;
+    border-bottom: 0;
 }
 
 .search {
@@ -129,4 +135,8 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 #mainMenu .ui-menu .ui-menuitem .ui-menuitem-link {
     padding: 6px 0px;
+}
+
+.ui-selectonemenu {
+    min-width: 100px !important;
 }

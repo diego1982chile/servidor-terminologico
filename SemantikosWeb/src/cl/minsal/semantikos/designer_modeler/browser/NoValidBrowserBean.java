@@ -62,9 +62,13 @@ public class NoValidBrowserBean implements Serializable {
      */
     private LazyDataModel<NoValidDescription> noValidDescriptions;
 
-    NoValidDescription noValidDescriptionSelected = null;
+    private NoValidDescription noValidDescriptionSelected = null;
 
-    ConceptSMTK conceptSelected = null;
+    private List<NoValidDescription> dataSource = new ArrayList<>();
+
+    private List<NoValidDescription> noValidDescriptionsSelected = new ArrayList<>();
+
+    private ConceptSMTK conceptSelected = null;
 
     private User user;
 
@@ -115,10 +119,33 @@ public class NoValidBrowserBean implements Serializable {
 
                 List<NoValidDescription> noValidDescriptions = queryManager.executeQuery(noValidQuery);
 
+                //if(dataSource.isEmpty())
+                dataSource = noValidDescriptions;
+
                 this.setRowCount(30);
                 //this.setRowCount(queryManager.countQueryResults(noValidQuery));
 
                 return noValidDescriptions;
+            }
+
+            @Override
+            public Object getRowKey(NoValidDescription noValidDescription) {
+                return noValidDescription != null ? noValidDescription.getNoValidDescription().getId() : null;
+            }
+
+            @Override
+            public NoValidDescription getRowData(String rowKey) {
+                List<NoValidDescription> noValidDescriptions = dataSource;
+                //List<PendingTerm> pendingTerms = (List<PendingTerm>)getWrappedData();
+                Integer value = Integer.valueOf(rowKey);
+
+                for (NoValidDescription noValidDescription : noValidDescriptions) {
+                    if (noValidDescription.getNoValidDescription().getId()==value) {
+                        return noValidDescription;
+                    }
+                }
+
+                return null;
             }
 
         };
@@ -128,20 +155,35 @@ public class NoValidBrowserBean implements Serializable {
     public void translateDescription() {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        noValidDescriptionSelected.getNoValidDescription().getConceptSMTK().removeDescription(noValidDescriptionSelected.getNoValidDescription());
-        noValidDescriptionSelected.getNoValidDescription().setConceptSMTK(conceptSelected);
+        if(noValidDescriptionSelected == null){
+            for (NoValidDescription noValidDescription : noValidDescriptionsSelected) {
 
-        try {
-            descriptionManager.moveDescriptionToConcept(conceptSelected, noValidDescriptionSelected.getNoValidDescription(), user);
-        } catch (EJBException e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+                noValidDescription.getNoValidDescription().getConceptSMTK().removeDescription(noValidDescription.getNoValidDescription());
+                noValidDescription.getNoValidDescription().setConceptSMTK(conceptSelected);
+
+                try {
+                    descriptionManager.moveDescriptionToConcept(conceptSelected, noValidDescription.getNoValidDescription(), user);
+                } catch (EJBException e) {
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+
+                }
+            }
         }
+        else{
+            noValidDescriptionSelected.getNoValidDescription().getConceptSMTK().removeDescription(noValidDescriptionSelected.getNoValidDescription());
+            noValidDescriptionSelected.getNoValidDescription().setConceptSMTK(conceptSelected);
 
-        //pendingTerms = pendingTermsManager.getAllPendingTerms();
+            try {
+                descriptionManager.moveDescriptionToConcept(conceptSelected, noValidDescriptionSelected.getNoValidDescription(), user);
+            } catch (EJBException e) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+            }
+        }
 
         conceptSelected = null;
         noValidDescriptionSelected = null;
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successful", "La descripción fue trasladada exitosamente"));
+        noValidDescriptionsSelected = new ArrayList<>();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successful", "La(s) descripción(es) ha sido trasladada(s) exitosamente"));
     }
 
     public NoValidQuery getNoValidQuery() {
@@ -186,6 +228,14 @@ public class NoValidBrowserBean implements Serializable {
 
     public void setNoValidDescriptionSelected(NoValidDescription noValidDescriptionSelected) {
         this.noValidDescriptionSelected = noValidDescriptionSelected;
+    }
+
+    public List<NoValidDescription> getNoValidDescriptionsSelected() {
+        return noValidDescriptionsSelected;
+    }
+
+    public void setNoValidDescriptionsSelected(List<NoValidDescription> noValidDescriptionsSelected) {
+        this.noValidDescriptionsSelected = noValidDescriptionsSelected;
     }
 
     public ConceptSMTK getConceptSelected() {

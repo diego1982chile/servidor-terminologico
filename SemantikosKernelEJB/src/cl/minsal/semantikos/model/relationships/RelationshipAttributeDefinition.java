@@ -19,9 +19,9 @@ public class RelationshipAttributeDefinition {
     /** Multiplicidad */
     private Multiplicity multiplicity;
 
-    private String ORDER_ATTRIBUTE = "orden";
+    private static final String ORDER_ATTRIBUTE = "orden";
 
-    private String RELATIONSHIP_TYPE_ATTRIBUTE = "tipo de relación";
+    private static final String RELATIONSHIP_TYPE_ATTRIBUTE = "tipo de relación";
 
     private static final long GRUOUP_SCT = 29;
 

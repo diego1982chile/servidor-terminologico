@@ -18,6 +18,7 @@ import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -33,7 +34,7 @@ import java.util.Map;
  */
 
 @ManagedBean(name = "pendingBrowserBean")
-@ViewScoped
+@SessionScoped
 public class PendingBrowserBean implements Serializable {
 
     static final Logger logger = LoggerFactory.getLogger(PendingBrowserBean.class);
@@ -231,30 +232,47 @@ public class PendingBrowserBean implements Serializable {
     public void translateDescription() {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        conceptPending.removeDescription(termSelected.getRelatedDescription());
-        termSelected.getRelatedDescription().setConceptSMTK(conceptSelected);
+        if(termSelected == null){
+            for (PendingTerm pendingTerm : termsSelected) {
+                conceptPending.removeDescription(pendingTerm.getRelatedDescription());
+                pendingTerm.getRelatedDescription().setConceptSMTK(conceptSelected);
+                try {
+                    descriptionManager.moveDescriptionToConcept(conceptPending, pendingTerm.getRelatedDescription(), user);
+                } catch (EJBException e) {
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
 
-        try {
-            descriptionManager.moveDescriptionToConcept(conceptPending, termSelected.getRelatedDescription(), user);
-
-        } catch (EJBException e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
-
+                }
+            }
         }
-        //pendingTerms = pendingTermsManager.getAllPendingTerms();
+        else{
+            conceptPending.removeDescription(termSelected.getRelatedDescription());
+            termSelected.getRelatedDescription().setConceptSMTK(conceptSelected);
+
+            try {
+                descriptionManager.moveDescriptionToConcept(conceptPending, termSelected.getRelatedDescription(), user);
+
+            } catch (EJBException e) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+
+            }
+        }
 
         conceptSelected = null;
         termSelected = null;
+        termsSelected = new ArrayList<>();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successful", "La descripción fue trasladada exitosamente"));
+
     }
 
-    public void createNewConcept(PendingTerm pendingT) throws IOException {
+    public void createNewConcept() throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();
 
-        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-        if(categorySelected!=null){
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&descriptionPending="+pendingT.getRelatedDescription().getId() );
+        if(!termsSelected.isEmpty()){
+            ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&pendingTerms=true");
+
         }else{
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + pendingT.getCategory().getId() +"&idConcept=0&favoriteDescription=&descriptionPending="+pendingT.getRelatedDescription().getId() );
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se han seleccionado términos"));
         }
     }
 

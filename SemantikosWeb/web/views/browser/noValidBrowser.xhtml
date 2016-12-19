@@ -36,9 +36,18 @@
                                                      sortBy="#{1}"
                                                      paginator="true" lazy="true" dynamic="true"
                                                      paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                                     emptyMessage="No se han encontrado descripciones con los criterios utilizados">
+                                                     emptyMessage="No se han encontrado descripciones con los criterios utilizados"
+                                                     selection="#{noValidBrowserBean.noValidDescriptionsSelected}">
 
                                             <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                                            <p:ajax event="rowSelect" update="@(.globalActions)" />
+                                            <p:ajax event="rowUnselect" update="@(.globalActions)" />
+                                            <p:ajax event="rowSelectCheckbox" update="@(.globalActions)" />
+                                            <p:ajax event="rowUnselectCheckbox" update="@(.globalActions)" />
+                                            <p:ajax event="toggleSelect" update="@(.globalActions)" />
+
+                                            <p:column selectionMode="multiple" style="width:16px;text-align:center" />
 
                                             <p:column headerText="ID" sortBy="#{1}">
                                                 <h:outputText value="#{noValidDescription.noValidDescription.descriptionId}"/>
@@ -77,10 +86,29 @@
                                                 <h:outputText value="#{noValidDescription.noValidDescription.uses}"/>
                                             </p:column>
 
-                                            <p:column headerText="Acciones" exportable="false" style="width: 10%; text-align: center">
+                                            <p:column exportable="false" style="width: 10%; text-align: center">
+                                                <f:facet name="header">
+                                                    <p:outputPanel styleClass="globalActions">
+                                                        <p:outputPanel rendered="#{not empty noValidBrowserBean.noValidDescriptionsSelected}">
+                                                            <p:commandLink title="Trasladar a concepto" update="@(.pending-description)" oncomplete="PF('dialogTDP').show()" style="padding: 5px">
+                                                                <i class="fa fa-external-link fa-lg"/>
+                                                                <f:setPropertyActionListener value="#{noValidDescription}"
+                                                                                             target="#{noValidBrowserBean.noValidDescriptionSelected}"/>
+                                                                <f:setPropertyActionListener value=""
+                                                                                             target="#{noValidBrowserBean.conceptSelected}"/>
+                                                                <f:setPropertyActionListener value=""
+                                                                                             target="#{findConceptBean.categorySelected}"/>
+                                                            </p:commandLink>
+                                                        </p:outputPanel>
+                                                        <p:outputPanel rendered="#{ empty noValidBrowserBean.noValidDescriptionsSelected}">
+                                                            <h:outputText value="Acciones" />
+                                                        </p:outputPanel>
+                                                    </p:outputPanel>
+                                                </f:facet>
                                                 <div style="text-align: center;">
 
-                                                    <p:commandLink oncomplete="PF('dialogTDP').show()" title="Trasladar a concepto" style="padding: 5px" process="@this" update="@(.noValidBrowserTable),@(.dialogTDP)">
+                                                    <p:commandLink oncomplete="PF('dialogTDP').show()" title="Trasladar a concepto" style="padding: 5px" process="@this"
+                                                                   update="@(.noValidBrowserTable),@(.dialogTDP)">
                                                         <i class="fa fa-external-link fa-lg"/>
                                                         <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}"/>
                                                         <f:setPropertyActionListener value="" target="#{noValidBrowserBean.conceptSelected}"/>
@@ -102,16 +130,37 @@
                                                   showEffect="fade" hideEffect="fade">
                                             <p:panel styleClass="pending-description">
                                                 <p:growl id="msgs" showDetail="true"/>
-                                                <h3>Descripcion a trasladar</h3>
-                                                <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
 
-                                                    <p:outputLabel id="transLabel" for="descidTrans" value="DESCID"/>
-                                                    <h:outputText id="descidTrans" value="#{noValidBrowserBean.noValidDescriptionSelected.noValidDescription.descriptionId}"/>
+                                                <p:outputPanel rendered="#{noValidBrowserBean.noValidDescriptionSelected != null}">
 
-                                                    <p:outputLabel id="transLabelTerm" for="descidTransTerm" value="Termino"/>
-                                                    <h:outputText id="descidTransTerm" value="#{noValidBrowserBean.noValidDescriptionSelected.noValidDescription}"/>
+                                                    <h3>Descripcion a trasladar</h3>
+                                                    <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
 
-                                                </h:panelGrid>
+                                                        <p:outputLabel id="transLabel" for="descidTrans" value="DESCID"/>
+                                                        <h:outputText id="descidTrans"
+                                                                      value="#{noValidBrowserBean.noValidDescriptionSelected.noValidDescription.descriptionId}"/>
+
+                                                        <p:outputLabel id="transLabelTerm" for="descidTransTerm" value="Termino"/>
+                                                        <h:outputText id="descidTransTerm"
+                                                                      value="#{noValidBrowserBean.noValidDescriptionSelected.noValidDescription.term}"/>
+
+                                                    </h:panelGrid>
+
+                                                </p:outputPanel>
+
+                                                <p:outputPanel rendered="#{noValidBrowserBean.noValidDescriptionSelected eq null and not empty noValidBrowserBean.noValidDescriptionsSelected }">
+
+                                                    <h3>Descripciones a trasladar</h3>
+                                                    <p:dataTable value="#{noValidBrowserBean.noValidDescriptionsSelected}" scrollable="true" scrollHeight="150" var="noValidDescription" style="width: 500px">
+                                                        <p:column headerText="DESCID">
+                                                            <h:outputText value="#{noValidDescription.noValidDescription.descriptionId}"/>
+                                                        </p:column>
+                                                        <p:column headerText="Termino">
+                                                            <h:outputText value="#{noValidDescription.noValidDescription.term}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+
+                                                </p:outputPanel>
 
                                                 <h3>Concepto Destino</h3>
                                                 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6">
