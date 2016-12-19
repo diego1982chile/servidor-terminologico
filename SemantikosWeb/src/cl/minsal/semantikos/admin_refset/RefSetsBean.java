@@ -60,11 +60,10 @@ public class RefSetsBean {
 
     private Institution institutionSelected;
 
-    @EJB
-    AuditManager auditManager;
-
     private Map<Long,AuditAction> refsetHistoryConcept;
 
+    @EJB
+    AuditManager auditManager;
 
     @EJB
     private CategoryManager categoryManager;
@@ -115,9 +114,13 @@ public class RefSetsBean {
         refSetList = refSetManager.getAllRefSets();
     }
 
+
+    /**
+     * Método encargado de invalidar el RefSet seleccionado por el usuario
+     */
     public void invalidRefset() {
-        refSetEdit.setValidityUntil(new Timestamp(currentTimeMillis()));
-        refSetManager.updateRefSet(refSetEdit, authenticationBean.getLoggedUser());
+        refSetSelect.setValidityUntil(new Timestamp(currentTimeMillis()));
+        refSetManager.updateRefSet(refSetSelect, authenticationBean.getLoggedUser());
         refSetList = refSetManager.getAllRefSets();
     }
 
@@ -206,9 +209,8 @@ public class RefSetsBean {
 
             }
         }
-
-
     }
+
 
 
     public RefSet getRefSetToCreate() {
