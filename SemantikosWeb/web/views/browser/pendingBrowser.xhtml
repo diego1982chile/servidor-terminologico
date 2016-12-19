@@ -121,7 +121,7 @@
                                                     </p:commandLink>
 
                                                     <p:commandLink title="Consultar" oncomplete="PF('dialogC').show()" process="@this"
-                                                                   update="@(.pendingBrowserTable),@(.pending-description)" style="padding: 5px">
+                                                                   update="@(.pendingBrowserTable),@(.query-pending-description)" style="padding: 5px">
                                                         <i class="fa fa-search fa-lg"/>
                                                         <f:setPropertyActionListener value="#{pendingTerm}"
                                                                                      target="#{pendingBrowserBean.termSelected}"/>
