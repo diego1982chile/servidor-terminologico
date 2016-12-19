@@ -74,21 +74,21 @@
                                         <p:spacer />
                                         <p:treeTable id="treeDocs" value="#{drugsBrowserBean.root}" var="concept">
 
-                                            <p:column headerText="Término" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}">
+                                            <p:column headerText="Término" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept Orange':''}">
                                                 <h:outputText value="#{concept.descriptionFavorite.term}" />
                                             </p:column>
 
-                                            <p:column headerText="ConceptId" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}"
+                                            <p:column headerText="ConceptId" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept Orange':''}"
                                                         style="width: 20%">
                                                 <h:outputText value="#{concept.conceptID}" />
                                             </p:column>
 
-                                            <p:column headerText="Categoría" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}">
+                                            <p:column headerText="Categoría" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept Orange':''}">
                                                 <h:outputText value="#{concept.category.name}" />
                                             </p:column>
 
                                             <p:column headerText="Acciones" exportable="false" style="text-align: center;width: 10%"
-                                                      styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}">
+                                                      styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept Orange':''}">
 
                                                 <div style="text-align: center;">
 
