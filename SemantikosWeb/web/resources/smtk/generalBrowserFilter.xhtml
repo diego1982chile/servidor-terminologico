@@ -24,9 +24,12 @@
                           columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
                           layout="grid" styleClass="ui-panelgrid-blank">
 
-                    <p:inputText value="#{cc.attrs.generalQuery.query}" placeholder="Buscar...">
-                        <p:ajax event="keyup" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
-                    </p:inputText>
+                    <p:outputPanel styleClass="search">
+                        <p:inputText value="#{cc.attrs.generalQuery.query}" placeholder="Buscar...">
+                            <p:ajax event="keyup" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
+                        </p:inputText>
+                        <i class="fa fa-search fa-lg" />
+                    </p:outputPanel>
 
                     <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewed}">
                         <f:selectItem itemLabel="¿Revisar?" itemValue="#{null}"/>
@@ -104,6 +107,15 @@
                                                      rendered="#{filter.definition.targetDefinition.SMTKType}" />
 
                         </p:repeat>
+
+                        <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateSince}"
+                                             dateSince="#{true}"
+                                             rendered="#{cc.attrs.generalQuery.customFilterable}" />
+                        <smtk:DateTypeFilter date="#{cc.attrs.generalQuery.creationDateTo}"
+                                             dateSince="#{false}"
+                                             rendered="#{cc.attrs.generalQuery.customFilterable}" />
+                        <smtk:userTypeFilter user="#{cc.attrs.generalQuery.user}"
+                                             rendered="#{cc.attrs.generalQuery.customFilterable}" />
 
                     </div>
 

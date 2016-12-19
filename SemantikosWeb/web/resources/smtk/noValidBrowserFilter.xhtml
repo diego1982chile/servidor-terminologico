@@ -24,9 +24,12 @@
                           columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
                           layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
 
-                <p:inputText value="#{cc.attrs.noValidQuery.query}" placeholder="Buscar...">
-                    <p:ajax event="keyup" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
-                </p:inputText>
+                <p:outputPanel styleClass="search">
+                    <p:inputText value="#{cc.attrs.noValidQuery.query}" placeholder="Buscar...">
+                        <p:ajax event="keyup" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
+                    </p:inputText>
+                    <i class="fa fa-search fa-lg" />
+                </p:outputPanel>
 
                 <p:selectCheckboxMenu id="descriptionTypes"
                                       value="#{cc.attrs.noValidQuery.descriptionTypes}"
