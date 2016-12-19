@@ -181,12 +181,13 @@
                            decimalPlaces="0"
                            decimalSeparator=","
                            thousandSeparator="."
-                           rendered="#{cc.attrs.targetDefinition.type.typeName=='int' and not cc.attrs.targetDefinition.discreteDomain}"
+                           rendered="#{cc.attrs.targetDefinition.type.typeName=='int' and not cc.attrs.targetDefinition.discreteDomain and not cc.attrs.relationshipAttributeDefinition.groupSCT}"
                            styleClass="fragments">
                 <f:attribute name="concept" value="#{cc.attrs.concept}"  />
                 <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                 <p:ajax event="blur" listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}" />
             </p:inputNumber>
+
 
             <p:inputNumber id="basicTypeValue13"
                            value="#{conceptBean.basicTypeValue.value}"

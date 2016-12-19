@@ -30,7 +30,7 @@ public interface DescriptionManager {
      *
      * @return La descripción creada a partir del término dado.
      */
-    public Description bindDescriptionToConcept(ConceptSMTK concept, String term, DescriptionType type, User user);
+    public Description bindDescriptionToConcept(ConceptSMTK concept, String term, boolean caseSensitive, DescriptionType type, User user);
 
     /**
      * Este método es responsable de asociar (agregar) una descripción a un concepto.

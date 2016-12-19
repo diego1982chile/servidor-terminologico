@@ -23,6 +23,8 @@ public class RelationshipAttributeDefinition {
 
     private String RELATIONSHIP_TYPE_ATTRIBUTE = "tipo de relación";
 
+    private static final long GRUOUP_SCT = 29;
+
     public RelationshipAttributeDefinition(long id, TargetDefinition target, String name, Multiplicity multiplicity) {
         this.id = id;
         this.target = target;
@@ -68,6 +70,10 @@ public class RelationshipAttributeDefinition {
 
     public boolean isRelationshipTypeAttribute(){
         return this.getName().equalsIgnoreCase(RELATIONSHIP_TYPE_ATTRIBUTE);
+    }
+
+    public boolean isGroupSCT(){
+        return this.id==GRUOUP_SCT;
     }
 
     public boolean equals(Object o) {

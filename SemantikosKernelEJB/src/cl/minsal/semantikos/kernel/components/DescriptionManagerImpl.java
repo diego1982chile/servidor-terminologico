@@ -59,7 +59,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
-    public Description bindDescriptionToConcept(ConceptSMTK concept, String term, DescriptionType descriptionType, User user) {
+    public Description bindDescriptionToConcept(ConceptSMTK concept, String term, boolean caseSensitive, DescriptionType descriptionType, User user) {
 
         /* Se aplican las reglas de negocio para crear la Descripción*/
         descriptionCreationBR.applyRules(concept, term, descriptionType, user, categoryManager);
@@ -68,6 +68,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         Description description = new Description(concept, term, descriptionType);
         //TODO: AL implementar los webservices este se podria encargar de asignar el description ID
         description.setDescriptionId(generateDescriptionId());
+        description.setCaseSensitive(caseSensitive);
 
         /* Se aplican las reglas de negocio para crear la Descripción y se persiste y asocia al concepto */
         new DescriptionBindingBR().applyRules(concept, description, user);

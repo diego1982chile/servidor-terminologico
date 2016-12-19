@@ -8,9 +8,11 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.lang.System.currentTimeMillis;
+import static java.lang.System.in;
 
 /**
  * @author Andrés Farías on 9/20/16.
@@ -119,6 +121,16 @@ public class RefSetManagerImpl implements RefSetManager {
     public List<RefSet> getAllRefSets() {
 
         return refsetDAO.getReftsets();
+    }
+
+    @Override
+    public List<RefSet> getRefsetByInstitution(Institution institution) {
+        if(institution.getId()==-1){
+            return Collections.emptyList();
+        }else{
+            return refsetDAO.getRefsetBy(institution);
+        }
+
     }
 
     @Override

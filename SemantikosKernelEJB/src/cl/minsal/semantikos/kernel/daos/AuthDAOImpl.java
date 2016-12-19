@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import java.sql.*;
@@ -21,6 +22,9 @@ import java.util.List;
 public class AuthDAOImpl implements AuthDAO {
 
     static final Logger logger = LoggerFactory.getLogger(AuthDAOImpl.class);
+
+    @EJB
+    private InstitutionDAO institutionDAO;
 
     @Override
     public User getUserById(long id) {
@@ -165,6 +169,8 @@ public class AuthDAOImpl implements AuthDAO {
         u.setRut(rs.getString(21));
 
         u.setProfiles(getUserProfiles(u.getIdUser()));
+
+        u.setInstitutions(institutionDAO.getInstitutionBy(u));
 
         return u;
     }

@@ -8,6 +8,7 @@ import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RefSetManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.Institution;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.audit.AuditAction;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
@@ -55,6 +56,10 @@ public class RefSetsBean {
 
     private RefSet refSetSelect;
 
+    private List<RefSet> refSetListInstitution;
+
+    private Institution institutionSelected;
+
     @EJB
     AuditManager auditManager;
 
@@ -80,10 +85,26 @@ public class RefSetsBean {
     @PostConstruct
     public void init() {
         categories = categoryManager.getCategories();
-        //refSetToCreate = new RefSet(null, authenticationBean.getLoggedUser().getInstitutions().get(0), null);
         refSetList = refSetManager.getAllRefSets();
         refsetHistoryConcept= new HashMap<>();
+        selectInstitutionMINSAL();
+        refSetListInstitution = refSetManager.getRefsetByInstitution((institutionSelected==null)?new Institution():institutionSelected);
 
+    }
+
+    public void reloadRefsetByInstitution(){
+        refSetListInstitution = refSetManager.getRefsetByInstitution((institutionSelected==null)?new Institution():institutionSelected);
+
+    }
+
+    public void selectInstitutionMINSAL(){
+        for (Institution institution : authenticationBean.getLoggedUser().getInstitutions()) {
+            if(institution.getName().equals("MINSAL")){
+                institutionSelected=institution;
+                break;
+            }
+
+        }
     }
 
     public void createRefset() {
@@ -300,5 +321,21 @@ public class RefSetsBean {
 
     public void setRefsetHistoryConcept(Map<Long, AuditAction> refsetHistoryConcept) {
         this.refsetHistoryConcept = refsetHistoryConcept;
+    }
+
+    public List<RefSet> getRefSetListInstitution() {
+        return refSetListInstitution;
+    }
+
+    public void setRefSetListInstitution(List<RefSet> refSetListInstitution) {
+        this.refSetListInstitution = refSetListInstitution;
+    }
+
+    public Institution getInstitutionSelected() {
+        return institutionSelected;
+    }
+
+    public void setInstitutionSelected(Institution institutionSelected) {
+        this.institutionSelected = institutionSelected;
     }
 }

@@ -8,10 +8,33 @@
                 template="/WEB-INF/template/template.xhtml">
 
     <ui:define name="content">
+
+        <p:panel>
+            <div style="text-align: center">
+                <h2>Navegador de conceptos pendientes</h2>
+            </div>
+
+        </p:panel>
+
+
         <h:form>
             <p:panel styleClass="tableTermPending">
+
+                <p:commandButton value="Crear concepto" oncomplete="PF('dialogNCMS').show()">
+                    <f:setPropertyActionListener value="" target="#{managerPendingTermsBean.categorySelected}" />
+                </p:commandButton>
+
+                <p:commandButton value="Trasladar concepto" oncomplete="PF('dialogTDPMS').show()">
+                    <f:setPropertyActionListener value="" target="#{managerPendingTermsBean.categorySelected}" />
+                </p:commandButton>
+
+                <p:growl id="msg"></p:growl>
+
                 <p:dataTable widgetVar="pendingTermTable" value="#{managerPendingTermsBean.pendingTerms}"
-                             var="pendingTerm" filteredValue="#{managerPendingTermsBean.pendingTermsListFilter}">
+                             var="pendingTerm" filteredValue="#{managerPendingTermsBean.pendingTermsListFilter}" rowKey="#{pendingTerm.id}" selection="#{managerPendingTermsBean.pendingTermList}"  >
+
+
+                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                     <p:column headerText="Categoría" filterBy="#{pendingTerm.category.name}"
                               filterMatchMode="exact" style="width: 400px;">
                         <f:facet name="filter">
@@ -46,15 +69,16 @@
                                                          target="#{managerPendingTermsBean.termSelected}"/>
                             <f:setPropertyActionListener value=""
                                                          target="#{managerPendingTermsBean.conceptSMTKSelected}"/>
-                            <f:setPropertyActionListener value=""
+                            <f:setPropertyActionListener value="#{pendingTerm.category}"
                                                          target="#{findConceptBean.categorySelected}"/>
+
                         </p:commandLink>
 
-                        <p:commandLink oncomplete="PF('dialogNC').show()" title="Crear nuevo concepto">
+                        <p:commandLink oncomplete="PF('dialogNC').show()" title="Crear nuevo concepto" update="@(.create-concept)">
                             <i class="fa fa-plus fa-lg"/>
                             <f:setPropertyActionListener value="#{pendingTerm}"
                                                          target="#{managerPendingTermsBean.termSelected}"/>
-                            <f:setPropertyActionListener value="" target="#{managerPendingTermsBean.categorySelected}" />
+                            <f:setPropertyActionListener value="#{pendingTerm.category}" target="#{managerPendingTermsBean.categorySelected}" />
                         </p:commandLink>
 
                         <p:commandLink title="Consultar" oncomplete="PF('dialogC').show()"
@@ -198,6 +222,17 @@
                         <p:inputText type="text" id="uses"
                                      value="#{managerPendingTermsBean.termSelected.relatedDescription.uses}" disabled="true"/>
 
+                        <p:outputLabel id="sensibilityLabel" for="sensibility" value="Sensibilidad"
+                                       rendered="#{managerPendingTermsBean.termSelected.relatedDescription.caseSensitive}"/>
+                        <p:inputText type="text" id="sensibility" value="Si"
+                                     disabled="true" rendered="#{managerPendingTermsBean.termSelected.relatedDescription.caseSensitive}"/>
+
+                        <p:outputLabel id="noSensibilityLabel" for="noSensibility" value="Sensibilidad"
+                                       rendered="#{not managerPendingTermsBean.termSelected.relatedDescription.caseSensitive}"/>
+                        <p:inputText type="text" id="noSensibility" value="No"
+                                     disabled="true" rendered="#{not managerPendingTermsBean.termSelected.relatedDescription.caseSensitive}"/>
+
+
                         <p:outputLabel id="observationLabel" for="observation" value="Observación"/>
                         <p:inputTextarea type="text" id="observation"
                                          value="#{managerPendingTermsBean.termSelected.observation}" disabled="true"/>
@@ -208,12 +243,12 @@
 
 
             <!-- Crear nuevo concepto -->
-            <p:dialog id="dialogNC" header="Consulta termino pendiente" widgetVar="dialogNC" global="true"
+            <p:dialog id="dialogNC" header="Crear nuevo concepto" widgetVar="dialogNC" global="true"
                       showEffect="fade" hideEffect="fade">
-                <p:panel styleClass="query-pending-description">
+                <p:panel styleClass="create-concept">
 
 
-                    <p:selectOneMenu id="parentTag" value="#{managerPendingTermsBean.categorySelected}"
+                    <p:selectOneMenu id="categoriesList" value="#{managerPendingTermsBean.categorySelected}"
                                      converter="omnifaces.SelectItemsConverter" panelStyle="width:60%"
                                      effect="fade" var="c" style="width:90%" filter="true"
                                      filterMatchMode="startsWith" >
@@ -228,6 +263,104 @@
 
                     <p:commandButton value="Crear concepto" actionListener="#{managerPendingTermsBean.createNewConcept(managerPendingTermsBean.termSelected)}"/>
 
+
+                </p:panel>
+            </p:dialog>
+
+            <!-- Crear nuevo concepto selección multiple -->
+            <p:dialog id="dialogNCMS" header="Crear nuevo concepto" widgetVar="dialogNCMS" global="true"
+                      showEffect="fade" hideEffect="fade">
+                <p:panel styleClass="create-concept">
+
+
+                    <p:selectOneMenu id="categoriesListMS" value="#{managerPendingTermsBean.categorySelected}"
+                                     converter="omnifaces.SelectItemsConverter" panelStyle="width:60%"
+                                     effect="fade" var="c" style="width:90%" filter="true"
+                                     filterMatchMode="startsWith" >
+                        <p:ajax/>
+                        <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
+                        <f:selectItems value="#{managerPendingTermsBean.categories}" var="category"
+                                       itemLabel="#{category.name}" itemValue="#{category}"/>
+                        <p:column>
+                            <h:outputText value="#{c.name}"/>
+                        </p:column>
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Crear concepto" actionListener="#{managerPendingTermsBean.newConcept}" update="msg"/>
+                </p:panel>
+            </p:dialog>
+
+
+            <!-- Trasladar varias descripciones a conceptos -->
+            <p:dialog id="dialogTDPMS" header="Trasladar descripcion" widgetVar="dialogTDPMS" global="true"
+                      showEffect="fade" hideEffect="fade">
+                <p:panel styleClass="pending-description">
+                    <h3>Descripcion a trasladar</h3>
+                    <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
+
+                    </h:panelGrid>
+                    <h3>Concepto Destino</h3>
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6">
+
+                        <p:autoComplete id="inputFindConceptTarget" scrollHeight="200" size="5"
+                                        style="width: 300px;margin: 10px;"
+                                        inputStyle="width: 300px;margin: 10px;"
+                                        converter="conceptConverter" var="concept"
+                                        value="#{managerPendingTermsBean.conceptSMTKSelected}"
+                                        completeMethod="#{findConceptBean.getConceptSearchInputAndCategories}"
+                                        itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
+                                        emptyMessage="No se encontraron conceptos relacionados"
+                                        placeholder="Buscar concepto por término"
+                                        disabled="#{conceptBean.conceptSMTKTranslateDes!=null}">
+                            <p:ajax event="itemSelect" update="@(.pending-description)"></p:ajax>
+
+                        </p:autoComplete>
+
+                        <p:selectOneMenu  value="#{findConceptBean.categorySelected}"
+                                          converter="omnifaces.SelectItemsConverter" panelStyle="width:180px"
+                                          effect="fade" var="c" style="width:160px" filter="true"
+                                          filterMatchMode="startsWith"
+                                          disabled="#{managerPendingTermsBean.conceptSMTKSelected!=null}">
+                            <p:ajax event="itemSelect"></p:ajax>
+                            <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
+                            <f:selectItems value="#{findConceptBean.categoryList}" var="category"
+                                           itemLabel="#{category.name}" itemValue="#{category}"/>
+                            <p:column>
+                                <h:outputText value="#{c.name}"/>
+                            </p:column>
+                        </p:selectOneMenu>
+
+
+
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6">
+
+                        <p:outputLabel id="transLabelCIDMS" for="descidTransCIDMS" value="Concept ID"/>
+                        <h:outputText id="descidTransCIDMS"
+                                      value="#{managerPendingTermsBean.conceptSMTKSelected.conceptID}"/>
+
+
+                        <p:outputLabel id="transLabelCDESMS" for="descidTransCDESMS" value="Descripción"/>
+                        <h:outputText id="descidTransCDESMS"
+                                      value="#{managerPendingTermsBean.conceptSMTKSelected.descriptionFavorite.term}"/>
+
+                        <p:outputLabel id="transLabelCCMS" for="descidTransCCMS" value="Categoría"/>
+                        <h:outputText id="descidTransCCMS"
+                                      value="#{managerPendingTermsBean.conceptSMTKSelected.category.name}"/>
+
+                    </h:panelGrid>
+                    <div style="text-align: center">
+                        <p:commandButton rendered="#{managerPendingTermsBean.conceptSMTKSelected!=null}"
+                                         update="@(.pending-description),@(.tableTermPending)"
+                                         value="Trasladar Concepto"
+                                         oncomplete="PF('dialogTDPMS').hide()"
+                                         icon="fa fa-exchange"
+                                         actionListener="#{managerPendingTermsBean.translateMultipleDescription}">
+                            <f:setPropertyActionListener value=""
+                                                         target="#{managerPendingTermsBean.conceptSMTKSelected}"/>
+                        </p:commandButton>
+                    </div>
 
                 </p:panel>
             </p:dialog>
