@@ -80,7 +80,7 @@
                                             <p:column headerText="Acciones" exportable="false" style="width: 10%; text-align: center">
                                                 <div style="text-align: center;">
 
-                                                    <p:commandLink oncomplete="PF('dialogTDP').show()" title="Trasladar a concepto" style="padding: 5px">
+                                                    <p:commandLink oncomplete="PF('dialogTDP').show()" title="Trasladar a concepto" style="padding: 5px" process="@this" update="@(.noValidBrowserTable),@(.dialogTDP)">
                                                         <i class="fa fa-external-link fa-lg"/>
                                                         <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}"/>
                                                         <f:setPropertyActionListener value="" target="#{noValidBrowserBean.conceptSelected}"/>
@@ -98,7 +98,7 @@
                                         </p:dataTable>
 
                                         <!-- Trasladar descripciones a conceptos -->
-                                        <p:dialog id="dialogTDP" header="Trasladar descripcion" widgetVar="dialogTDP" global="true"
+                                        <p:dialog id="dialogTDP" header="Trasladar descripcion" widgetVar="dialogTDP" global="true" styleClass="dialogTDP"
                                                   showEffect="fade" hideEffect="fade">
                                             <p:panel styleClass="pending-description">
                                                 <p:growl id="msgs" showDetail="true"/>

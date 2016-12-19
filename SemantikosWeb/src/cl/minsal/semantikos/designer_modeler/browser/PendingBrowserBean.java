@@ -125,8 +125,8 @@ public class PendingBrowserBean implements Serializable {
 
                 List<PendingTerm> pendingTerms = queryManager.executeQuery(pendingQuery);
 
-                if(dataSource.isEmpty())
-                    dataSource = pendingTerms;
+                //if(dataSource.isEmpty())
+                dataSource = pendingTerms;
 
                 this.setRowCount(30);
                 //this.setRowCount(queryManager.countQueryResults(noValidQuery));
@@ -142,6 +142,7 @@ public class PendingBrowserBean implements Serializable {
             @Override
             public PendingTerm getRowData(String rowKey) {
                 List<PendingTerm> pendingTerms = dataSource;
+                //List<PendingTerm> pendingTerms = (List<PendingTerm>)getWrappedData();
                 Integer value = Integer.valueOf(rowKey);
 
                 for (PendingTerm pendingTerm : pendingTerms) {
@@ -162,6 +163,8 @@ public class PendingBrowserBean implements Serializable {
     }
 
     public LazyDataModel<PendingTerm> getPendingTerms() {
+        if(pendingTerms.getWrappedData()==null)
+            pendingTerms.setWrappedData(dataSource);
         return pendingTerms;
     }
 
