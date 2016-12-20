@@ -11,6 +11,19 @@ import java.util.List;
  */
 @Local
 public interface InstitutionManager {
+
+    /**
+     * Método encargado de obtener las instituciones a las que se encuentra asociado un usuario
+     * @param user
+     * @return Lista de instituciones
+     */
     public List<Institution> getInstitutionsBy(User user);
+
+
+    /**
+     * Método encargado de obtener una lista con todas las instituciones
+     * @return Lista de instituciones
+     */
+    public List<Institution> getAllInstitution();
 }
 

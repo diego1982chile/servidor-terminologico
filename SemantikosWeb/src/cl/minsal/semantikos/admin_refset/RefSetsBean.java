@@ -67,6 +67,8 @@ public class RefSetsBean {
 
     private ConceptSMTK conceptSMTK;
 
+    private List<RefSet> refsetFilter;
+
     @EJB
     AuditManager auditManager;
 
@@ -145,6 +147,15 @@ public class RefSetsBean {
      */
     public void invalidRefset(RefSet refSetSelected) {
         refSetSelected.setValidityUntil(new Timestamp(currentTimeMillis()));
+        refSetManager.updateRefSet(refSetSelected, authenticationBean.getLoggedUser());
+        refSetList = refSetManager.getAllRefSets();
+    }
+
+    /**
+     * Método encargado de validate el RefSet seleccionado por el usuario
+     */
+    public void validRefset(RefSet refSetSelected) {
+        refSetSelected.setValidityUntil(null);
         refSetManager.updateRefSet(refSetSelected, authenticationBean.getLoggedUser());
         refSetList = refSetManager.getAllRefSets();
     }
@@ -410,5 +421,13 @@ public class RefSetsBean {
 
     public void setMessageBean(MessageBean messageBean) {
         this.messageBean = messageBean;
+    }
+
+    public List<RefSet> getRefsetFilter() {
+        return refsetFilter;
+    }
+
+    public void setRefsetFilter(List<RefSet> refsetFilter) {
+        this.refsetFilter = refsetFilter;
     }
 }

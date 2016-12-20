@@ -9,6 +9,7 @@
       xmlns:p="http://primefaces.org/ui">
 
 <composite:interface>
+    <composite:attribute name="refset" type="cl.minsal.semantikos.model.RefSet" />
 </composite:interface>
 <composite:implementation>
 
@@ -40,7 +41,7 @@
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-1">
             <p:commandButton value="Agregar" update="@(.conceptBindRefset)"
-                             actionListener="#{refsetsBean.addConcept(refsetsBean.refSetToCreate,refsetsBean.conceptSMTK)}">
+                             actionListener="#{refsetsBean.addConcept(cc.attrs.refset,refsetsBean.conceptSMTK)}">
                 <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTK}"/>
                 <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
             </p:commandButton>
@@ -49,7 +50,7 @@
 
 
     <p:dataTable id="conceptLinkToRefset" emptyMessage="No se han agregado conceptos al RefSets"
-                 value="#{refsetsBean.refSetToCreate.concepts}" var="conceptSMTK" styleClass="conceptBindRefset">
+                 value="#{cc.attrs.refset.concepts}" var="conceptSMTK" styleClass="conceptBindRefset">
 
         <p:column headerText="ID">
             <h:outputText value="#{conceptSMTK.id}"/>
@@ -61,8 +62,7 @@
 
         <p:column headerText="Acción" style="width: 50px;">
             <p:commandButton icon="fa fa-chain-broken"
-                             actionListener="#{refsetsBean.removeConcept(refsetsBean.refSetToCreate,conceptSMTK)}" update="@(.conceptBindRefset)">
-
+                             actionListener="#{refsetsBean.removeConcept(cc.attrs.refset,conceptSMTK)}" update="@(.conceptBindRefset)">
             </p:commandButton>
         </p:column>
 

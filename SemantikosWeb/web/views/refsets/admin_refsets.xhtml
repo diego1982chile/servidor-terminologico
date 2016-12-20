@@ -23,16 +23,17 @@
 
                 <p:tabView>
                     <!--Pestaña de administración de los RefSets-->
-                    <p:tab title="Administrador de RefSets" >
+                    <p:tab title="Administrador de RefSets">
                         <p:dataTable id="refsetsTable" value="#{refsetsBean.refSetList}" var="refset"
                                      rows="15" paginator="true" emptyMessage="No se han creado Refsets"
-                                     styleClass="listRefSets">
+                                     styleClass="listRefSets" filteredValue="#{refsetsBean.refsetFilter}">
 
                             <p:column headerText="ID">
                                 <h:outputText value="#{refset.id}"/>
                             </p:column>
 
-                            <p:column headerText="Nombre">
+                            <p:column headerText="Nombre" filterBy="#{refset.name}"
+                                      filterMatchMode="contains">
                                 <h:outputText value="#{refset.name}"/>
                             </p:column>
 
@@ -51,16 +52,21 @@
 
                             <p:column headerText="Acción">
                                 <div style="text-align: center">
-                                    <p:commandButton icon="fa fa-edit" >
+                                    <p:commandButton icon="fa fa-edit" update="@(.editRefset)"
+                                                     oncomplete="PF('editRefset').show()">
                                         <f:setPropertyActionListener value="#{refset}"
                                                                      target="#{refsetsBean.refSetEdit}"/>
                                     </p:commandButton>
                                     <p:commandButton icon="fa fa-search" oncomplete="PF('viewRefset').show()"
-                                                     update="@(.viewRefSet)" actionListener="#{refsetsBean.loadHistoryRefset(refset)}">
-                                        <f:setPropertyActionListener value="#{refset}" target="#{refsetsBean.refSetSelect}"/>
+                                                     update="@(.viewRefSet)"
+                                                     actionListener="#{refsetsBean.loadHistoryRefset(refset)}">
+                                        <f:setPropertyActionListener value="#{refset}"
+                                                                     target="#{refsetsBean.refSetSelect}"/>
                                     </p:commandButton>
 
-                                    <p:commandButton icon="fa fa-trash" actionListener="#{refsetsBean.invalidRefset(refset)}" update="@(.listRefSets)">
+                                    <p:commandButton icon="fa fa-trash"
+                                                     actionListener="#{refsetsBean.invalidRefset(refset)}"
+                                                     update="@(.listRefSets)">
 
                                     </p:commandButton>
                                 </div>
@@ -84,17 +90,20 @@
                                 <h:outputLabel value="Tipo:" style="font-weight:bold"/>
                             </div>
                             <div class="ui-g-12 ui-md-6 ui-lg-4">
-                                <p:selectOneMenu  value="#{refsetsBean.refSetToCreate.institution}"  var="i" converter="omnifaces.SelectItemsConverter">
-                                    <f:selectItem itemValue="" itemLabel="Seleccione una institución" noSelectionOption="true"/>
+                                <p:selectOneMenu value="#{refsetsBean.refSetToCreate.institution}" var="i"
+                                                 converter="omnifaces.SelectItemsConverter">
+                                    <f:selectItem itemValue="" itemLabel="Seleccione una institución"
+                                                  noSelectionOption="true"/>
                                     <f:selectItems value="#{refsetsBean.authenticationBean.loggedUser.institutions}"
-                                                   var="institution" itemValue="#{institution}" itemLabel="#{institution.name}"></f:selectItems>
+                                                   var="institution" itemValue="#{institution}"
+                                                   itemLabel="#{institution.name}"></f:selectItems>
                                     <p:column><h:outputText value="#{i.name}"></h:outputText></p:column>
                                 </p:selectOneMenu>
                             </div>
                         </div>
 
                         <p:fieldset toggleable="true" collapsed="true" legend="Agregar conceptos">
-                            <smtk:addConceptToRefset/>
+                            <smtk:addConceptToRefset refset="#{refsetsBean.refSetToCreate}"/>
                         </p:fieldset>
 
 
@@ -115,21 +124,34 @@
 
 
                 <p:dialog widgetVar="viewRefset" modal="true" showEffect="fade"
-                          hideEffect="fade" resizable="true" style="margin:40px;" header="Refset #{refsetsBean.refSetSelect.name}">
+                          hideEffect="fade" resizable="true" style="margin:40px;"
+                          header="Refset #{refsetsBean.refSetSelect.name}">
                     <p:outputPanel id="viewRefsetPanel" styleClass="viewRefSet" style="text-align:center;">
 
-                        <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts" emptyMessage="El RefSet no contiene conceptos">
-                             <p:column headerText="Concepto">
-                                 <h:outputText value="#{concepts.descriptionFavorite.term}" />
-                             </p:column>
+                        <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts"
+                                     emptyMessage="El RefSet no contiene conceptos"
+                                     >
+                            <p:column headerText="Concepto">
+                                <h:outputText value="#{concepts.descriptionFavorite.term}"/>
+                            </p:column>
                             <p:column headerText="Fecha ingreso">
-                                <h:outputText value="#{refsetsBean.conceptBindToRefsetHistory.get(concepts.id).actionDate}"/>
+                                <h:outputText
+                                        value="#{refsetsBean.conceptBindToRefsetHistory.get(concepts.id).actionDate}"/>
                             </p:column>
                         </p:dataTable>
 
                     </p:outputPanel>
                 </p:dialog>
 
+                <p:dialog widgetVar="editRefset" modal="true" showEffect="fade"
+                          hideEffect="fade" resizable="true" style="margin:40px;">
+                    <p:outputPanel id="editRefsetPanel" styleClass="editRefset">
+                        <smtk:addConceptToRefset refset="#{refsetsBean.refSetEdit}"/>
+                        <br/>
+                        <p:commandButton rendered="#{not refsetsBean.refSetEdit.valid}"
+                                         value="Vigente" actionListener="#{refsetsBean.validRefset(refsetsBean.refSetEdit)}" update="formRefset"></p:commandButton>
+                    </p:outputPanel>
+                </p:dialog>
 
 
             </h:form>
