@@ -117,7 +117,7 @@
                                                         <i class="fa fa-plus fa-lg"/>
                                                         <f:setPropertyActionListener value="#{pendingTerm}"
                                                                                      target="#{pendingBrowserBean.termSelected}"/>
-                                                        <f:setPropertyActionListener value="" target="#{pendingBrowserBean.categorySelected}" />
+                                                        <f:setPropertyActionListener value="#{pendingTerm.category}" target="#{pendingBrowserBean.categorySelected}" />
                                                     </p:commandLink>
 
                                                     <p:commandLink title="Consultar" oncomplete="PF('dialogC').show()" process="@this"
@@ -310,14 +310,16 @@
                                         <p:dialog id="dialogNC" header="Crear Concepto" widgetVar="dialogNC" global="true"
                                                   showEffect="fade" hideEffect="fade">
 
+                                            <p:growl id="msgs2" showDetail="true"/>
+
                                             <p:panel styleClass="create-concept">
 
                                                 <div class="ui-fluid">
 
-                                                    <p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank">
+                                                    <h:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" width="100%">
 
                                                         <p:selectOneMenu id="parentTag" value="#{pendingBrowserBean.categorySelected}"
-                                                                         converter="omnifaces.SelectItemsConverter"
+                                                                         converter="omnifaces.SelectItemsConverter" style="min-width: 223px"
                                                                          effect="fade" var="c" filter="true"
                                                                          filterMatchMode="startsWith" >
                                                             <p:ajax/>
@@ -329,10 +331,10 @@
                                                             </p:column>
                                                         </p:selectOneMenu>
 
-                                                        <p:commandButton value="Crear concepto" actionListener="#{pendingBrowserBean.createNewConcept}"/>
-
-                                                    </p:panelGrid>
+                                                    </h:panelGrid>
                                                 </div>
+                                                <p:commandButton value="Crear concepto" actionListener="#{pendingBrowserBean.createNewConcept}"
+                                                                 update="@(.create-concept),@(.pendingBrowserTable)" />
 
                                             </p:panel>
                                         </p:dialog>
