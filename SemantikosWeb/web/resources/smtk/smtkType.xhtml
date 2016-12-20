@@ -211,8 +211,6 @@
     <p:panel id="multiplicityN_with_attributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true"  toggleSpeed="500" collapsed="true"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
-        <p:spacer />
-
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
             <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}">
                 <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
@@ -307,55 +305,52 @@
             </div>
         </p:outputPanel>
 
-        <div class="ui-g">
-            <p:spacer />
-            <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
-                         id="tableRelationship3"
-                         styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
-                         draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}" style="margin: 10px;"
-                         value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                         var="rel">
+        <p:spacer rendered="#{cc.attrs.concept.editable}" />
+        <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
+                     id="tableRelationship3"
+                     styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
+                     draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}" style="margin: 10px;"
+                     value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+                     var="rel">
 
-                <!-- Parámetros del validador -->
-                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                <!---->
+            <!-- Parámetros del validador -->
+            <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+            <!---->
 
-                <p:ajax event="rowReorder" listener="#{conceptBean.onRowReorder}"
-                        update="@(.conceptHeader),@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})">
+            <p:ajax event="rowReorder" listener="#{conceptBean.onRowReorder}"
+                    update="@(.conceptHeader),@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})">
 
-                </p:ajax>
-                <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}" />
+            </p:ajax>
+            <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}" />
 
-                <p:column headerText="ID">
-                    <h:outputText value="#{rel.target.id}"/>
-                </p:column>
+            <p:column headerText="ID">
+                <h:outputText value="#{rel.target.id}"/>
+            </p:column>
 
-                <p:column headerText="Descripción">
-                    <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
-                </p:column>
+            <p:column headerText="Descripción">
+                <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
+            </p:column>
 
-                <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                           var="attribute"
-                           columnIndexVar="colIndex">
-                    <f:facet name="header">
-                        <h:outputText value="#{attribute.name}" />
-                    </f:facet>
-                    <p:outputPanel rendered="#{not empty rel.getAttributesByAttributeDefinition(attribute)}">
-                        <smtk:basicTypeAttributeCell attribute="#{attribute}" relationship="#{rel}" rendered="#{attribute.targetDefinition.basicType}" />
-                        <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{rel}" rendered="#{attribute.targetDefinition.helperTable}" />
-                    </p:outputPanel>
-                </p:columns>
+            <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+                       var="attribute"
+                       columnIndexVar="colIndex">
+                <f:facet name="header">
+                    <h:outputText value="#{attribute.name}" />
+                </f:facet>
+                <p:outputPanel rendered="#{not empty rel.getAttributesByAttributeDefinition(attribute)}">
+                    <smtk:basicTypeAttributeCell attribute="#{attribute}" relationship="#{rel}" rendered="#{attribute.targetDefinition.basicType}" />
+                    <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{rel}" rendered="#{attribute.targetDefinition.helperTable}" />
+                </p:outputPanel>
+            </p:columns>
 
-                <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
-                    <p:commandButton icon="fa fa-trash" title="Eliminar"
-                                     action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
-                                     update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                     process="@this">
-                    </p:commandButton>
-                </p:column>
-            </p:dataTable>
-
-        </div>
+            <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">
+                <p:commandButton icon="fa fa-trash" title="Eliminar"
+                                 action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
+                                 update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                 process="@this">
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
 
     </p:panel>
 

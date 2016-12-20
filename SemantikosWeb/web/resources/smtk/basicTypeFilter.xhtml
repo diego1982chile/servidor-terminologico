@@ -69,14 +69,15 @@
                    var="target"
                    varStatus="var">
 
-            <p:inputText disabled="true" id="itemSelected" value="#{target}" />
-            <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
-                           process="@this"
-                           update="@(.conceptFilters),@(.conceptBrowserTable)"
-                           action="#{generalBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
-                <i class="fa fa-close fa-lg"  />
-            </p:commandLink>
-
+            <p:outputPanel styleClass="search">
+                <p:inputText disabled="true" id="itemSelected" value="#{target}" />
+                <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
+                               process="@this"
+                               update="@(.conceptFilters),@(.conceptBrowserTable)"
+                               action="#{generalBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
+                    <i class="fa fa-close fa-lg"  />
+                </p:commandLink>
+            </p:outputPanel>
 
 
         </p:repeat>

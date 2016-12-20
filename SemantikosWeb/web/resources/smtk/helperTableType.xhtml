@@ -512,8 +512,6 @@
     <p:panel id="helperTableTypeCollectionWithAttributes" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500" collapsed="true"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
-        <p:spacer />
-
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
             <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}">
                 <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
@@ -609,7 +607,7 @@
             </div>
         </p:outputPanel>
 
-        <p:spacer />
+        <p:spacer rendered="#{cc.attrs.concept.editable}" />
         <p:dataTable id="collectionValuesWithAttributes"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
