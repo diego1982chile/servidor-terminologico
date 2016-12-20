@@ -27,7 +27,8 @@
 
             <p:selectOneMenu value="#{conceptBean.selectedHelperTableRecord}" var="helperT"
                              converter="helperTableRecordConverter"
-                             disabled="#{not cc.attrs.concept.editable }">
+                             disabled="#{not cc.attrs.concept.editable }"
+            filter="true" >
                 <p:ajax event="itemSelect"/>
                 <f:selectItem itemLabel="Tipo de relación" itemDisabled="true"/>
                 <f:selectItems value="#{helperTableBean.allRecord}" var="record"
