@@ -22,7 +22,9 @@
 
     <div class="ui-panelgrid-cell ui-grid-col-2">
 
-        <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes }" styleClass="search">
+        <p:outputPanel id="helperTableTypeAttributeNew" rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes }" styleClass="search">
+
+            <p:focus context="helperTableTypeAttributeNew" rendered="#{cc.attrs.relationship != null}" />
 
             <p:autoComplete id="helperTableTypeAttributeSimple" scrollHeight="200"
                             completeMethod="#{helperTableBean.getRecordSearchInput}"

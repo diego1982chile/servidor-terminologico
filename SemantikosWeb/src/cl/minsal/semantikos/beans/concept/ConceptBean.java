@@ -657,16 +657,7 @@ public class ConceptBean implements Serializable {
 
         // Si no se encuentra la relación, se crea una nueva relación con el atributo y target vacio
         if (!isRelationshipFound) {
-            Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
-            RelationshipAttribute attribute = new RelationshipAttribute(relationshipAttributeDefinition, relationship, target);
-            if (relationshipDefinition.getTargetDefinition().isSMTKType())
-                relationship.setTarget(null);
-            if (relationshipDefinition.getTargetDefinition().isBasicType())
-                relationship.setTarget(basicTypeValue);
-            if (relationshipDefinition.getTargetDefinition().isHelperTable())
-                relationship.setTarget(selectedHelperTableRecord);
-            relationship.getRelationshipAttributes().add(attribute);
-            this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes())); //  new ArrayList<RelationshipAttribute>()));
+            messageBean.messageError("No existe una relación a la cual añadir este atributo. Primero agregue la relación");
         }
 
         // Se resetean los placeholder para los target de las relaciones
