@@ -50,9 +50,9 @@ public class RefSetManagerImpl implements RefSetManager {
         RefSet refSet = new RefSet(name, institution, new Timestamp(currentTimeMillis()));
         refsetDAO.persist(refSet);
 
-
+        //TODO: Verificar si se debe guardar un registro
         /* Se registra la creación */
-        auditManager.recordRefSetCreation(refSet, user);
+        //auditManager.recordRefSetCreation(refSet, user);
 
 
         /* Se registra la creación del RefSet */

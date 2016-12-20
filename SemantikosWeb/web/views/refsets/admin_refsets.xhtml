@@ -3,6 +3,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
                 template="/WEB-INF/template/template.xhtml">
 
 
@@ -17,6 +18,8 @@
 
         <p:panel id="refsetsAdmin">
             <h:form id="formRefset">
+
+                <p:growl id="msg" showDetail="true" autoUpdate="true"></p:growl>
 
                 <p:tabView>
                     <!--Pestaña de administración de los RefSets-->
@@ -71,33 +74,29 @@
                     <p:tab title="Crear RefSet">
 
                         <div class="ui-g">
-                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
                                 <h:outputLabel value="Nombre:" style="font-weight:bold"/>
                             </div>
                             <div class="ui-g-12 ui-md-6 ui-lg-4">
-                                <p:inputText value="#{refsetsBean.refSetToCreate.name}" style="width: 100%;"/>
+                                <p:inputText value="#{refsetsBean.refSetToCreate.name}" style="width: 80%;"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <h:outputLabel value="Tipo:" style="font-weight:bold"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <p:selectOneMenu  value="#{refsetsBean.refSetToCreate.institution}"  var="i" converter="omnifaces.SelectItemsConverter">
+                                    <f:selectItem itemValue="" itemLabel="Seleccione una institución" noSelectionOption="true"/>
+                                    <f:selectItems value="#{refsetsBean.authenticationBean.loggedUser.institutions}"
+                                                   var="institution" itemValue="#{institution}" itemLabel="#{institution.name}"></f:selectItems>
+                                    <p:column><h:outputText value="#{i.name}"></h:outputText></p:column>
+                                </p:selectOneMenu>
                             </div>
                         </div>
 
-                        <p:dataTable id="conceptLinkToRefset" emptyMessage="No se han agregado conceptos al RefSets"
-                                     value="#{refsetsBean.refSetToCreate.concepts}" var="conceptSMTK">
+                        <p:fieldset toggleable="true" collapsed="true" legend="Agregar conceptos">
+                            <smtk:addConceptToRefset/>
+                        </p:fieldset>
 
-                            <p:column headerText="ID">
-                                <h:outputText value="#{conceptSMTK.id}"/>
-                            </p:column>
-
-                            <p:column headerText="Preferida">
-                                <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
-                            </p:column>
-
-                            <p:column headerText="Acción">
-                                <p:commandButton icon="fa fa-chain-broken"
-                                                 actionListener="#{refsetsBean.removeConcept(refsetsBean.refSetToCreate,conceptSMTK)}">
-
-                                </p:commandButton>
-                            </p:column>
-
-                        </p:dataTable>
 
                         <br/>
 

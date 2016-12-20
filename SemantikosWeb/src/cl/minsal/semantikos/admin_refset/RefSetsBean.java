@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.admin_refset;
 
+import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.beans.concept.ConceptBean;
 import cl.minsal.semantikos.kernel.components.AuditManager;
@@ -64,6 +65,7 @@ public class RefSetsBean {
 
     private Map<Long, AuditAction> conceptBindToRefsetHistory;
 
+    private ConceptSMTK conceptSMTK;
 
     @EJB
     AuditManager auditManager;
@@ -83,6 +85,9 @@ public class RefSetsBean {
     @ManagedProperty(value = "#{conceptBean}")
     private ConceptBean conceptBean;
 
+    @ManagedProperty(value = "#{messageBean}")
+    private MessageBean messageBean;
+
 
     @PostConstruct
     public void init() {
@@ -92,6 +97,7 @@ public class RefSetsBean {
         conceptBindToRefsetHistory = new HashMap<>();
         selectInstitutionMINSAL();
         refSetListInstitution = refSetManager.getRefsetByInstitution((institutionSelected == null) ? new Institution() : institutionSelected);
+        refSetToCreate = new RefSet(null, new Institution(), null);
 
     }
 
@@ -120,11 +126,17 @@ public class RefSetsBean {
      *
      */
     public void createRefset() {
-        refSetToCreate = refSetManager.createRefSet(refSetToCreate, authenticationBean.getLoggedUser());
-        refSetToCreate = new RefSet(null, authenticationBean.getLoggedUser().getInstitutions().get(0), null);
-        conceptsToCategory = null;
-        conceptsToDescription = null;
-        refSetList = refSetManager.getAllRefSets();
+        if(refSetToCreate.getInstitution()!=null && refSetToCreate.getName().length()>0){
+            refSetToCreate = refSetManager.createRefSet(refSetToCreate, authenticationBean.getLoggedUser());
+            refSetToCreate = new RefSet(null, new Institution(), null);
+            conceptsToCategory = null;
+            conceptsToDescription = null;
+            refSetList = refSetManager.getAllRefSets();
+            messageBean.messageSuccess("Éxito", "El RefSet a sido guardado exitosamente.");
+        }else{
+            messageBean.messageError("Falta información para crear el RefSet");
+        }
+
     }
 
 
@@ -193,6 +205,8 @@ public class RefSetsBean {
         refSet.bindConceptTo(conceptSMTK);
         if (refSet.isPersistent()) {
             refSetManager.bindConceptToRefSet(conceptSMTK, refSet, authenticationBean.getLoggedUser());
+        }else{
+            this.conceptSMTK = null;
         }
         if (conceptRefSetList != null) {
             conceptRefSetList = refSetManager.getRefsetsBy(conceptBean.getConcept());
@@ -384,5 +398,17 @@ public class RefSetsBean {
 
     public void setConceptBindToRefsetHistory(Map<Long, AuditAction> conceptBindToRefsetHistory) {
         this.conceptBindToRefsetHistory = conceptBindToRefsetHistory;
+    }
+
+    public ConceptSMTK getConceptSMTK() {
+        return conceptSMTK;
+    }
+
+    public void setConceptSMTK(ConceptSMTK conceptSMTK) {
+        this.conceptSMTK = conceptSMTK;
+    }
+
+    public void setMessageBean(MessageBean messageBean) {
+        this.messageBean = messageBean;
     }
 }
