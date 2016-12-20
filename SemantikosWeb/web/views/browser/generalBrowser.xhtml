@@ -30,6 +30,7 @@
                                         <p:spacer />
                                         <smtk:generalBrowserFilter generalQuery="#{generalBrowserBean.generalQuery}" />
                                         <p:spacer />
+
                                         <p:dataTable id="conceptTable"
                                                      styleClass="conceptBrowserTable"
                                                      value="#{generalBrowserBean.concepts}"
@@ -122,6 +123,7 @@
                                             </p:column>
 
                                         </p:dataTable>
+                                        <p:growl id="msgTransfer" showDetail="true" showSummary="true"/>
 
                                         <!-- Diálogo para buscar la categoría y aceptar -->
                                         <p:dialog id="dialogTC2-browser" header="Trasladar concepto" widgetVar="dialogTC2-browser" showEffect="fade" hideEffect="fade">
@@ -138,7 +140,7 @@
                                                     <p:inputText value="id concepto: #{transferConceptBean.conceptSMTKSelected.id}" disabled="true" />
 
                                                     <p:commandButton value="Trasladar" actionListener="#{transferConceptBean.transferConcept(transferConceptBean.conceptSMTKSelected)}"
-                                                                     icon="fa fa-exchange" styleClass="ui-priority-primary" />
+                                                                     icon="fa fa-exchange" styleClass="ui-priority-primary" update="msgTransfer" />
                                                 </h:panelGrid>
                                             </p:panel>
                                         </p:dialog>
