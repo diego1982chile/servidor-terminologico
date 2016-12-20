@@ -67,6 +67,25 @@ public class InstitutionDAOImpl implements InstitutionDAO {
         return institutions;
     }
 
+    @Override
+    public List<Institution> getAllInstitution() {
+        ConnectionBD connect = new ConnectionBD();
+        String GET_ALL_INSTITUTION = "{call semantikos.get_all_institution()}";
+        List<Institution> institutions= new ArrayList<>();
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(GET_ALL_INSTITUTION)) {
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                institutions.add(createInstitutionFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            logger.error("Error al al obtener los RefSets ", e);
+        }
+
+        return institutions;
+    }
+
     private Institution createInstitutionFromResultSet(ResultSet resultSet) {
         Institution institution = new Institution();
         try {

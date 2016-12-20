@@ -22,4 +22,8 @@ public class InstitutionManagerImpl implements InstitutionManager {
         return institutionDAO.getInstitutionBy(user);
     }
 
+    @Override
+    public List<Institution> getAllInstitution() {
+        return institutionDAO.getAllInstitution();
+    }
 }

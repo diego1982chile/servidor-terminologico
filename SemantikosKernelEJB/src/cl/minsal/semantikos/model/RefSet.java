@@ -29,6 +29,7 @@ public class RefSet extends PersistentEntity implements AuditableEntity {
     private long id;
 
     public RefSet(String name, Institution institution, Timestamp creationDate) {
+        this.id= NON_PERSISTED_ID;
         this.institution = institution;
         this.name = name;
         this.creationDate = creationDate;
@@ -37,6 +38,10 @@ public class RefSet extends PersistentEntity implements AuditableEntity {
 
     public Institution getInstitution() {
         return institution;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
     }
 
     public Timestamp getValidityUntil() {

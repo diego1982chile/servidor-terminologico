@@ -20,6 +20,10 @@
         <h:form>
             <p:panel styleClass="tableTermPending">
 
+                <div style="text-align: right">
+
+
+
                 <p:commandButton value="Crear concepto" oncomplete="PF('dialogNCMS').show()">
                     <f:setPropertyActionListener value="" target="#{managerPendingTermsBean.categorySelected}" />
                 </p:commandButton>
@@ -27,6 +31,8 @@
                 <p:commandButton value="Trasladar concepto" oncomplete="PF('dialogTDPMS').show()">
                     <f:setPropertyActionListener value="" target="#{managerPendingTermsBean.categorySelected}" />
                 </p:commandButton>
+                </div>
+                <br/>
 
                 <p:growl id="msg"></p:growl>
 
@@ -359,6 +365,7 @@
                                          actionListener="#{managerPendingTermsBean.translateMultipleDescription}">
                             <f:setPropertyActionListener value=""
                                                          target="#{managerPendingTermsBean.conceptSMTKSelected}"/>
+
                         </p:commandButton>
                     </div>
 

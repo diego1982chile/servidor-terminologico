@@ -63,7 +63,11 @@ public class RefSetDAOImpl implements RefSetDAO {
             call.setString(2, refSet.getName());
             call.setLong(3, refSet.getInstitution().getId());
             call.setTimestamp(4, refSet.getCreationDate());
-            call.setTimestamp(5, refSet.getValidityUntil());
+            if(refSet.getValidityUntil()==null){
+                call.setNull(5, Types.TIMESTAMP);
+            }else {
+                call.setTimestamp(5, refSet.getValidityUntil());
+            }
             call.execute();
         } catch (SQLException e) {
             logger.error("Error al crear el RefSet:" + refSet, e);
