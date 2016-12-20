@@ -1,32 +1,30 @@
 package cl.minsal.semantikos.kernel.components;
 
-import cl.minsal.semantikos.kernel.daos.ConceptQueryDAO;
+import cl.minsal.semantikos.kernel.daos.QueryDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.MultiplicityFactory;
-import cl.minsal.semantikos.model.browser.ConceptQuery;
-import cl.minsal.semantikos.model.browser.ConceptQueryColumn;
-import cl.minsal.semantikos.model.browser.ConceptQueryFilter;
-import cl.minsal.semantikos.model.browser.Sort;
+import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.browser.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
+import sun.security.krb5.internal.crypto.Des;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
 @Stateless
-public class ConceptQueryManagerImpl implements ConceptQueryManager{
+public class QueryManagerImpl implements QueryManager {
 
 
     @EJB
-    ConceptQueryDAO conceptQueryDAO;
+    QueryDAO queryDAO;
 
     @EJB
     private ConceptManager conceptManager;
@@ -38,15 +36,15 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
     private RelationshipDAO relationshipDAO;
 
     @Override
-    public ConceptQuery getDefaultQueryByCategory(Category category) {
+    public GeneralQuery getDefaultGeneralQuery(Category category) {
 
-        ConceptQuery query = new ConceptQuery();
+        GeneralQuery query = new GeneralQuery();
 
         List<Category> categories = new ArrayList<Category>();
         categories.add(category);
         query.setCategories(categories);
 
-        List<ConceptQueryFilter> filters = new ArrayList<ConceptQueryFilter>();
+        List<QueryFilter> filters = new ArrayList<QueryFilter>();
         query.setFilters(filters);
 
         // Stablishing custom filtering value
@@ -54,7 +52,7 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
 
         // Adding dynamic columns
         for (RelationshipDefinition relationshipDefinition : getShowableAttributesByCategory(category)) {
-            query.getColumns().add(new ConceptQueryColumn(relationshipDefinition.getName(), new Sort(null, false), relationshipDefinition));
+            query.getColumns().add(new QueryColumn(relationshipDefinition.getName(), new Sort(null, false), relationshipDefinition));
 
         }
 
@@ -63,7 +61,7 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
             if(relationshipDefinition.getTargetDefinition().isSMTKType()){
                 Category categoryDestination = (Category) relationshipDefinition.getTargetDefinition();
                 for (RelationshipDefinition relationshipDefinitionDestination : getSecondOrderShowableAttributesByCategory(categoryDestination)) {
-                    ConceptQueryColumn secondOrderColumn = new ConceptQueryColumn(relationshipDefinitionDestination.getName(), new Sort(null, false), relationshipDefinitionDestination);
+                    QueryColumn secondOrderColumn = new QueryColumn(relationshipDefinitionDestination.getName(), new Sort(null, false), relationshipDefinitionDestination);
                     query.getColumns().add(secondOrderColumn);
                     secondOrderColumn.setSecondOrder(true);
                 }
@@ -75,43 +73,74 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
             for (Category relatedCategory : categoryManager.getRelatedCategories(category)) {
                 if(getShowableValue(relatedCategory)) {
                     RelationshipDefinition rd = new RelationshipDefinition(relatedCategory.getId(), relatedCategory.getName(), relatedCategory.getName(), relatedCategory, MultiplicityFactory.ONE_TO_ONE);
-                    query.getColumns().add(new ConceptQueryColumn(rd.getName(), new Sort(null, false), rd));
+                    query.getColumns().add(new QueryColumn(rd.getName(), new Sort(null, false), rd));
                 }
             }
         }
 
         // Adding dynamic filters
         for (RelationshipDefinition relationshipDefinition : getSearchableAttributesByCategory(category)) {
-            ConceptQueryFilter conceptQueryFilter = new ConceptQueryFilter(relationshipDefinition);
-            conceptQueryFilter.setMultiple(getMultipleFilteringValue(category, relationshipDefinition));
-            query.getFilters().add(conceptQueryFilter);
+            QueryFilter queryFilter = new QueryFilter(relationshipDefinition);
+            queryFilter.setMultiple(getMultipleFilteringValue(category, relationshipDefinition));
+            query.getFilters().add(queryFilter);
         }
 
         return query;
     }
 
     @Override
-    public List<ConceptSMTK> executeQuery(ConceptQuery query) {
+    public DescriptionQuery getDefaultDescriptionQuery() {
+
+        DescriptionQuery query = new DescriptionQuery();
+
+        return query;
+    }
+
+    @Override
+    public NoValidQuery getDefaultNoValidQuery() {
+
+        NoValidQuery noValidQuery = new NoValidQuery();
+
+        return noValidQuery;
+    }
+
+    @Override
+    public PendingQuery getDefaultPendingQuery() {
+        PendingQuery pendingQuery = new PendingQuery();
+
+        return pendingQuery;
+    }
+
+    @Override
+    public List<ConceptSMTK> executeQuery(GeneralQuery query) {
 
         //return conceptQueryDAO.callQuery(query);
-        List<ConceptSMTK> conceptSMTKs = conceptQueryDAO.executeQuery(query);
+        List<ConceptSMTK> conceptSMTKs = queryDAO.executeQuery(query);
 
         for (ConceptSMTK conceptSMTK : conceptSMTKs) {
+
             if(!query.getColumns().isEmpty()) {
+
                 conceptSMTK.setRelationships(conceptManager.loadRelationships(conceptSMTK));
                 Category category = query.getCategories().get(0);
                 List<RelationshipDefinition> secondOrderAttributes = query.getSecondOrderDefinitions();
                 // Adding second order columns, if this apply
                 List<Relationship> secondOrderRelationships = new ArrayList<>();
+
                 for (RelationshipDefinition relationshipDefinition : getSourceSecondOrderShowableAttributesByCategory(category)) {
+
                     for (Relationship firstOrderRelationship : conceptSMTK.getRelationshipsByRelationDefinition(relationshipDefinition)) {
+
                         ConceptSMTK targetConcept = (ConceptSMTK)firstOrderRelationship.getTarget();
+
                         for (Relationship secondOrderRelationship : relationshipDAO.getRelationshipsBySourceConcept(targetConcept.getId())) {
+
                             if(secondOrderAttributes.contains(secondOrderRelationship.getRelationshipDefinition()))
                                 secondOrderRelationships.add(secondOrderRelationship);
                         }
                     }
                 }
+
                 conceptSMTK.getRelationships().addAll(secondOrderRelationships);
                 // Adding related concepts to relationships, if this apply
                 if(getShowableRelatedConceptsValue(category)){
@@ -128,17 +157,88 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
     }
 
     @Override
-    public int countConceptQuery(ConceptQuery query) {
-        return (int)conceptQueryDAO.countConceptByQuery(query);
+    public List<Description> executeQuery(DescriptionQuery query) {
+
+        List<Description> descriptions = queryDAO.executeQuery(query);
+
+        for (Description description : descriptions) {
+
+            Relationship otherThanFullyDefinitional = null;
+
+            for (Relationship relationship : conceptManager.getRelationships(description.getConceptSMTK()) ) {
+
+                if(relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()){
+
+                    if(otherThanFullyDefinitional == null)
+                        otherThanFullyDefinitional = relationship;
+
+                    // Si existe una relación ES_UN_MAPEO, se agrega esta relación y se detiene la búsqueda
+                    SnomedCTRelationship fullyDefinitional = (SnomedCTRelationship) relationship;
+
+                    if(fullyDefinitional.isES_UN_MAPEO()) {
+                        description.getConceptSMTK().setRelationships(Arrays.asList(relationship));
+                        break;
+                    }
+
+                }
+
+            }
+
+            // Si no se encontró una relación ES_UN_MAPEO, se agrega la primera relación a SNOMED_CT encontrada
+            if(!description.getConceptSMTK().isRelationshipsLoaded()){
+                description.getConceptSMTK().setRelationships(Arrays.asList(otherThanFullyDefinitional));
+            }
+
+        }
+
+        return descriptions;
+        //return queryDAO.executeQuery(query);
+
+    }
+
+    @Override
+    public List<NoValidDescription> executeQuery(NoValidQuery query) {
+
+        List<NoValidDescription> noValidDescriptions = queryDAO.executeQuery(query);
+
+        return noValidDescriptions;
+    }
+
+    @Override
+    public List<PendingTerm> executeQuery(PendingQuery query) {
+
+        List<PendingTerm> pendingTerms = queryDAO.executeQuery(query);
+
+        return pendingTerms;
+    }
+
+    @Override
+    public int countQueryResults(GeneralQuery query) {
+        return (int)queryDAO.countByQuery(query);
+    }
+
+    @Override
+    public int countQueryResults(DescriptionQuery query) {
+        return (int)queryDAO.countByQuery(query);
+    }
+
+    @Override
+    public int countQueryResults(NoValidQuery query) {
+        return (int)queryDAO.countByQuery(query);
+    }
+
+    @Override
+    public int countQueryResults(PendingQuery query) {
+        return (int)queryDAO.countByQuery(query);
     }
 
     @Override
     public List<RelationshipDefinition> getShowableAttributesByCategory(Category category) {
-        return conceptQueryDAO.getShowableAttributesByCategory(category);
+        return queryDAO.getShowableAttributesByCategory(category);
     }
 
     public List<RelationshipDefinition> getSecondOrderShowableAttributesByCategory(Category category){
-        return conceptQueryDAO.getSecondOrderShowableAttributesByCategory(category);
+        return queryDAO.getSecondOrderShowableAttributesByCategory(category);
     }
 
     public List<RelationshipDefinition> getSourceSecondOrderShowableAttributesByCategory(Category category){
@@ -155,22 +255,22 @@ public class ConceptQueryManagerImpl implements ConceptQueryManager{
 
     @Override
     public List<RelationshipDefinition> getSearchableAttributesByCategory(Category category) {
-        return conceptQueryDAO.getSearchableAttributesByCategory(category);
+        return queryDAO.getSearchableAttributesByCategory(category);
     }
 
     private boolean getCustomFilteringValue(Category category){
-        return conceptQueryDAO.getCustomFilteringValue(category);
+        return queryDAO.getCustomFilteringValue(category);
     }
 
     private boolean getMultipleFilteringValue(Category category, RelationshipDefinition relationshipDefinition){
-        return conceptQueryDAO.getMultipleFilteringValue(category, relationshipDefinition);
+        return queryDAO.getMultipleFilteringValue(category, relationshipDefinition);
     }
 
     private boolean getShowableRelatedConceptsValue(Category category){
-        return conceptQueryDAO.getShowableRelatedConceptsValue(category);
+        return queryDAO.getShowableRelatedConceptsValue(category);
     }
 
     private boolean getShowableValue(Category category){
-        return conceptQueryDAO.getShowableValue(category);
+        return queryDAO.getShowableValue(category);
     }
 }

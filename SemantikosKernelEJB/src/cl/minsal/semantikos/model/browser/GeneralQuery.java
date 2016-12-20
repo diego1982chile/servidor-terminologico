@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.model.browser;
 
 import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Tag;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -12,7 +11,7 @@ import java.util.*;
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
-public class ConceptQuery {
+public class GeneralQuery {
 
     /**
      * Static filters
@@ -40,12 +39,12 @@ public class ConceptQuery {
     /**
      * Dynamic filters
      */
-    private List<ConceptQueryFilter> filters = new ArrayList<>();
+    private List<QueryFilter> filters = new ArrayList<>();
 
     /**
      * Dynamic columns
      */
-    private List<ConceptQueryColumn> columns = new ArrayList<>();
+    private List<QueryColumn> columns = new ArrayList<>();
 
     /**
      * Order
@@ -67,11 +66,11 @@ public class ConceptQuery {
         this.query = query;
     }
 
-    public List<ConceptQueryFilter> getFilters() {
+    public List<QueryFilter> getFilters() {
         return filters;
     }
 
-    public void setFilters(List<ConceptQueryFilter> filters) {
+    public void setFilters(List<QueryFilter> filters) {
         this.filters = filters;
     }
 
@@ -166,11 +165,11 @@ public class ConceptQuery {
         this.categories = categories;
     }
 
-    public List<ConceptQueryColumn> getColumns() {
+    public List<QueryColumn> getColumns() {
         return columns;
     }
 
-    public void setColumns(List<ConceptQueryColumn> columns) {
+    public void setColumns(List<QueryColumn> columns) {
         this.columns = columns;
     }
 
@@ -190,10 +189,10 @@ public class ConceptQuery {
         this.customFilterable = customFilterable;
     }
 
-    public List<ConceptQueryColumn> getColumnsByRelationshipDefinition(RelationshipDefinition relationshipDefinition){
-        List<ConceptQueryColumn> someColumns = new ArrayList<>();
+    public List<QueryColumn> getColumnsByRelationshipDefinition(RelationshipDefinition relationshipDefinition){
+        List<QueryColumn> someColumns = new ArrayList<>();
 
-        for (ConceptQueryColumn column : this.getColumns()) {
+        for (QueryColumn column : this.getColumns()) {
             if(column.getRelationshipDefinition().equals(relationshipDefinition))
                 someColumns.add(column);
         }
@@ -204,7 +203,7 @@ public class ConceptQuery {
     public List<RelationshipDefinition> getSecondOrderDefinitions(){
         List<RelationshipDefinition> someDefinitions = new ArrayList<>();
 
-        for (ConceptQueryColumn column : this.getColumns()) {
+        for (QueryColumn column : this.getColumns()) {
             if(column.isSecondOrder())
                 someDefinitions.add(column.getRelationshipDefinition());
         }
@@ -248,7 +247,7 @@ public class ConceptQuery {
 
         List<Long> conceptCategoryValues = new ArrayList<>();
 
-        for (ConceptQueryFilter filter : filters)
+        for (QueryFilter filter : filters)
             conceptCategoryValues.addAll(filter.getCategoryValues());
 
         if(conceptCategoryValues.isEmpty())
@@ -264,7 +263,7 @@ public class ConceptQuery {
 
         List<Long> conceptValues = new ArrayList<>();
 
-        for (ConceptQueryFilter filter : filters)
+        for (QueryFilter filter : filters)
             conceptValues.addAll(filter.getConceptValues());
 
         if(conceptValues.isEmpty())
@@ -280,7 +279,7 @@ public class ConceptQuery {
 
         List<Long> helperTableValues = new ArrayList<>();
 
-        for (ConceptQueryFilter filter : filters)
+        for (QueryFilter filter : filters)
             helperTableValues.addAll(filter.getHelperTableValues());
 
         if(helperTableValues.isEmpty())
@@ -296,7 +295,7 @@ public class ConceptQuery {
 
         List<Long> helperTableRecordValues = new ArrayList<>();
 
-        for (ConceptQueryFilter filter : filters)
+        for (QueryFilter filter : filters)
             helperTableRecordValues.addAll(filter.getHelperTableRecordValues());
 
         if(helperTableRecordValues.isEmpty())
@@ -312,7 +311,7 @@ public class ConceptQuery {
 
         List<Long> basicTypeDefinitionValues = new ArrayList<>();
 
-        for (ConceptQueryFilter filter : filters)
+        for (QueryFilter filter : filters)
             basicTypeDefinitionValues.addAll(filter.getBasicTypeDefinitionValues());
 
         if(basicTypeDefinitionValues.isEmpty())
@@ -329,7 +328,7 @@ public class ConceptQuery {
 
         List<String> basicTypeValues = new ArrayList<>();
 
-        for (ConceptQueryFilter filter : filters)
+        for (QueryFilter filter : filters)
             basicTypeValues.addAll(filter.getBasicTypeValues());
 
         if(basicTypeValues.isEmpty())
@@ -348,31 +347,31 @@ public class ConceptQuery {
             return getUser().getIdUser();
     }
 
-    public List<ConceptQueryParameter> getConceptQueryParameters(){
+    public List<QueryParameter> getQueryParameters(){
 
-        List<ConceptQueryParameter> conceptQueryParameters = new ArrayList<>();
+        List<QueryParameter> queryParameters = new ArrayList<>();
 
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getCategoryValues(), true)); /** ids categorias **/
-        conceptQueryParameters.add(new ConceptQueryParameter(String.class, getQuery(), false)); /** patrón de búsqueda **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getModeled(), false)); /** está modelado? **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getToBeReviewed(), false)); /** para revisar? **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Boolean.class, getToBeConsulted(), false)); /** para consultar? **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getTagValues(), true)); /** etiquetas **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getConceptCategoryValues(), true));
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getConceptValues(), true));
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getBasicTypeDefinitionValues(), true)); /** ids basicTypeDefinitionValues **/
-        conceptQueryParameters.add(new ConceptQueryParameter(String.class, getBasicTypeValues(), true)); /** ids basicTypeValues **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getHelperTableValues(), true)); /** ids helperTableValues **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getHelperTableRecordValues(), true)); /** ids helperTableRecordValues **/
-        conceptQueryParameters.add(new ConceptQueryParameter(Timestamp.class, getCreationDateSince(), false));
-        conceptQueryParameters.add(new ConceptQueryParameter(Timestamp.class, getCreationDateTo(), false));
-        conceptQueryParameters.add(new ConceptQueryParameter(Long.class, getUserValue(), false));
-        conceptQueryParameters.add(new ConceptQueryParameter(Integer.class, getOrder(), false));
-        conceptQueryParameters.add(new ConceptQueryParameter(String.class, getAsc(), false));
-        conceptQueryParameters.add(new ConceptQueryParameter(Integer.class, getPageNumber(), false));
-        conceptQueryParameters.add(new ConceptQueryParameter(Integer.class, getPageSize(), false));
+        queryParameters.add(new QueryParameter(Long.class, getCategoryValues(), true)); /** ids categorias **/
+        queryParameters.add(new QueryParameter(String.class, getQuery(), false)); /** patrón de búsqueda **/
+        queryParameters.add(new QueryParameter(Boolean.class, getModeled(), false)); /** está modelado? **/
+        queryParameters.add(new QueryParameter(Boolean.class, getToBeReviewed(), false)); /** para revisar? **/
+        queryParameters.add(new QueryParameter(Boolean.class, getToBeConsulted(), false)); /** para consultar? **/
+        queryParameters.add(new QueryParameter(Long.class, getTagValues(), true)); /** etiquetas **/
+        queryParameters.add(new QueryParameter(Long.class, getConceptCategoryValues(), true));
+        queryParameters.add(new QueryParameter(Long.class, getConceptValues(), true));
+        queryParameters.add(new QueryParameter(Long.class, getBasicTypeDefinitionValues(), true)); /** ids basicTypeDefinitionValues **/
+        queryParameters.add(new QueryParameter(String.class, getBasicTypeValues(), true)); /** ids basicTypeValues **/
+        queryParameters.add(new QueryParameter(Long.class, getHelperTableValues(), true)); /** ids helperTableValues **/
+        queryParameters.add(new QueryParameter(Long.class, getHelperTableRecordValues(), true)); /** ids helperTableRecordValues **/
+        queryParameters.add(new QueryParameter(Timestamp.class, getCreationDateSince(), false));
+        queryParameters.add(new QueryParameter(Timestamp.class, getCreationDateTo(), false));
+        queryParameters.add(new QueryParameter(Long.class, getUserValue(), false));
+        queryParameters.add(new QueryParameter(Integer.class, getOrder(), false));
+        queryParameters.add(new QueryParameter(String.class, getAsc(), false));
+        queryParameters.add(new QueryParameter(Integer.class, getPageNumber(), false));
+        queryParameters.add(new QueryParameter(Integer.class, getPageSize(), false));
         //conceptQueryParameters.add(new ConceptQueryParameter(String.class, getOrder(), false));
 
-        return conceptQueryParameters;
+        return queryParameters;
     }
 }

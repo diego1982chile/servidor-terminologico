@@ -138,4 +138,9 @@ public class RefSetManagerImpl implements RefSetManager {
     public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK) {
         return refsetDAO.getRefsetsBy(conceptSMTK);
     }
+
+    @Override
+    public List<RefSet> getRefsetsBy(List<Long> categories, String pattern) {
+        return null;
+    }
 }

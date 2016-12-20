@@ -16,6 +16,8 @@ public interface DescriptionDAO {
 
     public Description getDescriptionBy(long id);
 
+    public NoValidDescription getNoValidDescriptionByID(long id);
+
     /**
      * Este método es responsable de recuperar todas las descripciones de un concepto.
      *
@@ -97,4 +99,8 @@ public interface DescriptionDAO {
     public void setInvalidDescription(NoValidDescription noValidDescription);
 
     public List<ObservationNoValid> getObservationsNoValid();
+
+    public ObservationNoValid getObservationNoValidBy(Description description);
+
+    public List<ConceptSMTK> getSuggestedConceptsBy(Description description);
 }

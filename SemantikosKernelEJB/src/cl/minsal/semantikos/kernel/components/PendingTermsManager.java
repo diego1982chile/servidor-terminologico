@@ -27,4 +27,12 @@ public interface PendingTermsManager {
      * @return Una lista de Términos Pendientes.
      */
     public List<PendingTerm> getAllPendingTerms();
+
+
+    /**
+     * Este método es responsable de recuperar un término pendiente dado su id en la BD
+     *
+     * @return un <code>PendingTerm</code>
+     */
+    public PendingTerm getPendingTermById(long id);
 }

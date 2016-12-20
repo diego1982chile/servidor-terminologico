@@ -78,4 +78,6 @@ public interface RefSetManager {
     public List<RefSet> getRefsetByInstitution(Institution institution);
 
     public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK);
+
+    public List<RefSet> getRefsetsBy(List<Long> categories, String pattern);
 }

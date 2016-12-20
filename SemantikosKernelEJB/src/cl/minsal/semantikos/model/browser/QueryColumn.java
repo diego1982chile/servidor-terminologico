@@ -2,12 +2,10 @@ package cl.minsal.semantikos.model.browser;
 
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
-import java.lang.reflect.Type;
-
 /**
  * Created by root on 25-10-16.
  */
-public class ConceptQueryColumn {
+public class QueryColumn {
 
     String columnName;
     Sort sort;
@@ -15,12 +13,12 @@ public class ConceptQueryColumn {
 
     boolean secondOrder;
 
-    public ConceptQueryColumn(String columnName, Sort sort) {
+    public QueryColumn(String columnName, Sort sort) {
         this.columnName = columnName;
         this.sort = sort;
     }
 
-    public ConceptQueryColumn(String columnName, Sort sort, RelationshipDefinition relationshipDefinition) {
+    public QueryColumn(String columnName, Sort sort, RelationshipDefinition relationshipDefinition) {
         this(columnName, sort);
         this.relationshipDefinition = relationshipDefinition;
     }

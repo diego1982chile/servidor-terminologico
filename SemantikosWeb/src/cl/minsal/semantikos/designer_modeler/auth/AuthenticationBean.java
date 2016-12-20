@@ -2,10 +2,13 @@ package cl.minsal.semantikos.designer_modeler.auth;
 
 import cl.minsal.semantikos.designer_modeler.Constants;
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
+import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.User;
+import org.primefaces.model.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -40,11 +43,9 @@ public class AuthenticationBean {
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(AUTH_KEY) != null;
     }
 
-
     public void warn() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", "Watch out for PrimeFaces."));
     }
-
 
     public void login() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -134,9 +135,6 @@ public class AuthenticationBean {
     public void setLoggedUser(User loggedUser) {
         this.loggedUser = loggedUser;
     }
-
-
-
 
 
 }

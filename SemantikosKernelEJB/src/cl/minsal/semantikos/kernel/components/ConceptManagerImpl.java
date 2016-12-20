@@ -372,6 +372,11 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    public List<Relationship> getRelationships(ConceptSMTK concept) {
+        return relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
+    }
+
+    @Override
     public List<ConceptSMTK> getConceptDraft() {
         return conceptDAO.getConceptDraft();
     }

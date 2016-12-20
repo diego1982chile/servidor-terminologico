@@ -5,12 +5,10 @@ import cl.minsal.semantikos.kernel.auth.UserManager;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.browser.ConceptQuery;
-import cl.minsal.semantikos.model.browser.ConceptQueryFilter;
+import cl.minsal.semantikos.model.browser.GeneralQuery;
+import cl.minsal.semantikos.model.browser.QueryFilter;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
-import org.omnifaces.util.Ajax;
-import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.slf4j.Logger;
@@ -26,9 +24,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -37,14 +33,14 @@ import java.util.Map;
  * Created by diego on 26/06/2016.
  */
 
-@ManagedBean(name = "conceptBrowserBean")
+@ManagedBean(name = "generalBrowserBean")
 @ViewScoped
-public class ConceptBrowserBean implements Serializable {
+public class GeneralBrowserBean implements Serializable {
 
-    static final Logger logger = LoggerFactory.getLogger(ConceptBrowserBean.class);
+    static final Logger logger = LoggerFactory.getLogger(GeneralBrowserBean.class);
 
     @EJB
-    ConceptQueryManager conceptQueryManager;
+    QueryManager queryManager;
 
     @EJB
     TagManager tagManager;
@@ -58,7 +54,7 @@ public class ConceptBrowserBean implements Serializable {
     /**
      * Objeto de consulta: contiene todos los filtros y columnas necesarios para el despliegue de los resultados en el navegador
      */
-    private ConceptQuery conceptQuery;
+    private GeneralQuery generalQuery;
 
     /**
      * Lista de tags para el despliegue del filtro por tags
@@ -123,8 +119,10 @@ public class ConceptBrowserBean implements Serializable {
         /**
          * Si el objeto de consulta no está inicializado, inicializarlo
          */
-        if(conceptQuery == null)
-            conceptQuery = conceptQueryManager.getDefaultQueryByCategory(category);
+        if(generalQuery == null)
+            generalQuery = queryManager.getDefaultGeneralQuery(category);
+
+
 
         /**
          * Ejecutar la consulta
@@ -135,17 +133,17 @@ public class ConceptBrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
-                conceptQuery.setPageNumber(first);
-                conceptQuery.setPageSize(pageSize);
-                conceptQuery.setOrder(new Integer(sortField));
+                generalQuery.setPageNumber(first);
+                generalQuery.setPageSize(pageSize);
+                generalQuery.setOrder(new Integer(sortField));
 
                 if(sortOrder.name().substring(0,3).toLowerCase().equals("asc"))
-                    conceptQuery.setAsc(sortOrder.name().substring(0,3).toLowerCase());
+                    generalQuery.setAsc(sortOrder.name().substring(0,3).toLowerCase());
                 else
-                    conceptQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
+                    generalQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
 
-                List<ConceptSMTK> conceptSMTKs = conceptQueryManager.executeQuery(conceptQuery);
-                this.setRowCount(conceptQueryManager.countConceptQuery(conceptQuery));
+                List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(generalQuery);
+                this.setRowCount(queryManager.countQueryResults(generalQuery));
 
                 return conceptSMTKs;
             }
@@ -203,12 +201,12 @@ public class ConceptBrowserBean implements Serializable {
         this.category = category;
     }
 
-    public ConceptQuery getConceptQuery() {
-        return conceptQuery;
+    public GeneralQuery getGeneralQuery() {
+        return generalQuery;
     }
 
-    public void setConceptQuery(ConceptQuery conceptQuery) {
-        this.conceptQuery = conceptQuery;
+    public void setGeneralQuery(GeneralQuery generalQuery) {
+        this.generalQuery = generalQuery;
     }
 
     public List<Tag> getTags() {
@@ -288,12 +286,12 @@ public class ConceptBrowserBean implements Serializable {
             return;
 
         // Se busca el filtro
-        for (ConceptQueryFilter conceptQueryFilter : conceptQuery.getFilters()) {
-            if (conceptQueryFilter.getDefinition().equals(relationshipDefinition)) {
-                if(conceptQueryFilter.getTargets().isEmpty()) //Si la lista de targets está vacía, se agrega el target
-                    conceptQueryFilter.getTargets().add(target);
+        for (QueryFilter queryFilter : generalQuery.getFilters()) {
+            if (queryFilter.getDefinition().equals(relationshipDefinition)) {
+                if(queryFilter.getTargets().isEmpty()) //Si la lista de targets está vacía, se agrega el target
+                    queryFilter.getTargets().add(target);
                 else //Si no, se modifica
-                    conceptQueryFilter.getTargets().set(0, target);
+                    queryFilter.getTargets().set(0, target);
                 break;
             }
         }
@@ -309,9 +307,9 @@ public class ConceptBrowserBean implements Serializable {
             return;
 
         // Se busca el filtro
-        for (ConceptQueryFilter conceptQueryFilter : conceptQuery.getFilters()) {
-            if (conceptQueryFilter.getDefinition().equals(relationshipDefinition)) {
-                conceptQueryFilter.getTargets().remove(target);
+        for (QueryFilter queryFilter : generalQuery.getFilters()) {
+            if (queryFilter.getDefinition().equals(relationshipDefinition)) {
+                queryFilter.getTargets().remove(target);
                 break;
             }
         }
@@ -339,7 +337,7 @@ public class ConceptBrowserBean implements Serializable {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
         String query = "";
         if(concepts.getRowCount()==0)
-            query=conceptQuery.getQuery();
+            query=generalQuery.getQuery();
         eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + idCategory +"&idConcept=0&favoriteDescription=" + query);
     }
 

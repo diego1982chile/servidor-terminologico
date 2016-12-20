@@ -1,8 +1,10 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.model.Category;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.browser.ConceptQuery;
+import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.browser.GeneralQuery;
+import cl.minsal.semantikos.model.browser.DescriptionQuery;
+import cl.minsal.semantikos.model.browser.NoValidQuery;
+import cl.minsal.semantikos.model.browser.PendingQuery;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.Local;
@@ -13,13 +15,23 @@ import java.util.List;
  */
 
 @Local
-public interface ConceptQueryDAO {
+public interface QueryDAO {
 
-    //public List<ConceptSMTK> callQuery(ConceptQuery query);
+    List<ConceptSMTK> executeQuery(GeneralQuery query);
 
-    List<ConceptSMTK> executeQuery(ConceptQuery query);
+    List<Description> executeQuery(DescriptionQuery query);
 
-    long countConceptByQuery(ConceptQuery query);
+    List<NoValidDescription> executeQuery(NoValidQuery query);
+
+    List<PendingTerm> executeQuery(PendingQuery query);
+
+    long countByQuery(GeneralQuery query);
+
+    long countByQuery(DescriptionQuery query);
+
+    long countByQuery(NoValidQuery query);
+
+    long countByQuery(PendingQuery query);
 
     List<RelationshipDefinition> getSearchableAttributesByCategory(Category category);
 

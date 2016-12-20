@@ -4,6 +4,7 @@ import cl.minsal.semantikos.beans.description.AutogenerateBeans;
 import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.beans.snomed.SnomedBeans;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
+import cl.minsal.semantikos.designer_modeler.browser.PendingBrowserBean;
 import cl.minsal.semantikos.designer_modeler.designer.*;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
@@ -111,11 +112,11 @@ public class ConceptBean implements Serializable {
     @ManagedProperty( value = "#{sensibilityBean}")
     private SensibilityDescriptionDefaultBean sensibilityDescriptionDefaultBean;
 
-    @ManagedProperty( value = "#{managerPendingTermsBean}")
-    private ManagerPendingTermsBean managerPendingTermsBean;
+    @ManagedProperty( value = "#{pendingBrowserBean}")
+    private PendingBrowserBean pendingBrowserBean;
 
-    public void setManagerPendingTermsBean(ManagerPendingTermsBean managerPendingTermsBean) {
-        this.managerPendingTermsBean = managerPendingTermsBean;
+    public void setPendingBrowserBean(PendingBrowserBean pendingBrowserBean) {
+        this.pendingBrowserBean = pendingBrowserBean;
     }
 
     public void setSensibilityDescriptionDefaultBean(SensibilityDescriptionDefaultBean sensibilityDescriptionDefaultBean) {
@@ -704,8 +705,18 @@ public class ConceptBean implements Serializable {
      * Este método es el encargado de remover una relación específica del concepto.
      */
     public void removeRelationship(RelationshipDefinition rd, Relationship r) {
+
         concept.removeRelationshipWeb(r);
         concept.removeRelationship(r);
+
+        if (rd.getOrderAttributeDefinition() != null) {
+            int order = 1;
+            for (RelationshipWeb rw : concept.getValidRelationshipsWebByRelationDefinition(rd)) {
+                rw.setOrder(order);
+                order++;
+            }
+        }
+
         autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC);
         crossmapBean.refreshCrossmapIndirect(concept);
 
@@ -1004,11 +1015,11 @@ public class ConceptBean implements Serializable {
 
     public void setPendingTerms(boolean pendingTerms) {
         if(pendingTerms){
-            for (PendingTerm pendingTerm : managerPendingTermsBean.pendingTermList) {
+            for (PendingTerm pendingTerm : pendingBrowserBean.getTermsSelected()) {
                 concept.addDescriptionWeb(new DescriptionWeb(pendingTerm.getRelatedDescription()));
             }
         }
-        managerPendingTermsBean.setPendingTerms(new ArrayList<PendingTerm>());
+        pendingBrowserBean.setTermsSelected(new ArrayList<PendingTerm>());
         this.pendingTerms = pendingTerms;
     }
 
@@ -1313,6 +1324,31 @@ public class ConceptBean implements Serializable {
             Collections.sort(orderedRelationshipDefinitionsList);
         }
         return orderedRelationshipDefinitionsList;
+    }
+
+    /**
+     * Este método retorna una lista ordenada de definiciones propias de semantikos.
+     *
+     * @return Una lista ordenada de las relaciones de la categoría.
+     */
+    public List<RelationshipDefinitionWeb> getOrderedSMTKRelationshipDefinitions() {
+        if (orderedRelationshipDefinitionsList.isEmpty()) {
+            for (RelationshipDefinition relationshipDefinition : category.getRelationshipDefinitions()) {
+                RelationshipDefinitionWeb relationshipDefinitionWeb = viewAugmenter.augmentRelationshipDefinition(category, relationshipDefinition);
+                orderedRelationshipDefinitionsList.add(relationshipDefinitionWeb);
+            }
+            Collections.sort(orderedRelationshipDefinitionsList);
+        }
+
+        List<RelationshipDefinitionWeb> smtkRelationshipDefinitions = new ArrayList<>();
+
+        for (RelationshipDefinitionWeb relationshipDefinition : orderedRelationshipDefinitionsList) {
+            if(!relationshipDefinition.getTargetDefinition().isSnomedCTType() && !relationshipDefinition.getTargetDefinition().isCrossMapType()) {
+                smtkRelationshipDefinitions.add(relationshipDefinition);
+            }
+        }
+
+        return smtkRelationshipDefinitions;
     }
 
     public void changeMultiplicityNotRequiredRelationshipDefinitionMC() {

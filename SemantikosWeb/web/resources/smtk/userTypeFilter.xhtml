@@ -16,10 +16,9 @@
 
     <div class="ui-g-12 ui-md-6 ui-lg-2">
         <p:selectOneMenu value="#{cc.attrs.user}" converter="omnifaces.SelectItemsConverter"
-                         autoWidth="false"
-                         style="margin-right:10px; width: 60%">
+                         autoWidth="false">
             <f:selectItem itemLabel="Usuario..." itemValue="#{null}"/>
-            <f:selectItems value="#{conceptBrowserBean.users}" var="user"
+            <f:selectItems value="#{generalBrowserBean.users}" var="user"
                            itemLabel="#{user.username}" itemValue="#{user}"/>
             <p:ajax event="itemSelect" update="@(.conceptBrowserTable)" />
         </p:selectOneMenu>

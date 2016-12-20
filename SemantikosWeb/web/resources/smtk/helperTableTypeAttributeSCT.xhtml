@@ -21,18 +21,13 @@
 
 <composite:implementation>
 
-    <div class="ui-g-12 ui-md-6 ui-lg-2">
-        <p:outputPanel
-                rendered="#{ cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipAttributeDefinition.multiplicity.collection }"
-                style="width: 110px;">
+    <div class="ui-panelgrid-cell ui-grid-col-2">
+
+        <p:outputPanel rendered="#{ cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipAttributeDefinition.multiplicity.collection }">
 
             <p:selectOneMenu value="#{conceptBean.selectedHelperTableRecord}" var="helperT"
                              converter="helperTableRecordConverter"
-                             filter="true"
-                             forceSelection="true"
-                             disabled="#{not cc.attrs.concept.editable }"
-                             style="width: 100px;"
-                             panelStyle="width:  100px;">
+                             disabled="#{not cc.attrs.concept.editable }">
                 <p:ajax event="itemSelect"/>
                 <f:selectItem itemLabel="Tipo de relación" itemDisabled="true"/>
                 <f:selectItems value="#{helperTableBean.allRecord}" var="record"
@@ -54,6 +49,7 @@
             </p:selectOneMenu>
 
         </p:outputPanel>
+
     </div>
 </composite:implementation>
 </html>

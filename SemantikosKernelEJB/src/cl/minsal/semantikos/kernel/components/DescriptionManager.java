@@ -137,4 +137,6 @@ public interface DescriptionManager {
 
 
     public Description getDescriptionByID(long id);
+
+    public NoValidDescription getNoValidDescriptionByID(long id);
 }
