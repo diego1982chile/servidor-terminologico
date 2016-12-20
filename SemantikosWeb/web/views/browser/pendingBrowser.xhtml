@@ -113,7 +113,7 @@
                                                     </p:commandLink>
 
                                                     <p:commandLink oncomplete="PF('dialogNC').show()" title="Crear nuevo concepto" process="@this"
-                                                                   update="@(.pendingBrowserTable),@(.pending-description)" style="padding: 5px">
+                                                                   update="@(.pendingBrowserTable),@(.create-concept)" style="padding: 5px">
                                                         <i class="fa fa-plus fa-lg"/>
                                                         <f:setPropertyActionListener value="#{pendingTerm}"
                                                                                      target="#{pendingBrowserBean.termSelected}"/>
@@ -309,24 +309,30 @@
                                         <!-- Crear nuevo concepto -->
                                         <p:dialog id="dialogNC" header="Crear Concepto" widgetVar="dialogNC" global="true"
                                                   showEffect="fade" hideEffect="fade">
-                                            <p:panel styleClass="query-pending-description">
 
+                                            <p:panel styleClass="create-concept">
 
-                                                <p:selectOneMenu id="parentTag" value="#{pendingBrowserBean.categorySelected}"
-                                                                 converter="omnifaces.SelectItemsConverter" panelStyle="width:60%"
-                                                                 effect="fade" var="c" style="width:90%" filter="true"
-                                                                 filterMatchMode="startsWith" >
-                                                    <p:ajax/>
-                                                    <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
-                                                    <f:selectItems value="#{pendingBrowserBean.categories}" var="category"
-                                                                   itemLabel="#{category.name}" itemValue="#{category}"/>
-                                                    <p:column>
-                                                        <h:outputText value="#{c.name}"/>
-                                                    </p:column>
-                                                </p:selectOneMenu>
+                                                <div class="ui-fluid">
 
-                                                <p:commandButton value="Crear concepto" actionListener="#{pendingBrowserBean.createNewConcept}"/>
+                                                    <p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank">
 
+                                                        <p:selectOneMenu id="parentTag" value="#{pendingBrowserBean.categorySelected}"
+                                                                         converter="omnifaces.SelectItemsConverter"
+                                                                         effect="fade" var="c" filter="true"
+                                                                         filterMatchMode="startsWith" >
+                                                            <p:ajax/>
+                                                            <f:selectItem itemLabel="Seleccione una categoría" itemDisabled="true"/>
+                                                            <f:selectItems value="#{pendingBrowserBean.categories}" var="category"
+                                                                           itemLabel="#{category.name}" itemValue="#{category}"/>
+                                                            <p:column>
+                                                                <h:outputText value="#{c.name}"/>
+                                                            </p:column>
+                                                        </p:selectOneMenu>
+
+                                                        <p:commandButton value="Crear concepto" actionListener="#{pendingBrowserBean.createNewConcept}"/>
+
+                                                    </p:panelGrid>
+                                                </div>
 
                                             </p:panel>
                                         </p:dialog>
