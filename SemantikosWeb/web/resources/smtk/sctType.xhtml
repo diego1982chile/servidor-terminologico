@@ -107,8 +107,6 @@
     <p:panel id="multiplicityN_with_attributes"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and cc.attrs.relationshipDefinition.hasRelationshipAttributeDefinitions()}">
 
-        <p:spacer />
-
         <p:outputPanel id="attrs" styleClass="attributes_#{cc.attrs.relationshipDefinition.id}" style="width:100%" rendered="#{cc.attrs.concept.editable}">
             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
@@ -118,7 +116,7 @@
 
                     <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
 
-                        <div class="ui-grid-row">
+                        <div class="ui-grid-row Container">
 
                             <div class="ui-panelgrid-cell ui-grid-col-2">
 
@@ -203,7 +201,7 @@
                                                                   rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
                                 />
                             </p:repeat>
-                            <div class="ui-panelgrid-cell ui-grid-col-1">
+                            <div class="ui-panelgrid-cell Container10 Responsive">
                                 <p:commandButton
                                         process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                         action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"

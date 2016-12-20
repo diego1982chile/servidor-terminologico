@@ -705,8 +705,18 @@ public class ConceptBean implements Serializable {
      * Este método es el encargado de remover una relación específica del concepto.
      */
     public void removeRelationship(RelationshipDefinition rd, Relationship r) {
+
         concept.removeRelationshipWeb(r);
         concept.removeRelationship(r);
+
+        if (rd.getOrderAttributeDefinition() != null) {
+            int order = 1;
+            for (RelationshipWeb rw : concept.getValidRelationshipsWebByRelationDefinition(rd)) {
+                rw.setOrder(order);
+                order++;
+            }
+        }
+
         autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC);
         crossmapBean.refreshCrossmapIndirect(concept);
 
