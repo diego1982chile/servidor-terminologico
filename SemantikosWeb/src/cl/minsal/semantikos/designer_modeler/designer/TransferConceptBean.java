@@ -6,6 +6,7 @@ import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.Description;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,6 +73,12 @@ public class TransferConceptBean {
     public void transferConcept(ConceptSMTK conceptSMTK) {
         Category categoryById = categoryManager.getCategoryById(categoryId);
         try{
+            for (Description description : conceptSMTK.getDescriptions()) {
+                if(categoryManager.categoryContains(categoryById, description.getTerm())){
+                    messageBean.messageError("Una(s) de las descripciones ya existe en categoría");
+                    return;
+                }
+            }
             conceptManager.transferConcept(conceptSMTK, categoryById, conceptBean.user);
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
             eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categoryId + "&idConcept=" + conceptSMTK.getId());
