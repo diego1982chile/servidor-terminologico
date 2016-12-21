@@ -267,13 +267,24 @@ public class PendingBrowserBean implements Serializable {
     public void createNewConcept() throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        if(!termsSelected.isEmpty()){
+        if(termSelected != null){
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&pendingTerms=true");
-
-        }else{
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se han seleccionado términos"));
+            if(categorySelected!=null){
+                eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&descriptionPending="+termSelected.getRelatedDescription().getId() );
+            }else{
+                eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + termSelected.getCategory().getId() +"&idConcept=0&favoriteDescription=&descriptionPending="+termSelected.getRelatedDescription().getId() );
+            }
         }
+        else{
+            if(!termsSelected.isEmpty()){
+                ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+                eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&pendingTerms=true");
+
+            }else{
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se han seleccionado términos"));
+            }
+        }
+
     }
 
     public List<PendingTerm> getTermsSelected() {
