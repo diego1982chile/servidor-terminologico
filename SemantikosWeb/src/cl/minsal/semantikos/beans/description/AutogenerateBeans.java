@@ -102,6 +102,22 @@ public class AutogenerateBeans {
         }
     }
 
+    public void autogenerateRemoveRelationship(RelationshipDefinition relationshipDefinition, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE){
+        if (!concept.isModeled()) {
+            if (relationshipDefinition.getId() == 52) {
+                autogeneratePCCE.setAutogeneratePCCE("");
+                autogeneratePCCE.setCVP();
+                concept.getDescriptionFavorite().setTerm(autogeneratePCCE.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+            if (relationshipDefinition.getId() == 51) {
+                autogeneratePCCE.setPc("");
+                concept.getDescriptionFavorite().setTerm(autogeneratePCCE.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+        }
+    }
+
     public void autogenerateRelationship(RelationshipDefinition relationshipDefinition, Relationship relationship, Target target, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE) {
         if (!concept.isModeled()) {
             if (relationshipDefinition.getId() == 48) {

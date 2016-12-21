@@ -703,7 +703,7 @@ public class ConceptBean implements Serializable {
                 order++;
             }
         }
-
+        autogenerateBeans.autogenerateRemoveRelationship(rd,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
         autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC);
         crossmapBean.refreshCrossmapIndirect(concept);
 
