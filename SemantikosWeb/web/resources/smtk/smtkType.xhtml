@@ -24,7 +24,6 @@
 
         <h3>#{cc.attrs.relationshipDefinition.name}</h3>
 
-
         <div class="ui-g">
 
             <div class="ui-g-12 ui-md-6 ui-lg-6">
@@ -427,7 +426,7 @@
                                     <p:inputText disabled="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.term}" />
 
                                     <p:commandLink process="@this"
-                                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                                   update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                                    rendered="#{conceptBean.concept.hasRelationships(cc.attrs.relationshipDefinition)}"
                                                    action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
                                         <i class="fa fa-close fa-lg"  />

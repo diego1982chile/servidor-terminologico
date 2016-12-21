@@ -16,7 +16,7 @@
 </composite:interface>
 <composite:implementation>
 
-    <p:outputPanel id="noValidFilters" styleClass="descriptionFilters">
+    <p:outputPanel id="noValidFilters" styleClass="noValidFilters">
 
         <div class="ui-fluid">
 
@@ -26,7 +26,7 @@
 
                 <p:outputPanel styleClass="search">
                     <p:inputText value="#{cc.attrs.noValidQuery.query}" placeholder="Buscar...">
-                        <p:ajax event="keyup" update="@(.conceptBrowserTable),@(.generalQueryFilter)" process="@this" />
+                        <p:ajax event="keyup" update="@(.noValidBrowserTable),@(.noValidFilters)" process="@this" />
                     </p:inputText>
                     <i class="fa fa-search fa-lg" />
                 </p:outputPanel>
@@ -37,7 +37,7 @@
                                       label="Tipos...">
 
                     <p:ajax event="change"
-                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
+                            update="@(.noValidBrowserTable),@(.noValidFilters)"
                             process="@this" />
 
                     <f:selectItems value="#{noValidBrowserBean.descriptionTypes}" var="descriptionType"
@@ -51,7 +51,7 @@
                                       label="Observación...">
 
                     <p:ajax event="change"
-                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
+                            update="@(.noValidBrowserTable),@(.noValidFilters)"
                             process="@this" />
 
                     <f:selectItems value="#{noValidBrowserBean.observationTypes}" var="observationType"

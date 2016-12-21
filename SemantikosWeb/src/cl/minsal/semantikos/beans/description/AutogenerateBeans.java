@@ -102,6 +102,22 @@ public class AutogenerateBeans {
         }
     }
 
+    public void autogenerateRemoveRelationship(RelationshipDefinition relationshipDefinition, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE){
+        if (!concept.isModeled()) {
+            if (relationshipDefinition.getId() == 52) {
+                autogeneratePCCE.setAutogeneratePCCE("");
+                autogeneratePCCE.setCVP();
+                concept.getDescriptionFavorite().setTerm(autogeneratePCCE.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+            if (relationshipDefinition.getId() == 51) {
+                autogeneratePCCE.setPc("");
+                concept.getDescriptionFavorite().setTerm(autogeneratePCCE.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+        }
+    }
+
     public void autogenerateRelationship(RelationshipDefinition relationshipDefinition, Relationship relationship, Target target, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE) {
         if (!concept.isModeled()) {
             if (relationshipDefinition.getId() == 48) {
@@ -196,18 +212,17 @@ public class AutogenerateBeans {
         for (int i = 0; i < list.size(); i++) {
             if (i != event.getFromIndex()) {
                 if (i == event.getToIndex()) {
-                    if (event.getFromIndex() < event.getToIndex()) {
-                        autoNuevoOrden.add(list.get(i));
                         autoNuevoOrden.add(list.get(event.getFromIndex()));
-                    } else {
-
-                        autoNuevoOrden.add(list.get(event.getFromIndex()));
-                        autoNuevoOrden.add(list.get(i));
-                    }
                 } else {
                     autoNuevoOrden.add(list.get(i));
                 }
+            }else{
+                autoNuevoOrden.add(list.get(event.getToIndex()));
             }
+        }
+        list.clear();
+        for (int i = 0; i < autoNuevoOrden.size(); i++) {
+            list.add(autoNuevoOrden.get(i));
         }
         return autoNuevoOrden;
     }
@@ -216,6 +231,10 @@ public class AutogenerateBeans {
         for (Relationship relationship :  conceptSMTKWeb.getRelationshipsWeb()) {
             if(!relationship.getRelationshipAttributes().isEmpty()){
                 autogenerateRelationshipWithAttributes(relationship.getRelationshipDefinition(),relationship,conceptSMTKWeb,autogenerateList,autogenerateMC);
+                autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
+                for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationship.getRelationshipDefinition().getRelationshipAttributeDefinitions()) {
+                    autogenerateAttributeDefinition(relationshipAttributeDefinition,relationship.getAttribute(relationshipAttributeDefinition).getTarget(), relationship.getAttribute(relationshipAttributeDefinition),conceptSMTKWeb,autogenerateMC,autogenerateMCCE);
+                }
             }else{
                 autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
             }

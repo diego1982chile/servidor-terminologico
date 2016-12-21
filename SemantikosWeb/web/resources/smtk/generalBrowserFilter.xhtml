@@ -22,7 +22,7 @@
 
             <p:panelGrid  columns="6"  style="width: 100%"
                           columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
-                          layout="grid" styleClass="ui-panelgrid-blank">
+                          layout="grid" styleClass="ui-panelgrid-blank Container">
 
                     <p:outputPanel styleClass="search">
                         <p:inputText value="#{cc.attrs.generalQuery.query}" placeholder="Buscar...">
@@ -66,7 +66,8 @@
                                        itemLabel="#{tag.name}" itemValue="#{tag}"/>
                     </p:selectCheckboxMenu>
 
-                <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="fa fa-plus" styleClass="ui-priority-primary" value="Crear Nuevo" type="submit" process="browserForm" />
+                    <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="fa fa-plus" styleClass="ui-priority-primary Container10 Responsive"
+                                     value="Crear Nuevo" type="submit" process="browserForm" />
 
             </p:panelGrid>
 

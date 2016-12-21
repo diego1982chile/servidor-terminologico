@@ -71,8 +71,10 @@ public class DrugsManagerImpl implements DrugsManager {
 
             for (Relationship edge : edges) {
                 ConceptSMTK childNode = (ConceptSMTK) edge.getTarget();
-                childNode.setRelationships(new ArrayList<Relationship>());
-                traverseDown(childNode);
+                if(childNode.isModeled()) {
+                    childNode.setRelationships(new ArrayList<Relationship>());
+                    traverseDown(childNode);
+                }
             }
         }
         return node;
@@ -110,7 +112,7 @@ public class DrugsManagerImpl implements DrugsManager {
                 for (Relationship relationship : relationships) {
                     if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
                         ConceptSMTK conceptSMTK = (ConceptSMTK) relationship.getTarget();
-                        if(!node.equals(conceptSMTK)) {
+                        if(!node.equals(conceptSMTK) && node.isModeled()) {
                             traverseDown(conceptSMTK);
                             conceptSMTK.setRelationships(new ArrayList<Relationship>());
                             relationship.setTarget(conceptSMTK);
@@ -119,7 +121,8 @@ public class DrugsManagerImpl implements DrugsManager {
                     }
                 }
 
-                thisNodeParentNodes.add(parentNode);
+                if(parentNode.isModeled())
+                    thisNodeParentNodes.add(parentNode);
             }
 
             allNodesParentNodes.addAll(thisNodeParentNodes);
