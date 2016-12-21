@@ -11,10 +11,15 @@ import java.util.*;
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
+/**
+ * Esta clase representa la Consulta del Navegador de Categorías
+ *
+ * @author Diego Soto.
+ */
 public class GeneralQuery {
 
     /**
-     * Static filters
+     * Filtros estáticos
      */
     private List<Category> categories;
 
@@ -30,30 +35,30 @@ public class GeneralQuery {
     private boolean customFilterable;
 
     /**
-     * Custom filters
+     * Filtros dinámicos
+     */
+    private List<QueryFilter> filters = new ArrayList<>();
+
+    /**
+     * Columnas dinámicas
+     */
+    private List<QueryColumn> columns = new ArrayList<>();
+
+    /**
+     * Filtros custom
      */
     private Date creationDateSince;
     private Date creationDateTo;
     private User user;
 
     /**
-     * Dynamic filters
-     */
-    private List<QueryFilter> filters = new ArrayList<>();
-
-    /**
-     * Dynamic columns
-     */
-    private List<QueryColumn> columns = new ArrayList<>();
-
-    /**
-     * Order
+     * Orden
      */
     private int order;
     private String asc;
 
     /**
-     * Pagination
+     * Paginación
      */
     private int pageSize;
     private int pageNumber;
@@ -200,6 +205,12 @@ public class GeneralQuery {
         return someColumns;
     }
 
+    /**
+     * Este método es responsable de recuperar las columnas dinámicas que corresponden a relaciones de 2o orden, es decir,
+     * relaciones que provienen de una relación a concepto SMTK
+     *
+     * @return Una lista de definiciones correspondientes a columnas de 2o orden
+     */
     public List<RelationshipDefinition> getSecondOrderDefinitions(){
         List<RelationshipDefinition> someDefinitions = new ArrayList<>();
 
@@ -211,6 +222,13 @@ public class GeneralQuery {
         return someDefinitions;
     }
 
+    /**
+     * Este método es responsable de recuperar los ids de las categorías filtradas en el objeto de consulta del navegador
+     * de categorías
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de las
+     * categorías filtradas
+     */
     public Long[] getCategoryValues(){
 
         List<Long> categoryValues = new ArrayList<>();
@@ -227,6 +245,13 @@ public class GeneralQuery {
         }
     }
 
+    /**
+     * Este método es responsable de recuperar los ids de los tags filtrados en el objeto de consulta del navegador
+     * de categorías
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de los
+     * tags filtrados
+     */
     public Long[] getTagValues(){
 
         List<Long> tagValues = new ArrayList<>();
@@ -243,6 +268,13 @@ public class GeneralQuery {
         }
     }
 
+    /**
+     * Este método es responsable de recuperar los ids de las categorías correspondientes a los conceptos filtrados en
+     * el objeto de consulta del navegador de categorías
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de las
+     * categorías de los conceptos filtrados
+     */
     public Long[] getConceptCategoryValues(){
 
         List<Long> conceptCategoryValues = new ArrayList<>();
@@ -259,6 +291,13 @@ public class GeneralQuery {
         }
     }
 
+    /**
+     * Este método es responsable de recuperar los ids de los conceptos filtrados en el objeto de consulta del navegador
+     * de categorías
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de los
+     * conceptos filtrados
+     */
     public Long[] getConceptValues(){
 
         List<Long> conceptValues = new ArrayList<>();
@@ -275,6 +314,13 @@ public class GeneralQuery {
         }
     }
 
+    /**
+     * Este método es responsable de recuperar los ids de las tablas auxiliares correspondientes a los registros de
+     * tablas auxiliares filtrados en el objeto de consulta del navegador de categorías
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de las
+     * categorías de los conceptos filtrados
+     */
     public Long[] getHelperTableValues(){
 
         List<Long> helperTableValues = new ArrayList<>();
@@ -291,6 +337,13 @@ public class GeneralQuery {
         }
     }
 
+    /**
+     * Este método es responsable de recuperar los ids de los registros de tablas auxiliares filtrados en el objeto de
+     * consulta del navegador de categorías
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de los
+     * registros de tablas auxiliares filtrados
+     */
     public Long[] getHelperTableRecordValues(){
 
         List<Long> helperTableRecordValues = new ArrayList<>();
@@ -307,6 +360,13 @@ public class GeneralQuery {
         }
     }
 
+    /**
+     * Este método es responsable de recuperar los ids de las definiciones correspondientes a los tipos básicos
+     * filtrados en el objeto de consulta del navegador de categorías
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids tipos
+     * básicos filtrados en el objeto de consulta del navegador de categorías
+     */
     public Long[] getBasicTypeDefinitionValues(){
 
         List<Long> basicTypeDefinitionValues = new ArrayList<>();
@@ -323,7 +383,13 @@ public class GeneralQuery {
         }
     }
 
-
+    /**
+     * Este método es responsable de recuperar los ids de los tipos básicos filtrados en el objeto de consulta del
+     * navegador de categorías
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de los
+     * tipos básicos filtrados
+     */
     public String[] getBasicTypeValues(){
 
         List<String> basicTypeValues = new ArrayList<>();
@@ -340,6 +406,13 @@ public class GeneralQuery {
         }
     }
 
+    /**
+     * Este método es responsable de recuperar los ids de los usuarios filtrados en el objeto de consulta del navegador
+     * de categorías
+     *
+     * @return Una lista de <code>java.util.List</code> de <code>java.lang.Long</code> correspondiente a los ids de los
+     * usuarios
+     */
     public Long getUserValue(){
         if(getUser()==null)
             return null;
@@ -347,6 +420,13 @@ public class GeneralQuery {
             return getUser().getIdUser();
     }
 
+    /**
+     * Este método es responsable de recuperar los parámetros de los filtros del objeto de consulta del navegador de
+     * categorías
+     *
+     * @return Una lista de <code>cl.minsal.semantikos.model.browser.QueryParameter</code> correspondiente a los
+     * parámetros de los filtros
+     */
     public List<QueryParameter> getQueryParameters(){
 
         List<QueryParameter> queryParameters = new ArrayList<>();
