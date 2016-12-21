@@ -10,7 +10,6 @@ public class QueryColumn {
     String columnName;
     Sort sort;
     RelationshipDefinition relationshipDefinition;
-
     boolean secondOrder;
 
     public QueryColumn(String columnName, Sort sort) {
