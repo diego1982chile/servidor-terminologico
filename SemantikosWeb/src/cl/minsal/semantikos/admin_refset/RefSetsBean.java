@@ -21,6 +21,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +35,7 @@ import static java.lang.System.currentTimeMillis;
  */
 @ManagedBean(name = "refsetsBean")
 @ViewScoped
-public class RefSetsBean {
+public class RefSetsBean implements Serializable {
 
 
     private RefSet refSetToCreate;

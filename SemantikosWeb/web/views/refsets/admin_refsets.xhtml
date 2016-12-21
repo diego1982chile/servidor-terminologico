@@ -28,24 +28,24 @@
                                      rows="15" paginator="true" emptyMessage="No se han creado Refsets"
                                      styleClass="listRefSets" filteredValue="#{refsetsBean.refsetFilter}">
 
-                            <p:column headerText="ID">
+                            <p:column headerText="ID" sortBy="#{refset.id}">
                                 <h:outputText value="#{refset.id}"/>
                             </p:column>
 
                             <p:column headerText="Nombre" filterBy="#{refset.name}"
-                                      filterMatchMode="contains">
+                                      filterMatchMode="contains" sortBy="#{refset.name}">
                                 <h:outputText value="#{refset.name}"/>
                             </p:column>
 
-                            <p:column headerText="Tipo">
+                            <p:column headerText="Tipo" sortBy="#{refset.institution.name}">
                                 <h:outputText value="#{refset.institution.name}"/>
                             </p:column>
 
-                            <p:column headerText="Fecha de creación">
+                            <p:column headerText="Fecha de creación"  sortBy="#{refset.creationDate}">
                                 <h:outputText value="#{refset.creationDate}"/>
                             </p:column>
 
-                            <p:column headerText="Vigencia">
+                            <p:column headerText="Vigencia" sortBy="#{refset.isValid()}">
                                 <h:outputText value="Vigente" rendered="#{refset.isValid()}"/>
                                 <h:outputText value="No vigente" rendered="#{!refset.isValid()}"/>
                             </p:column>
@@ -67,6 +67,8 @@
                                     <p:commandButton icon="fa fa-trash"
                                                      actionListener="#{refsetsBean.invalidRefset(refset)}"
                                                      update="@(.listRefSets)">
+                                        <p:confirm header="Confirmation" message="¿Desea invalidar este RefSet?"
+                                                   icon="ui-icon-alert"/>
 
                                     </p:commandButton>
                                 </div>
@@ -134,6 +136,9 @@
                             <p:column headerText="Concepto">
                                 <h:outputText value="#{concepts.descriptionFavorite.term}"/>
                             </p:column>
+                            <p:column headerText="Categoría">
+                                <h:outputText value="#{concepts.category.name}"/>
+                            </p:column>
                             <p:column headerText="Fecha ingreso">
                                 <h:outputText
                                         value="#{refsetsBean.conceptBindToRefsetHistory.get(concepts.id).actionDate}"/>
@@ -153,7 +158,12 @@
                     </p:outputPanel>
                 </p:dialog>
 
-
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes"
+                                     icon="ui-icon-check"/>
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                                     icon="ui-icon-close"/>
+                </p:confirmDialog>
             </h:form>
         </p:panel>
     </ui:define>
