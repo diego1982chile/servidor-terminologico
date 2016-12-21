@@ -129,14 +129,14 @@ public class RefSetsBean implements Serializable {
      *
      */
     public void createRefset() {
-        if(refSetToCreate.getInstitution()!=null && refSetToCreate.getName().length()>0){
+        if (refSetToCreate.getInstitution() != null && refSetToCreate.getName().length() > 0) {
             refSetToCreate = refSetManager.createRefSet(refSetToCreate, authenticationBean.getLoggedUser());
             refSetToCreate = new RefSet(null, new Institution(), null);
             conceptsToCategory = null;
             conceptsToDescription = null;
             refSetList = refSetManager.getAllRefSets();
             messageBean.messageSuccess("Éxito", "El RefSet a sido guardado exitosamente.");
-        }else{
+        } else {
             messageBean.messageError("Falta información para crear el RefSet");
         }
 
@@ -214,11 +214,17 @@ public class RefSetsBean implements Serializable {
      * @param conceptSMTK Concepto seleccionado para vincularse a un Refset
      */
     public void addConcept(RefSet refSet, ConceptSMTK conceptSMTK) {
-        refSet.bindConceptTo(conceptSMTK);
+
         if (refSet.isPersistent()) {
+            refSet.bindConceptTo(conceptSMTK);
             refSetManager.bindConceptToRefSet(conceptSMTK, refSet, authenticationBean.getLoggedUser());
-        }else{
-            this.conceptSMTK = null;
+        } else {
+            if (conceptSMTK != null) {
+                refSet.bindConceptTo(conceptSMTK);
+                this.conceptSMTK = null;
+            } else {
+                messageBean.messageError("Debe seleccionar un concepto");
+            }
         }
         if (conceptRefSetList != null) {
             conceptRefSetList = refSetManager.getRefsetsBy(conceptBean.getConcept());
@@ -265,6 +271,7 @@ public class RefSetsBean implements Serializable {
 
     /**
      * Método encargado de obtener el ingreso de los conceptos al RefSet
+     *
      * @param refsetConsult
      */
     public void loadHistoryRefset(RefSet refsetConsult) {
@@ -275,7 +282,7 @@ public class RefSetsBean implements Serializable {
             for (ConceptAuditAction conceptAuditAction : auditActions) {
                 if (conceptAuditAction.getAuditActionType().getId() == REFSET_UPDATE.getId()) {
                     if (conceptAuditAction.getAuditableEntity().getId() == refsetConsult.getId()) {
-                        conceptBindToRefsetHistory.put(conceptSMTK.getId(),conceptAuditAction);
+                        conceptBindToRefsetHistory.put(conceptSMTK.getId(), conceptAuditAction);
                     }
                 }
             }

@@ -215,6 +215,10 @@ public class AutogenerateBeans {
         for (Relationship relationship :  conceptSMTKWeb.getRelationshipsWeb()) {
             if(!relationship.getRelationshipAttributes().isEmpty()){
                 autogenerateRelationshipWithAttributes(relationship.getRelationshipDefinition(),relationship,conceptSMTKWeb,autogenerateList,autogenerateMC);
+                autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
+                for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationship.getRelationshipDefinition().getRelationshipAttributeDefinitions()) {
+                    autogenerateAttributeDefinition(relationshipAttributeDefinition,relationship.getAttribute(relationshipAttributeDefinition).getTarget(), relationship.getAttribute(relationshipAttributeDefinition),conceptSMTKWeb,autogenerateMC,autogenerateMCCE);
+                }
             }else{
                 autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
             }

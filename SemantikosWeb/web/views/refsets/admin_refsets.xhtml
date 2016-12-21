@@ -11,7 +11,7 @@
 
         <p:panel>
             <div style="text-align: center">
-                <h2>Administrador de Refset</h2>
+                <h2>Administrador de RefSets</h2>
             </div>
         </p:panel>
 
@@ -22,6 +22,56 @@
                 <p:growl id="msg" showDetail="true" autoUpdate="true"></p:growl>
 
                 <p:tabView>
+
+
+                    <!--Pestaña crear RefSet-->
+                    <p:tab title="Crear RefSet">
+
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <h:outputLabel value="Nombre:" style="font-weight:bold"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <p:inputText value="#{refsetsBean.refSetToCreate.name}" style="width: 80%;"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <h:outputLabel value="Tipo:" style="font-weight:bold"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                <p:selectOneMenu value="#{refsetsBean.refSetToCreate.institution}" var="i"
+                                                 converter="omnifaces.SelectItemsConverter">
+                                    <f:selectItem itemValue="" itemLabel="Seleccione una institución"
+                                                  noSelectionOption="true"/>
+                                    <f:selectItems value="#{refsetsBean.authenticationBean.loggedUser.institutions}"
+                                                   var="institution" itemValue="#{institution}"
+                                                   itemLabel="#{institution.name}"></f:selectItems>
+                                    <p:column><h:outputText value="#{i.name}"></h:outputText></p:column>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+
+                        <p:fieldset toggleable="true" collapsed="true" legend="Agregar conceptos">
+
+                            <h:panelGrid columns="2" cellpadding="10">
+            <i class="fa fa-info-circle Fs50 Fleft Blue"></i>
+            <h:outputText value="El RefSet puede ser creado sin conceptos"/>
+            </h:panelGrid>
+                            <br/>
+
+                            <smtk:addConceptToRefset refset="#{refsetsBean.refSetToCreate}"/>
+                        </p:fieldset>
+
+
+                        <br/>
+
+                        <div style="text-align: center;">
+                            <h3><p:commandButton value="Crear RefSet" actionListener="#{refsetsBean.createRefset}"
+                                                 update="formRefset"/></h3>
+                        </div>
+
+
+                    </p:tab>
+
                     <!--Pestaña de administración de los RefSets-->
                     <p:tab title="Administrador de RefSets">
                         <p:dataTable id="refsetsTable" value="#{refsetsBean.refSetList}" var="refset"
@@ -76,47 +126,6 @@
                             </p:column>
 
                         </p:dataTable>
-                    </p:tab>
-
-                    <!--Pestaña crear RefSet-->
-                    <p:tab title="Crear RefSet">
-
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-md-6 ui-lg-1">
-                                <h:outputLabel value="Nombre:" style="font-weight:bold"/>
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                                <p:inputText value="#{refsetsBean.refSetToCreate.name}" style="width: 80%;"/>
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-1">
-                                <h:outputLabel value="Tipo:" style="font-weight:bold"/>
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-4">
-                                <p:selectOneMenu value="#{refsetsBean.refSetToCreate.institution}" var="i"
-                                                 converter="omnifaces.SelectItemsConverter">
-                                    <f:selectItem itemValue="" itemLabel="Seleccione una institución"
-                                                  noSelectionOption="true"/>
-                                    <f:selectItems value="#{refsetsBean.authenticationBean.loggedUser.institutions}"
-                                                   var="institution" itemValue="#{institution}"
-                                                   itemLabel="#{institution.name}"></f:selectItems>
-                                    <p:column><h:outputText value="#{i.name}"></h:outputText></p:column>
-                                </p:selectOneMenu>
-                            </div>
-                        </div>
-
-                        <p:fieldset toggleable="true" collapsed="true" legend="Agregar conceptos">
-                            <smtk:addConceptToRefset refset="#{refsetsBean.refSetToCreate}"/>
-                        </p:fieldset>
-
-
-                        <br/>
-
-                        <div style="text-align: center;">
-                            <h3><p:commandButton value="Crear Refset" actionListener="#{refsetsBean.createRefset}"
-                                                 update="formRefset"/></h3>
-                        </div>
-
-
                     </p:tab>
 
                 </p:tabView>
