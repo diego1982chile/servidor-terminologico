@@ -42,7 +42,7 @@
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-1">
             <p:commandButton value="Agregar" update="@(.conceptBindRefset)"
-                             actionListener="#{refsetsBean.addConcept(cc.attrs.refset,refsetsBean.conceptSMTK)}">
+                             actionListener="#{refsetsBean.addConcept(cc.attrs.refset,refsetsBean.conceptSMTK)}" disabled="#{not cc.attrs.refset.valid}">
                 <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTK}"/>
                 <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
             </p:commandButton>
@@ -71,7 +71,8 @@
                                  ajax="true"
                                  process="@this"
                                  actionListener="#{refsetsBean.removeConcept(cc.attrs.refset,conceptSMTK)}"
-                                 update="@(.conceptBindRefset)">
+                                 update="@(.conceptBindRefset)"
+                                 disabled="#{not cc.attrs.refset.valid}">
                     <p:confirm header="Confirmación"
                                message="¿Está seguro de eliminar este concepto del RefSet?"></p:confirm>
                 </p:commandButton>

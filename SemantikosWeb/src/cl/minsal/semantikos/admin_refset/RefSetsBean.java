@@ -244,6 +244,10 @@ public class RefSetsBean implements Serializable {
         }
     }
 
+    /**
+     * Método encargado de cargar el historial del concepto de acuerdo al RefSet
+     */
+
     public void loadHistoryConcept() {
         List<ConceptAuditAction> auditActions = auditManager.getConceptAuditActions(conceptBean.getConcept(), false);
 
@@ -259,6 +263,10 @@ public class RefSetsBean implements Serializable {
         }
     }
 
+    /**
+     * Método encargado de obtener el ingreso de los conceptos al RefSet
+     * @param refsetConsult
+     */
     public void loadHistoryRefset(RefSet refsetConsult) {
 
         for (ConceptSMTK conceptSMTK : refsetConsult.getConcepts()) {
