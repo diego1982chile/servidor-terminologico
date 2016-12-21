@@ -312,8 +312,6 @@ public class ConceptBean implements Serializable {
         return pendingTerms;
     }
 
-
-
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() throws ParseException {
@@ -323,7 +321,6 @@ public class ConceptBean implements Serializable {
         autogenerateMCCE = new AutogenerateMCCE();
         autogenerateMC = new AutogenerateMC();
         autogeneratePCCE = new AutogeneratePCCE();
-
         noValidDescriptions = new ArrayList<>();
         observationNoValids = descriptionManager.getObservationsNoValid();
         categoryList = categoryManager.getCategories();
@@ -696,7 +693,6 @@ public class ConceptBean implements Serializable {
      * Este método es el encargado de remover una relación específica del concepto.
      */
     public void removeRelationship(RelationshipDefinition rd, Relationship r) {
-
         concept.removeRelationshipWeb(r);
         concept.removeRelationship(r);
 
@@ -824,7 +820,6 @@ public class ConceptBean implements Serializable {
             context.addMessage(null, new FacesMessage("Warning", "No se ha realizado ningún cambio al concepto!!"));
         else {
             context.addMessage(null, new FacesMessage("Successful", "Se han registrado " + changes + " cambios en el concepto."));
-
             // Se restablece el concepto, como el concepto está persistido, se le pasa su id
             getConceptById(concept.getId());
         }
@@ -865,7 +860,6 @@ public class ConceptBean implements Serializable {
         for (Pair<RelationshipWeb, RelationshipWeb> relationship : relationshipsForUpdate) {
             relationshipManager.updateRelationship(concept, relationship.getFirst(), relationship.getSecond(), user);
         }
-
         changeMarketedBean.changeMarketed();
 
         return relationshipsForPersist.size() + relationshipsForDelete.size() + relationshipsForUpdate.size();
@@ -891,7 +885,6 @@ public class ConceptBean implements Serializable {
             }
             _concept.removeDescription(description);
         }
-
         /* Se actualizan las que tienen cambios */
         List<Pair<DescriptionWeb, DescriptionWeb>> descriptionsForUpdate = concept.getModifiedDescriptionsWeb(_concept);
         for (Pair<DescriptionWeb, DescriptionWeb> description : descriptionsForUpdate) {
@@ -971,7 +964,6 @@ public class ConceptBean implements Serializable {
     }
 
     public void onRowReorder(ReorderEvent event) {
-
         FacesContext context = FacesContext.getCurrentInstance();
 
         RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinition");
@@ -1142,7 +1134,6 @@ public class ConceptBean implements Serializable {
 
     public List<TagSMTK> getTagSMTKs(String query) {
         List<TagSMTK> results = new ArrayList<TagSMTK>();
-
         for (TagSMTK tagSMTK : tagSMTKs) {
             if (tagSMTK.getName().toLowerCase().contains(query.toLowerCase()))
                 results.add(tagSMTK);
@@ -1338,7 +1329,6 @@ public class ConceptBean implements Serializable {
                 smtkRelationshipDefinitions.add(relationshipDefinition);
             }
         }
-
         return smtkRelationshipDefinitions;
     }
 
