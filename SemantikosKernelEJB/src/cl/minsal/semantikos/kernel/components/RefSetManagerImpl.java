@@ -142,6 +142,11 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    public List<RefSet> getRefsetsBy(List<Long> categories, String pattern) {
+        return null;
+    }
+
+    @Override
     public List<RefSet> findRefsetsByName(String pattern) {
         return this.refsetDAO.findRefsetsByName(StringUtils.toSQLLikePattern(pattern));
     }
