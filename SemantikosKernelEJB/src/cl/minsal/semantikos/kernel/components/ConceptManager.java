@@ -2,6 +2,7 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.Local;
 import javax.validation.constraints.NotNull;
@@ -116,9 +117,43 @@ public interface ConceptManager {
      */
     public List<ConceptSMTK> findConceptBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize);
 
+    /**
+     * Lo mismo que el metodo anterior pero el match con el pattern se hace por truncate perfect.
+     * @param pattern
+     * @param categories
+     * @param refsets
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize);
+
     /*Método temporal para trabajar con el navegador de conceptos*/
     @Deprecated
     public List<ConceptSMTK> findConceptBy(Category category);
+
+    /**
+     * Este método es responsable de buscar los conceptos que posean un atributo de tipo básico que tenga el valor
+     * <code>value</code>.
+     *
+     * @param aCategory            La categoría en la cual se buscan los conceptos.
+     * @param refSetNames          Los refsets en los cuales deben encontrarse los conceptos.
+     * @param requestableAttribute El atributo utilizado para filtrar la búsqueda.
+     * @param value                El valor que debe tener el atributo.
+     *
+     * @return Una lista fresca de conceptos, perezosamente incializados.
+     */
+    public List<ConceptSMTK> findConcepts(Category aCategory, List<String> refSetNames, RelationshipDefinition requestableAttribute, String value);
+
+    public List<ConceptSMTK> findModeledConceptBy(Category category, int pageSize, int pageNumber);
+
+    public int countModeledConceptBy(Category category);
+
+    public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize);
+
+    public Integer countModeledConceptsBy(RefSet refSet);
+
+    public Integer countConceptBy(String pattern, Long[] category, Long[] refset);
 
     /**
      * Método encargado de realizar la búsqueda de conceptos por patron, en caso de no encontrar un "Perfect Match" por
@@ -158,6 +193,17 @@ public interface ConceptManager {
     public List<Description> getDescriptionsBy(ConceptSMTK concept);
 
     /**
+     * Este método es responsable de recuperar el concepto que posee una descripción con el <em>DESCRIPTION_ID</em>
+     * dado
+     * como parámetro (<code>descriptionId</code>).
+     *
+     * @param descriptionId El <em>DESCRIPTION_ID</em> de la descripción cuyo concepto contenedor se desea recuperar.
+     *
+     * @return El concepto que contiene la descripción cuyo <em>DESCRIPTION_ID</em> corresponde con el parámetro.
+     */
+    public ConceptSMTK getConceptByDescriptionID(String descriptionId);
+
+    /**
      * Este método es responsable de cargar las relaciones del concepto.
      *
      * @param concept El concepto cuyas relaciones son actualizadas.
@@ -187,6 +233,17 @@ public interface ConceptManager {
      * @return Lista de conceptos relacionados (concepto --> relacionados)
      */
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
+
+    /**
+     * Este método es una extensión del método <code>getRelatedConcepts</code>, filtrando los conceptos relacionados a
+     * las categorías especificadas.
+     *
+     * @param conceptSMTK El concepto cuyos conceptos relacionados se desea recuperar.
+     * @param categories  Las categorías a las cuales los conceptos relacionados deben pertenecer.
+     *
+     * @return La lista de conceptos relacionados que pertenecen a alguna de las categorías en <code>categories</code>.
+     */
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK, Category... categories);
 
     /**
      * Método encargado de obtener los conceptos en borrador

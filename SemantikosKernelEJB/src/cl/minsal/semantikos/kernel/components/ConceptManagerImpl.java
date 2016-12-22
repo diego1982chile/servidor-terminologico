@@ -9,6 +9,7 @@ import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,10 +19,7 @@ import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.UUID;
+import java.util.*;
 
 import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 
@@ -42,6 +40,9 @@ public class ConceptManagerImpl implements ConceptManager {
 
     @EJB
     private DescriptionDAO descriptionDAO;
+
+    @EJB
+    private RefSetManager refSetManager;
 
     @EJB
     private RelationshipDAO relationshipDAO;
@@ -97,6 +98,62 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    public List<ConceptSMTK> findConcepts(Category aCategory, List<String> refSetNames, RelationshipDefinition basicTypeAttribute, String value) {
+
+        /* Primero se debe validar que el RelationshipDefinition es tipo Tipo Básico */
+        boolean basicType = basicTypeAttribute.getTargetDefinition().isBasicType();
+        if (!basicType) {
+            throw new IllegalArgumentException("Se consideró un tipo básico de un target que no lo es: " + basicTypeAttribute);
+        }
+
+        /* Luego se recuperan los refsets */
+        ArrayList<RefSet> refsets = new ArrayList<>();
+        for (String refSetName : refSetNames) {
+            RefSet refsetByName = refSetManager.getRefsetByName(refSetName);
+            refsets.add(refsetByName);
+        }
+
+        /* Por razones de eficiencia, es mejor realizar la búsqueda directamente en la base de datos */
+        if (refsets.isEmpty()) {
+            return conceptDAO.findConceptsWithStringBasicType(aCategory, basicTypeAttribute, value);
+        } else {
+            return conceptDAO.findConceptsWithStringBasicType(aCategory, refsets, basicTypeAttribute, value);
+        }
+    }
+
+    @Override
+    public List<ConceptSMTK> findModeledConceptBy(Category category, int pageSize, int pageNumber) {
+        return this.conceptDAO.getModeledConceptBy(category.getId(), pageSize, pageNumber);
+    }
+
+    @Override
+    public int countModeledConceptBy(Category category) {
+        return this.conceptDAO.countModeledConceptBy(category.getId());
+    }
+
+    @Override
+    public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize) {
+        return this.conceptDAO.findModeledConceptsBy(refSet, page, pageSize);
+    }
+
+    @Override
+    public Integer countModeledConceptsBy(RefSet refSet) {
+        return this.conceptDAO.countModeledConceptsBy(refSet);
+    }
+
+    @Override
+    public Integer countConceptBy(String pattern, Long[] categories, Long[] refsets) {
+        boolean isModeled = true;
+        categories = (categories == null) ? new Long[0] : categories;
+        refsets = (refsets == null) ? new Long[0] : refsets;
+
+        pattern = standardizationPattern(pattern);
+        String[] arrayPattern = patternToArray(pattern);
+
+        return this.conceptDAO.countConceptBy(arrayPattern, categories, refsets, isModeled);
+    }
+
+    @Override
     public List<ConceptSMTK> findConceptBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize) {
 
 
@@ -139,6 +196,20 @@ public class ConceptManagerImpl implements ConceptManager {
 
         //Búsqueda por largo (PageSize y PageNumber)
         return conceptDAO.getConceptsBy(isModeled, pageSize, pageNumber);
+    }
+
+    @Override
+    public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize) {
+        boolean isModeled = true;
+        //TODO: Actualizar esto de los estados que ya no va.
+
+        categories = (categories == null) ? new Long[0] : categories;
+        refsets = (refsets == null) ? new Long[0] : refsets;
+
+        pattern = standardizationPattern(pattern);
+        String[] arrayPattern = patternToArray(pattern);
+
+        return conceptDAO.getConceptBy(arrayPattern, categories, refsets, isModeled, pageSize, pageNumber);
     }
 
     @Override
@@ -358,6 +429,12 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    public ConceptSMTK getConceptByDescriptionID(String descriptionId) {
+        /* Se hace delegación sobre el DescriptionManager */
+        return descriptionManager.getDescriptionByDescriptionID(descriptionId).getConceptSMTK();
+    }
+
+    @Override
     public List<Relationship> loadRelationships(ConceptSMTK concept) {
         List<Relationship> relationships = relationshipDAO.getRelationshipsBySourceConcept(concept.getId());
         concept.setRelationships(relationships);
@@ -412,6 +489,32 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK) {
         return conceptDAO.getRelatedConcepts(conceptSMTK);
+    }
+
+    @Override
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK, Category... categories) {
+
+        /* Se recuperan los conceptos relacionados */
+        List<ConceptSMTK> relatedConcepts = getRelatedConcepts(conceptSMTK);
+
+        /* Si no hay categorías por las que filtrar, se retorna la lista original */
+        if (categories == null || categories.length == 0) {
+            return relatedConcepts;
+        }
+
+        /* Se filtra para retornar sólo aquellos que pertenecen a alguna de las categorías dadas */
+        ArrayList<ConceptSMTK> filteredRelatedConcepts = new ArrayList<>();
+        for (ConceptSMTK relatedConcept : relatedConcepts) {
+            Category conceptCategory = relatedConcept.getCategory();
+            List<Category> categoryFilters = Arrays.asList(categories);
+
+            /* Se agrega el concepto si su categoría está dentro de las categorías para filtrar */
+            if (categoryFilters.contains(conceptCategory)) {
+                filteredRelatedConcepts.add(relatedConcept);
+            }
+        }
+
+        return filteredRelatedConcepts;
     }
 
     /**
