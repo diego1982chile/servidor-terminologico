@@ -143,6 +143,7 @@ public class RefSetManagerImpl implements RefSetManager {
 
     @Override
     public List<RefSet> getRefsetsBy(List<Long> categories, String pattern) {
+        // TODO: Terminar lo que sea que haga esto
         return null;
     }
 
