@@ -13,14 +13,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.math.BigInteger;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * @author Andrés Farías on 27-05-16.
@@ -28,8 +24,7 @@ import java.util.List;
 @Stateless
 public class CategoryManagerImpl implements CategoryManager {
 
-    @PersistenceContext(unitName = "SEMANTIKOS_PU")
-    private EntityManager entityManager;
+    private static final Logger logger = LoggerFactory.getLogger(CategoryManagerImpl.class);
 
     @EJB
     private CategoryDAO categoryDAO;
@@ -37,14 +32,12 @@ public class CategoryManagerImpl implements CategoryManager {
     @EJB
     private RelationshipDAO relationshipDAO;
 
-    private static final Logger logger = LoggerFactory.getLogger(CategoryManagerImpl.class);
-
     @EJB
     private DescriptionManager descriptionManager;
 
     @Override
     public List<RelationshipDefinition> getCategoryMetaData(int id) {
-       return categoryDAO.getCategoryMetaData(id);
+        return categoryDAO.getCategoryMetaData(id);
     }
 
     @Override
@@ -94,6 +87,11 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
+    public Category getCategoryByName(String name) {
+        return this.categoryDAO.getCategoryByName(name);
+    }
+
+    @Override
     public List<Category> getCategories() {
 
         logger.debug("Recuperando todas las categorías.");
@@ -108,4 +106,21 @@ public class CategoryManagerImpl implements CategoryManager {
     public List<Category> getRelatedCategories(Category category) {
         return categoryDAO.getRelatedCategories(category);
     }
+
+    @Override
+    public List<Category> findCategories(List<String> categoriesNames) {
+        List<Category> res = new ArrayList<>();
+
+        for ( String categoryName : categoriesNames ) {
+            Category found = this.getCategoryByName(categoryName);
+            if ( found != null ) {
+                res.add(found);
+            } else {
+                throw new NoSuchElementException("Categoria no encontrada: " + categoryName);
+            }
+        }
+
+        return res;
+    }
+
 }
