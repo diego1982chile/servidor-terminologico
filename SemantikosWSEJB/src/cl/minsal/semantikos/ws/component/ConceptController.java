@@ -444,7 +444,8 @@ public class ConceptController {
                 termRequest.getSpecialty(),
                 termRequest.getSubSpecialty(),
                 termRequest.getEmail(),
-                termRequest.getObservation());
+                termRequest.getObservation(),
+                termRequest.getIdInstitution());
 
         /* Se realiza la solicitud */
         Description description = pendingTermManager.addPendingTerm(pendingTerm, user);
