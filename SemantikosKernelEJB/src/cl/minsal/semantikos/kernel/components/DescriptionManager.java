@@ -158,4 +158,6 @@ public interface DescriptionManager {
     public Description getDescriptionByID(long id);
 
     public List<ObservationNoValid> getObservationsNoValid();
+
+    public NoValidDescription getNoValidDescriptionByID(long id);
 }

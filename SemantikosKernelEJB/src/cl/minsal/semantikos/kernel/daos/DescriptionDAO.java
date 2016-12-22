@@ -14,6 +14,8 @@ public interface DescriptionDAO {
 
     public List<DescriptionType> getDescriptionTypes();
 
+    public NoValidDescription getNoValidDescriptionByID(long id);
+
     /**
      * Este método es responsable de recuperar una descripción desde la BDD a partir de su llave primaria.
      *
