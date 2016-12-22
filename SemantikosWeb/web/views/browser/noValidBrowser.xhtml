@@ -29,7 +29,7 @@
                                         <p:spacer />
                                         <smtk:noValidBrowserFilter noValidQuery="#{noValidBrowserBean.noValidQuery}" />
                                         <p:dataTable id="noValidTable"
-                                                     styleClass="noValidBrowserTable"
+                                                     styleClass="browserTable"
                                                      value="#{noValidBrowserBean.noValidDescriptions}"
                                                      var="noValidDescription"
                                                      rows="30"
@@ -108,7 +108,7 @@
                                                 <div style="text-align: center;">
 
                                                     <p:commandLink oncomplete="PF('dialogTDP').show()" title="Trasladar a concepto" style="padding: 5px" process="@this"
-                                                                   update="@(.noValidBrowserTable),@(.dialogTDP)">
+                                                                   update="@(.browserTable),@(.dialogTDP)">
                                                         <i class="fa fa-external-link fa-lg"/>
                                                         <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}"/>
                                                         <f:setPropertyActionListener value="" target="#{noValidBrowserBean.conceptSelected}"/>
@@ -214,7 +214,7 @@
                                                 </h:panelGrid>
                                                 <div style="text-align: center">
                                                     <p:commandButton rendered="#{noValidBrowserBean.conceptSelected!=null}"
-                                                                     update="@(.pending-description),@(.noValidBrowserTable)"
+                                                                     update="@(.pending-description),@(.browserTable)"
                                                                      value="Trasladar Concepto"
                                                                      oncomplete="PF('dialogTDP').hide()"
                                                                      icon="fa fa-exchange"

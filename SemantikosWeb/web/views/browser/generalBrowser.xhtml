@@ -28,20 +28,38 @@
                                             <p:menuitem value="#{generalBrowserBean.category.name}" url="#" />
                                         </p:breadCrumb>
                                         <p:spacer />
-                                        <smtk:generalBrowserFilter generalQuery="#{generalBrowserBean.generalQuery}" />
+                                        <p:fieldset legend="Filtros" toggleable="true" toggleSpeed="500" collapsed="true">
+                                            <smtk:generalBrowserFilter generalQuery="#{generalBrowserBean.generalQuery}" />
+                                        </p:fieldset>
                                         <p:spacer />
 
-                                        <p:dataTable id="conceptTable"
-                                                     styleClass="conceptBrowserTable"
+                                        <p:dataTable id="browserTable"
+                                                     styleClass="browserTable"
                                                      value="#{generalBrowserBean.concepts}"
                                                      var="concept"
                                                      rows="30"
                                                      sortBy="#{1}"
-                                                     paginator="true" lazy="true" dynamic="true"
+                                                     paginator="true" lazy="true" dynamic="true" reflow="false"
                                                      paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                                      emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
                                             <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                                            <f:facet name="header">
+                                                <div class="Container">
+                                                    <div class="Container60" style="text-align: left;">
+                                                        <h3>Navegador #{generalBrowserBean.category.name}</h3>
+                                                    </div>
+                                                    <div class="Container40" style="text-align: right;">
+                                                        <p:commandButton id="toggler" type="button" value="Columnas" icon="fa fa-columns" style="float: right" />
+                                                        <p:columnToggler datasource="browserTable" trigger="toggler" />
+                                                        <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="fa fa-plus"
+                                                                         value="Crear Nuevo" type="submit" process="browserForm" style="float: right">
+                                                        </p:commandButton>
+                                                    </div>
+                                                </div>
+                                            </f:facet>
+
 
                                             <p:column headerText="ConceptID" sortBy="#{1}" style="width:7%">
                                                 <h:outputText value="#{concept.id}"/>
@@ -51,11 +69,11 @@
                                                 <h:outputText value="#{concept.descriptionFavorite.term}"/>
                                             </p:column>
 
-                                            <p:column headerText="Observación">
+                                            <p:column headerText="Observación" priority="6">
                                                 <h:outputText value="#{concept.observation}"/>
                                             </p:column>
 
-                                            <p:column headerText="Etiqueta">
+                                            <p:column headerText="Etiqueta" priority="6">
                                                 <p:repeat
                                                         offset="0"
                                                         size="#{concept.tags.size()}"
@@ -76,7 +94,7 @@
                                             </p:column>
 
                                             <p:columns value="#{generalBrowserBean.generalQuery.columns}"
-                                                       var="column"
+                                                       var="column" priority="2"
                                                        columnIndexVar="colIndex">
                                                 <f:facet name="header">
                                                     <h:outputText value="#{column.relationshipDefinition.name}" />
@@ -113,7 +131,7 @@
                                                                      ajax="true"
                                                                      process="@this"
                                                                      rendered="#{not concept.modeled}"
-                                                                     update="@(.conceptBrowserTable), growl" title="Eliminar" style="padding: 5px">
+                                                                     update="@(.browserTable), growl" title="Eliminar" style="padding: 5px">
                                                         <i class="fa fa-trash fa-lg"/>
                                                         <p:confirm header="Confirmation" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
                                                     </p:commandLink>

@@ -16,7 +16,7 @@
 </composite:interface>
 <composite:implementation>
 
-    <p:outputPanel id="pendingFilters" styleClass="pendingFilters">
+    <p:outputPanel id="browserFilters" styleClass="browserFilters">
 
         <div class="ui-fluid">
 
@@ -26,7 +26,7 @@
 
                 <p:outputPanel styleClass="search">
                     <p:inputText value="#{cc.attrs.pendingQuery.query}" placeholder="Buscar...">
-                        <p:ajax event="keyup" update="@(.pendingBrowserTable),@(.pendingQueryFilter)" process="@this" />
+                        <p:ajax event="keyup" update="@(.browserTable),@(.pendingQueryFilter)" process="@this" />
                     </p:inputText>
                     <i class="fa fa-search fa-lg" />
                 </p:outputPanel>
@@ -39,7 +39,7 @@
                                       filterMatchMode="startsWith">
 
                     <p:ajax event="change"
-                            update="@(.pendingBrowserTable),@(.pendingFilters)"
+                            update="@(.browserTable),@(.browserFilters)"
                             process="@this" />
 
                     <f:selectItems value="#{pendingBrowserBean.categories}" var="category"

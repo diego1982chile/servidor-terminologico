@@ -80,25 +80,24 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     width: 95%;
 }
 
-.descriptionFilters .ui-autocomplete-multiple-container, .noValidFilters .ui-autocomplete-multiple-container, .pendingFilters .ui-autocomplete-multiple-container {
+.browserFilters .ui-autocomplete-multiple-container {
     width: 100% !important;
 }
 
-.descriptionFilters .ui-autocomplete-input-token input, .noValidFilters .ui-autocomplete-input-token input, .pendingFilters .ui-autocomplete-input-token input {
+.browserFilters .ui-autocomplete-input-token input {
     margin: 0px !important;
 }
 
-.descriptionFilters .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token, .noValidFilters .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token,
-.pendingFilters .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token {
+.browserFilters .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token {
     padding: 2px !important;
 }
 
-.descriptionFilters .ui-autocomplete-token, .noValidFilters .ui-autocomplete-token, .pendingFilters .ui-autocomplete-token {
+.browserFilters .ui-autocomplete-token {
     margin: 0px !important;
     margin-right: 2px !important;
 }
 
-.descriptionFilters .ui-autocomplete-multiple-container, .noValidFilters .ui-autocomplete-multiple-container, .pendingFilters .ui-autocomplete-multiple-container {
+.browserFilters .ui-autocomplete-multiple-container {
     opacity:100;
     background-color: #FFF;
     border-bottom: 0;
@@ -138,6 +137,8 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     padding: 6px 0px;
 }
 
+/*
 .ui-selectonemenu {
     min-width: 223px !important;
 }
+*/

@@ -16,7 +16,7 @@
 </composite:interface>
 <composite:implementation>
 
-    <p:outputPanel id="descriptionFilters" styleClass="descriptionFilters">
+    <p:outputPanel id="browserFilters" styleClass="browserFilters">
 
         <div class="ui-fluid">
 
@@ -26,7 +26,7 @@
 
                 <p:outputPanel styleClass="search">
                     <p:inputText value="#{cc.attrs.descriptionQuery.query}" placeholder="Buscar...">
-                        <p:ajax event="keyup" update="@(.descriptionBrowserTable),@(.descriptionFilters)" process="@this" />
+                        <p:ajax event="keyup" update="@(.browserTable),@(.browserFilters)" process="@this" />
                     </p:inputText>
                     <i class="fa fa-search fa-lg" />
                 </p:outputPanel>
@@ -39,7 +39,7 @@
                                       filterMatchMode="startsWith">
 
                     <p:ajax event="change"
-                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
+                            update="@(.browserTable),@(.browserFilters)"
                             process="@this" />
 
                     <f:selectItems value="#{descriptionsBrowserBean.categories}" var="category"
@@ -53,7 +53,7 @@
                                       label="Tipos...">
 
                     <p:ajax event="change"
-                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
+                            update="@(.browserTable),@(.browserFilters)"
                             process="@this" />
 
                     <f:selectItems value="#{descriptionsBrowserBean.descriptionTypes}" var="descriptionType"
@@ -67,7 +67,7 @@
                                       label="RefSets...">
 
                     <p:ajax event="change"
-                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
+                            update="@(.browserTable),@(.browserFilters)"
                             process="@this" />
 
                     <f:selectItems value="#{descriptionsBrowserBean.refSets}" var="refSet"
