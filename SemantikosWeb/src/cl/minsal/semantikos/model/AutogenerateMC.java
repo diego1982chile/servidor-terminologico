@@ -95,6 +95,9 @@ public class AutogenerateMC {
     public void addFFA(Relationship relationship) {
         ffa.add(((HelperTableRecord) relationship.getTarget()).getValueColumn("description") + "");
     }
+    public void voidRemoveFFA(Relationship relationship) {
+        ffa.remove(((HelperTableRecord) relationship.getTarget()).getValueColumn("description") + "");
+    }
 
     public void addVol(Relationship relationship) {
         String vol = relationship.getTarget().toString();

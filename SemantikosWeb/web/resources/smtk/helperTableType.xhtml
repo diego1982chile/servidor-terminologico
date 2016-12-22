@@ -649,7 +649,7 @@
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"
-                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                        update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                         style="float: right"
                         process="@this"
                         immediate="true"

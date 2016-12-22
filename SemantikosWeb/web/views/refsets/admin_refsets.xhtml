@@ -157,13 +157,56 @@
                     </p:outputPanel>
                 </p:dialog>
 
+                <smtk:addConceptToRefset refset="#{refsetsBean.refSetEdit}"/>
+
                 <p:dialog widgetVar="editRefset" modal="true" showEffect="fade"
                           hideEffect="fade" resizable="true" style="margin:40px;">
                     <p:outputPanel id="editRefsetPanel" styleClass="editRefset">
-                        <smtk:addConceptToRefset refset="#{refsetsBean.refSetEdit}"/>
+
+                        <h3>Refset #{refsetsBean.refSetEdit.name}  </h3><h3>  Total Conceptos:#{refsetsBean.refSetEdit.getCountConcepts()}</h3>
+                        <p:commandButton value="Agregar Conceptos" oncomplete="PF('selectConcept').show()"/>
+                        <br/>
+                        <smtk:conceptRefset refset="#{refsetsBean.refSetEdit}"/>
+
                         <br/>
                         <p:commandButton rendered="#{not refsetsBean.refSetEdit.valid}"
                                          value="Vigente" actionListener="#{refsetsBean.validRefset(refsetsBean.refSetEdit)}" update="formRefset"></p:commandButton>
+                    </p:outputPanel>
+                </p:dialog>
+
+
+                <p:dialog widgetVar="selectConcept" modal="true" showEffect="fade"
+                          hideEffect="fade" resizable="true" style="margin:40px;">
+                    <p:outputPanel id="selectConceptPanel" styleClass="selectConcept">
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-md-6 ui-lg-5">
+                                <p:autoComplete id="inputFindConcept" scrollHeight="200" size="5" style="width: 300px;"
+                                                inputStyle="width: 300px;"
+                                                converter="conceptConverter" var="concept"
+                                                value="#{refsetsBean.conceptSMTK}"
+                                                completeMethod="#{findConceptBean.getConceptSearchInputAndCategories}"
+                                                itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
+                                                emptyMessage="No se encontraron conceptos relacionados"
+                                                placeholder="Buscar concepto por término"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-5">
+                                <p:selectOneMenu value="#{findConceptBean.categorySelected}"
+                                                 converter="omnifaces.SelectItemsConverter" panelStyle="width:180px"
+                                                 effect="fade" var="c" style="width:160px" filter="true"
+                                                 filterMatchMode="startsWith">
+                                    <p:ajax event="itemSelect"></p:ajax>
+                                    <f:selectItem itemLabel="Categorías" itemDisabled="true"/>
+                                    <f:selectItems value="#{findConceptBean.categoryList}" var="category"
+                                                   itemLabel="#{category.name}" itemValue="#{category}"/>
+                                    <p:column>
+                                        <h:outputText value="#{c.name}"/>
+                                    </p:column>
+                                </p:selectOneMenu>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+
+                            </div>
+                        </div>
                     </p:outputPanel>
                 </p:dialog>
 

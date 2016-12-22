@@ -99,10 +99,15 @@ public class AutogenerateBeans {
                     concept.getDescriptionFavorite().setCaseSensitive(false);
                 }
             }
+            if (relationshipDefinition.getId() == 58) {
+                autogenerateMC.voidRemoveFFA(relationship);
+                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
         }
     }
 
-    public void autogenerateRemoveRelationship(RelationshipDefinition relationshipDefinition, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE){
+    public void autogenerateRemoveRelationship(RelationshipDefinition relationshipDefinition, Relationship relationship, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE){
         if (!concept.isModeled()) {
             if (relationshipDefinition.getId() == 52) {
                 autogeneratePCCE.setAutogeneratePCCE("");
@@ -113,6 +118,11 @@ public class AutogenerateBeans {
             if (relationshipDefinition.getId() == 51) {
                 autogeneratePCCE.setPc("");
                 concept.getDescriptionFavorite().setTerm(autogeneratePCCE.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+            if (relationshipDefinition.getId() == 58) {
+                autogenerateMC.voidRemoveFFA(relationship);
+                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
         }
