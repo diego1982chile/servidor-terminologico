@@ -38,7 +38,7 @@ public class PendingTermsManagerImpl implements PendingTermsManager {
 
         /* 2. Agregarlo al concepto especial 'Pendientes' */
         ConceptSMTK pendingTermsConcept = conceptManager.getPendingConcept();
-        Description description = descriptionManager.bindDescriptionToConcept(pendingTermsConcept, pendingTerm.getTerm(),pendingTerm.isSensibility(), DescriptionType.SYNONYMOUS, loggedUser);
+        Description description = descriptionManager.bindDescriptionToConcept(pendingTermsConcept, pendingTerm.getTerm(),DescriptionType.SYNONYMOUS, loggedUser);
 
         pendingTerm.setRelatedDescription(description);
         pendingTermDAO.bindTerm2Description(pendingTerm, description);
