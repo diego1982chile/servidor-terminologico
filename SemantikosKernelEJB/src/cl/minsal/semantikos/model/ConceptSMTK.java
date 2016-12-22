@@ -84,6 +84,13 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     /** Variable que indica si el grado de definición se obtiene heredado * */
     private boolean inherited;
 
+    /** RefSets a los que pertenece el concepto */
+    private List<RefSet> refsets;
+
+    public ConceptSMTK() {
+        super(PersistentEntity.NON_PERSISTED_ID);
+    }
+
     /**
      * La categoría es la mínima información que se le puede dar a un concepto.
      */
@@ -182,11 +189,11 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     }
 
     public List<Description> getDescriptions() {
-        return descriptions;
+        return new ArrayList<>(descriptions);
     }
 
     public void setDescriptions(List<Description> descriptions) {
-        this.descriptions = descriptions;
+        this.descriptions = new ArrayList<>(descriptions);
     }
 
     /**
@@ -201,6 +208,38 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         return relationships;
+    }
+
+    /**
+     * Este método es responsable de recuperar todas las relaciones que son de tipo Basic Type.
+     *
+     * @return Una lista de los atributos de tipo báisco del concepto.
+     */
+    public List<Relationship> getRelationshipsBasicType() {
+        List<Relationship> snomedRelationships = new ArrayList<>();
+        for (Relationship relationship : relationships) {
+            if (relationship.getRelationshipDefinition() != null
+                    && relationship.getRelationshipDefinition().getTargetDefinition() != null
+                    && relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
+                snomedRelationships.add(relationship);
+            }
+        }
+        return snomedRelationships;
+    }
+
+    /**
+     * Este método es responsable de recuperar todas las relaciones del concepto que no son básicas.
+     *
+     * @return Una lista con las relaciones del concepto.
+     */
+    public List<Relationship> getRelationshipsNonBasicType() {
+        List<Relationship> snomedRelationships = new ArrayList<>();
+        for (Relationship relationship : relationships) {
+            if (!relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
+                snomedRelationships.add(relationship);
+            }
+        }
+        return snomedRelationships;
     }
 
     /**
@@ -702,6 +741,14 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      */
     public boolean isJustPublished() {
         return justPublished;
+    }
+
+    public List<RefSet> getRefsets() {
+        return refsets;
+    }
+
+    public void setRefsets(List<RefSet> refsets) {
+        this.refsets = refsets;
     }
 
     public TagSMTK getTagSMTK() {
