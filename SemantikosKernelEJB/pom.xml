@@ -4,8 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-
-    <groupId>cl.minsal.semantikos</groupId>
     <artifactId>SemantikosKernelEJB</artifactId>
     <version>2.2.3</version>
     <packaging>ejb</packaging>
@@ -27,7 +25,6 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.21</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.apache.axis</groupId>
@@ -53,29 +50,6 @@
             <artifactId>ehcache</artifactId>
             <version>3.1.2</version>
         </dependency>
-
-        <!--
-        <dependency>
-            <groupId>javax.ejb</groupId>
-            <artifactId>javax.ejb-api</artifactId>
-            <version>3.2</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>1.0.1.Final</version>
-            <scope>provided</scope>
-        </dependency>
-        -->
 
         <!-- dependencia del runtime de jboss que incluye jee, ejb, jsf y mucho mas -->
         <dependency>
@@ -113,7 +87,6 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.8.0</version>
         </dependency>
-
 
         <dependency>
             <groupId>postgresql</groupId>
@@ -158,8 +131,6 @@
         </dependency>
     </dependencies>
 
-
-
     <build>
         <sourceDirectory>src</sourceDirectory>
         <plugins>
@@ -187,7 +158,6 @@
                 </configuration>
 
                 <executions>
-
                     <execution>
                         <id>default-ejb</id>
                         <phase>package</phase>

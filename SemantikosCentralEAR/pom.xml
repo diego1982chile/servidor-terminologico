@@ -8,7 +8,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <groupId>cl.minsal.semantikos</groupId>
     <artifactId>SemantikosCentralEAR</artifactId>
     <version>2.2.3</version>
     <packaging>ear</packaging>
@@ -31,6 +30,20 @@
 
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
+            <artifactId>SemantikosKernelEJB</artifactId>
+            <version>2.2.3</version>
+            <type>ejb</type>
+        </dependency>
+
+        <dependency>
+            <groupId>cl.minsal.semantikos</groupId>
+            <artifactId>SemantikosWSEJB</artifactId>
+            <version>2.2.3</version>
+            <type>ejb</type>
+        </dependency>
+
+        <dependency>
+            <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosWeb</artifactId>
             <version>2.2.3</version>
             <type>war</type>
@@ -45,9 +58,9 @@
 
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosKernelEJB</artifactId>
+            <artifactId>SemantikosWS</artifactId>
             <version>2.2.3</version>
-            <type>ejb</type>
+            <type>war</type>
         </dependency>
 
         <!-- Clases para validaciones básicas tipo @NotNull -->
@@ -99,6 +112,11 @@
                             <groupId>cl.minsal.semantikos</groupId>
                             <artifactId>SemantikosBrowser</artifactId>
                             <contextRoot>browser</contextRoot>
+                        </webModule>
+                        <webModule>
+                            <groupId>cl.minsal.semantikos</groupId>
+                            <artifactId>SemantikosWS</artifactId>
+                            <contextRoot>ws</contextRoot>
                         </webModule>
                     </modules>
                 </configuration>

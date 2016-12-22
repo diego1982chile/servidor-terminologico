@@ -4,7 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cl.minsal.semantikos</groupId>
     <artifactId>SemantikosBrowser</artifactId>
     <version>2.2.3</version>
     <packaging>war</packaging>
@@ -29,14 +28,6 @@
             <scope>provided</scope>
         </dependency>
 
-
-        <!-- dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency -->
-
         <dependency>
             <groupId>javax.faces</groupId>
             <artifactId>javax.faces-api</artifactId>
@@ -50,7 +41,6 @@
             <version>2.2.3</version>
             <scope>provided</scope>
         </dependency>
-
 
         <dependency>
             <groupId>net.bull.javamelody</groupId>
@@ -90,8 +80,6 @@
             <version>3.14</version>
         </dependency>
 
-
-
     </dependencies>
 
 
@@ -127,7 +115,6 @@
                     <webXml>web\WEB-INF\web.xml</webXml>
                     <warName>SemantikosBrowser</warName>
                     <warSourceDirectory>web</warSourceDirectory>
-
                 </configuration>
             </plugin>
 

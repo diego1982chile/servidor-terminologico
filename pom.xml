@@ -13,15 +13,12 @@
         <module>SemantikosWeb</module>
         <module>SemantikosKernelEJB</module>
         <module>SemantikosCentralEAR</module>
-        <module>SemantikosWS</module>
         <module>SemantikosWSEJB</module>
+        <module>SemantikosWS</module>
         <module>SemantikosBrowser</module>
     </modules>
 
-
     <build>
-
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -33,7 +30,6 @@
                 <version>2.3.2</version>
             </plugin>
         </plugins>
-
     </build>
 
     <properties>
