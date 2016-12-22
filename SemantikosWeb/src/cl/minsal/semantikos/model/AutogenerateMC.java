@@ -74,7 +74,7 @@ public class AutogenerateMC {
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 9)
                 attributes[1] = (((HelperTableRecord) relationshipAttribute.getTarget()).getValueColumn("description"));
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 10) {
-                if (Integer.parseInt(relationshipAttribute.getTarget().toString()) > 1) {
+                if (Float.parseFloat(relationshipAttribute.getTarget().toString()) != 1) {
                     attributes[2] = "/" + relationshipAttribute.getTarget().toString()+" ";
                 } else {
                     attributes[2] = "/";

@@ -376,7 +376,7 @@ public class TargetDAOImpl implements TargetDAO {
             java.util.Date d = (java.util.Date) target.getValue();
             call.setTimestamp(2, new Timestamp(d.getTime()) );
         } else if (targetDefinition.getType().getTypeName().equals("float")) {
-            call.setFloat(1, (Float) target.getValue());
+            call.setFloat(1, Float.parseFloat (target.getValue().toString()) );
         } else if (targetDefinition.getType().getTypeName().equals("int")) {
             call.setInt(5, (Integer.parseInt(target.getValue().toString())));
         } else if (targetDefinition.getType().getTypeName().equals("string")) {
