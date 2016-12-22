@@ -27,10 +27,10 @@ public class DescriptionTranslationBR {
     public void apply(ConceptSMTK sourceConcept,ConceptSMTK targetConcept, Description description) {
 
         /* Se validan las pre-condiciones para realizar el movimiento de descripciones */
-        validatePreConditions(sourceConcept,description, targetConcept);
+        validatePreConditions(description, targetConcept);
 
         /* Traslado de Descripciones abreviadas */
-        brDescriptionTranslate001(sourceConcept, targetConcept, description);
+        brDescriptionTranslate001(targetConcept, description);
     }
 
     /**
@@ -39,13 +39,13 @@ public class DescriptionTranslationBR {
      * @param description   La descripción que se desea validar.
      * @param targetConcept El concepto al cual se desea mover la descripción.
      */
-    public void validatePreConditions(ConceptSMTK sourceConcept, Description description, ConceptSMTK targetConcept) {
+    public void validatePreConditions(Description description, ConceptSMTK targetConcept) {
 
         /* Descripciones que no se pueden trasladar */
         pcDescriptionTranslate001(description);
 
         /* Estados posibles para trasladar descripciones */
-        brDescriptionTranslate011(sourceConcept, targetConcept);
+        brDescriptionTranslate011(description.getConceptSMTK(), targetConcept);
     }
 
     /**
@@ -85,10 +85,6 @@ public class DescriptionTranslationBR {
             return;
         }
 
-        if(conceptManager.getPendingConcept().getId()==sourceConcept.getId()){
-            return;
-        }
-
         throw new BusinessRuleException("BR-UNK", "No se puede trasladar una descripción a un concepto Borrador");
     }
 
@@ -97,11 +93,10 @@ public class DescriptionTranslationBR {
      * definida una descripción Abreviada, entonces la descripción a ser trasladada pasará como tipo descriptor
      * “General”.
      *
-     * @param sourceConcept El concepto en donde se encuentra la descripción inicialmente.
      * @param targetConcept El concepto al cual se quiere mover la descripción.
      * @param description   La descripción que se desea trasladar.
      */
-    private void brDescriptionTranslate001(ConceptSMTK sourceConcept, ConceptSMTK targetConcept, Description description) {
+    private void brDescriptionTranslate001(ConceptSMTK targetConcept, Description description) {
 
         /* Aplica si el tipo de la descripción es Abreviada */
         if (description.getDescriptionType().equals(ABREVIADA)) {

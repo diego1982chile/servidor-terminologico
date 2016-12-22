@@ -100,22 +100,23 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     }
 
     @Override
-    public NoValidDescription getNoValidDescriptionByID(long id) {
+    public Description getDescriptionByDescriptionID(String descriptionId) {
         ConnectionBD connect = new ConnectionBD();
+        Description description= null;
 
-        NoValidDescription noValidDescription = null;
-
-        String sql = "{call semantikos.get_description_by_id(?)}";
+        String sql = "{call semantikos.get_description_by_business_id(?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            call.setLong(1, id);
+            call.setString(1, descriptionId);
             call.execute();
 
-            logger.debug("Descripciones recuperadas con ID=" + id);
+            logger.debug("Descripciones recuperadas con Business ID=" + descriptionId);
             ResultSet rs = call.getResultSet();
-            while (rs.next()) {
-                noValidDescription = createNoValidDescriptionFromResultSet(rs, null);
+            if (rs.next()) {
+                description = createDescriptionFromResultSet(rs, null);
+            } else {
+                throw new IllegalArgumentException("No existe una descripción con DESCRIPTION_ID = " + descriptionId);
             }
 
         } catch (SQLException e) {
@@ -124,7 +125,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             throw new EJBException(e);
         }
 
-        return noValidDescription;
+        return description;
     }
 
     @Override
@@ -436,6 +437,38 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             call.setString(1, term.toLowerCase());
             Category[] entities = categories.toArray(new Category[categories.size()]);
             call.setArray(2, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
+            call.execute();
+
+            logger.debug("Búsqueda exacta descripciones con término =" + term);
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                Description description = createDescriptionFromResultSet(rs, null);
+                descriptions.add(description);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar descripciones de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return descriptions;
+    }
+
+    @Override
+    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
+        ConnectionBD connect = new ConnectionBD();
+        List<Description> descriptions = new ArrayList<>();
+
+        String sql = "{call semantikos.search_descriptions_by_term_and_categories_and_refsets(?,?,?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setString(1, term.toLowerCase());
+            Category[] entities = categories.toArray(new Category[categories.size()]);
+            RefSet[] refsetEntities = refSets.toArray(new RefSet[refSets.size()]);
+            call.setArray(2, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
+            call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
             call.execute();
 
             logger.debug("Búsqueda exacta descripciones con término =" + term);
