@@ -126,8 +126,8 @@ public class ConceptController {
         return sourceConcept;
     }
 
-    public RelatedConceptsResponse findRelatedLite(String conceptId, String descriptionId, String categoryName) throws NotFoundFault {
-        RelatedConceptsResponse res = new RelatedConceptsResponse();
+    public RelatedConceptsLiteResponse findRelatedLite(String conceptId, String descriptionId, String categoryName) throws NotFoundFault {
+        RelatedConceptsLiteResponse res = new RelatedConceptsLiteResponse();
 
         Category category = this.categoryManager.getCategoryByName(categoryName);
         if (category == null) {
@@ -142,14 +142,13 @@ public class ConceptController {
         }
 
         if (source != null) {
-            List<ConceptResponse> relatedResponses = new ArrayList<>();
-            List<ConceptSMTK> relateds = this.conceptManager.getRelatedConcepts(source);
+            List<ConceptLightResponse> relatedResponses = new ArrayList<>();
+            List<ConceptSMTK> relatedConcepts = this.conceptManager.getRelatedConcepts(source);
 
-            if (relateds != null) {
-                for (ConceptSMTK related : relateds) {
+            if (relatedConcepts != null) {
+                for (ConceptSMTK related : relatedConcepts) {
                     if (category.equals(related.getCategory())) {
-                        ConceptResponse relatedResponse = new ConceptResponse(related);
-                        relatedResponses.add(relatedResponse);
+                        relatedResponses.add(new ConceptLightResponse(related));
                     }
                 }
             }
@@ -157,7 +156,6 @@ public class ConceptController {
             res.setRelatedConcepts(relatedResponses);
         }
 
-        // TODO: atributos
         return res;
     }
 

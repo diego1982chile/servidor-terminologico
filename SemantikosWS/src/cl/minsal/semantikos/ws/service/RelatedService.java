@@ -6,6 +6,7 @@ import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.request.DescriptionsSuggestionsRequest;
 import cl.minsal.semantikos.ws.request.RelatedConceptsByCategoryRequest;
 import cl.minsal.semantikos.ws.request.RelatedConceptsRequest;
+import cl.minsal.semantikos.ws.response.RelatedConceptsLiteResponse;
 import cl.minsal.semantikos.ws.response.RelatedConceptsResponse;
 import cl.minsal.semantikos.ws.response.TermSearchResponse;
 
@@ -64,7 +65,7 @@ public class RelatedService {
     // REQ-WS-010...021 Lite
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "conceptosRelacionadosLite")
-    public RelatedConceptsResponse conceptosRelacionadosLite(
+    public RelatedConceptsLiteResponse conceptosRelacionadosLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionadosPorCategoria")
             RelatedConceptsByCategoryRequest request
@@ -92,7 +93,7 @@ public class RelatedService {
     // REQ-WS-011 Lite
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "obtenerMedicamentoClinicoLite")
-    public RelatedConceptsResponse obtenerMedicamentoClinicoLite(
+    public RelatedConceptsLiteResponse obtenerMedicamentoClinicoLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
@@ -114,7 +115,7 @@ public class RelatedService {
     // REQ-WS-010.1-Lite
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "obtenerMedicamentoClinicoPorMedicamentoBasicoLite")
-    public RelatedConceptsResponse obtenerMedicamentoClinicoPorMedicamentoBasicoLite(
+    public RelatedConceptsLiteResponse obtenerMedicamentoClinicoPorMedicamentoBasicoLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
@@ -136,7 +137,7 @@ public class RelatedService {
     // REQ-WS-011.1-Lite
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "obtenerMedicamentoClinicoPorProductoComercialLite")
-    public RelatedConceptsResponse obtenerMedicamentoClinicoPorProductoComercialLite(
+    public RelatedConceptsLiteResponse obtenerMedicamentoClinicoPorProductoComercialLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
@@ -158,7 +159,7 @@ public class RelatedService {
     // REQ-WS-012.1-Lite
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "obtenerMedicamentoBasicoLite")
-    public RelatedConceptsResponse obtenerMedicamentoBasicoLite(
+    public RelatedConceptsLiteResponse obtenerMedicamentoBasicoLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
@@ -180,7 +181,7 @@ public class RelatedService {
     // REQ-WS-012.1-Lite
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "obtenerMedicamentoBasicoPorMedicamentoClinicoLite")
-    public RelatedConceptsResponse obtenerMedicamentoBasicoPorMedicamentoClinicoLite(
+    public RelatedConceptsLiteResponse obtenerMedicamentoBasicoPorMedicamentoClinicoLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
@@ -270,7 +271,7 @@ public class RelatedService {
     // REQ-WS-014 Lite
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "obtenerMedicamentoClinicoConEnvaseLite")
-    public RelatedConceptsResponse obtenerMedicamentoClinicoConEnvaseLite(
+    public RelatedConceptsLiteResponse obtenerMedicamentoClinicoConEnvaseLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
@@ -292,7 +293,7 @@ public class RelatedService {
     // REQ-WS-014.1 Lite
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "obtenerMedicamentoClinicoConEnvasePorMedicamentoClinicoLite")
-    public RelatedConceptsResponse obtenerMedicamentoClinicoConEnvasePorMedicamentoClinicoLite(
+    public RelatedConceptsLiteResponse obtenerMedicamentoClinicoConEnvasePorMedicamentoClinicoLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
@@ -314,7 +315,7 @@ public class RelatedService {
     // REQ-WS-015 Lite
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "obtenerProductoComercialConEnvaseLite")
-    public RelatedConceptsResponse obtenerProductoComercialConEnvaseLite(
+    public RelatedConceptsLiteResponse obtenerProductoComercialConEnvaseLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
@@ -336,7 +337,7 @@ public class RelatedService {
     // REQ-WS-015.1 Lite
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvaseLite")
-    public RelatedConceptsResponse obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvaseLite(
+    public RelatedConceptsLiteResponse obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvaseLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
@@ -381,7 +382,7 @@ public class RelatedService {
     // REQ-WS-018 Lite
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "obtenerProductoClinicoConEnvaseLite")
-    public RelatedConceptsResponse obtenerProductoClinicoConEnvaseLite(
+    public RelatedConceptsLiteResponse obtenerProductoClinicoConEnvaseLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
@@ -403,7 +404,7 @@ public class RelatedService {
     // REQ-WS-018.1 Lite
     @WebResult(name = "respuestaConceptosRelacionados")
     @WebMethod(operationName = "obtenerProductoClinicoConEnvasePorProductoComercialLite")
-    public RelatedConceptsResponse obtenerProductoClinicoConEnvasePorProductoComercialLite(
+    public RelatedConceptsLiteResponse obtenerProductoClinicoConEnvasePorProductoComercialLite(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
