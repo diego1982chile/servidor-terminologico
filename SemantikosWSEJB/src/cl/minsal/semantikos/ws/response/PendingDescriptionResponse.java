@@ -16,12 +16,12 @@ import java.util.List;
 @XmlType(name = "DescripcionPendiente", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class PendingDescriptionResponse implements Serializable {
 
-    @XmlElement(name="pendienteCodificacion")
-    private Boolean pendingCodification;
-    @XmlElement(name="nombreCategoria")
-    private String categoryName;
     @XmlElement(name="terminoPreferido")
     private String preferredTerm;
+    @XmlElement(name="nombreCategoria")
+    private String categoryName;
+    @XmlElement(name="pendienteCodificacion")
+    private Boolean pendingCodification;
     @XmlElement(name="validez")
     private Boolean valid;
     @XmlElementWrapper(name="descripciones")
@@ -30,15 +30,13 @@ public class PendingDescriptionResponse implements Serializable {
 
     public PendingDescriptionResponse() {}
 
-    public PendingDescriptionResponse(@NotNull Description description, @NotNull List<Description> descriptions) {
+    public PendingDescriptionResponse(@NotNull Description description) {
         this.pendingCodification = true;
         this.valid = description.isValid();
         this.categoryName = description.getConceptSMTK().getCategory().getName();
         this.preferredTerm = description.getConceptSMTK().getDescriptionFavorite().getTerm();
-        this.descriptions = new ArrayList<>(descriptions.size());
-        for ( Description description1 : descriptions ) {
-            this.descriptions.add(new SimplifiedDescriptionResponse(description1));
-        }
+        this.descriptions = new ArrayList<>(1);
+        this.descriptions.add(new SimplifiedDescriptionResponse(description));
     }
 
     public Boolean getPendingCodification() {

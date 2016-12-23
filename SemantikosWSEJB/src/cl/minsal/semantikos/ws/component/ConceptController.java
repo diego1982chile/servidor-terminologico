@@ -196,9 +196,8 @@ public class ConceptController {
                     } else {
                         perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
                     }
-                } else if ( !description.isModeled() ) {
-                    List<Description> descriptions1 = new ArrayList<>(); // TODO: Obtener
-                    pendingDescriptions.add(new PendingDescriptionResponse(description, descriptions1));
+                } else if ( "Pendientes".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm()) ) {
+                    pendingDescriptions.add(new PendingDescriptionResponse(description));
                 } else {
                     perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
                 }
