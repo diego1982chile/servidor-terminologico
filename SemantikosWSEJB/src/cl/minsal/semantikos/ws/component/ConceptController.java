@@ -189,10 +189,13 @@ public class ConceptController {
 
         if ( descriptions != null ) {
             for ( Description description : descriptions ) {
-                if ( !description.isValid() ) {
-                    List<ConceptSMTK> suggestedConcepts = new ArrayList<>(); // TODO: Obtener
-                    List<Description> suggestedDescriptions = new ArrayList<>(); // TODO: Obtener
-                    noValidDescriptions.add(new NoValidDescriptionResponse(description, suggestedConcepts, suggestedDescriptions));
+                if ( "Concepto no válido".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm()) ) {
+                    NoValidDescription noValidDescription = this.descriptionManager.getNoValidDescriptionByID(description.getId());
+                    if ( noValidDescription != null ) {
+                        noValidDescriptions.add(new NoValidDescriptionResponse(noValidDescription));
+                    } else {
+                        perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
+                    }
                 } else if ( !description.isModeled() ) {
                     List<Description> descriptions1 = new ArrayList<>(); // TODO: Obtener
                     pendingDescriptions.add(new PendingDescriptionResponse(description, descriptions1));

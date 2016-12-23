@@ -1166,11 +1166,11 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>Sustancia B (sustancia)</termino>\r
+            <termino>hipromelosa 10.5 mg/0.5 mL + salbutamol 22.55 mg aerosol para inhalación (producto)</termino>\r
             <!--Zero or more repetitions:-->\r
-            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>\r
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>\r
             <!--Zero or more repetitions:-->\r
-            <nombreRefSet>nuevo refset con conceptos</nombreRefSet>\r
+            <nombreRefSet>Refset 3</nombreRefSet>\r
          </peticionBuscarTermino>\r
       </ser:buscarTermino>\r
    </soapenv:Body>\r
@@ -1183,7 +1183,7 @@
             <!--Zero or more repetitions:-->\r
             <!--<nombreCategoria>Fármacos - Sustancia</nombreCategoria>\r-->
             <!--Zero or more repetitions:-->\r
-            <nombreRefSet>nuevo refset con conceptos</nombreRefSet>\r
+            <nombreRefSet>Refset 3</nombreRefSet>\r
          </peticionBuscarTermino>\r
       </ser:buscarTermino>\r
    </soapenv:Body>\r
@@ -1437,7 +1437,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>termino 2 amb</termino>\r
+            <termino>Un término</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -1486,7 +1486,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>Un término</termino>\r
+            <termino>Un término 9</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -1535,7 +1535,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino> test 4</termino>\r
+            <termino>test 2 sensible</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -1584,7 +1584,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>Sustancia A</termino>\r
+            <termino>salbutamol</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -1633,7 +1633,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>Sustancia A (sustancia)</termino>\r
+            <termino>salbutamol (sustancia)</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -1682,7 +1682,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>Sustancia B</termino>\r
+            <termino>salbutamol</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -1731,7 +1731,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>Sustancia B (sustancia)</termino>\r
+            <termino>salbutamol (producto)</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -1780,7 +1780,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>Sustancia C</termino>\r
+            <termino>silla</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -1829,7 +1829,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>Sustancia C (sustancia)</termino>\r
+            <termino>silla (objeto físico)</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -1878,7 +1878,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>Sustancia A + Sustancia B</termino>\r
+            <termino>hipromelosa + lanatósido C + salbutamol</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -1927,7 +1927,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>Sustancia A + Sustancia B (producto)</termino>\r
+            <termino>hipromelosa + lanatósido C + salbutamol (producto)</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -1976,7 +1976,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>Sustancia C + Sustancia A</termino>\r
+            <termino>hormona foliculoestimulante</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -2025,7 +2025,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>Sustancia C + Sustancia A (producto)</termino>\r
+            <termino>hormona foliculoestimulante (sustancia)</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -2074,7 +2074,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>A1</termino>\r
+            <termino>Geriatría</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -2123,7 +2123,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>A1 (medio ambiente)</termino>\r
+            <termino>Geriatría (ocupación)</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -2172,7 +2172,7 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>tifus</termino>\r
+            <termino>a d s</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>
@@ -2221,7 +2221,56 @@
    <soapenv:Body>\r
       <ser:buscarTermino>\r
          <peticionBuscarTermino>\r
-            <termino>tifus (hallazgo)</termino>\r
+            <termino>am 11</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="8e3ff8c9-8bb0-49cc-b0ee-cea55e0b6bfb" name="buscarTermino33"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino33" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>ddd 111</termino>\r
             <!--Zero or more repetitions:-->\r
             <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
             <nombreCategoria>Áreas institucionales</nombreCategoria>

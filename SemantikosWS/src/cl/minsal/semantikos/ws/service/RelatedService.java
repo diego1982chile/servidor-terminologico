@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 /**
  * Created by Development on 2016-11-18.
+ *
  */
 @WebService(serviceName = "ServicioDeRelacionados")
 public class RelatedService {

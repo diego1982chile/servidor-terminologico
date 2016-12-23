@@ -2,6 +2,7 @@ package cl.minsal.semantikos.ws.response;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.NoValidDescription;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
@@ -21,9 +22,6 @@ public class NoValidDescriptionResponse implements Serializable {
     private String noValidityCause;
     @XmlElement(name="validez")
     private Boolean valid;
-    @XmlElementWrapper(name="idConceptosSugeridos")
-    @XmlElement(name="idConceptoSugerido")
-    private List<String> suggestedConceptsId;
     @XmlElementWrapper(name="descripcionesSugeridas")
     @XmlElement(name="descripcionSugerida")
     private List<PerfectMatchDescriptionResponse> suggestedDescriptions;
@@ -32,17 +30,20 @@ public class NoValidDescriptionResponse implements Serializable {
 
     public NoValidDescriptionResponse() {}
 
-    public NoValidDescriptionResponse(@NotNull Description description, @NotNull List<ConceptSMTK> suggestedConcepts, @NotNull List<Description> suggestedDescriptions) {
-        this.noValidityCause = null; // TODO: Como obtener?
+    public NoValidDescriptionResponse(@NotNull NoValidDescription noValidDescription) {
         this.valid = false;
-        this.numberOfEntries = suggestedDescriptions.size();
-        this.suggestedConceptsId = new ArrayList<>(suggestedConcepts.size());
-        for ( ConceptSMTK conceptSMTK : suggestedConcepts ) {
-            this.suggestedConceptsId.add(conceptSMTK.getConceptID());
+        if ( noValidDescription.getObservationNoValid() != null ) {
+            this.noValidityCause = noValidDescription.getObservationNoValid().getDescription();
         }
-        this.suggestedDescriptions = new ArrayList<>(suggestedDescriptions.size());
-        for ( Description description1 : suggestedDescriptions ) {
-            this.suggestedDescriptions.add(new PerfectMatchDescriptionResponse(description1));
+        if ( noValidDescription.getSuggestedConcepts() != null ) {
+            Integer size = noValidDescription.getSuggestedConcepts().size();
+            this.suggestedDescriptions = new ArrayList<>(size);
+            for (ConceptSMTK suggestedConcept : noValidDescription.getSuggestedConcepts()) {
+                this.suggestedDescriptions.add(new PerfectMatchDescriptionResponse(suggestedConcept.getDescriptionFavorite()));
+            }
+            this.numberOfEntries = size;
+        } else {
+            this.numberOfEntries = 0;
         }
     }
 
@@ -60,14 +61,6 @@ public class NoValidDescriptionResponse implements Serializable {
 
     public void setValid(Boolean valid) {
         this.valid = valid;
-    }
-
-    public List<String> getSuggestedConceptsId() {
-        return suggestedConceptsId;
-    }
-
-    public void setSuggestedConceptsId(List<String> suggestedConceptsId) {
-        this.suggestedConceptsId = suggestedConceptsId;
     }
 
     public List<PerfectMatchDescriptionResponse> getSuggestedDescriptions() {
