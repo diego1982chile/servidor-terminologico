@@ -161,10 +161,10 @@ public class SearchService {
     }
 
     // REQ-WS-007
-    // REQ-WS-009: TODO: solo retornar el String del nombre del refset.
-    @WebResult(name = "respuestaRefSetsPorIdDescripcion")
+    // REQ-WS-009
+    @WebResult(name = "refset")
     @WebMethod(operationName = "refSetsPorIdDescripcion")
-    public TermSearchResponse refSetsPorIdDescripcion(
+    public List<String> refSetsPorIdDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "peticionRefSetsPorIdDescripcion")
             RefSetsByDescriptionIdRequest request
@@ -172,7 +172,7 @@ public class SearchService {
         if (request.getDescriptionId() == null || request.getDescriptionId().isEmpty()) {
             throw new IllegalInputFault("Debe ingresar por lo menos un idDescripcion");
         }
-        return this.refSetController.findRefSetsByDescriptionIds(request.getDescriptionId(), request.getIncludeInstitutions());
+        return this.refSetController.findRefSetsByDescriptions(request.getDescriptionId(), request.getIncludeInstitutions());
     }
 
     // REQ-WS-008

@@ -10,6 +10,7 @@ import cl.minsal.semantikos.ws.response.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 /**
@@ -28,9 +29,9 @@ public class RefSetController {
     @EJB
     private ConceptController conceptController;
 
-    public TermSearchResponse findRefSetsByDescriptionIds(List<String> descriptionIds, Boolean includeInstitutions) throws NotFoundFault {
-        TermSearchResponse res = new TermSearchResponse();
-        // TODO: include institutions
+    public List<String> findRefSetsByDescriptions(@NotNull List<String> descriptionIds, Boolean includeInstitutions) throws NotFoundFault {
+        // TODO: Implementar seguridad especificada en requerimientos y funcion del parametro includeInstitutions
+        Set<String> res = new HashSet<>(descriptionIds.size());
 
         Set<ConceptSMTK> conceptSMTKS = new HashSet<>(descriptionIds.size());
         for ( String descriptionId : descriptionIds ) {
@@ -41,25 +42,16 @@ public class RefSetController {
             }
         }
 
-        List<ConceptLightResponse> conceptResponses = new ArrayList<>(conceptSMTKS.size());
         for ( ConceptSMTK conceptSMTK : conceptSMTKS ) {
-            ConceptLightResponse conceptResponse = new ConceptLightResponse(conceptSMTK);
-            //TODO: Evaluar esta linea para un concepto light: this.conceptController.loadRefSets(conceptResponse, conceptSMTK);
-
-            /* TODO: Revisar esto.
-            List<DescriptionResponse> toRemove = new ArrayList<>();
-            for (DescriptionResponse descriptionResponse : conceptResponse.getDescriptions() ) {
-                if ( !descriptionIds.contains(descriptionResponse.getDescriptionID()) ) {
-                    toRemove.add(descriptionResponse);
+            List<RefSet> refSets = refSetManager.findByConcept(conceptSMTK);
+            if ( refSets != null ) {
+                for ( RefSet refSet : refSets ) {
+                    res.add(refSet.getName());
                 }
             }
-            conceptResponse.getDescriptions().removeAll(toRemove); */
-
-            conceptResponses.add(conceptResponse);
         }
-        res.setConcepts(conceptResponses);
 
-        return res;
+        return new ArrayList<>(res);
     }
 
     public List<RefSet> findRefsets(List<String> refSetsNames) throws NotFoundFault {

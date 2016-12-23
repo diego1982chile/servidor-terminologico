@@ -856,6 +856,10 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         return false;
     }
 
+    /**
+     * Sobreescritura de este método para poder usar objetos de esta clase en un HashSet. Andrés por favor no lo borres.
+     * @author Alfonso Cornejo
+     */
     @Override
     public int hashCode() {
         return getConceptID() != null ? getConceptID().hashCode() : 0;
