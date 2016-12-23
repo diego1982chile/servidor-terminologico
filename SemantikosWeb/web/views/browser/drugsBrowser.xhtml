@@ -27,52 +27,66 @@
                                         <p:spacer />
                                         <p:outputPanel styleClass="drugsFinder">
                                             <div class="ui-fluid drugsFinder">
-                                                <p:panelGrid  columns="6"  style="width: 100%"
-                                                              columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
-                                                              layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
-                                                    <p:outputPanel rendered="#{drugsBrowserBean.conceptSelected eq null}" styleClass="search">
-                                                        <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
-                                                                        placeholder="Buscar fármaco..."
-                                                                        forceSelection="true"
-                                                                        id="findConceptSMTK" scrollHeight="200" size="5"
-                                                                        completeMethod="#{drugsBrowserBean.getConceptSearchInput}"
-                                                                        converter="conceptConverter"
-                                                                        var="concept"
-                                                                        value="#{drugsBrowserBean.conceptSelected}"
-                                                                        itemLabel="#{concept.descriptionFavorite.term}"
-                                                                        itemValue="#{concept}">
 
-                                                            <p:column>
-                                                                <h:outputText value="#{concept.descriptionFavorite.id}"/>
-                                                            </p:column>
+                                                <div class="Container">
 
-                                                            <p:column>
-                                                                <h:outputText value="#{concept.descriptionFavorite.term}"/>
-                                                            </p:column>
+                                                    <div class="Container30 White Responsive">
+                                                        <div class="ContainerIndent">
 
-                                                            <p:column>
-                                                                <h:outputText value="#{concept.category.name}"/>
-                                                            </p:column>
+                                                            <p:outputPanel rendered="#{drugsBrowserBean.conceptSelected eq null}" styleClass="search">
+                                                                <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
+                                                                                placeholder="Buscar fármaco..."
+                                                                                forceSelection="true"
+                                                                                id="findConceptSMTK" scrollHeight="200" size="5"
+                                                                                completeMethod="#{drugsBrowserBean.getConceptSearchInput}"
+                                                                                converter="conceptConverter"
+                                                                                var="concept"
+                                                                                value="#{drugsBrowserBean.conceptSelected}"
+                                                                                itemLabel="#{concept.descriptionFavorite.term}"
+                                                                                itemValue="#{concept}">
 
-                                                            <p:ajax event="itemSelect" async="false" listener="#{drugsBrowserBean.setConceptSelected(concept)}" update=":browserForm" process="@this" />
+                                                                    <p:column>
+                                                                        <h:outputText value="#{concept.descriptionFavorite.id}"/>
+                                                                    </p:column>
 
-                                                        </p:autoComplete>
-                                                        <i class="fa fa-search fa-lg"  />
-                                                    </p:outputPanel>
-                                                    <p:outputPanel rendered="#{drugsBrowserBean.conceptSelected != null}" styleClass="search">
-                                                        <p:inputText disabled="true" id="itemSelected" value="#{drugsBrowserBean.conceptSelected.descriptionFavorite}" />
-                                                        <p:commandLink
-                                                                process="@this"
-                                                                update="@(.drugsFinder)"
-                                                                action="#{drugsBrowserBean.resetConceptSelected}">
-                                                            <i class="fa fa-close fa-lg"  />
-                                                        </p:commandLink>
-                                                    </p:outputPanel>
-                                                </p:panelGrid>
+                                                                    <p:column>
+                                                                        <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                                                    </p:column>
+
+                                                                    <p:column>
+                                                                        <h:outputText value="#{concept.category.name}"/>
+                                                                    </p:column>
+
+                                                                    <p:ajax event="itemSelect" async="false" listener="#{drugsBrowserBean.setConceptSelected(concept)}" update=":browserForm" process="@this" />
+
+                                                                </p:autoComplete>
+                                                                <i class="fa fa-search fa-lg"  />
+                                                            </p:outputPanel>
+
+                                                            <p:outputPanel rendered="#{drugsBrowserBean.conceptSelected != null}" styleClass="search">
+                                                                <p:inputText disabled="true" id="itemSelected" value="#{drugsBrowserBean.conceptSelected.descriptionFavorite}" />
+                                                                <p:commandLink
+                                                                        process="@this"
+                                                                        update="@(.drugsFinder)"
+                                                                        action="#{drugsBrowserBean.resetConceptSelected}">
+                                                                    <i class="fa fa-close fa-lg"  />
+                                                                </p:commandLink>
+                                                            </p:outputPanel>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </p:outputPanel>
-                                        <p:spacer />
+
                                         <p:treeTable id="treeDocs" value="#{drugsBrowserBean.root}" var="concept">
+
+                                            <f:facet name="header">
+                                                <div class="Container">
+                                                    <div class="Container60" style="text-align: left;">
+                                                        Navegador Fármacos
+                                                    </div>
+                                                </div>
+                                            </f:facet>
 
                                             <p:column headerText="Término" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept Orange':''}">
                                                 <h:outputText value="#{concept.descriptionFavorite.term}" />

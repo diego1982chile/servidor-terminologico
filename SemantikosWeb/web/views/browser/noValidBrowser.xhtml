@@ -27,7 +27,10 @@
                                             <p:menuitem value="No Válidos" url="#" />
                                         </p:breadCrumb>
                                         <p:spacer />
-                                        <smtk:noValidBrowserFilter noValidQuery="#{noValidBrowserBean.noValidQuery}" />
+                                        <p:fieldset legend="Filtros" toggleable="true" toggleSpeed="500" collapsed="true">
+                                            <smtk:noValidBrowserFilter noValidQuery="#{noValidBrowserBean.noValidQuery}" />
+                                        </p:fieldset>
+                                        <p:spacer />
                                         <p:dataTable id="noValidTable"
                                                      styleClass="browserTable"
                                                      value="#{noValidBrowserBean.noValidDescriptions}"
@@ -46,6 +49,14 @@
                                             <p:ajax event="rowSelectCheckbox" update="@(.globalActions)" />
                                             <p:ajax event="rowUnselectCheckbox" update="@(.globalActions)" />
                                             <p:ajax event="toggleSelect" update="@(.globalActions)" />
+
+                                            <f:facet name="header">
+                                                <div class="Container">
+                                                    <div class="Container60" style="text-align: left;">
+                                                        No Válidos
+                                                    </div>
+                                                </div>
+                                            </f:facet>
 
                                             <p:column selectionMode="multiple" style="width:16px;text-align:center" />
 
@@ -70,16 +81,11 @@
                                             </p:column>
 
                                             <p:column headerText="Conceptos Sugeridos">
-                                                <p:commandLink id="suggestedConceptsLink"
+                                                <p:commandLink update="@(.suggestedConceptsDetail)" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search"
                                                                rendered="#{not empty noValidDescription.suggestedConcepts}">
                                                     <h:outputText value="#{noValidDescription.suggestedConcepts.size()}" />
+                                                    <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}" />
                                                 </p:commandLink>
-                                                <p:overlayPanel id="suggestedConcepts" for="suggestedConcepts" hideEffect="fade" dynamic="true">
-                                                    <p:dataList value="#{noValidDescription.suggestedConcepts}" var="suggestedConcept" type="definition">
-                                                        <h:outputText value="#{suggestedConcept.descriptionFavorite.term}" />
-                                                    </p:dataList>
-
-                                                </p:overlayPanel>
                                             </p:column>
 
                                             <p:column headerText="Usos">
@@ -124,6 +130,26 @@
                                             </p:column>
 
                                         </p:dataTable>
+
+                                        <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
+                                            <p:outputPanel id="descriptionSelected" styleClass="suggestedConceptsDetail" style="width: 300px;">
+                                                <p:dataTable value="#{noValidBrowserBean.noValidDescriptionSelected.suggestedConcepts}" var="concept" width="100%">
+                                                    <p:column headerText="ConceptID">
+                                                        <h:outputText value="#{concept.conceptID}" />
+                                                    </p:column>
+                                                    <p:column headerText="Término">
+                                                        <h:outputText value="#{concept.descriptionFavorite}" />
+                                                    </p:column>
+                                                    <p:column headerText="Consultar">
+                                                        <p:link outcome="/views/concept/conceptEdit" style="padding: 5px">
+                                                            <i class="fa fa-eye fa-lg"/>
+                                                            <f:param name="editMode" value="#{false}" />
+                                                            <f:param name="idConcept" value="#{concept.id}" />
+                                                        </p:link>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </p:outputPanel>
+                                        </p:overlayPanel>
 
                                         <!-- Trasladar descripciones a conceptos -->
                                         <p:dialog id="dialogTDP" header="Trasladar descripcion" widgetVar="dialogTDP" global="true" styleClass="dialogTDP"

@@ -20,35 +20,41 @@
 
         <div class="ui-fluid">
 
-            <p:panelGrid  columns="6"  style="width: 100%"
-                          columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
-                          layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+            <div class="Container">
 
-                <p:outputPanel styleClass="search">
-                    <p:inputText value="#{cc.attrs.pendingQuery.query}" placeholder="Buscar...">
-                        <p:ajax event="keyup" update="@(.browserTable),@(.pendingQueryFilter)" process="@this" />
-                    </p:inputText>
-                    <i class="fa fa-search fa-lg" />
-                </p:outputPanel>
+                <div class="Container20 White Responsive">
+                    <div class="ContainerIndent">
 
-                <p:selectCheckboxMenu id="categories"
-                                      value="#{cc.attrs.pendingQuery.categories}"
-                                      converter="omnifaces.SelectItemsConverter"
-                                      label="Categorías..."
-                                      filter="true"
-                                      filterMatchMode="startsWith">
+                        <p:outputPanel styleClass="search">
+                            <p:inputText value="#{cc.attrs.pendingQuery.query}" placeholder="Buscar...">
+                                <p:ajax event="keyup" update="@(.browserTable),@(.pendingQueryFilter)" process="@this" />
+                            </p:inputText>
+                            <i class="fa fa-search fa-lg" />
+                        </p:outputPanel>
 
-                    <p:ajax event="change"
-                            update="@(.browserTable),@(.browserFilters)"
-                            process="@this" />
+                    </div>
+                </div>
 
-                    <f:selectItems value="#{pendingBrowserBean.categories}" var="category"
-                                   itemLabel="#{category.name}" itemValue="#{category}"/>
+                <div class="Container20 White Responsive">
+                    <div class="ContainerIndent">
+                        <p:selectCheckboxMenu id="categories"
+                                              value="#{cc.attrs.pendingQuery.categories}"
+                                              converter="omnifaces.SelectItemsConverter"
+                                              label="Categorías..."
+                                              filter="true"
+                                              filterMatchMode="startsWith">
 
-                </p:selectCheckboxMenu>
+                            <p:ajax event="change"
+                                    update="@(.browserTable),@(.browserFilters)"
+                                    process="@this" />
 
-            </p:panelGrid>
+                            <f:selectItems value="#{pendingBrowserBean.categories}" var="category"
+                                           itemLabel="#{category.name}" itemValue="#{category}"/>
 
+                        </p:selectCheckboxMenu>
+                    </div>
+                </div>
+            </div>
         </div>
         <p:spacer />
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.pendingQuery.categories}" itemName="Categoría" />
