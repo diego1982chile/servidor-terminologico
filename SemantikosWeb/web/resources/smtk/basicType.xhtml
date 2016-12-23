@@ -327,7 +327,7 @@
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
-                                               update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                               update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
                                     <i class="fa fa-close fa-lg"  />
                                 </p:commandLink>

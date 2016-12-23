@@ -714,6 +714,8 @@ public class ConceptBean implements Serializable {
      */
     public void removeRelationshipAttribute(Relationship r, RelationshipAttribute ra) {
         r.getRelationshipAttributes().remove(ra);
+        autogenerateBeans.autogenerateRemoveAttribute(ra.getRelationAttributeDefinition(),concept,autogenerateMC);
+
     }
 
     /**
@@ -926,7 +928,7 @@ public class ConceptBean implements Serializable {
             conceptManager.delete(concept, user);
             messageBean.messageSuccess("Acción exitosa", "Concepto eliminado");
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptBrowser.xhtml?idCategory=" + category.getId());
+            eContext.redirect(eContext.getRequestContextPath() + "/views/browser/generalBrowser.xhtml?idCategory=" + category.getId());
         } else {
             conceptManager.invalidate(concept, user);
             messageBean.messageSuccess("Acción exitosa", "Concepto invalidado");

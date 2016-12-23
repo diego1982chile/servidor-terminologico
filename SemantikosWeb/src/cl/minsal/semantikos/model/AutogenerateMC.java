@@ -47,6 +47,9 @@ public class AutogenerateMC {
         String vol = relationship.getTarget().toString();
         volumen = vol;
     }
+    public void setVolumenEmpty() {
+        volumen = "";
+    }
 
     public String getUnidadVolumen() {
         return unidadVolumen;
@@ -54,6 +57,9 @@ public class AutogenerateMC {
 
     public void setUnidadVolumen(RelationshipAttribute relationshipAttribute) {
         this.unidadVolumen = (((HelperTableRecord) relationshipAttribute.getTarget()).getValueColumn("description"));
+    }
+    public void setUnidadVolumenEmpty() {
+        this.unidadVolumen = "";
     }
 
     /**
