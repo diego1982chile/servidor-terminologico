@@ -209,41 +209,6 @@ public class ConceptController {
         return res;
     }
 
-    public TermSearchResponse searchTerm(
-            String term,
-            List<String> categoriesNames,
-            List<String> refSetsNames
-    ) throws NotFoundFault {
-        List<Category> categories = this.categoryController.findCategories(categoriesNames);
-        List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
-
-        List<ConceptLightResponse> conceptResponses = new ArrayList<>();
-        List<Description> descriptions = this.descriptionManager.searchDescriptionsByTerm(term, categories, refSets);
-        if (descriptions != null) {
-            List<ConceptSMTK> conceptSMTKS = new ArrayList<>(descriptions.size());
-            for (Description description : descriptions) {
-                if (!conceptSMTKS.contains(description.getConceptSMTK())) {
-                    conceptSMTKS.add(description.getConceptSMTK());
-                }
-            }
-
-            for (ConceptSMTK source : conceptSMTKS) {
-                // TODO: Agregar sugeridos
-                ConceptLightResponse conceptResponse = new ConceptLightResponse(source);
-                conceptResponses.add(conceptResponse);
-            }
-        }
-
-        TermSearchResponse response = new TermSearchResponse();
-        response.setConcepts(conceptResponses);
-
-        if (conceptResponses.isEmpty()) {
-            throw new NotFoundFault("Termino no encontrado");
-        }
-
-        return response;
-    }
-
     public TermSearchResponse searchTruncatePerfect(
             String term,
             List<String> categoriesNames,
@@ -303,7 +268,7 @@ public class ConceptController {
         ConceptResponse res = new ConceptResponse(conceptSMTK);
         this.loadRelationships(res, conceptSMTK);
         this.loadRefSets(res, conceptSMTK);
-        // TODO: Atributos y Relaciones
+        // TODO: Agregar todos los Atributos, Relaciones, Crossmaps, Descripciones y etc.
         return res;
     }
 
@@ -334,7 +299,7 @@ public class ConceptController {
         }
         res.setConceptResponses(conceptResponses);
 
-        // TODO: Cargar atributos correctamente y eliminar partes de la respuesta que no son parte de los requerimientos
+        // TODO: Cargar atributos correctamente y eliminar partes de la respuesta que no son parte del requerimiento
 
         return res;
     }
@@ -344,7 +309,6 @@ public class ConceptController {
             Integer pageNumber,
             Integer pageSize
     ) throws NotFoundFault {
-        // TODO
         ConceptsByRefsetResponse res = new ConceptsByRefsetResponse();
 
         RefSet refSet = this.refSetManager.getRefsetByName(refSetName);
@@ -355,41 +319,10 @@ public class ConceptController {
         res.setPagination(paginationResponse);
 
         List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptsBy(refSet, pageNumber, pageSize);
-        List<ConceptResponse> conceptResponses = new ArrayList<>();
+        List<ConceptLightResponse> conceptResponses = new ArrayList<>();
         if (concepts != null) {
             for (ConceptSMTK source : concepts) {
-                ConceptResponse conceptResponse = new ConceptResponse(source);
-//                this.loadAttributes(conceptResponse, source);
-//                this.loadCategory(conceptResponse, source);
-                conceptResponses.add(conceptResponse);
-            }
-        }
-        res.setConcepts(conceptResponses);
-
-        return res;
-    }
-
-    public ConceptsByRefsetResponse conceptsByRefsetWithPreferedDescriptions(
-            String refSetName,
-            Integer pageNumber,
-            Integer pageSize
-    ) throws NotFoundFault {
-
-        ConceptsByRefsetResponse res = new ConceptsByRefsetResponse();
-
-        RefSet refSet = this.refSetManager.getRefsetByName(refSetName);
-        res.setRefSet(this.refSetController.getResponse(refSet));
-
-        Integer total = this.conceptManager.countModeledConceptsBy(refSet);
-        PaginationResponse paginationResponse = this.paginationController.getResponse(pageNumber, pageSize, total);
-        res.setPagination(paginationResponse);
-
-        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptsBy(refSet, pageNumber, pageSize);
-        List<ConceptResponse> conceptResponses = new ArrayList<>();
-        if (concepts != null) {
-            for (ConceptSMTK sourceConcept : concepts) {
-                ConceptResponse conceptResponse = new ConceptResponse(sourceConcept);
-                conceptResponses.add(conceptResponse);
+                conceptResponses.add(new ConceptLightResponse(source));
             }
         }
         res.setConcepts(conceptResponses);

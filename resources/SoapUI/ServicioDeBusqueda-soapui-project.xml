@@ -2609,7 +2609,7 @@
    <soapenv:Body>\r
       <ser:conceptosPorRefSet>\r
          <peticionConceptosPorRefSet>\r
-            <nombreRefSet>nuevo refset con conceptos 2</nombreRefSet>
+            <nombreRefSet>Refset 3</nombreRefSet>
             <!--Optional:-->\r
             <numeroPagina>0</numeroPagina>\r
             <!--Optional:-->\r
@@ -2648,7 +2648,7 @@
    <soapenv:Body>\r
       <ser:descripcionesPreferidasPorRefSet>\r
          <peticionConceptosPorRefSet>\r
-            <nombreRefSet>nuevo refset con conceptos</nombreRefSet>\r
+            <nombreRefSet>Refset 3</nombreRefSet>\r
             <!--Optional:-->\r
             <numeroPagina>0</numeroPagina>\r
             <!--Optional:-->\r

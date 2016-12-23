@@ -55,7 +55,7 @@ public class RefSetController {
     }
 
     public List<RefSet> findRefsets(List<String> refSetsNames) throws NotFoundFault {
-        // TODO: Seguridad
+        // TODO: Seguridad especificada en requerimientos
         List<RefSet> refSets;
         if ( refSetsNames != null && !refSetsNames.isEmpty() ) {
             try {
@@ -70,6 +70,7 @@ public class RefSetController {
     }
 
     public List<RefSetResponse> refSetList(Boolean includeAllInstitutions) throws NotFoundFault {
+        // TODO considerar funcion del parametro includeAllInstitutions segun especificado en requerimientos
         List<RefSetResponse> res = new ArrayList<>();
         List<RefSet> refSets = this.refSetManager.getAllRefSets();
         if ( refSets != null ) {
@@ -77,7 +78,6 @@ public class RefSetController {
                 res.add(this.getResponse(refSet));
             }
         }
-        // TODO includeAllInstitutions
         return res;
     }
 

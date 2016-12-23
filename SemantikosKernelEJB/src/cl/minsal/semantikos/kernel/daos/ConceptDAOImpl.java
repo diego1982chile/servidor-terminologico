@@ -582,8 +582,8 @@ public class ConceptDAOImpl implements ConceptDAO {
         boolean modeled;
         boolean completelyDefined;
         boolean published;
-        boolean heritable;
         String conceptId;
+        boolean heritable = false;
 
         id = Long.valueOf(resultSet.getString("id"));
         conceptId = resultSet.getString("conceptid");
@@ -597,10 +597,18 @@ public class ConceptDAOImpl implements ConceptDAO {
         modeled = resultSet.getBoolean("is_modeled");
         completelyDefined = resultSet.getBoolean("is_fully_defined");
         published = resultSet.getBoolean("is_published");
-        heritable = resultSet.getBoolean("is_inherited");
         conceptId = resultSet.getString("conceptid");
         String observation = resultSet.getString("observation");
         long idTagSMTK = resultSet.getLong("id_tag_smtk");
+
+        /**
+         * Try y catch ignored porque no todas las funciones de la BD que recuperan Concepts de la BD traen esta columna.
+         * Ej: Usar la funcion semantikos.find_concepts_by_refset_paginated para recueprar conceptos se cae con la excepcion:
+         * org.postgresql.util.PSQLException: The column name is_inherited was not found in this ResultSet.
+         */
+        try {
+            heritable = resultSet.getBoolean("is_inherited");
+        } catch (Exception ignored) { }
 
 
         /* Se recupera su Tag Semántikos */

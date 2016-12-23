@@ -19,7 +19,7 @@ public class ConceptsByRefsetResponse implements Serializable {
     private PaginationResponse pagination;
     @XmlElementWrapper(name="conceptos")
     @XmlElement(name="concepto")
-    private List<ConceptResponse> concepts;
+    private List<ConceptLightResponse> concepts;
 
     public RefSetResponse getRefSet() {
         return refSet;
@@ -37,11 +37,11 @@ public class ConceptsByRefsetResponse implements Serializable {
         this.pagination = pagination;
     }
 
-    public List<ConceptResponse> getConcepts() {
+    public List<ConceptLightResponse> getConcepts() {
         return concepts;
     }
 
-    public void setConcepts(List<ConceptResponse> concepts) {
+    public void setConcepts(List<ConceptLightResponse> concepts) {
         this.concepts = concepts;
     }
 }
