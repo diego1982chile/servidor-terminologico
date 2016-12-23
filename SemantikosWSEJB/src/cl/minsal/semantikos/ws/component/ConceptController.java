@@ -254,7 +254,7 @@ public class ConceptController {
         ConceptResponse res = new ConceptResponse(conceptSMTK);
         this.loadRelationships(res, conceptSMTK);
         this.loadRefSets(res, conceptSMTK);
-        // TODO: Agregar todos los Atributos, Relaciones, Crossmaps, Descripciones y etc.
+        // TODO: Agregar todos los Atributos, Relaciones, Crossmaps, Descripciones y otros especificados en requerimiento.
         return res;
     }
 
@@ -268,7 +268,6 @@ public class ConceptController {
         ConceptResponse res = new ConceptResponse(conceptSMTK);
         this.loadRelationships(res, conceptSMTK);
         this.loadRefSets(res, conceptSMTK);
-        // TODO: Agregar todos los Atributos, Relaciones, Crossmaps, Descripciones y etc.
         return res;
     }
 
@@ -299,7 +298,7 @@ public class ConceptController {
         }
         res.setConceptResponses(conceptResponses);
 
-        // TODO: Cargar atributos correctamente y eliminar partes de la respuesta que no son parte del requerimiento
+        // TODO: Cargar atributos faltantes y eliminar partes de la respuesta que no son parte del requerimiento
 
         return res;
     }

@@ -55,7 +55,7 @@ public class RefSetController {
     }
 
     public List<RefSet> findRefsets(List<String> refSetsNames) throws NotFoundFault {
-        // TODO: Seguridad especificada en requerimientos
+        // TODO: Implementar seguridad especificada en requerimientos
         List<RefSet> refSets;
         if ( refSetsNames != null && !refSetsNames.isEmpty() ) {
             try {
