@@ -2175,7 +2175,7 @@
             <!--Optional:-->\r
             <!--<idConcepto>3365e08d-e</idConcepto>\r-->
             <!--Optional:-->\r
-            <idDescripcion>45d81c89-0</idDescripcion>\r
+            <idDescripcion>ca39b67f-c</idDescripcion>\r
             <categoriaRelacion>Fármacos - Medicamento Clínico</categoriaRelacion>\r
          </peticionConceptosRelacionadosPorCategoria>\r
       </ser:conceptosRelacionados>\r
@@ -2188,7 +2188,7 @@
             <!--Optional:-->\r
             <!--<idConcepto>3365e08d-e</idConcepto>\r-->
             <!--Optional:-->\r
-            <idDescripcion>92bbbd2e-c</idDescripcion>\r
+            <idDescripcion>1dfc2927-d</idDescripcion>\r
             <categoriaRelacion>Fármacos - Medicamento Clínico</categoriaRelacion>\r
          </peticionConceptosRelacionadosPorCategoria>\r
       </ser:conceptosRelacionados>\r
@@ -2199,12 +2199,12 @@
       <ser:conceptosRelacionadosLite>\r
          <peticionConceptosRelacionadosPorCategoria>\r
             <!--Optional:-->\r
-            <idDescripcion>92bbbd2e-c</idDescripcion>
+            <idDescripcion>ca39b67f-c</idDescripcion>
             <categoriaRelacion>Fármacos - Medicamento Clínico</categoriaRelacion>
          </peticionConceptosRelacionadosPorCategoria>\r
       </ser:conceptosRelacionadosLite>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/conceptosRelacionadosLite" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="100617d0-ec0c-4f20-919a-6c6ce5a171dd" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerBioequivalentes TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="bd87baf0-c201-413c-b9da-b727b3e3af93" name="obtenerBioequivalentes"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" id="b31a91b0-0fb3-494e-b78e-561204d6110a" name="Not SOAP Fault"/><con:assertion type="SOAP Response" id="3f855e0b-f98a-49ac-a4a2-7a085ade6be2" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/conceptosRelacionadosLite" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="100617d0-ec0c-4f20-919a-6c6ce5a171dd" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerBioequivalentes TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="bd87baf0-c201-413c-b9da-b727b3e3af93" name="obtenerBioequivalentes"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerBioequivalentes>\r
@@ -2216,19 +2216,7 @@
          </ser:peticionConceptosRelacionados>\r
       </ser:obtenerBioequivalentes>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="dc957e92-4488-4c70-9a03-38e5e1da4e59" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerBioequivalentesPorProductoComercial TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="5f40b6a4-67bb-4e0d-99cd-67ecf5e853c4" name="obtenerBioequivalentesPorProductoComercial"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentesPorProductoComercial</con:operation><con:request name="obtenerBioequivalentesPorProductoComercial" id="a5dad3fc-fab0-45ba-8706-534bc6c098dd"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerBioequivalentesPorProductoComercial>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerBioequivalentesPorProductoComercial>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentesPorProductoComercial"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="64c17a4b-1875-45d9-a7f8-fd79e51a7832" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerFamiliaProducto TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="4ed58a0c-5db0-48c2-874a-c1fbc8fe2d0e" name="obtenerFamiliaProducto"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerFamiliaProducto</con:operation><con:request name="obtenerFamiliaProducto" id="6e400de2-08f8-4235-8efd-5ea73be25519"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="64c17a4b-1875-45d9-a7f8-fd79e51a7832" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerFamiliaProducto TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="4ed58a0c-5db0-48c2-874a-c1fbc8fe2d0e" name="obtenerFamiliaProducto"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerFamiliaProducto</con:operation><con:request name="obtenerFamiliaProducto" id="6e400de2-08f8-4235-8efd-5ea73be25519"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerFamiliaProducto>\r
@@ -2240,19 +2228,7 @@
          </ser:peticionConceptosRelacionados>\r
       </ser:obtenerFamiliaProducto>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerFamiliaProducto"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="10cc726d-2092-4499-be6f-33ad28a0326e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerFamiliaProductoPorGrupoFamiliaProducto TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="4530e368-f09f-4104-84c6-79ee38af0c14" name="obtenerFamiliaProductoPorGrupoFamiliaProducto"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerFamiliaProductoPorGrupoFamiliaProducto</con:operation><con:request name="obtenerFamiliaProductoPorGrupoFamiliaProducto" id="288d8034-17f7-424c-bc4f-75f4e4f1af9c"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerFamiliaProductoPorGrupoFamiliaProducto>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerFamiliaProductoPorGrupoFamiliaProducto>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerFamiliaProductoPorGrupoFamiliaProducto"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="b8a91cdc-3d4e-4b74-9b1c-106e34608bd3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoBasico TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="c106b813-4a28-4433-b716-dffce79bf60a" name="obtenerMedicamentoBasico"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoBasico</con:operation><con:request name="obtenerMedicamentoBasico" id="8dece223-4b98-4ff8-a2c8-58e8ab4178a4"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerFamiliaProducto"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="b8a91cdc-3d4e-4b74-9b1c-106e34608bd3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoBasico TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="c106b813-4a28-4433-b716-dffce79bf60a" name="obtenerMedicamentoBasico"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoBasico</con:operation><con:request name="obtenerMedicamentoBasico" id="8dece223-4b98-4ff8-a2c8-58e8ab4178a4"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerMedicamentoBasico>\r
@@ -2276,43 +2252,17 @@
          </ser:peticionConceptosRelacionados>\r
       </ser:obtenerMedicamentoBasicoLite>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoBasicoLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="b4965be4-d66a-4a13-86b9-c465f0ce2ee5" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoBasicoPorMedicamentoClinico TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="fe85edf6-1281-4022-85d1-d952ab2b1a4d" name="obtenerMedicamentoBasicoPorMedicamentoClinico"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoBasicoPorMedicamentoClinico</con:operation><con:request name="obtenerMedicamentoBasicoPorMedicamentoClinico" id="05fdc758-f85e-4eb6-87d9-858d5d7b5231"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerMedicamentoBasicoPorMedicamentoClinico>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerMedicamentoBasicoPorMedicamentoClinico>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoBasicoPorMedicamentoClinico"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="8cac3097-e740-46c1-9476-f38eb5ce12ff" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoBasicoPorMedicamentoClinicoLite TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="3e6d5987-e15e-485c-add4-486f97b5f0a3" name="obtenerMedicamentoBasicoPorMedicamentoClinicoLite"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoBasicoPorMedicamentoClinicoLite</con:operation><con:request name="obtenerMedicamentoBasicoPorMedicamentoClinicoLite" id="b15632b4-5b0a-41cf-8f7d-750363d8fbfe"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerMedicamentoBasicoPorMedicamentoClinicoLite>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerMedicamentoBasicoPorMedicamentoClinicoLite>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoBasicoPorMedicamentoClinicoLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="18de6a38-4e70-4e78-8bd8-7907fa843260" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoClinico TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="38e35c84-a77f-4594-a04a-22e72e999d96" name="obtenerMedicamentoClinico"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoClinico</con:operation><con:request name="obtenerMedicamentoClinico" id="f86cb1cb-2bd0-4609-8d5a-70592d9b361e"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoBasicoLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="18de6a38-4e70-4e78-8bd8-7907fa843260" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoClinico TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="38e35c84-a77f-4594-a04a-22e72e999d96" name="obtenerMedicamentoClinico"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoClinico</con:operation><con:request name="obtenerMedicamentoClinico" id="f86cb1cb-2bd0-4609-8d5a-70592d9b361e"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerMedicamentoClinico>\r
-         <ser:peticionConceptosRelacionados>\r
+         <peticionConceptosRelacionados>\r
             <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
+            <idDescripcion>ca39b67f-c</idDescripcion>\r
+         </peticionConceptosRelacionados>\r
       </ser:obtenerMedicamentoClinico>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoClinico"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="4d1b6687-c915-443e-aadc-a5c0a1eb878b" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoClinicoConEnvase TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="a72720a2-a9bf-4cd5-997f-9389e974809c" name="obtenerMedicamentoClinicoConEnvase"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoClinicoConEnvase</con:operation><con:request name="obtenerMedicamentoClinicoConEnvase" id="a3999297-f1f7-43ac-874e-135ddc27732d"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" id="f5649e23-241a-4d4b-97cf-37826d010613" name="Not SOAP Fault"/><con:assertion type="SOAP Response" id="2eb63a12-e9f7-4d84-9887-5b2ad17dc814" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoClinico" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="4d1b6687-c915-443e-aadc-a5c0a1eb878b" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoClinicoConEnvase TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="a72720a2-a9bf-4cd5-997f-9389e974809c" name="obtenerMedicamentoClinicoConEnvase"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoClinicoConEnvase</con:operation><con:request name="obtenerMedicamentoClinicoConEnvase" id="a3999297-f1f7-43ac-874e-135ddc27732d"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerMedicamentoClinicoConEnvase>\r
@@ -2336,91 +2286,16 @@
          </ser:peticionConceptosRelacionados>\r
       </ser:obtenerMedicamentoClinicoConEnvaseLite>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoClinicoConEnvaseLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="03ae64ac-0a21-4b3f-93fd-411eea3bca11" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoClinicoConEnvasePorMedicamentoClinico TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="291da61f-9d8a-4e78-aee8-8cce46504fea" name="obtenerMedicamentoClinicoConEnvasePorMedicamentoClinico"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoClinicoConEnvasePorMedicamentoClinico</con:operation><con:request name="obtenerMedicamentoClinicoConEnvasePorMedicamentoClinico" id="fb233c0b-eb57-4e26-bcc1-d73f00b0f7a1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerMedicamentoClinicoConEnvasePorMedicamentoClinico>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerMedicamentoClinicoConEnvasePorMedicamentoClinico>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoClinicoConEnvasePorMedicamentoClinico"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="79aa45ae-7221-4465-97b3-86176e543410" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoClinicoConEnvasePorMedicamentoClinicoLite TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="b90a68d4-dedd-4eef-ad25-7e09c442ac64" name="obtenerMedicamentoClinicoConEnvasePorMedicamentoClinicoLite"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoClinicoConEnvasePorMedicamentoClinicoLite</con:operation><con:request name="obtenerMedicamentoClinicoConEnvasePorMedicamentoClinicoLite" id="51ae347b-6403-4bca-bf8a-374239c084f5"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerMedicamentoClinicoConEnvasePorMedicamentoClinicoLite>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerMedicamentoClinicoConEnvasePorMedicamentoClinicoLite>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoClinicoConEnvasePorMedicamentoClinicoLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="f7429de9-94d8-4777-a957-eb3e95386f20" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoClinicoLite TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="47aafd37-7cb0-4e6d-9341-497b551c30b0" name="obtenerMedicamentoClinicoLite"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoClinicoLite</con:operation><con:request name="obtenerMedicamentoClinicoLite" id="9404812d-4eb4-4279-b4d8-429d50a8fe63"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoClinicoConEnvaseLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="f7429de9-94d8-4777-a957-eb3e95386f20" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoClinicoLite TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="47aafd37-7cb0-4e6d-9341-497b551c30b0" name="obtenerMedicamentoClinicoLite"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoClinicoLite</con:operation><con:request name="obtenerMedicamentoClinicoLite" id="9404812d-4eb4-4279-b4d8-429d50a8fe63"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerMedicamentoClinicoLite>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
+         <peticionConceptosRelacionados>\r
+            <idDescripcion>ca39b67f-c</idDescripcion>
+         </peticionConceptosRelacionados>\r
       </ser:obtenerMedicamentoClinicoLite>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoClinicoLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="3b0a4486-1cef-415c-aa62-2de41cf767e0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoClinicoPorMedicamentoBasico TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="3fee2aab-ac26-4829-9245-0361d099c688" name="obtenerMedicamentoClinicoPorMedicamentoBasico"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoClinicoPorMedicamentoBasico</con:operation><con:request name="obtenerMedicamentoClinicoPorMedicamentoBasico" id="8740d906-b80e-41fd-ba22-cbd0a429cbe5"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerMedicamentoClinicoPorMedicamentoBasico>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerMedicamentoClinicoPorMedicamentoBasico>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoClinicoPorMedicamentoBasico"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="bd3851db-d2df-42a3-b18a-8f856d4ccfc2" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoClinicoPorMedicamentoBasicoLite TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="1f90f0bd-69ab-46f2-889b-244cbdead9e4" name="obtenerMedicamentoClinicoPorMedicamentoBasicoLite"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoClinicoPorMedicamentoBasicoLite</con:operation><con:request name="obtenerMedicamentoClinicoPorMedicamentoBasicoLite" id="9503d526-b425-45df-b437-64e2038bbee5"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerMedicamentoClinicoPorMedicamentoBasicoLite>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerMedicamentoClinicoPorMedicamentoBasicoLite>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoClinicoPorMedicamentoBasicoLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="f8abcce5-9e8d-40dd-a2f7-99a948839b3b" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoClinicoPorProductoComercial TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="56b1de5f-e984-4572-b0b6-da9fc455b47c" name="obtenerMedicamentoClinicoPorProductoComercial"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoClinicoPorProductoComercial</con:operation><con:request name="obtenerMedicamentoClinicoPorProductoComercial" id="ba047884-91e4-403c-b007-985667144ff7"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerMedicamentoClinicoPorProductoComercial>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerMedicamentoClinicoPorProductoComercial>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoClinicoPorProductoComercial"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="33be4bcc-ff64-43d5-82e9-f4c5b94b90c6" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerMedicamentoClinicoPorProductoComercialLite TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="bd31d899-88ee-457b-89d7-0308987f99ff" name="obtenerMedicamentoClinicoPorProductoComercialLite"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerMedicamentoClinicoPorProductoComercialLite</con:operation><con:request name="obtenerMedicamentoClinicoPorProductoComercialLite" id="8be57ce1-519e-4289-9333-6c97b5850c69"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerMedicamentoClinicoPorProductoComercialLite>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerMedicamentoClinicoPorProductoComercialLite>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoClinicoPorProductoComercialLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="bb4ffe14-0f87-4a87-aa36-bf14435556b3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoClinicoConEnvase TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="ff5625a0-4c6d-4d9b-9d25-f8c38397b68a" name="obtenerProductoClinicoConEnvase"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoClinicoConEnvase</con:operation><con:request name="obtenerProductoClinicoConEnvase" id="ede30036-8ca5-4839-ad17-53a952bf242c"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerMedicamentoClinicoLite" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="bb4ffe14-0f87-4a87-aa36-bf14435556b3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoClinicoConEnvase TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="ff5625a0-4c6d-4d9b-9d25-f8c38397b68a" name="obtenerProductoClinicoConEnvase"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoClinicoConEnvase</con:operation><con:request name="obtenerProductoClinicoConEnvase" id="ede30036-8ca5-4839-ad17-53a952bf242c"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerProductoClinicoConEnvase>\r
@@ -2444,31 +2319,7 @@
          </ser:peticionConceptosRelacionados>\r
       </ser:obtenerProductoClinicoConEnvaseLite>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoClinicoConEnvaseLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="92029dc8-ddc5-4bd7-a1fa-9c73b1620b8b" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoClinicoConEnvasePorProductoComercial TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="67b05448-3aeb-45f4-b54d-5d4b472d484b" name="obtenerProductoClinicoConEnvasePorProductoComercial"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoClinicoConEnvasePorProductoComercial</con:operation><con:request name="obtenerProductoClinicoConEnvasePorProductoComercial" id="189c5a2a-d736-42c4-9078-85d2e5b6b3be"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerProductoClinicoConEnvasePorProductoComercial>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerProductoClinicoConEnvasePorProductoComercial>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoClinicoConEnvasePorProductoComercial"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="2211eae6-f2de-4389-9ef8-2228788f859c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoClinicoConEnvasePorProductoComercialLite TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="a9f5d42e-1008-405b-8e11-ab639bc7d918" name="obtenerProductoClinicoConEnvasePorProductoComercialLite"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoClinicoConEnvasePorProductoComercialLite</con:operation><con:request name="obtenerProductoClinicoConEnvasePorProductoComercialLite" id="2f3459c7-4709-48f6-af46-3a055af8a698"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerProductoClinicoConEnvasePorProductoComercialLite>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerProductoClinicoConEnvasePorProductoComercialLite>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoClinicoConEnvasePorProductoComercialLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="436fe7a7-4a69-4a9c-993d-371d2b7a8df6" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoComercial TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="2713e885-f059-4977-a3f6-af8fa344c383" name="obtenerProductoComercial"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoComercial</con:operation><con:request name="obtenerProductoComercial" id="53a72d5c-d44e-4fb7-ab2a-6588022d617b"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoClinicoConEnvaseLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="436fe7a7-4a69-4a9c-993d-371d2b7a8df6" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoComercial TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="2713e885-f059-4977-a3f6-af8fa344c383" name="obtenerProductoComercial"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoComercial</con:operation><con:request name="obtenerProductoComercial" id="53a72d5c-d44e-4fb7-ab2a-6588022d617b"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerProductoComercial>\r
@@ -2504,31 +2355,7 @@
          </ser:peticionConceptosRelacionados>\r
       </ser:obtenerProductoComercialConEnvaseLite>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoComercialConEnvaseLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="6187f3ff-6487-4a1d-a038-964b35debf51" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvase TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="bcbb3aba-ca82-406d-9aa6-1b13d5d5cb42" name="obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvase"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvase</con:operation><con:request name="obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvase" id="e1cf7bad-67aa-47d1-82ed-7dc772c21dc1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvase>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvase>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvase"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="125de0ef-347e-47a6-8458-c6fb414d5708" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvaseLite TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="24806c01-06a5-4618-97c5-32ddebf96e79" name="obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvaseLite"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvaseLite</con:operation><con:request name="obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvaseLite" id="f86c1bcd-4305-45b7-a157-78c49761b1cf"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvaseLite>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvaseLite>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoComercialConEnvasePorMedicamentoClinicoConEnvaseLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="fd46bc00-0815-48ff-bb28-f5f30b19a944" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoComercialLite TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="ab7e36cd-ceca-4353-a770-a50039cdd7ad" name="obtenerProductoComercialLite"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoComercialLite</con:operation><con:request name="obtenerProductoComercialLite" id="989578f2-5ab8-4e8f-a725-a18dfb5c8d21"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoComercialConEnvaseLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="fd46bc00-0815-48ff-bb28-f5f30b19a944" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoComercialLite TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="ab7e36cd-ceca-4353-a770-a50039cdd7ad" name="obtenerProductoComercialLite"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoComercialLite</con:operation><con:request name="obtenerProductoComercialLite" id="989578f2-5ab8-4e8f-a725-a18dfb5c8d21"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerProductoComercialLite>\r
@@ -2540,55 +2367,7 @@
          </ser:peticionConceptosRelacionados>\r
       </ser:obtenerProductoComercialLite>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoComercialLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="2d705d07-e399-4142-b620-d497b52b1664" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoComercialPorFamiliaProducto TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="fa457b6d-ba4c-4c47-b258-3636c6dd5686" name="obtenerProductoComercialPorFamiliaProducto"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoComercialPorFamiliaProducto</con:operation><con:request name="obtenerProductoComercialPorFamiliaProducto" id="c62bddd6-963a-4a03-bb9f-9a751a18288e"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerProductoComercialPorFamiliaProducto>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerProductoComercialPorFamiliaProducto>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoComercialPorFamiliaProducto"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="6206ddcb-89ef-47f9-a1c5-9cf60ff76ee3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoComercialPorFamiliaProductoLite TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="01418b15-6df3-4617-a818-fdb62d309b07" name="obtenerProductoComercialPorFamiliaProductoLite"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoComercialPorFamiliaProductoLite</con:operation><con:request name="obtenerProductoComercialPorFamiliaProductoLite" id="bb36e354-a6a6-4f98-9505-6d56c365ef62"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerProductoComercialPorFamiliaProductoLite>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerProductoComercialPorFamiliaProductoLite>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoComercialPorFamiliaProductoLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="3fb0e978-5b16-4926-8366-0d57b7e21cff" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoComercialPorMedicamentoClinico TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="78ddd3e4-40ce-44ff-ac4e-e68f987109de" name="obtenerProductoComercialPorMedicamentoClinico"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoComercialPorMedicamentoClinico</con:operation><con:request name="obtenerProductoComercialPorMedicamentoClinico" id="747fabb2-aeda-4d71-b3af-8761aecd2483"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerProductoComercialPorMedicamentoClinico>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerProductoComercialPorMedicamentoClinico>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoComercialPorMedicamentoClinico"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="488a7c45-6dd2-4acc-bd97-e9f177d9e0db" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerProductoComercialPorMedicamentoClinicoLite TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="723a36e9-5238-4413-974c-de30422beb7a" name="obtenerProductoComercialPorMedicamentoClinicoLite"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerProductoComercialPorMedicamentoClinicoLite</con:operation><con:request name="obtenerProductoComercialPorMedicamentoClinicoLite" id="2a2045df-b15b-44a2-9b5b-98b5e267a691"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerProductoComercialPorMedicamentoClinicoLite>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerProductoComercialPorMedicamentoClinicoLite>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoComercialPorMedicamentoClinicoLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="da1abaf1-7d98-4d54-861b-da6e1447456c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerRegistroISP TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="70e775d5-7fbf-47ed-ae9b-c6a9f1c623ad" name="obtenerRegistroISP"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerRegistroISP</con:operation><con:request name="obtenerRegistroISP" id="cb45a434-a53b-46b8-99ff-54f4f2fa40f1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerProductoComercialLite"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="da1abaf1-7d98-4d54-861b-da6e1447456c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerRegistroISP TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="70e775d5-7fbf-47ed-ae9b-c6a9f1c623ad" name="obtenerRegistroISP"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerRegistroISP</con:operation><con:request name="obtenerRegistroISP" id="cb45a434-a53b-46b8-99ff-54f4f2fa40f1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerRegistroISP>\r
@@ -2600,19 +2379,7 @@
          </ser:peticionConceptosRelacionados>\r
       </ser:obtenerRegistroISP>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerRegistroISP"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="acae7251-3f15-4615-a949-29089de40395" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerRegistroISPPorProductoComercial TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="bd834124-736a-40c3-9063-fd1dff1e464e" name="obtenerRegistroISPPorProductoComercial"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerRegistroISPPorProductoComercial</con:operation><con:request name="obtenerRegistroISPPorProductoComercial" id="e1e700b9-e8f4-48a5-88b1-6ee98152a975"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerRegistroISPPorProductoComercial>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerRegistroISPPorProductoComercial>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerRegistroISPPorProductoComercial"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="f71cf8eb-99cf-407e-aa94-d4a41d29ba0e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerSustancia TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="180502ff-b73f-4ac0-a1bb-c19e3f344f66" name="obtenerSustancia"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerSustancia</con:operation><con:request name="obtenerSustancia" id="ab598aca-367c-4849-ba88-dec6aba4e69f"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerRegistroISP"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="f71cf8eb-99cf-407e-aa94-d4a41d29ba0e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerSustancia TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="180502ff-b73f-4ac0-a1bb-c19e3f344f66" name="obtenerSustancia"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerSustancia</con:operation><con:request name="obtenerSustancia" id="ab598aca-367c-4849-ba88-dec6aba4e69f"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerSustancia>\r
@@ -2624,19 +2391,7 @@
          </ser:peticionConceptosRelacionados>\r
       </ser:obtenerSustancia>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerSustancia"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="151e00bf-1dea-471d-870b-7fc7fdbcdd4b" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerSustanciaPorMedicamentoBasico TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="c71e7c84-0c29-4f23-b0ae-a6a6043d01ef" name="obtenerSustanciaPorMedicamentoBasico"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerSustanciaPorMedicamentoBasico</con:operation><con:request name="obtenerSustanciaPorMedicamentoBasico" id="2f8cf400-9680-4acd-b3fd-14bbc881b531"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <ser:obtenerSustanciaPorMedicamentoBasico>\r
-         <ser:peticionConceptosRelacionados>\r
-            <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
-            <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
-      </ser:obtenerSustanciaPorMedicamentoBasico>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerSustanciaPorMedicamentoBasico"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="b71ed4cb-494f-4625-96b5-76d0f97df7bd" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="sugerenciasDeDescripciones TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="8813298b-0a37-4c49-ad14-e465702f00d4" name="sugerenciasDeDescripciones"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>sugerenciasDeDescripciones</con:operation><con:request name="sugerenciasDeDescripciones" id="2d7d3752-db36-40bf-bccd-a3e7e654020f"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerSustancia"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="b71ed4cb-494f-4625-96b5-76d0f97df7bd" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="sugerenciasDeDescripciones TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="8813298b-0a37-4c49-ad14-e465702f00d4" name="sugerenciasDeDescripciones"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>sugerenciasDeDescripciones</con:operation><con:request name="sugerenciasDeDescripciones" id="2d7d3752-db36-40bf-bccd-a3e7e654020f"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:sugerenciasDeDescripciones>\r
