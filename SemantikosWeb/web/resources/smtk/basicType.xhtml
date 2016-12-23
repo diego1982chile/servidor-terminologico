@@ -321,6 +321,7 @@
                             <p:outputLabel for="basicTypeValue2" value="#{cc.attrs.relationshipDefinition.name}"/>
                             <p:outputLabel value=" *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
                         </div>
+                    </div>
 
                     <div class="Container30 White Responsive">
                         <div class="ContainerIndent">
@@ -351,7 +352,6 @@
                                                        rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
                         />
                     </p:repeat>
-                    </div>
                 </div>
             </div>
         </p:repeat>

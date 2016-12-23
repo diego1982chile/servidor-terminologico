@@ -21,36 +21,37 @@
 
 <composite:implementation>
 
-    <div class="ui-panelgrid-cell ui-grid-col-2">
+    <div class="Container20 White Responsive">
+        <div class="ContainerIndent">
 
-        <p:outputPanel rendered="#{ cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipAttributeDefinition.multiplicity.collection }">
+            <p:outputPanel rendered="#{ cc.attrs.relationshipDefinition.multiplicity.collection and not cc.attrs.relationshipAttributeDefinition.multiplicity.collection }">
 
-            <p:selectOneMenu value="#{conceptBean.selectedHelperTableRecord}" var="helperT"
-                             converter="helperTableRecordConverter"
-                             disabled="#{not cc.attrs.concept.editable }"
-            filter="true" >
-                <p:ajax event="itemSelect"/>
-                <f:selectItem itemLabel="Tipo de relación" itemDisabled="true"/>
-                <f:selectItems value="#{helperTableBean.allRecord}" var="record"
-                               itemLabel="#{record.fields['description']}"
-                               itemValue="#{record}"/>
-                <p:column>
-                    <h:outputText value="#{helperT.fields['description']}"/>
-                </p:column>
+                <p:selectOneMenu value="#{conceptBean.selectedHelperTableRecord}" var="helperT"
+                                 converter="omnifaces.SelectItemsConverter"
+                                 disabled="#{not cc.attrs.concept.editable }" autoWidth="false"
+                                 filter="true" >
+                    <p:ajax event="itemSelect"/>
+                    <f:selectItem itemLabel="Tipo de relación" value="#{null}" itemDisabled="true" />
+                    <f:selectItems value="#{helperTableBean.allRecord}" var="record"
+                                   itemLabel="#{record.fields['description']}"
+                                   itemValue="#{record}"/>
+                    <p:column>
+                        <h:outputText value="#{helperT.fields['description']}"/>
+                    </p:column>
 
-                <!-- Parámetros del buscador -->
-                <f:attribute name="helperTable" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}"/>
-                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"/>
-                <!-- Parámetros del validador -->
-                <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"/>
-                <!---->
-                <p:ajax event="itemSelect"
-                        listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.selectedHelperTableRecord)}"
-                        process="@this"/>
-            </p:selectOneMenu>
+                    <!-- Parámetros del buscador -->
+                    <f:attribute name="helperTable" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}"/>
+                    <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"/>
+                    <!-- Parámetros del validador -->
+                    <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"/>
+                    <!---->
+                    <p:ajax event="itemSelect"
+                            listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.selectedHelperTableRecord)}"
+                            process="@this"/>
+                </p:selectOneMenu>
 
-        </p:outputPanel>
-
+            </p:outputPanel>
+        </div>
     </div>
 </composite:implementation>
 </html>

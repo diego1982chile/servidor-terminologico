@@ -278,8 +278,6 @@
     <p:panel id="helperTableTypeCollection" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500" collapsed="true"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and not cc.attrs.relationshipDefinition.ISP}">
 
-        <p:spacer />
-
         <f:facet name="#{cc.attrs.concept.editable? 'footer':null}">
             <p:outputPanel rendered="#{cc.attrs.concept.editable and cc.attrs.relationshipDefinition.multiplicity.lowerBoundary>0}">
                 <i class="fa  fa-exclamation-triangle fa-lg" style="padding-right:10px" />
@@ -340,13 +338,12 @@
             </div>
         </div>
 
-        <p:spacer />
+        <p:spacer rendered="#{cc.attrs.concept.editable}" />
 
         <p:dataTable id="collectionValues12"
                      styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                     style="width: 100%"
                      reflow="true">
             <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
                        var="column"
@@ -614,7 +611,7 @@
                                                        rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
                         />
                     </p:repeat>
-                    <div class="Container10 White Responsive">
+                    <div class="Container20 White Responsive">
                         <div class="ContainerIndent">
                             <p:commandButton
                                     process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
