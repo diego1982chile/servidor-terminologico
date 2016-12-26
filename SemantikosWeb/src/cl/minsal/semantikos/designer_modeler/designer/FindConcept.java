@@ -41,12 +41,30 @@ public class FindConcept implements Serializable{
 
     private Category categorySelected;
 
+    private String pattern;
+
     @PostConstruct
     public void init() {
         findConcepts = new ArrayList<ConceptSMTK>();
         categoryList = categoryManager.getCategories();
     }
 
+    /**
+     * Método encargado de obtener los conceptos por categoría
+     */
+    public void getConceptByCategory(){
+       if(pattern==null || pattern.trim().length()==0){
+           findConcepts=conceptManager.findConceptBy(categorySelected);
+       }else{
+           getConceptSearchInputAndCategories(pattern);
+       }
+    }
+
+    /**
+     * Este método es el encargado de realizar la búsqueda de conceptos por patrón de texto
+     * @param pattern
+     * @return
+     */
     public List<ConceptSMTK> getConceptSearchInput(String pattern) {
 
         if (pattern != null) {
@@ -57,6 +75,12 @@ public class FindConcept implements Serializable{
         }
         return findConcepts;
     }
+
+    /**
+     * Este método es el encargado de relaizar la búsqueda por patrón de texto y categorías seleccionadas
+     * @param pattern
+     * @return
+     */
     public List<ConceptSMTK> getConceptSearchInputAndCategories(String pattern) {
         RequestContext.getCurrentInstance().update("::conceptTranslate");
 
@@ -73,6 +97,11 @@ public class FindConcept implements Serializable{
         return null;
     }
 
+    /**
+     * Este método realiza la búsqueda de concepto por todas las categorías
+     * @param pattern
+     * @return
+     */
     public List<ConceptSMTK> findConceptAllCategories(String pattern) {
         if (pattern != null) {
             if (pattern.trim().length() >= 2) {
@@ -84,6 +113,13 @@ public class FindConcept implements Serializable{
         return null;
     }
 
+
+    /**
+     * Meotodo encargado de setear el texto de acuerdo al estandar de búsqueda
+     * @param pattern
+     * @return
+     */
+
     private String standardizationPattern(String pattern) {
 
         if (pattern != null) {
@@ -94,6 +130,14 @@ public class FindConcept implements Serializable{
         }
         return pattern;
     }
+
+
+
+
+    /**
+     * Getter and Setter
+     *
+     */
 
     public List<ConceptSMTK> getFindConcepts() {
         return findConcepts;
@@ -141,5 +185,13 @@ public class FindConcept implements Serializable{
 
     public void setCategorySelected(Category categorySelected) {
         this.categorySelected = categorySelected;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
     }
 }

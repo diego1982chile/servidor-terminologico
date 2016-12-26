@@ -50,15 +50,23 @@
                             </div>
                         </div>
 
-                        <p:fieldset toggleable="true" collapsed="true" legend="Agregar conceptos">
+                        <p:fieldset toggleable="true" collapsed="true" legend="Conceptos">
 
                             <h:panelGrid columns="2" cellpadding="10">
-            <i class="fa fa-info-circle Fs50 Fleft Blue"></i>
-            <h:outputText value="El RefSet puede ser creado sin conceptos"/>
-            </h:panelGrid>
+                                <i class="fa fa-info-circle Fs50 Fleft Blue"></i>
+                                <h:outputText value="El RefSet puede ser creado sin conceptos"/>
+                            </h:panelGrid>
                             <br/>
+                            <div style="text-align: right">
+                                <p:commandButton value="Agregar Conceptos" oncomplete="PF('selectConceptCreate').show()"
+                                                 update="@(.selectConcept)"
+                                                 disabled="#{not refsetsBean.refSetToCreate.valid}"/>
+                            </div>
+
 
                             <smtk:addConceptToRefset refset="#{refsetsBean.refSetToCreate}"/>
+
+                            <smtk:conceptRefset refset="#{refsetsBean.refSetToCreate}"/>
                         </p:fieldset>
 
 
@@ -91,7 +99,7 @@
                                 <h:outputText value="#{refset.institution.name}"/>
                             </p:column>
 
-                            <p:column headerText="Fecha de creación"  sortBy="#{refset.creationDate}">
+                            <p:column headerText="Fecha de creación" sortBy="#{refset.creationDate}">
                                 <h:outputText value="#{refset.creationDate}"/>
                             </p:column>
 
@@ -141,7 +149,7 @@
 
                         <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts"
                                      emptyMessage="El RefSet no contiene conceptos"
-                                     >
+                        >
                             <p:column headerText="Concepto">
                                 <h:outputText value="#{concepts.descriptionFavorite.term}"/>
                             </p:column>
@@ -157,58 +165,33 @@
                     </p:outputPanel>
                 </p:dialog>
 
-                <smtk:addConceptToRefset refset="#{refsetsBean.refSetEdit}"/>
+                <!-- Editar Refset-->
 
                 <p:dialog widgetVar="editRefset" modal="true" showEffect="fade"
                           hideEffect="fade" resizable="true" style="margin:40px;">
                     <p:outputPanel id="editRefsetPanel" styleClass="editRefset">
 
-                        <h3>Refset #{refsetsBean.refSetEdit.name}  </h3><h3>  Total Conceptos:#{refsetsBean.refSetEdit.getCountConcepts()}</h3>
-                        <p:commandButton value="Agregar Conceptos" oncomplete="PF('selectConcept').show()"/>
+                        <h3>Refset #{refsetsBean.refSetEdit.name}  </h3>
+                        <h3> Total Conceptos:#{refsetsBean.refSetEdit.getCountConcepts()}</h3>
+                        <div style="text-align: right">
+                        <p:commandButton value="Agregar Conceptos" oncomplete="PF('selectConcept').show()"
+                                         update="@(.selectConcept)" disabled="#{not refsetsBean.refSetEdit.valid}"/>
+                        </div>
                         <br/>
                         <smtk:conceptRefset refset="#{refsetsBean.refSetEdit}"/>
 
                         <br/>
                         <p:commandButton rendered="#{not refsetsBean.refSetEdit.valid}"
-                                         value="Vigente" actionListener="#{refsetsBean.validRefset(refsetsBean.refSetEdit)}" update="formRefset"></p:commandButton>
+                                         value="Vigente"
+                                         actionListener="#{refsetsBean.validRefset(refsetsBean.refSetEdit)}"
+                                         update="formRefset"></p:commandButton>
                     </p:outputPanel>
                 </p:dialog>
 
 
-                <p:dialog widgetVar="selectConcept" modal="true" showEffect="fade"
-                          hideEffect="fade" resizable="true" style="margin:40px;">
-                    <p:outputPanel id="selectConceptPanel" styleClass="selectConcept">
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-md-6 ui-lg-5">
-                                <p:autoComplete id="inputFindConcept" scrollHeight="200" size="5" style="width: 300px;"
-                                                inputStyle="width: 300px;"
-                                                converter="conceptConverter" var="concept"
-                                                value="#{refsetsBean.conceptSMTK}"
-                                                completeMethod="#{findConceptBean.getConceptSearchInputAndCategories}"
-                                                itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
-                                                emptyMessage="No se encontraron conceptos relacionados"
-                                                placeholder="Buscar concepto por término"/>
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-5">
-                                <p:selectOneMenu value="#{findConceptBean.categorySelected}"
-                                                 converter="omnifaces.SelectItemsConverter" panelStyle="width:180px"
-                                                 effect="fade" var="c" style="width:160px" filter="true"
-                                                 filterMatchMode="startsWith">
-                                    <p:ajax event="itemSelect"></p:ajax>
-                                    <f:selectItem itemLabel="Categorías" itemDisabled="true"/>
-                                    <f:selectItems value="#{findConceptBean.categoryList}" var="category"
-                                                   itemLabel="#{category.name}" itemValue="#{category}"/>
-                                    <p:column>
-                                        <h:outputText value="#{c.name}"/>
-                                    </p:column>
-                                </p:selectOneMenu>
-                            </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                <smtk:addConceptToRefset refset="#{refsetsBean.refSetEdit}"
+                                         refsetCreate="#{refsetsBean.refSetToCreate}"/>
 
-                            </div>
-                        </div>
-                    </p:outputPanel>
-                </p:dialog>
 
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                     <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes"
