@@ -104,13 +104,15 @@
                                                                             targetDefinition="#{relationshipDefinition.targetDefinition}"
                                                                             concept="#{conceptBean.concept}"/>
 
+                                                                    <smtk:customType relationshipDefinition="#{relationshipDefinition}"
+                                                                                     targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                                                                     concept="#{conceptBean.concept}"/>
+
                                                                     <smtk:basicType
-                                                                            targetDefinition="#{relationshipDefinition.targetDefinition and relationshipDefinition.compositeID eq 1}"
+                                                                            targetDefinition="#{relationshipDefinition.targetDefinition}"
                                                                             relationshipDefinition="#{relationshipDefinition}"
                                                                             concept="#{conceptBean.concept}"
                                                                             rendered="#{relationshipDefinition.targetDefinition.basicType}"/>
-
-                                                                    <smtk:customType />
 
                                                                 </p:outputPanel>
 
