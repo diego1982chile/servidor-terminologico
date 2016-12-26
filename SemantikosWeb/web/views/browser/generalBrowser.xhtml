@@ -28,9 +28,7 @@
                                             <p:menuitem value="#{generalBrowserBean.category.name}" url="#" />
                                         </p:breadCrumb>
                                         <p:spacer />
-                                        <p:fieldset legend="Filtros" toggleable="true" toggleSpeed="500" collapsed="true">
-                                            <smtk:generalBrowserFilter generalQuery="#{generalBrowserBean.generalQuery}" />
-                                        </p:fieldset>
+                                        <smtk:generalBrowserFilter generalQuery="#{generalBrowserBean.generalQuery}" />
                                         <p:spacer />
 
                                         <p:dataTable id="browserTable"
@@ -40,24 +38,15 @@
                                                      rows="30"
                                                      sortBy="#{1}"
                                                      paginator="true" lazy="true" dynamic="true" reflow="false"
-                                                     paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                     paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {Exporters}"
                                                      emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
                                             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-                                            <f:facet name="header">
-                                                <div class="Container">
-                                                    <div class="Container60" style="text-align: left;">
-                                                        #{generalBrowserBean.category.name}
-                                                    </div>
-                                                    <div class="Container40" style="text-align: right;">
-                                                        <p:commandButton id="toggler" type="button" value="Columnas" icon="fa fa-columns" style="float: right" />
-                                                        <p:columnToggler datasource="browserTable" trigger="toggler" />
-                                                        <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="fa fa-plus"
-                                                                         value="Crear Nuevo" type="submit" process="browserForm" style="float: right">
-                                                        </p:commandButton>
-                                                    </div>
-                                                </div>
+                                            <f:facet name="{Exporters}">
+                                                <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="fa fa-plus"
+                                                                 value="Crear Nuevo" type="submit" process="browserForm">
+                                                </p:commandButton>
                                             </f:facet>
 
                                             <p:column headerText="ConceptID" sortBy="#{1}" style="width:7%">

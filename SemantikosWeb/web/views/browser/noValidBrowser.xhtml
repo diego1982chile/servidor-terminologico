@@ -27,9 +27,7 @@
                                             <p:menuitem value="No Válidos" url="#" />
                                         </p:breadCrumb>
                                         <p:spacer />
-                                        <p:fieldset legend="Filtros" toggleable="true" toggleSpeed="500" collapsed="true">
-                                            <smtk:noValidBrowserFilter noValidQuery="#{noValidBrowserBean.noValidQuery}" />
-                                        </p:fieldset>
+                                        <smtk:noValidBrowserFilter noValidQuery="#{noValidBrowserBean.noValidQuery}" />
                                         <p:spacer />
                                         <p:dataTable id="noValidTable"
                                                      styleClass="browserTable"
@@ -49,14 +47,6 @@
                                             <p:ajax event="rowSelectCheckbox" update="@(.globalActions)" />
                                             <p:ajax event="rowUnselectCheckbox" update="@(.globalActions)" />
                                             <p:ajax event="toggleSelect" update="@(.globalActions)" />
-
-                                            <f:facet name="header">
-                                                <div class="Container">
-                                                    <div class="Container60" style="text-align: left;">
-                                                        No Válidos
-                                                    </div>
-                                                </div>
-                                            </f:facet>
 
                                             <p:column selectionMode="multiple" style="width:16px;text-align:center" />
 

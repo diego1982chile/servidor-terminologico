@@ -27,15 +27,16 @@
 
             <div class="Container30 White Responsive">
                 <div class="ContainerIndent">
-                    <p:inputText id="favorite"
+                    <p:inputTextarea id="favorite"
                                  styleClass="terms"
                                  name="description"
+                                 rows="1"
                                  validator="#{validatorBean.validateRequiredInput}"
                                  value="#{cc.attrs.description.term}"
                                  disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
                                  autocomplete="off">
                         <p:ajax event="change" update="@this" process="@this" delay="100" />
-                    </p:inputText>
+                    </p:inputTextarea>
                 </div>
             </div>
 

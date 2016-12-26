@@ -29,9 +29,7 @@
                                         </p:breadCrumb>
 
                                         <p:spacer />
-                                        <p:fieldset legend="Filtros" toggleable="true" toggleSpeed="500" collapsed="true">
-                                            <smtk:pendingBrowserFilter pendingQuery="#{pendingBrowserBean.pendingQuery}" />
-                                        </p:fieldset>
+                                        <smtk:pendingBrowserFilter pendingQuery="#{pendingBrowserBean.pendingQuery}" />
                                         <p:spacer />
                                         <p:dataTable id="pendingTable"
                                                      styleClass="browserTable"
@@ -45,14 +43,6 @@
                                                      selection="#{pendingBrowserBean.termsSelected}">
 
                                             <p:growl id="growl" showDetail="true" showSummary="true"/>
-
-                                            <f:facet name="header">
-                                                <div class="Container">
-                                                    <div class="Container60" style="text-align: left;">
-                                                        Pendientes
-                                                    </div>
-                                                </div>
-                                            </f:facet>
 
                                             <p:ajax event="rowSelect" update="@(.globalActions)" />
                                             <p:ajax event="rowUnselect" update="@(.globalActions)" />

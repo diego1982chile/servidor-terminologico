@@ -28,9 +28,7 @@
                                             <p:menuitem value="Descripciones" url="#" />
                                         </p:breadCrumb>
                                         <p:spacer />
-                                        <p:fieldset legend="Filtros" toggleable="true" toggleSpeed="500" collapsed="true">
-                                            <smtk:descriptionBrowserFilter descriptionQuery="#{descriptionsBrowserBean.descriptionQuery}" />
-                                        </p:fieldset>
+                                        <smtk:descriptionBrowserFilter descriptionQuery="#{descriptionsBrowserBean.descriptionQuery}" />
                                         <p:spacer />
                                         <p:dataTable id="descriptionTable"
                                                      styleClass="browserTable"
@@ -41,14 +39,6 @@
                                                      paginator="true" lazy="true" dynamic="true"
                                                      paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                                      emptyMessage="No se han encontrado descripciones con los criterios utilizados">
-
-                                            <f:facet name="header">
-                                                <div class="Container">
-                                                    <div class="Container60" style="text-align: left;">
-                                                        <h3>Descripciones</h3>
-                                                    </div>
-                                                </div>
-                                            </f:facet>
 
                                             <p:growl id="growl" showDetail="true" showSummary="true"/>
 
