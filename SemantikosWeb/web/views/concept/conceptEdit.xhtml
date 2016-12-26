@@ -99,10 +99,12 @@
                                                                             concept="#{conceptBean.concept}"/>
 
                                                                     <smtk:helperTableType
-                                                                            rendered="#{relationshipDefinition.targetDefinition.helperTable}"
+                                                                            rendered="#{relationshipDefinition.targetDefinition.helperTable and relationshipDefinition.compositeID eq 1}"
                                                                             relationshipDefinition="#{relationshipDefinition}"
                                                                             targetDefinition="#{relationshipDefinition.targetDefinition}"
                                                                             concept="#{conceptBean.concept}"/>
+
+                                                                    <smtk:customType></smtk:customType>
 
                                                                     <smtk:basicType
                                                                             targetDefinition="#{relationshipDefinition.targetDefinition}"
