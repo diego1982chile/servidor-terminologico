@@ -26,7 +26,7 @@
                     <div class="ContainerIndent">
                         <p:outputPanel styleClass="search">
                             <p:inputText value="#{cc.attrs.generalQuery.query}" placeholder="Buscar...">
-                                <p:ajax event="keyup" update="@(.browserTable),@(.browserFilters)" process="@this" />
+                                <p:ajax event="keyup" update="@(.browserTable)" process="@this" />
                             </p:inputText>
                             <i class="fa fa-search fa-lg" />
                         </p:outputPanel>

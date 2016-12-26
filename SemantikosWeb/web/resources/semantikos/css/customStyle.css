@@ -138,6 +138,19 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 }
 
 /*
+.ui-widget, .ui-widget .ui-widget
+{
+    font-size: 95% !important;
+}
+
+
+.ui-selectonemenu-label, .ui-selectonemenu .ui-selectonemenu-label
+{
+    font-size: 95% !important;
+}
+*/
+
+/*
 .ui-selectonemenu {
     min-width: 223px !important;
 }
