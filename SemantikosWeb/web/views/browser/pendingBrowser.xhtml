@@ -30,8 +30,9 @@
 
                                         <p:spacer />
                                         <smtk:pendingBrowserFilter pendingQuery="#{pendingBrowserBean.pendingQuery}" />
+                                        <p:spacer />
                                         <p:dataTable id="pendingTable"
-                                                     styleClass="pendingBrowserTable"
+                                                     styleClass="browserTable"
                                                      value="#{pendingBrowserBean.pendingTerms}"
                                                      var="pendingTerm"
                                                      rows="30"
@@ -102,7 +103,7 @@
                                                 </f:facet>
                                                 <div style="text-align: center;">
                                                     <p:commandLink title="Trasladar a concepto" oncomplete="PF('dialogTDP').show()"
-                                                                   update="@(.pendingBrowserTable),@(.pending-description)" style="padding: 5px">
+                                                                   update="@(.browserTable),@(.pending-description)" style="padding: 5px">
                                                         <i class="fa fa-external-link fa-lg"/>
                                                         <f:setPropertyActionListener value="#{pendingTerm}"
                                                                                      target="#{pendingBrowserBean.termSelected}"/>
@@ -113,7 +114,7 @@
                                                     </p:commandLink>
 
                                                     <p:commandLink oncomplete="PF('dialogNC').show()" title="Crear nuevo concepto" process="@this"
-                                                                   update="@(.pendingBrowserTable),@(.create-concept)" style="padding: 5px">
+                                                                   update="@(.browserTable),@(.create-concept)" style="padding: 5px">
                                                         <i class="fa fa-plus fa-lg"/>
                                                         <f:setPropertyActionListener value="#{pendingTerm}"
                                                                                      target="#{pendingBrowserBean.termSelected}"/>
@@ -121,7 +122,7 @@
                                                     </p:commandLink>
 
                                                     <p:commandLink title="Consultar" oncomplete="PF('dialogC').show()" process="@this"
-                                                                   update="@(.pendingBrowserTable),@(.query-pending-description)" style="padding: 5px">
+                                                                   update="@(.browserTable),@(.query-pending-description)" style="padding: 5px">
                                                         <i class="fa fa-search fa-lg"/>
                                                         <f:setPropertyActionListener value="#{pendingTerm}"
                                                                                      target="#{pendingBrowserBean.termSelected}"/>
@@ -226,7 +227,7 @@
                                                 </h:panelGrid>
                                                 <div style="text-align: center">
                                                     <p:commandButton rendered="#{pendingBrowserBean.conceptSelected!=null}"
-                                                                     update="@(.pending-description),@(.pendingBrowserTable)"
+                                                                     update="@(.pending-description),@(.browserTable)"
                                                                      value="Trasladar Concepto"
                                                                      oncomplete="PF('dialogTDP').hide()"
                                                                      icon="fa fa-exchange"
@@ -334,7 +335,7 @@
                                                     </h:panelGrid>
                                                 </div>
                                                 <p:commandButton value="Crear concepto" actionListener="#{pendingBrowserBean.createNewConcept}"
-                                                                 update="@(.create-concept),@(.pendingBrowserTable)" />
+                                                                 update="@(.create-concept),@(.browserTable)" />
 
                                             </p:panel>
                                         </p:dialog>

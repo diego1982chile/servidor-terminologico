@@ -10,78 +10,114 @@
 
 <composite:interface>
     <composite:attribute name="refset" type="cl.minsal.semantikos.model.RefSet"/>
+    <composite:attribute name="refsetCreate" type="cl.minsal.semantikos.model.RefSet"/>
 </composite:interface>
 
 <composite:implementation>
 
 
-    <div class="ui-g">
-        <div class="ui-g-12 ui-md-6 ui-lg-5">
-            <p:autoComplete id="inputFindConcept" scrollHeight="200" size="5" style="width: 300px;"
-                            inputStyle="width: 300px;"
-                            converter="conceptConverter" var="concept"
-                            value="#{refsetsBean.conceptSMTK}"
-                            completeMethod="#{findConceptBean.getConceptSearchInputAndCategories}"
-                            itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
-                            emptyMessage="No se encontraron conceptos relacionados"
-                            placeholder="Buscar concepto por término"/>
-        </div>
-        <div class="ui-g-12 ui-md-6 ui-lg-5">
-            <p:selectOneMenu value="#{findConceptBean.categorySelected}"
-                             converter="omnifaces.SelectItemsConverter" panelStyle="width:180px"
-                             effect="fade" var="c" style="width:160px" filter="true"
-                             filterMatchMode="startsWith">
-                <p:ajax event="itemSelect"></p:ajax>
-                <f:selectItem itemLabel="Categorías" itemDisabled="true"/>
-                <f:selectItems value="#{findConceptBean.categoryList}" var="category"
-                               itemLabel="#{category.name}" itemValue="#{category}"/>
-                <p:column>
-                    <h:outputText value="#{c.name}"/>
+    <!--Cuadro de diálogo para agregar conceptos a un RefSEt que se esta editando-->
+    <p:dialog widgetVar="selectConcept" modal="true" showEffect="fade"
+              hideEffect="fade" resizable="true" style="margin:40px;">
+        <p:outputPanel id="selectConceptPanel" styleClass="selectConcept">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-6 ui-lg-5">
+                    <p:inputText value="#{findConceptBean.pattern}">
+                        <p:ajax update="@(.findConcept)" listener="#{findConceptBean.getConceptSearchInputAndCategories(findConceptBean.pattern)}"></p:ajax>
+                    </p:inputText>
+
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-6">
+                    <p:selectOneMenu value="#{findConceptBean.categorySelected}"
+                                     converter="omnifaces.SelectItemsConverter"
+                                     effect="fade" var="c" filter="true"
+                                     filterMatchMode="startsWith">
+                        <p:ajax event="itemSelect" listener="#{findConceptBean.getConceptByCategory}" update="@(.findConcept)"></p:ajax>
+                        <f:selectItem itemLabel="Categorías" itemDisabled="true"/>
+                        <f:selectItems value="#{findConceptBean.categoryList}" var="category"
+                                       itemLabel="#{category.name}" itemValue="#{category}"/>
+                        <p:column>
+                            <h:outputText value="#{c.name}"/>
+                        </p:column>
+                    </p:selectOneMenu>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                    <p:commandButton value="Agregar" update="@(.conceptBindRefset),@(.editRefset)"
+                                     actionListener="#{refsetsBean.addConcept(cc.attrs.refset)}" disabled="#{not cc.attrs.refset.valid}" oncomplete="PF('selectConcept').hide()">
+                        <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTK}"/>
+                        <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
+                    </p:commandButton>
+                </div>
+            </div>
+
+
+            <p:dataTable styleClass="findConcept" var="concept" value="#{findConceptBean.findConcepts}"  selection="#{refsetsBean.conceptSMTKListSelected}" rowKey="#{concept.id}">
+                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                <p:column headerText="Concept ID">
+                    <h:outputText value="#{concept.conceptID}"/>
                 </p:column>
-            </p:selectOneMenu>
-        </div>
-        <div class="ui-g-12 ui-md-6 ui-lg-1">
-            <p:commandButton value="Agregar" update="@(.conceptBindRefset)"
-                             actionListener="#{refsetsBean.addConcept(cc.attrs.refset,refsetsBean.conceptSMTK)}" disabled="#{not cc.attrs.refset.valid}">
-                <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTK}"/>
-                <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
-            </p:commandButton>
-        </div>
-    </div>
+                <p:column headerText="Descripción">
+                    <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                </p:column>
+                <p:column headerText="Categoría">
+                    <h:outputText value="#{concept.category.name}"/>
+                </p:column>
+            </p:dataTable>
 
-    <p:panel id="otherDescriptionsPanel" styleClass="otherDescriptionsPanel" widgetVar="panel">
+        </p:outputPanel>
+    </p:dialog>
 
-        <p:dataTable id="conceptLinkToRefset" emptyMessage="No se han agregado conceptos al RefSets"
-                     value="#{cc.attrs.refset.concepts}" var="conceptSMTK" styleClass="conceptBindRefset">
 
-            <p:column headerText="ID">
-                <h:outputText value="#{conceptSMTK.id}"/>
-            </p:column>
+    <!--Cuadro de diálogo para agregar conceptos a un RefSEt que se esta creando-->
+    <p:dialog widgetVar="selectConceptCreate" modal="true" showEffect="fade"
+              hideEffect="fade" resizable="true" style="margin:40px;">
+        <p:outputPanel id="selectConceptPanelCreate" styleClass="selectConcept">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-6 ui-lg-5">
+                    <p:inputText value="#{findConceptBean.pattern}">
+                        <p:ajax update="@(.findConcept)" listener="#{findConceptBean.getConceptSearchInputAndCategories(findConceptBean.pattern)}"></p:ajax>
+                    </p:inputText>
 
-            <p:column headerText="Preferida">
-                <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
-            </p:column>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-6">
+                    <p:selectOneMenu value="#{findConceptBean.categorySelected}"
+                                     converter="omnifaces.SelectItemsConverter"
+                                     effect="fade" var="c" filter="true"
+                                     filterMatchMode="startsWith">
+                        <p:ajax event="itemSelect" listener="#{findConceptBean.getConceptByCategory}" update="@(.findConcept)"></p:ajax>
+                        <f:selectItem itemLabel="Categorías" itemDisabled="true"/>
+                        <f:selectItems value="#{findConceptBean.categoryList}" var="category"
+                                       itemLabel="#{category.name}" itemValue="#{category}"/>
+                        <p:column>
+                            <h:outputText value="#{c.name}"/>
+                        </p:column>
+                    </p:selectOneMenu>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                    <p:commandButton value="Agregar" update="@(.conceptBindRefset)"
+                                     actionListener="#{refsetsBean.addConcept(cc.attrs.refsetCreate)}"  oncomplete="PF('selectConceptCreate').hide()">
+                        <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTK}"/>
+                        <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
+                    </p:commandButton>
+                </div>
+            </div>
 
-            <p:column headerText="Categoría">
-                <h:outputText value="#{conceptSMTK.category.name}"/>
-            </p:column>
 
-            <p:column headerText="Acción" style="width: 50px;">
-                <p:commandButton icon="fa fa-chain-broken"
-                                 ajax="true"
-                                 process="@this"
-                                 actionListener="#{refsetsBean.removeConcept(cc.attrs.refset,conceptSMTK)}"
-                                 update="@(.conceptBindRefset)"
-                                 disabled="#{not cc.attrs.refset.valid}">
-                    <p:confirm header="Confirmación"
-                               message="¿Está seguro de eliminar este concepto del RefSet?"></p:confirm>
-                </p:commandButton>
+            <p:dataTable styleClass="findConcept" var="concept" value="#{findConceptBean.findConcepts}"  selection="#{refsetsBean.conceptSMTKListSelected}" rowKey="#{concept.id}">
+                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                <p:column headerText="Concept ID">
+                    <h:outputText value="#{concept.conceptID}"/>
+                </p:column>
+                <p:column headerText="Descripción">
+                    <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                </p:column>
+                <p:column headerText="Categoría">
+                    <h:outputText value="#{concept.category.name}"/>
+                </p:column>
+            </p:dataTable>
 
-            </p:column>
-
-        </p:dataTable>
-
-    </p:panel>
+        </p:outputPanel>
+    </p:dialog>
 
 </composite:implementation>
 </html>

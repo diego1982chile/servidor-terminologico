@@ -16,66 +16,87 @@
 </composite:interface>
 <composite:implementation>
 
-    <p:outputPanel id="descriptionFilters" styleClass="descriptionFilters">
+    <p:outputPanel id="browserFilters" styleClass="browserFilters">
 
         <div class="ui-fluid">
 
-            <p:panelGrid  columns="6"  style="width: 100%"
-                          columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
-                          layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+            <div class="Container">
 
-                <p:outputPanel styleClass="search">
-                    <p:inputText value="#{cc.attrs.descriptionQuery.query}" placeholder="Buscar...">
-                        <p:ajax event="keyup" update="@(.descriptionBrowserTable),@(.descriptionFilters)" process="@this" />
-                    </p:inputText>
-                    <i class="fa fa-search fa-lg" />
-                </p:outputPanel>
+                <div class="Container20 White Responsive">
+                    <div class="ContainerIndent">
 
-                <p:selectCheckboxMenu id="categories"
-                                      value="#{cc.attrs.descriptionQuery.categories}"
-                                      converter="omnifaces.SelectItemsConverter"
-                                      label="Categorías..."
-                                      filter="true"
-                                      filterMatchMode="startsWith">
+                        <p:outputPanel styleClass="search">
+                            <p:inputText value="#{cc.attrs.descriptionQuery.query}" placeholder="Buscar...">
+                                <p:ajax event="keyup" update="@(.browserTable),@(.browserFilters)" process="@this" />
+                            </p:inputText>
+                            <i class="fa fa-search fa-lg" />
+                        </p:outputPanel>
 
-                    <p:ajax event="change"
-                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
-                            process="@this" />
+                    </div>
+                </div>
 
-                    <f:selectItems value="#{descriptionsBrowserBean.categories}" var="category"
-                                   itemLabel="#{category.name}" itemValue="#{category}"/>
+                <div class="Container20 White Responsive">
+                    <div class="ContainerIndent">
 
-                </p:selectCheckboxMenu>
+                        <p:selectCheckboxMenu id="categories"
+                                              value="#{cc.attrs.descriptionQuery.categories}"
+                                              converter="omnifaces.SelectItemsConverter"
+                                              label="Categorías..."
+                                              filter="true"
+                                              filterMatchMode="startsWith">
 
-                <p:selectCheckboxMenu id="descriptionTypes"
-                                      value="#{cc.attrs.descriptionQuery.descriptionTypes}"
-                                      converter="omnifaces.SelectItemsConverter"
-                                      label="Tipos...">
+                            <p:ajax event="change"
+                                    update="@(.browserTable),@(.browserFilters)"
+                                    process="@this" />
 
-                    <p:ajax event="change"
-                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
-                            process="@this" />
+                            <f:selectItems value="#{descriptionsBrowserBean.categories}" var="category"
+                                           itemLabel="#{category.name}" itemValue="#{category}"/>
 
-                    <f:selectItems value="#{descriptionsBrowserBean.descriptionTypes}" var="descriptionType"
-                                   itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
+                        </p:selectCheckboxMenu>
 
-                </p:selectCheckboxMenu>
+                    </div>
+                </div>
 
-                <p:selectCheckboxMenu id="refsets"
-                                      value="#{cc.attrs.descriptionQuery.refSets}"
-                                      converter="omnifaces.SelectItemsConverter"
-                                      label="RefSets...">
+                <div class="Container20 White Responsive">
+                    <div class="ContainerIndent">
 
-                    <p:ajax event="change"
-                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
-                            process="@this" />
+                        <p:selectCheckboxMenu id="descriptionTypes"
+                                              value="#{cc.attrs.descriptionQuery.descriptionTypes}"
+                                              converter="omnifaces.SelectItemsConverter"
+                                              label="Tipos...">
 
-                    <f:selectItems value="#{descriptionsBrowserBean.refSets}" var="refSet"
-                                   itemLabel="#{refSet.name}" itemValue="#{refSet}"/>
+                            <p:ajax event="change"
+                                    update="@(.browserTable),@(.browserFilters)"
+                                    process="@this" />
 
-                </p:selectCheckboxMenu>
+                            <f:selectItems value="#{descriptionsBrowserBean.descriptionTypes}" var="descriptionType"
+                                           itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
 
-            </p:panelGrid>
+                        </p:selectCheckboxMenu>
+
+                    </div>
+                </div>
+
+                <div class="Container20 White Responsive">
+                    <div class="ContainerIndent">
+
+                        <p:selectCheckboxMenu id="refsets"
+                                              value="#{cc.attrs.descriptionQuery.refSets}"
+                                              converter="omnifaces.SelectItemsConverter"
+                                              label="RefSets...">
+
+                            <p:ajax event="change"
+                                    update="@(.browserTable),@(.browserFilters)"
+                                    process="@this" />
+
+                            <f:selectItems value="#{descriptionsBrowserBean.refSets}" var="refSet"
+                                           itemLabel="#{refSet.name}" itemValue="#{refSet}"/>
+
+                        </p:selectCheckboxMenu>
+
+                    </div>
+                </div>
+            </div>
         </div>
         <p:spacer />
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.categories}" itemName="Categorías" />

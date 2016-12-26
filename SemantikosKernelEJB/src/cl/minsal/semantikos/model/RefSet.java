@@ -84,6 +84,10 @@ public class RefSet extends PersistentEntity implements AuditableEntity {
         return (getValidityUntil() == null || this.getValidityUntil().after(new Timestamp(System.currentTimeMillis())));
     }
 
+    public String getCountConcepts(){
+        return String.valueOf(concepts.size());
+    }
+
     @Override
     public long getId() {
         return id;

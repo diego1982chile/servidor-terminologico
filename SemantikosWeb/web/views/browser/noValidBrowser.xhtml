@@ -28,8 +28,9 @@
                                         </p:breadCrumb>
                                         <p:spacer />
                                         <smtk:noValidBrowserFilter noValidQuery="#{noValidBrowserBean.noValidQuery}" />
+                                        <p:spacer />
                                         <p:dataTable id="noValidTable"
-                                                     styleClass="noValidBrowserTable"
+                                                     styleClass="browserTable"
                                                      value="#{noValidBrowserBean.noValidDescriptions}"
                                                      var="noValidDescription"
                                                      rows="30"
@@ -70,16 +71,11 @@
                                             </p:column>
 
                                             <p:column headerText="Conceptos Sugeridos">
-                                                <p:commandLink id="suggestedConceptsLink"
+                                                <p:commandLink update="@(.suggestedConceptsDetail)" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search"
                                                                rendered="#{not empty noValidDescription.suggestedConcepts}">
                                                     <h:outputText value="#{noValidDescription.suggestedConcepts.size()}" />
+                                                    <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}" />
                                                 </p:commandLink>
-                                                <p:overlayPanel id="suggestedConcepts" for="suggestedConcepts" hideEffect="fade" dynamic="true">
-                                                    <p:dataList value="#{noValidDescription.suggestedConcepts}" var="suggestedConcept" type="definition">
-                                                        <h:outputText value="#{suggestedConcept.descriptionFavorite.term}" />
-                                                    </p:dataList>
-
-                                                </p:overlayPanel>
                                             </p:column>
 
                                             <p:column headerText="Usos">
@@ -108,7 +104,7 @@
                                                 <div style="text-align: center;">
 
                                                     <p:commandLink oncomplete="PF('dialogTDP').show()" title="Trasladar a concepto" style="padding: 5px" process="@this"
-                                                                   update="@(.noValidBrowserTable),@(.dialogTDP)">
+                                                                   update="@(.browserTable),@(.dialogTDP)">
                                                         <i class="fa fa-external-link fa-lg"/>
                                                         <f:setPropertyActionListener value="#{noValidDescription}" target="#{noValidBrowserBean.noValidDescriptionSelected}"/>
                                                         <f:setPropertyActionListener value="" target="#{noValidBrowserBean.conceptSelected}"/>
@@ -124,6 +120,26 @@
                                             </p:column>
 
                                         </p:dataTable>
+
+                                        <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
+                                            <p:outputPanel id="descriptionSelected" styleClass="suggestedConceptsDetail" style="width: 300px;">
+                                                <p:dataTable value="#{noValidBrowserBean.noValidDescriptionSelected.suggestedConcepts}" var="concept" width="100%">
+                                                    <p:column headerText="ConceptID">
+                                                        <h:outputText value="#{concept.conceptID}" />
+                                                    </p:column>
+                                                    <p:column headerText="Término">
+                                                        <h:outputText value="#{concept.descriptionFavorite}" />
+                                                    </p:column>
+                                                    <p:column headerText="Consultar">
+                                                        <p:link outcome="/views/concept/conceptEdit" style="padding: 5px">
+                                                            <i class="fa fa-eye fa-lg"/>
+                                                            <f:param name="editMode" value="#{false}" />
+                                                            <f:param name="idConcept" value="#{concept.id}" />
+                                                        </p:link>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </p:outputPanel>
+                                        </p:overlayPanel>
 
                                         <!-- Trasladar descripciones a conceptos -->
                                         <p:dialog id="dialogTDP" header="Trasladar descripcion" widgetVar="dialogTDP" global="true" styleClass="dialogTDP"
@@ -214,7 +230,7 @@
                                                 </h:panelGrid>
                                                 <div style="text-align: center">
                                                     <p:commandButton rendered="#{noValidBrowserBean.conceptSelected!=null}"
-                                                                     update="@(.pending-description),@(.noValidBrowserTable)"
+                                                                     update="@(.pending-description),@(.browserTable)"
                                                                      value="Trasladar Concepto"
                                                                      oncomplete="PF('dialogTDP').hide()"
                                                                      icon="fa fa-exchange"

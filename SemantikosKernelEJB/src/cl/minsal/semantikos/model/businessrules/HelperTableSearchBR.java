@@ -71,9 +71,10 @@ public class HelperTableSearchBR {
         if (helperTableRecord.getHelperTable().getName().equals(HT_ATC_NAME)){
             Collections.sort(records, new ATCRecordComparator());
         }
-
-        /* Sino, se ordena alfabéticamente */
-        Collections.sort(records);
+        else{
+            /* Sino, se ordena alfabéticamente */
+            Collections.sort(records);
+        }
     }
 
     class ATCRecordComparator implements Comparator<HelperTableRecord> {
@@ -84,8 +85,11 @@ public class HelperTableSearchBR {
             Map<String, String> fieldsATC1 = atc1.getFields();
             Map<String, String> fieldsATC2 = atc2.getFields();
 
-            String recordATC1 = fieldsATC1.get("DESCRIPTION").concat(fieldsATC1.get("DCC_COMPLETA_ATC"));
-            String recordATC2 = fieldsATC2.get("DESCRIPTION").concat(fieldsATC2.get("DCC_COMPLETA_ATC"));
+            //String recordATC1 = fieldsATC1.get("description").concat(fieldsATC1.get("dsc_atc"));
+            //String recordATC2 = fieldsATC2.get("description").concat(fieldsATC2.get("dsc_atc"));
+
+            String recordATC1 = fieldsATC1.get("dsc_atc");
+            String recordATC2 = fieldsATC2.get("dsc_atc");
 
             return recordATC1.length() - recordATC2.length();
         }
