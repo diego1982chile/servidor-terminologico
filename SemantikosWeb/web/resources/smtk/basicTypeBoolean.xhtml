@@ -84,7 +84,12 @@
                     <div class="Container10 White Responsive">
                         <div class="ContainerIndent">
 
-                            <p:selectBooleanButton value="#{relationship.target.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check" offIcon="fa fa-close">
+                            <p:selectBooleanButton value="#{relationship.target.value}"
+                                                   offLabel="No"
+                                                   onLabel="Si"
+                                                   onIcon="fa fa-check"
+                                                   offIcon="fa fa-close"
+                                                   disabled="#{not conceptBean.isMCSpecial(cc.attrs.relationshipDefinition) and not conceptBean.concept.isModeled()}">
                                 <p:ajax event="change"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,relationship.target)}"
                                         process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
