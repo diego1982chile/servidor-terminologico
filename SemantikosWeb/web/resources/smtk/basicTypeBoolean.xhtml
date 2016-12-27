@@ -40,18 +40,12 @@
                     <div class="Container10 White Responsive">
                         <div class="ContainerIndent">
 
-                            <p:selectBooleanButton value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check" offIcon="fa fa-close">
+                            <p:selectBooleanButton value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
                                 <p:ajax event="change"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                         process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
                             </p:selectBooleanButton>
 
-                            <p:selectOneButton value="#{conceptBean.basicTypeValue.value}" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItems itemLabel="#{domain}" itemValue="#{domain}" value="#{cc.attrs.targetDefinition.domain}" var="domain" />
-                                <p:ajax event="change"
-                                        listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
-                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.attributes)" />
-                            </p:selectOneButton>
                         </div>
                     </div>
                 </div>
@@ -93,7 +87,7 @@
                             <p:selectBooleanButton value="#{relationship.target.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check" offIcon="fa fa-close">
                                 <p:ajax event="change"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,relationship.target)}"
-                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.attributes)" />
+                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
                             </p:selectBooleanButton>
 
                         </div>

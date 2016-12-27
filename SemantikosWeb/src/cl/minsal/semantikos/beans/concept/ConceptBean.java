@@ -586,6 +586,7 @@ public class ConceptBean implements Serializable {
     public void addOrChangeRelationship(RelationshipDefinition relationshipDefinition, Target target) {
         Relationship relationship = null;
         boolean isRelationshipFound = false;
+
         if (target.toString().equals(""))
             target = null;
 
