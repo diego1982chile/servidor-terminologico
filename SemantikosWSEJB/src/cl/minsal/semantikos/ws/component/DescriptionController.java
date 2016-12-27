@@ -43,9 +43,11 @@ public class DescriptionController {
     public DescriptionResponse incrementDescriptionHits(String descriptionId) {
 
         /* Se incrementa la descripción */
+        logger.debug("Por incrementar el contador de usos de la descripcion con DESCRIPCION_ID=" + descriptionId);
         Description description = descriptionManager.incrementDescriptionHits(descriptionId);
 
         /* Y se retorna la respuesta */
+        logger.debug("Descripcion con DESCRIPCION_ID=" + descriptionId + " tiene " + description.getUses() + " usos.");
         return new DescriptionResponse(description);
     }
 }
