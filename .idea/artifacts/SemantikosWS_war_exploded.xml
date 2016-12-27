@@ -7,12 +7,15 @@
           <element id="module-output" name="SemantikosWS" />
         </element>
         <element id="directory" name="lib">
+          <element id="archive" name="SemantikosWSEJB-2.2.3.jar">
+            <element id="module-output" name="SemantikosWSEJB" />
+          </element>
           <element id="library" level="project" name="Maven: net.bull.javamelody:javamelody-core:1.59.0" />
           <element id="library" level="project" name="Maven: org.jrobin:jrobin:1.5.9" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/SemantikosWS/target/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/SemantikosWS/target/SemantikosWS/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="SemantikosWS/web/Web" />
     </root>

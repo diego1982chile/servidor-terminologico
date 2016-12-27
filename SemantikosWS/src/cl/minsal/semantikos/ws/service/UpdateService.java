@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.ws.component.ConceptController;
+import cl.minsal.semantikos.ws.component.DescriptionController;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.request.NewTermRequest;
 import cl.minsal.semantikos.ws.response.DescriptionResponse;
@@ -24,11 +25,13 @@ public class UpdateService {
     @EJB
     private ConceptController conceptController;
 
+    @EJB
+    private DescriptionController descriptionController;
+
     /**
      * REQ-WS-003: Este servicio web corresponde al formulario de solicitud para la creación de un nuevo término.
      *
      * @param termRequest La solicitud de creación de un nuevo término.
-     *
      * @return El <em>ID DESCRIPCIÓN</em> de la descripción creada a partir de la solicitud.
      */
     @WebResult(name = "respuestaCodificacionDeNuevoTermino")
@@ -36,21 +39,27 @@ public class UpdateService {
     public NewTermResponse codificacionDeNuevoTermino(
             @XmlElement(required = true)
             @WebParam(name = "peticionCodificacionDeNuevoTermino")
-            NewTermRequest termRequest) throws IllegalInputFault {
+                    NewTermRequest termRequest) throws IllegalInputFault {
 
         return conceptController.requestTermCreation(termRequest);
     }
 
     // REQ-WS-030
-    @WebResult(name = "descripcion")
+
+    /**
+     * REQ-WS-030: El sistema Semantikos debe disponer un servicio que permita aumentar el hit de una Descripción.
+     *
+     * @param descriptionId El valor de negocio DESCRIPTION_ID de una descripción.
+     * @return
+     */
+    @WebResult(name = "descripcionCounter")
     @WebMethod
     public DescriptionResponse incrementarContadorDescripcionConsumida(
             @XmlElement(required = true)
-            @WebParam(name = "idDescripcion")
-            String descriptionId
+            @WebParam(name = "descriptionID")
+                    String descriptionId
     ) {
-        // TODO: Terminar servicio.
-        return null;
+        return descriptionController.incrementDescriptionHits(descriptionId);
     }
 
 }

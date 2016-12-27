@@ -301,7 +301,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
     public Description getDescriptionByDescriptionID(String descriptionId) {
 
         /* Validación de integridad */
-        if(descriptionId == null || descriptionId.trim().equals("")){
+        if (descriptionId == null || descriptionId.trim().equals("")) {
             throw new IllegalArgumentException("Se busca una descripción sin indicar su DESCRIPTION_ID.");
         }
 
@@ -323,4 +323,17 @@ public class DescriptionManagerImpl implements DescriptionManager {
         return descriptionDAO.getNoValidDescriptionByID(id);
     }
 
+    @Override
+    public Description incrementDescriptionHits(String descriptionId) {
+
+        /* Primero se recupera la descripción */
+        Description descriptionByDescriptionID = descriptionDAO.getDescriptionByDescriptionID(descriptionId);
+
+        /* Se incrementa y se actualiza en la BDD */
+        descriptionByDescriptionID.setUses(descriptionByDescriptionID.getUses() + 1);
+        descriptionDAO.update(descriptionByDescriptionID);
+
+        /* Finalmente se retorna */
+        return descriptionByDescriptionID;
+    }
 }

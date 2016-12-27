@@ -27,7 +27,6 @@ public interface DescriptionManager {
      * @param term    El término de la descripción.
      * @param type    El tipo de la descripción.
      * @param user    El usuario que agrega el término
-     *
      * @return La descripción creada a partir del término dado.
      */
     public Description bindDescriptionToConcept(ConceptSMTK concept, String term, DescriptionType type, User user);
@@ -38,7 +37,6 @@ public interface DescriptionManager {
      * @param concept     El concepto al cual se agrega la descripción.
      * @param description La descripción que será asociada al concepto. Esta puede o no estar persistida.
      * @param user        El usuario que agrega el término
-     *
      * @return La descripción creada a partir del término dado.
      */
     public Description bindDescriptionToConcept(ConceptSMTK concept, Description description, boolean editionMode, User user);
@@ -49,7 +47,6 @@ public interface DescriptionManager {
      * @param concept     El concepto al cual se agrega la descripción.
      * @param description La descripción que será asociada al concepto. Esta puede o no estar persistida.
      * @param user        El usuario que agrega el término
-     *
      * @return La descripción creada a partir del término dado.
      */
     public Description unbindDescriptionToConcept(ConceptSMTK concept, Description description, User user);
@@ -101,7 +98,6 @@ public interface DescriptionManager {
      * Este método es responsable de recuperar las descripciones de un concepto.
      *
      * @param concept El concepto cuyas descripciones deben ser recuperadas.
-     *
      * @return Un objeto <code>java.util.List</code> con las descripciones del concepto <code>concept</code>.
      */
     List<Description> getDescriptionsOf(ConceptSMTK concept);
@@ -119,7 +115,6 @@ public interface DescriptionManager {
      *
      * @param term       El término buscado.
      * @param categories Las categorías en donde se realiza la búsqueda.
-     *
      * @return Todas las descripciones que poseen exactamente el término <code>term</code>.
      */
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories);
@@ -145,7 +140,6 @@ public interface DescriptionManager {
      * negocio.
      *
      * @param descriptionId El <em>DESCRIPTION_ID</em> de la descripción buscada.
-     *
      * @return Una instancia fresca de la descripción buscada.
      */
     public Description getDescriptionByDescriptionID(String descriptionId);
@@ -160,4 +154,12 @@ public interface DescriptionManager {
     public List<ObservationNoValid> getObservationsNoValid();
 
     public NoValidDescription getNoValidDescriptionByID(long id);
+
+    /**
+     * Este método es responsable de incrementar el uso que tiene una descripción dada.
+     *
+     * @param descriptionId El valor de negocio <em>DESCRIPTION_ID</em> de la descripción cuyo uso se desea incrementar.
+     * @return La descripción con sus usos.
+     */
+    public Description incrementDescriptionHits(String descriptionId);
 }
