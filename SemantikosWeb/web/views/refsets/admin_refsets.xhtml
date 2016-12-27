@@ -70,10 +70,6 @@
 
                                 </p:commandButton>
                             </div>
-
-
-                            <smtk:addConceptToRefset refset="#{refsetsBean.refSetToCreate}"/>
-
                             <smtk:conceptRefset refset="#{refsetsBean.refSetToCreate}"/>
                         </p:fieldset>
 
@@ -155,6 +151,9 @@
                           header="Refset #{refsetsBean.refSetSelect.name}">
                     <p:outputPanel id="viewRefsetPanel" styleClass="viewRefSet" style="text-align:center;">
 
+                        <h3>RefSet: #{refsetsBean.refSetSelect.name}  </h3>
+                        <h3> Total Conceptos:#{refsetsBean.refSetSelect.getCountConcepts()}</h3>
+
                         <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts"
                                      emptyMessage="El RefSet no contiene conceptos"
                         >
@@ -179,7 +178,7 @@
                           hideEffect="fade" resizable="true" style="margin:40px;">
                     <p:outputPanel id="editRefsetPanel" styleClass="editRefset">
 
-                        <h3>Refset #{refsetsBean.refSetEdit.name}  </h3>
+                        <h3>RefSet #{refsetsBean.refSetEdit.name}  </h3>
                         <h3> Total Conceptos:#{refsetsBean.refSetEdit.getCountConcepts()}</h3>
                         <div style="text-align: right">
                             <p:commandButton value="Agregar Conceptos" oncomplete="PF('selectConcept').show()"
@@ -188,8 +187,9 @@
                                 <f:setPropertyActionListener value="" target="#{findConceptBean.pattern}"/>
                                 <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
                                 <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTKListSelected}"/>
-                                <f:setPropertyActionListener value=""
-                                                             target="#{findConceptBean.findConcepts}"/>
+                                <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTKListSelectedEdit}"/>
+                                <f:setPropertyActionListener value="" target="#{findConceptBean.findConcepts}"/>
+                                <p:ajax/>
                             </p:commandButton>
                         </div>
                         <br/>
@@ -214,6 +214,8 @@
                     <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
                                      icon="ui-icon-close"/>
                 </p:confirmDialog>
+
+
             </h:form>
         </p:panel>
     </ui:define>
