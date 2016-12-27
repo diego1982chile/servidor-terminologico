@@ -586,7 +586,6 @@ public class ConceptBean implements Serializable {
     public void addOrChangeRelationship(RelationshipDefinition relationshipDefinition, Target target) {
         Relationship relationship = null;
         boolean isRelationshipFound = false;
-
         if (target.toString().equals(""))
             target = null;
 
@@ -792,10 +791,14 @@ public class ConceptBean implements Serializable {
     private void persistConcept(FacesContext context) {
         try {
             conceptManager.persist(concept, user);
-            if (descriptionPending != null) {
-                ConceptSMTK conceptSource = descriptionPending.getConceptSMTK();
-                descriptionPending.setConceptSMTK(concept);
-                descriptionManager.moveDescriptionToConcept(conceptSource, descriptionPending, user);
+            if (pendingTerms) {
+                for (DescriptionWeb descriptionWeb : concept.getDescriptionsWeb()) {
+                    if(descriptionWeb.getConceptSMTK().equals(conceptManager.getPendingConcept())){
+                        ConceptSMTK conceptSource = descriptionPending.getConceptSMTK();
+                        descriptionPending.setConceptSMTK(concept);
+                        descriptionManager.moveDescriptionToConcept(conceptSource, descriptionPending, user);
+                    }
+                }
             }
             context.addMessage(null, new FacesMessage("Successful", "Concepto guardado "));
             // Se resetea el concepto, como el concepto está persistido, se le pasa su id
