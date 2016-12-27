@@ -326,7 +326,7 @@
                                 </p:column>
 
                                 <p:ajax event="itemSelect"
-                                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                                        update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.search)"
                                         listener="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
                                         process="@this"/>
 
