@@ -8,6 +8,11 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.jboss.resteasy:jaxrs-api:3.0.12.Final" />
+          <element id="library" level="project" name="Maven: net.bull.javamelody:javamelody-core:1.59.0" />
+          <element id="library" level="project" name="Maven: org.jrobin:jrobin:1.5.9" />
+          <element id="archive" name="SemantikosWSEJB-2.2.3.jar">
+            <element id="module-output" name="SemantikosWSEJB" />
+          </element>
         </element>
       </element>
       <element id="directory" name="META-INF">
