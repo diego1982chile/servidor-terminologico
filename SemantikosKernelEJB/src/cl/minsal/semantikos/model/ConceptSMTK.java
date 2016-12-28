@@ -197,52 +197,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     }
 
     /**
-     * Este método es responsable de recuperar las relaciones del concepto.
-     *
-     * @return Una lista con las relaciones del concepto.
-     */
-    public List<Relationship> getRelationships() {
-
-        if (!relationshipsLoaded) {
-            throw new EJBException("Las relaciones de este concepto no han sido cargadas aun.");
-        }
-
-        return relationships;
-    }
-
-    /**
-     * Este método es responsable de recuperar todas las relaciones que son de tipo Basic Type.
-     *
-     * @return Una lista de los atributos de tipo báisco del concepto.
-     */
-    public List<Relationship> getRelationshipsBasicType() {
-        List<Relationship> snomedRelationships = new ArrayList<>();
-        for (Relationship relationship : relationships) {
-            if (relationship.getRelationshipDefinition() != null
-                    && relationship.getRelationshipDefinition().getTargetDefinition() != null
-                    && relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
-                snomedRelationships.add(relationship);
-            }
-        }
-        return snomedRelationships;
-    }
-
-    /**
-     * Este método es responsable de recuperar todas las relaciones del concepto que no son básicas.
-     *
-     * @return Una lista con las relaciones del concepto.
-     */
-    public List<Relationship> getRelationshipsNonBasicType() {
-        List<Relationship> snomedRelationships = new ArrayList<>();
-        for (Relationship relationship : relationships) {
-            if (!relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
-                snomedRelationships.add(relationship);
-            }
-        }
-        return snomedRelationships;
-    }
-
-    /**
      * Este método es responsable de retornar todos los conceptos SMTK de relaciones (a conceptos STMK) que pertenecen
      * a
      * la categoría indicada.
@@ -265,6 +219,53 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         return relatedConcepts;
+    }
+
+    /**
+     * Este método es responsable de recuperar las relaciones del concepto.
+     *
+     * @return Una lista con las relaciones del concepto.
+     */
+    public List<Relationship> getRelationships() {
+
+        if (!relationshipsLoaded) {
+            throw new EJBException("Las relaciones de este concepto no han sido cargadas aun.");
+        }
+
+        return relationships;
+    }
+
+    /**
+     * Este método es responsable de recuperar todas las relaciones que son de tipo Basic Type.
+     *
+     * @return Una lista de los atributos de tipo báisco del concepto.
+     */
+    public List<Relationship> getRelationshipsBasicType() {
+        List<Relationship> snomedRelationships = new ArrayList<>();
+        for (Relationship relationship : relationships) {
+            if ( relationship.isValid()
+                    && relationship.getRelationshipDefinition() != null
+                    && relationship.getRelationshipDefinition().getTargetDefinition() != null
+                    && relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
+                snomedRelationships.add(relationship);
+            }
+        }
+        return snomedRelationships;
+    }
+
+    /**
+     * Este método es responsable de recuperar todas las relaciones del concepto que no son básicas.
+     *
+     * @return Una lista con las relaciones del concepto.
+     */
+    public List<Relationship> getRelationshipsNonBasicType() {
+        List<Relationship> snomedRelationships = new ArrayList<>();
+        for (Relationship relationship : relationships) {
+            if (!relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
+                snomedRelationships.add(relationship);
+            }
+        }
+        return snomedRelationships;
     }
 
     /**

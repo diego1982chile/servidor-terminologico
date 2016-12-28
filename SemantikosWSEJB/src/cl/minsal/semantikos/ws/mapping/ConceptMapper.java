@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.DescriptionType;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import cl.minsal.semantikos.ws.response.*;
 
 import java.util.ArrayList;
@@ -120,4 +121,25 @@ public class ConceptMapper {
         return conceptResponse;
     }
 
+    public static List<SnomedCTRelationshipResponse> getSnomedCTRelationships(ConceptSMTK source) {
+        if (source != null) {
+            List<SnomedCTRelationship> relationships = source.getRelationshipsSnomedCT();
+            if ( relationships != null ) {
+                List<SnomedCTRelationshipResponse> res = new ArrayList<>(relationships.size());
+                for ( SnomedCTRelationship relationship : relationships ) {
+                    res.add(SnomedCTRelationshipMapper.map(relationship));
+                }
+                return res;
+            }
+        }
+        return null;
+    }
+
+    public static ConceptResponse appendSnomedCTRelationships(ConceptResponse conceptResponse, ConceptSMTK source) {
+        if ( conceptResponse != null ) {
+            conceptResponse.setSnomedCTRelationshipResponses(getSnomedCTRelationships(source));
+        }
+
+        return conceptResponse;
+    }
 }

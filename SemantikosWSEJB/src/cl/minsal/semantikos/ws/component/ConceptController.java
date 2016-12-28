@@ -252,22 +252,11 @@ public class ConceptController {
         }
 
         ConceptResponse res = new ConceptResponse(conceptSMTK);
-        this.loadRelationships(res, conceptSMTK);
+        this.loadSnomedCTRelationships(res, conceptSMTK);
+        this.loadAttributes(res, conceptSMTK);
         this.loadRefSets(res, conceptSMTK);
+        res.setForREQWS028();
         // TODO: Agregar todos los Atributos, Relaciones, Crossmaps, Descripciones y otros especificados en requerimiento.
-        return res;
-    }
-
-    public ConceptResponse conceptById(String conceptId) throws NotFoundFault {
-        ConceptSMTK conceptSMTK;
-        try {
-            conceptSMTK = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
-        } catch (Exception e) {
-            throw new NotFoundFault("Concepto no encontrado: " + conceptId);
-        }
-        ConceptResponse res = new ConceptResponse(conceptSMTK);
-        this.loadRelationships(res, conceptSMTK);
-        this.loadRefSets(res, conceptSMTK);
         return res;
     }
 
@@ -327,7 +316,7 @@ public class ConceptController {
         return res;
     }
 
-    public ConceptResponse loadAttributes(ConceptResponse conceptResponse, ConceptSMTK source) {
+    public ConceptResponse loadAttributes(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) {
         if ( conceptResponse.getAttributes() == null || conceptResponse.getAttributes().isEmpty() ) {
             if (!source.isRelationshipsLoaded()) {
                 conceptManager.loadRelationships(source);
@@ -337,7 +326,7 @@ public class ConceptController {
         return conceptResponse;
     }
 
-    public ConceptResponse loadRelationships(ConceptResponse conceptResponse, ConceptSMTK source) {
+    public ConceptResponse loadRelationships(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) {
         if (conceptResponse.getRelationships() == null || conceptResponse.getRelationships().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
                 conceptManager.loadRelationships(source);
@@ -347,7 +336,18 @@ public class ConceptController {
         return conceptResponse;
     }
 
-    public ConceptResponse loadRefSets(ConceptResponse conceptResponse, ConceptSMTK source) {
+    public ConceptResponse loadSnomedCTRelationships(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) {
+        if ( conceptResponse.getSnomedCTRelationshipResponses() == null || conceptResponse.getSnomedCTRelationshipResponses().isEmpty() ) {
+            if (!source.isRelationshipsLoaded()) {
+                conceptManager.loadRelationships(source);
+            }
+            ConceptMapper.appendSnomedCTRelationships(conceptResponse, source);
+        }
+
+        return conceptResponse;
+    }
+
+    public ConceptResponse loadRefSets(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) {
         if (conceptResponse.getRefsets() == null || conceptResponse.getRefsets().isEmpty()) {
             if (source.getRefsets() == null || source.getRefsets().isEmpty()) {
                 refSetManager.loadConceptRefSets(source);

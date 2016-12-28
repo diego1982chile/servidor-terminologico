@@ -303,14 +303,4 @@ public class SearchService {
         return this.conceptController.conceptByDescriptionId(descriptionId);
     }
 
-    @WebResult(name = "concepto")
-    @WebMethod(operationName = "conceptoPorId")
-    public ConceptResponse conceptoPorId(
-            @XmlElement(required = true)
-            @WebParam(name = "idConcepto")
-            String conceptId
-    ) throws NotFoundFault {
-        return this.conceptController.conceptById(conceptId);
-    }
-
 }

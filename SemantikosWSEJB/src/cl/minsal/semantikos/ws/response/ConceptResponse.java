@@ -62,11 +62,16 @@ public class ConceptResponse implements Serializable {
     @XmlElement(name = "relacion")
     private List<RelationshipResponse> relationships;
 
+    @XmlElementWrapper(name = "relacionesSnomedCT")
+    @XmlElement(name = "relacionSnomedCT")
+    private List<SnomedCTRelationshipResponse> snomedCTRelationshipResponses;
+
     public ConceptResponse() {
         this.relationships = new ArrayList<>();
         this.attributes = new ArrayList<>();
         this.descriptions = new ArrayList<>();
         this.refsets = new ArrayList<>();
+        this.snomedCTRelationshipResponses = new ArrayList<>();
     }
 
     public ConceptResponse(ConceptSMTK conceptSMTK) {
@@ -113,6 +118,9 @@ public class ConceptResponse implements Serializable {
         }
     }
 
+    /**
+     * Elimina de la respuesta los campos que no son necesarios retornar en le respuesta del WS-002.
+     */
     public void setForREQWS002() {
         this.toBeReviewed = null;
         this.toBeConsulted = null;
@@ -124,6 +132,22 @@ public class ConceptResponse implements Serializable {
 
         for ( DescriptionResponse descriptionResponse : this.descriptions ) {
             descriptionResponse.setForREQWS002();
+        }
+    }
+
+    /**
+     * Elimina de la respuesta los campos que no son necesarios retornar en le respuesta del WS-028.
+     */
+    public void setForREQWS028() {
+        this.toBeReviewed = null;
+        this.toBeConsulted = null;
+        this.modeled = null;
+        this.fullyDefined = null;
+        this.isPublished = null;
+        this.relationships = null;
+
+        for ( DescriptionResponse descriptionResponse : this.descriptions ) {
+            descriptionResponse.setForREQWS028();
         }
     }
 
@@ -237,6 +261,14 @@ public class ConceptResponse implements Serializable {
 
     public void setRelationships(List<RelationshipResponse> relationships) {
         this.relationships = relationships;
+    }
+
+    public List<SnomedCTRelationshipResponse> getSnomedCTRelationshipResponses() {
+        return snomedCTRelationshipResponses;
+    }
+
+    public void setSnomedCTRelationshipResponses(List<SnomedCTRelationshipResponse> snomedCTRelationshipResponses) {
+        this.snomedCTRelationshipResponses = snomedCTRelationshipResponses;
     }
 
     @Override
