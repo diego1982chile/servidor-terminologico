@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.ws.service;
+package service;
 
 import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.component.DescriptionController;

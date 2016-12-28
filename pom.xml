@@ -16,6 +16,7 @@
         <module>SemantikosWSEJB</module>
         <module>SemantikosWS</module>
         <module>SemantikosBrowser</module>
+        <module>TestWSRest</module>
     </modules>
 
     <build>
@@ -38,6 +39,4 @@
         <maven.compiler.source>1.6</maven.compiler.source>
         <maven.compiler.target>1.6</maven.compiler.target>
     </properties>
-
-
 </project>
