@@ -1,4 +1,4 @@
-package service;
+package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;

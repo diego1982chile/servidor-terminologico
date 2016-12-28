@@ -1,4 +1,4 @@
-package service;
+package cl.minsal.semantikos.ws.service;
 
 import javax.ws.rs.*;
 
