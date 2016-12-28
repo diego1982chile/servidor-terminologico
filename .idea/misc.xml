@@ -10,12 +10,14 @@
     <file type="web" url="file://$PROJECT_DIR$/SemantikosBrowser" />
     <file type="web" url="file://$PROJECT_DIR$/SemantikosWeb" />
     <file type="web" url="file://$PROJECT_DIR$/SemantikosWS" />
+    <file type="web" url="file://$PROJECT_DIR$/TestWSRest" />
   </component>
   <component name="IdProvider" IDEtalkID="C91CD3865C16EB217ACFD8D68C9083AC" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/TestWSRest/pom.xml" />
       </list>
     </option>
   </component>

@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.ws.service;
+package service;
 
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.model.Category;

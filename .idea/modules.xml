@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/SemantikosWS/SemantikosWS.iml" filepath="$PROJECT_DIR$/SemantikosWS/SemantikosWS.iml" />
       <module fileurl="file://$PROJECT_DIR$/SemantikosWSEJB/SemantikosWSEJB.iml" filepath="$PROJECT_DIR$/SemantikosWSEJB/SemantikosWSEJB.iml" />
       <module fileurl="file://$PROJECT_DIR$/SemantikosWeb/SemantikosWeb.iml" filepath="$PROJECT_DIR$/SemantikosWeb/SemantikosWeb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestWSRest/TestWSRest.iml" filepath="$PROJECT_DIR$/TestWSRest/TestWSRest.iml" />
     </modules>
   </component>
 </project>
