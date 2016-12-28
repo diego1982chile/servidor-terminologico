@@ -256,7 +256,7 @@ public class ConceptController {
         this.loadAttributes(res, conceptSMTK);
         this.loadRefSets(res, conceptSMTK);
         res.setForREQWS028();
-        // TODO: Agregar crossmaps a la respuesta
+        // TODO: Agregar crossmaps a la respuesta (Alfonso)
         return res;
     }
 

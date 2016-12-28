@@ -30,7 +30,6 @@ public class RefSetController {
     private ConceptController conceptController;
 
     public List<String> findRefSetsByDescriptions(@NotNull List<String> descriptionIds, Boolean includeInstitutions) throws NotFoundFault {
-        // TODO: Implementar seguridad especificada en requerimientos y funcion del parametro includeInstitutions
         Set<String> res = new HashSet<>(descriptionIds.size());
 
         Set<ConceptSMTK> conceptSMTKS = new HashSet<>(descriptionIds.size());
@@ -55,7 +54,6 @@ public class RefSetController {
     }
 
     public List<RefSet> findRefsets(List<String> refSetsNames) throws NotFoundFault {
-        // TODO: Implementar seguridad especificada en requerimientos
         List<RefSet> refSets;
         if ( refSetsNames != null && !refSetsNames.isEmpty() ) {
             try {
@@ -70,7 +68,6 @@ public class RefSetController {
     }
 
     public List<RefSetResponse> refSetList(Boolean includeAllInstitutions) throws NotFoundFault {
-        // TODO considerar funcion del parametro includeAllInstitutions segun especificado en requerimientos
         List<RefSetResponse> res = new ArrayList<>();
         List<RefSet> refSets = this.refSetManager.getAllRefSets();
         if ( refSets != null ) {
