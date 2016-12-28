@@ -1,24 +1,39 @@
 package cl.minsal.semantikos.ws.service;
 
+import cl.minsal.semantikos.ws.component.ConceptController;
+import cl.minsal.semantikos.ws.fault.NotFoundFault;
+import cl.minsal.semantikos.ws.response.GenericTermSearchResponse;
+
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
 import javax.ws.rs.*;
+import java.util.ArrayList;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 /**
  * @author Andrés Farías on 27-12-16.
  */
-@Path(value = "/termSearch")
+@Path(value = "/termSearch/{term}")
+@Singleton
 public class TermSearcherWS {
 
-    @GET
-    @Produces("text/plain")
-    @Consumes("text/plain")
-    public String findTerm() {
-        return "{Hello World}";
-    }
+    @EJB
+    ConceptController conceptController;
 
-    @POST
-    @Produces("text/plain")
-    @Consumes("text/plain")
-    public String findTerms() {
-        return "{Hello World}";
+    @GET
+    @Produces(APPLICATION_JSON)
+    public GenericTermSearchResponse findTerm(@PathParam("term") String term) throws NotFoundFault {
+
+        GenericTermSearchResponse genericTermSearchResponse;
+        if (conceptController == null){
+            System.out.println("conceptController es null");
+            return null;
+        } else {
+            genericTermSearchResponse = conceptController.searchTermGeneric(term, new ArrayList<String>(), new ArrayList<String>());
+        }
+
+        return genericTermSearchResponse;
     }
 }
+

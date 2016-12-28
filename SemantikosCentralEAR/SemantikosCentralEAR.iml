@@ -35,7 +35,7 @@
     <orderEntry type="module" module-name="SemantikosWeb" />
     <orderEntry type="module" module-name="SemantikosBrowser" />
     <orderEntry type="module" module-name="SemantikosWS" />
-    <orderEntry type="module" module-name="TestWSRest" />
+    <orderEntry type="library" name="Maven: cl.minsal.semantikos:TestWSRest:war:1.0" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.0.0.GA" level="project" />
   </component>
 </module>

@@ -29,7 +29,6 @@
         <module name="SemantikosWeb" />
         <module name="SemantikosWS" />
         <module name="SemantikosWSEJB" />
-        <module name="TestWSRest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
