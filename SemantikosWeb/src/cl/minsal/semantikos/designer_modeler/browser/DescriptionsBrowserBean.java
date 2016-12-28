@@ -180,17 +180,8 @@ public class DescriptionsBrowserBean implements Serializable {
         this.authenticationBean = authenticationBean;
     }
 
-    public String stringifyCategories(List<Category> categories){
-        if(categories.isEmpty())
-            return "Categorías...";
-
-        String stringCategories= "";
-
-        for (Category category : categories) {
-            stringCategories= stringCategories.concat(category.getName()).concat(", ");
-        }
-
-        return  stringCategories;
+    public RefSetManager getRefSetManager() {
+        return refSetManager;
     }
 
     public List<Category> getCategories() {

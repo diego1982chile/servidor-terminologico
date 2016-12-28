@@ -12,6 +12,10 @@ form.consult div.ui-selectonemenu.ui-state-disabled .ui-selectonemenu-label {
     background-color: #FFF !important;
 }
 
+.ContainerIndentRight{
+    margin-right: 10px !important;
+}
+
 form.consult div.ui-selectoneradio .ui-state-disabled {
     opacity: 100 !important;
 }

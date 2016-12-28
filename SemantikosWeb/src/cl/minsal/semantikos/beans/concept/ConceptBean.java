@@ -752,7 +752,7 @@ public class ConceptBean implements Serializable {
 
     public void saveConcept() {
         FacesContext context = FacesContext.getCurrentInstance();
-        if(descriptionPending!=null && concept.getRelationshipsSnomedCT().isEmpty()){
+        if(pendingTerms && concept.getRelationshipsSnomedCT().isEmpty()){
             messageBean.messageError("Cuando se crea un concepto desde pendientes, este puede ser guardado, sólo si cumple las condiciones para ser un concepto Modelado.");
             return;
         }
@@ -794,9 +794,9 @@ public class ConceptBean implements Serializable {
             if (pendingTerms) {
                 for (DescriptionWeb descriptionWeb : concept.getDescriptionsWeb()) {
                     if(descriptionWeb.getConceptSMTK().equals(conceptManager.getPendingConcept())){
-                        ConceptSMTK conceptSource = descriptionPending.getConceptSMTK();
-                        descriptionPending.setConceptSMTK(concept);
-                        descriptionManager.moveDescriptionToConcept(conceptSource, descriptionPending, user);
+                        ConceptSMTK conceptSource = descriptionWeb.getConceptSMTK();
+                        descriptionWeb.setConceptSMTK(concept);
+                        descriptionManager.moveDescriptionToConcept(conceptSource, descriptionWeb, user);
                     }
                 }
             }

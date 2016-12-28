@@ -112,10 +112,11 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="Container ContainerIndent">
 
                     <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+
+                        <div class="ContainerIndentRight">
 
                             <p:inputNumber id="basicTypeValue12"
                                            value="#{sctBean.relationshipGroup}"
@@ -130,10 +131,12 @@
                             </p:inputNumber>
 
                         </div>
+
                     </div>
 
                     <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+
+                        <div class="ContainerIndentRight">
 
                             <p:selectOneMenu value="#{sctBean.searchOption}">
                                 <f:selectItem itemLabel="Buscar por Término" itemValue="term" />
@@ -145,7 +148,8 @@
                     </div>
 
                     <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+
+                        <div class="ContainerIndentRight">
 
                             <p:outputPanel styleClass="search">
 
@@ -165,7 +169,7 @@
                                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                                     <!---->
 
-                                    <p:column>
+                                    <p:column style="width: 500px">
                                         <h:outputText value="#{concept.descriptionFSN.term}"/>
                                     </p:column>
 
@@ -178,7 +182,6 @@
                                 </p:autoComplete>
                                 <i class="fa fa-search fa-lg"  />
                             </p:outputPanel>
-
                         </div>
                     </div>
 
@@ -204,7 +207,7 @@
                         />
                     </p:repeat>
                     <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                        <div class="ContainerIndentRight">
                             <p:commandButton
                                     process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                     action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
@@ -218,8 +221,6 @@
                 </div>
             </div>
         </p:outputPanel>
-
-        <p:spacer rendered="#{cc.attrs.concept.editable}" />
 
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
                      id="tableRelationship3"
