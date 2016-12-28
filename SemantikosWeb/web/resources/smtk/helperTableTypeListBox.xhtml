@@ -43,7 +43,7 @@
                                              filter="true"
                                              converter="omnifaces.SelectItemsConverter">
 
-                                <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..." itemValue=""/>
+                                <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..." noSelectionOption="true" itemDisabled="true"/>
                                 <f:selectItems value="#{helperTableBean.allRecord}"
                                                var="record"
                                                itemLabel="#{record.fields['description']}"
@@ -149,7 +149,7 @@
                                                  filter="true"
                                                  converter="omnifaces.SelectItemsConverter">
 
-                                    <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..." itemValue=""/>
+                                    <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
                                     <f:selectItems value="#{helperTableBean.allRecord}"
                                                    var="record"
                                                    itemLabel="#{record.fields['description']}"
@@ -187,7 +187,7 @@
                                                  concept="#{cc.attrs.concept}"
                                                  rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()}"
                         />
-                        <smtk:helperTableTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                        <smtk:helperTableTypeAttributeListBox relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                                        relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                                        targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
                                                        concept="#{cc.attrs.concept}"
@@ -293,7 +293,7 @@
                                              filter="true"
                                              converter="omnifaces.SelectItemsConverter">
 
-                                <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..." itemValue=""/>
+                                <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
                                 <f:selectItems value="#{helperTableBean.allRecord}"
                                                var="record"
                                                itemLabel="#{record.fields['description']}"
