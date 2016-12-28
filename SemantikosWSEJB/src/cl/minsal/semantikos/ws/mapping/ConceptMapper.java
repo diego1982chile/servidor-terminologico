@@ -5,10 +5,7 @@ import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.DescriptionType;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.ws.response.ConceptResponse;
-import cl.minsal.semantikos.ws.response.DescriptionResponse;
-import cl.minsal.semantikos.ws.response.RefSetResponse;
-import cl.minsal.semantikos.ws.response.RelationshipResponse;
+import cl.minsal.semantikos.ws.response.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +16,27 @@ import java.util.List;
  *
  */
 public class ConceptMapper {
+
+    public static List<AttributeResponse> getAttributes(ConceptSMTK conceptSMTK) {
+        if ( conceptSMTK != null ) {
+            List<AttributeResponse> attributeResponses = new ArrayList<>();
+            List<Relationship> basicRelationships = conceptSMTK.getRelationshipsBasicType();
+            if ( basicRelationships != null ) {
+                for ( Relationship relationship : basicRelationships ) {
+                    attributeResponses.add(AttributeMapper.map(relationship));
+                }
+            }
+            return attributeResponses;
+        }
+        return null;
+    }
+
+    public static ConceptResponse appendAttributes(ConceptResponse conceptResponse, ConceptSMTK conceptSMTK) {
+        if ( conceptResponse != null ) {
+            conceptResponse.setAttributes(getAttributes(conceptSMTK));
+        }
+        return conceptResponse;
+    }
 
     public static List<DescriptionResponse> getDescriptions(ConceptSMTK conceptSMTK) {
         if ( conceptSMTK != null && conceptSMTK.getDescriptions() != null ) {

@@ -291,14 +291,12 @@ public class ConceptController {
         if (concepts != null) {
             for (ConceptSMTK source : concepts) {
                 ConceptResponse conceptResponse = new ConceptResponse(source);
-                this.loadRelationships(conceptResponse, source);
-                this.loadRefSets(conceptResponse, source);
+                conceptResponse.setForREQWS002();
+                this.loadAttributes(conceptResponse, source);
                 conceptResponses.add(conceptResponse);
             }
         }
         res.setConceptResponses(conceptResponses);
-
-        // TODO: Cargar atributos faltantes y eliminar partes de la respuesta que no son parte del requerimiento
 
         return res;
     }
@@ -327,6 +325,16 @@ public class ConceptController {
         res.setConcepts(conceptResponses);
 
         return res;
+    }
+
+    public ConceptResponse loadAttributes(ConceptResponse conceptResponse, ConceptSMTK source) {
+        if ( conceptResponse.getAttributes() == null || conceptResponse.getAttributes().isEmpty() ) {
+            if (!source.isRelationshipsLoaded()) {
+                conceptManager.loadRelationships(source);
+            }
+            ConceptMapper.appendAttributes(conceptResponse, source);
+        }
+        return conceptResponse;
     }
 
     public ConceptResponse loadRelationships(ConceptResponse conceptResponse, ConceptSMTK source) {

@@ -43,9 +43,6 @@ public class ConceptResponse implements Serializable {
     @XmlElement(name = "observacion")
     private String observation;
 
-    @XmlElement(name = "tagSMTK")
-    private TagSMTKResponse tagSMTK;
-
     @XmlElement(name = "categoria")
     private CategoryResponse category;
 
@@ -88,9 +85,46 @@ public class ConceptResponse implements Serializable {
         this.isValid = this.validUntil.after(new Date());
 
         /* Se cargan las otras propiedades del concepto */
-        loadPreferredDescriptions(conceptSMTK);
+        loadDescriptions(conceptSMTK);
         loadAttributes(conceptSMTK);
         this.setCategory(new CategoryResponse(conceptSMTK.getCategory()));
+    }
+
+    /**
+     * Este método es responsable de cargar las descripciones de un concepto (<code>toConceptResponse</code>) a otro
+     * (<code>sourceConcept</code>).
+     *
+     * @param sourceConcept El concepto desde el cual se cargan las descripciones
+     */
+    private void loadDescriptions(@NotNull ConceptSMTK sourceConcept) {
+        for (Description description : sourceConcept.getDescriptions()) {
+            this.descriptions.add(new DescriptionResponse(description));
+        }
+    }
+
+    /**
+     * Este método es responsable de caregar en este concepto los atributos de un concepto fuente.
+     *
+     * @param sourceConcept El concepto desde el cual se cargan los atrubos.
+     */
+    private void loadAttributes(@NotNull ConceptSMTK sourceConcept) {
+        for (Relationship relationship : sourceConcept.getRelationshipsBasicType()) {
+            this.attributes.add(new AttributeResponse(relationship));
+        }
+    }
+
+    public void setForREQWS002() {
+        this.toBeReviewed = null;
+        this.toBeConsulted = null;
+        this.modeled = null;
+        this.fullyDefined = null;
+        this.isPublished = null;
+        this.relationships = null;
+        this.refsets = null;
+
+        for ( DescriptionResponse descriptionResponse : this.descriptions ) {
+            descriptionResponse.setForREQWS002();
+        }
     }
 
     public String getConceptId() {
@@ -165,14 +199,6 @@ public class ConceptResponse implements Serializable {
         this.observation = observation;
     }
 
-    public TagSMTKResponse getTagSMTK() {
-        return tagSMTK;
-    }
-
-    public void setTagSMTK(TagSMTKResponse tagSMTK) {
-        this.tagSMTK = tagSMTK;
-    }
-
     public List<RefSetResponse> getRefsets() {
         return refsets;
     }
@@ -211,29 +237,6 @@ public class ConceptResponse implements Serializable {
 
     public void setRelationships(List<RelationshipResponse> relationships) {
         this.relationships = relationships;
-    }
-
-    /**
-     * Este método es responsable de cargar las descripciones de un concepto (<code>toConceptResponse</code>) a otro
-     * (<code>sourceConcept</code>).
-     *
-     * @param sourceConcept El concepto desde el cual se cargan las descripciones
-     */
-    private void loadPreferredDescriptions(@NotNull ConceptSMTK sourceConcept) {
-        for (Description description : sourceConcept.getDescriptions()) {
-            this.descriptions.add(new DescriptionResponse(description));
-        }
-    }
-
-    /**
-     * Este método es responsable de caregar en este concepto los atributos de un concepto fuente.
-     *
-     * @param sourceConcept El concepto desde el cual se cargan los atrubos.
-     */
-    private void loadAttributes(@NotNull ConceptSMTK sourceConcept) {
-        for (Relationship relationship : sourceConcept.getRelationshipsBasicType()) {
-            this.attributes.add(new AttributeResponse(relationship));
-        }
     }
 
     @Override

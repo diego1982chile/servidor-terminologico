@@ -529,7 +529,17 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     private Description createDescriptionFromResultSet(ResultSet resultSet, ConceptSMTK conceptSMTK) throws SQLException {
 
         long id = resultSet.getLong("id");
-        int uses = resultSet.getInt("uses");
+
+        /*
+         * Try y catch ignored porque no todas las funciones de la BD que recuperan Descriptions de la BD traen esta columna.
+         * Ej: Usar la funcion semantikos.get_descriptions_by_idconcept para recueprar conceptos se cae con la excepcion:
+         * org.postgresql.util.PSQLException: The column name uses was not found in this ResultSet.
+         */
+        int uses = 0;
+        try {
+            uses = resultSet.getInt("uses");
+        } catch (Exception ignored) {}
+
         String descriptionID = resultSet.getString("description_id");
         long idDescriptionType = resultSet.getLong("id_description_type");
         String term = resultSet.getString("term");
