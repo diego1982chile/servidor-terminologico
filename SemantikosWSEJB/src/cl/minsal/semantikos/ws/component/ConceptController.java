@@ -256,7 +256,7 @@ public class ConceptController {
         this.loadAttributes(res, conceptSMTK);
         this.loadRefSets(res, conceptSMTK);
         res.setForREQWS028();
-        // TODO: Agregar todos los Atributos, Relaciones, Crossmaps, Descripciones y otros especificados en requerimiento.
+        // TODO: Agregar crossmaps a la respuesta
         return res;
     }
 
