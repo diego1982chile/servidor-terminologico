@@ -38,7 +38,6 @@
       <element id="archive" name="SemantikosWS-2.2.3.war">
         <element id="artifact" artifact-name="SemantikosWS:war exploded" />
       </element>
-      <element id="library" level="project" name="Maven: cl.minsal.semantikos:TestWSRest:war:1.0" />
     </root>
   </artifact>
 </component>

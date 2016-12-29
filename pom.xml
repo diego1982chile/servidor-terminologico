@@ -16,7 +16,6 @@
         <module>SemantikosWSEJB</module>
         <module>SemantikosWS</module>
         <module>SemantikosBrowser</module>
-        <module>TestWSRest</module>
     </modules>
 
     <build>
