@@ -23,13 +23,15 @@
 
             <div class="Container20 White Responsive">
                 <div class="ContainerIndent">
-                    <p:outputLabel for="toBeReviewedCheck" value="Indicadores"/>
+                    <p:outputLabel for="toBeReviewedCheck">
+                        Indicadores
+                    </p:outputLabel>
                 </div>
             </div>
 
             <div class="Container30 White Responsive">
-                <div class="ContainerIndent">
-                    <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                <div class="ContainerIndentRight">
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" style="padding-top: 0.3em">
                         <p:selectBooleanCheckbox id="toBeReviewedCheck" itemLabel="Revisar" disabled="#{not cc.attrs.concept.editable}"
                                                  value="#{cc.attrs.concept.toBeReviewed}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
                         <p:selectBooleanCheckbox id="toBeConsultatedCheck" itemLabel="Consultar" disabled="#{not cc.attrs.concept.editable}"
@@ -45,15 +47,13 @@
             </div>
 
             <div class="Container30 White Responsive">
-                <div class="ContainerIndent">
-
-                    <p:selectOneRadio id="city" value="#{conceptBean.fullyDefined}" layout="grid" columns="2"
+                <div class="ContainerIndentRight">
+                    <p:selectOneRadio id="city" value="#{conceptBean.fullyDefined}" layout="grid" columns="2" style="padding-top: 0.3em"
                                       disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept) or not conceptBean.editable}">
                         <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
                         <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
                         <p:ajax event="change" listener="#{conceptBean.changeFullyDefined(conceptBean.concept)}" process="@this" update="@(.conceptHeader)" />
                     </p:selectOneRadio>
-
                 </div>
             </div>
 
@@ -65,14 +65,14 @@
 
         <div class="Container">
 
-            <div class="Container20 White Responsive" style="padding-top: 0.6em; padding-bottom: 0.6em">
+            <div class="Container20 White Responsive">
                 <div class="ContainerIndent">
-                    <p:outputLabel for="tagSemantikos" value="Tag Semantiko"/>
+                    <p:outputLabel for="tagSemantikos" value="Tag Semantiko" styleClass="FontBold" />
                 </div>
             </div>
 
             <div class="Container30 White Responsive">
-                <div class="ContainerIndent">
+                <div class="ContainerIndentRight">
                     <p:selectOneMenu id="tagSemantikos"
                                      value="#{cc.attrs.concept.tagSMTK}"
                                      converter="omnifaces.SelectItemsConverter"
@@ -112,15 +112,14 @@
             </div>
 
             <div class="Container60 White Responsive">
-                <div class="ContainerIndent">
+
                     <p:inputTextarea id="observation"
                                      name="observation"
                                      disabled="#{not cc.attrs.concept.editable}"
-                                     value="#{cc.attrs.concept.observation}"
-                                     style="width:90%">
+                                     value="#{cc.attrs.concept.observation}">
                         <p:ajax />
                     </p:inputTextarea>
-                </div>
+
             </div>
         </div>
     </div>

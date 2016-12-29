@@ -71,6 +71,21 @@
                                                 <h:outputText value="#{description.conceptSMTK.descriptionFSN.term}"/>
                                             </p:column>
 
+                                            <p:column headerText="Etiqueta" priority="6">
+                                                <p:repeat
+                                                        offset="0"
+                                                        size="#{descriptionsBrowserBean.refSetManager.getRefsetsBy(description.conceptSMTK).size()}"
+                                                        step="1"
+                                                        varStatus="var"
+                                                        value="#{descriptionsBrowserBean.refSetManager.getRefsetsBy(description.conceptSMTK)}"
+                                                        var="refset">
+
+                                                    <h:outputText rendered="#{var.index>0}" value=", " />
+                                                    <h:outputText value="#{refset}" />
+
+                                                </p:repeat>
+                                            </p:column>
+
                                             <p:column headerText="Acciones" exportable="false" style="width: 10%; text-align: center">
 
                                                 <div style="text-align: center;">

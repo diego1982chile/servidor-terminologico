@@ -38,14 +38,12 @@
                     </div>
 
                     <div class="Container10 White Responsive">
-                        <div class="ContainerIndent">
-
+                        <div class="ContainerIndentRight">
                             <p:selectBooleanButton value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
                                 <p:ajax event="change"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                         process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
                             </p:selectBooleanButton>
-
                         </div>
                     </div>
                 </div>
@@ -82,8 +80,7 @@
                     </div>
 
                     <div class="Container10 White Responsive">
-                        <div class="ContainerIndent">
-
+                        <div class="ContainerIndentRight">
                             <p:selectBooleanButton value="#{relationship.target.value}"
                                                    offLabel="No"
                                                    onLabel="Si"
@@ -94,7 +91,6 @@
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,relationship.target)}"
                                         process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
                             </p:selectBooleanButton>
-
                         </div>
                     </div>
                 </div>

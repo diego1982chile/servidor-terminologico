@@ -104,6 +104,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
             descriptionDAO.persist(description, user);
         }
 
+        descriptionDAO.update(description);
+
         /* Registrar en el Historial si es preferida (Historial BR) */
         if (description.getConceptSMTK().isModeled()) {
             auditManager.recordDescriptionCreation(description, user);

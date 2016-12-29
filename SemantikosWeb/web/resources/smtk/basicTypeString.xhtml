@@ -38,7 +38,6 @@
                 </div>
 
                 <div class="Container30 White Responsive">
-                    <div class="ContainerIndent">
 
                         <p:inputText id="basicTypeValue11"
                                      value="#{conceptBean.basicTypeValue.value}"
@@ -53,7 +52,6 @@
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id})"/>
                         </p:inputText>
 
-                    </div>
                 </div>
             </div>
         </div>
@@ -131,7 +129,6 @@
                 </div>
 
                 <div class="Container30 White Responsive">
-                    <div class="ContainerIndent">
 
                         <p:inputText id="basicTypeValue19"
                                      value="#{conceptBean.basicTypeValue.value}"
@@ -144,7 +141,7 @@
                             <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)" event="blur" />
                         </p:inputText>
-                    </div>
+
                 </div>
                 <!-- Atributos de relación -->
                 <p:repeat

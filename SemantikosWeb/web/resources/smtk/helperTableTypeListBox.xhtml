@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="Container30 White Responsive">
-                    <div class="ContainerIndent">
+                    <div class="ContainerIndentRight">
                         <p:outputPanel styleClass="search">
                             <p:selectOneMenu id="findHTRecords1" scrollHeight="200"
                                              forceSelection="true"
@@ -93,8 +93,7 @@
                     </div>
 
                     <div class="Container30 White Responsive">
-                        <div class="ContainerIndent">
-
+                        <div class="ContainerIndentRight">
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.fields['description']}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
                                 <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.fields['dsc_completa_atc']}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
@@ -104,7 +103,6 @@
                                     <i class="fa fa-close fa-lg"  />
                                 </p:commandLink>
                             </p:outputPanel>
-
                         </div>
                     </div>
 
@@ -135,10 +133,11 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="Container ContainerIndent">
 
                     <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+
+                        <div class="ContainerIndentRight">
 
                             <p:outputPanel styleClass="search">
 
@@ -196,7 +195,7 @@
                         />
                     </p:repeat>
                     <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                        <div class="ContainerIndentRight">
                             <p:commandButton
                                     process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                     action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
@@ -210,7 +209,6 @@
             </div>
         </p:outputPanel>
 
-        <p:spacer rendered="#{cc.attrs.concept.editable}" />
         <p:dataTable id="collectionValuesWithAttributes"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
@@ -319,8 +317,6 @@
                 </div>
             </div>
         </div>
-
-        <p:spacer rendered="#{cc.attrs.concept.editable}" />
 
         <p:dataTable id="collectionValues12"
                      styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"

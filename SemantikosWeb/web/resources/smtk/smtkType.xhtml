@@ -231,10 +231,11 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="Container ContainerIndent">
 
                     <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+
+                        <div class="ContainerIndentRight">
 
                             <p:outputPanel styleClass="search">
 
@@ -268,7 +269,9 @@
                                 </p:autoComplete>
                                 <i class="fa fa-search fa-lg"  />
                             </p:outputPanel>
+
                         </div>
+
                     </div>
                     <!-- Atributos de relación -->
                     <p:repeat
@@ -292,7 +295,7 @@
                         />
                     </p:repeat>
                     <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+
                             <p:commandButton
                                     process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                     action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
@@ -300,13 +303,12 @@
                                     style="max-width: 100px"
                                     value="Agregar">
                             </p:commandButton>
-                        </div>
+
                     </div>
                 </div>
             </div>
         </p:outputPanel>
 
-        <p:spacer rendered="#{cc.attrs.concept.editable}" />
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
                      id="tableRelationship3"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
@@ -376,7 +378,9 @@
                         </div>
 
                         <div class="Container30 White Responsive">
-                            <div class="ContainerIndent">
+
+                            <div class="ContainerIndentRight">
+
                                 <p:outputPanel styleClass="search">
 
                                     <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
@@ -411,6 +415,7 @@
                                     </p:autoComplete>
                                     <i class="fa fa-search fa-lg"  />
                                 </p:outputPanel>
+
                             </div>
                         </div>
                     </div>
@@ -439,7 +444,7 @@
                                 </div>
 
                                 <div class="Container30 White Responsive">
-                                    <div class="ContainerIndent">
+                                    <div class="ContainerIndentRight">
                                         <p:outputPanel styleClass="search">
                                             <p:inputText disabled="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.term}" />
 
@@ -460,7 +465,7 @@
                                 </div>
 
                                 <div class="Container30 White Responsive">
-                                    <div class="ContainerIndent">
+                                    <div class="ContainerIndentRight">
                                         <p:inputText value="#{relationship.target.conceptID}" disabled="true" />
                                     </div>
                                 </div>

@@ -38,8 +38,7 @@
                 </div>
 
                 <div class="Container30 White Responsive">
-                    <div class="ContainerIndent">
-
+                    <div class="ContainerIndentRight">
                         <p:inputNumber id="basicTypeValue11"
                                        value="#{conceptBean.basicTypeValue.value}"
                                        var="value"
@@ -57,7 +56,6 @@
                             <p:ajax listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}" event="change"
                                     update="@(.panel_#{cc.attrs.relationshipDefinition.id})"/>
                         </p:inputNumber>
-
                     </div>
                 </div>
             </div>
@@ -94,8 +92,7 @@
                     </div>
 
                     <div class="Container30 White Responsive">
-                        <div class="ContainerIndent">
-
+                        <div class="ContainerIndentRight">
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="basicTypeValue" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
@@ -105,7 +102,6 @@
                                     <i class="fa fa-close fa-lg"  />
                                 </p:commandLink>
                             </p:outputPanel>
-
                         </div>
                     </div>
                 </div>
@@ -136,8 +132,7 @@
                 </div>
 
                 <div class="Container30 White Responsive">
-                    <div class="ContainerIndent">
-
+                    <div class="ContainerIndentRight">
                         <p:inputNumber id="basicTypeValue19"
                                        value="#{conceptBean.basicTypeValue.value}"
                                        var="value"
@@ -202,7 +197,7 @@
                     </div>
 
                     <div class="Container30 White Responsive">
-                        <div class="ContainerIndent">
+                        <div class="ContainerIndentRight">
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="basicTypeValue2" value="#{relationship.target}" />
                                 <p:commandLink process="@this"
