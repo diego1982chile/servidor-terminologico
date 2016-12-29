@@ -3,6 +3,7 @@ package cl.minsal.semantikos.model.audit;
 import cl.minsal.semantikos.model.User;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  * @author Andrés Farías on 9/20/16.
@@ -50,6 +51,11 @@ public abstract class AuditAction {
 
     public Timestamp getActionDate() {
         return actionDate;
+    }
+
+    public String getActionDateFormat() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return format.format(actionDate);
     }
 
     public void setActionDate(Timestamp actionDate) {

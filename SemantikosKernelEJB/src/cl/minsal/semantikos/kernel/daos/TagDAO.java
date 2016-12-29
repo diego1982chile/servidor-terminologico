@@ -103,6 +103,14 @@ public interface TagDAO {
      */
     public Tag findTagByID(long id);
 
-
+    /**
+     * Método encargado de verificar si existe otro Tag con el mismo nombre
+     * @param tagName
+     * @return
+     */
     public boolean containTag(String tagName);
+
+
+
+    public long countConceptContainTag(Tag tag);
 }

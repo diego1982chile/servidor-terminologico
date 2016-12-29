@@ -408,4 +408,28 @@ public class TagDAOImpl implements TagDAO {
 
         return (contain>0)?true: false;
     }
+
+    @Override
+    public long countConceptContainTag(Tag tag) {
+        ConnectionBD connect = new ConnectionBD();
+        long count=0;
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.concept_contain_tag(?)}")) {
+
+            call.setLong(1, tag.getId());
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                count = rs.getLong(1);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            String errorMsg = "Error al consultar si contiene el registro";
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return count;
+    }
 }

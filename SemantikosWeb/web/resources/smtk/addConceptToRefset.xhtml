@@ -21,13 +21,13 @@
               hideEffect="fade" resizable="true" style="margin:40px;">
         <p:outputPanel id="selectConceptPanel" styleClass="selectConcept">
             <div class="ui-g">
-                <div class="ui-g-12 ui-md-6 ui-lg-5">
-                    <p:inputText value="#{findConceptBean.pattern}">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:inputText value="#{findConceptBean.pattern}" style="width:90%;" placeholder="Buscar...">
                         <p:ajax event="keyup" update="@(.findConcept)" process="@this" listener="#{findConceptBean.getConceptSearchInputAndCategories(findConceptBean.pattern)}"></p:ajax>
                     </p:inputText>
 
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <p:selectOneMenu value="#{findConceptBean.categorySelected}"
                                      converter="omnifaces.SelectItemsConverter"
                                      effect="fade" var="c" filter="true"
@@ -74,13 +74,13 @@
               hideEffect="fade" resizable="true" style="margin:40px;">
         <p:outputPanel id="selectConceptPanelCreate" styleClass="selectConcept">
             <div class="ui-g">
-                <div class="ui-g-12 ui-md-6 ui-lg-5">
-                    <p:inputText value="#{findConceptBean.pattern}">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:inputText value="#{findConceptBean.pattern}" style="width:90%;" placeholder="Buscar...">
                         <p:ajax event="keyup" update="@(.findConcept)"  process="@this" listener="#{findConceptBean.getConceptSearchInputAndCategories(findConceptBean.pattern)}"></p:ajax>
                     </p:inputText>
 
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <p:selectOneMenu value="#{findConceptBean.categorySelected}"
                                      converter="omnifaces.SelectItemsConverter"
                                      effect="fade" var="c" filter="true"

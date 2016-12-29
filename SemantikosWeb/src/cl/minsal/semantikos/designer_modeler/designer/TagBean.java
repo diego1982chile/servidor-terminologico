@@ -385,6 +385,10 @@ public class TagBean implements Serializable{
         }return false;
     }
 
+    public long conceptContain( Tag tag){
+        return tagManager.conceptContain(tag);
+    }
+
 
 
 
