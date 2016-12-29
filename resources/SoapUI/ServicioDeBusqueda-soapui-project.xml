@@ -1295,7 +1295,7 @@
          <incluyeEstablecimientos>true</incluyeEstablecimientos>\r
       </ser:listaRefSet>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/listaRefSet"/></con:call></con:operation><con:operation id="11c43d5b-b3b9-4611-bb65-b8dc498fc2cf" isOneWay="false" action="" name="obtenerTerminosPedibles" bindingOperationName="obtenerTerminosPedibles" type="Request-Response" outputName="obtenerTerminosPediblesResponse" inputName="obtenerTerminosPedibles" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="05fa4051-bf21-4d51-b3e4-21e226625ebf" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/listaRefSet"/></con:call></con:operation><con:operation id="11c43d5b-b3b9-4611-bb65-b8dc498fc2cf" isOneWay="false" action="" name="obtenerTerminosPedibles" bindingOperationName="obtenerTerminosPedibles" type="Request-Response" outputName="obtenerTerminosPediblesResponse" inputName="obtenerTerminosPedibles" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="05fa4051-bf21-4d51-b3e4-21e226625ebf" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerTerminosPedibles>\r
@@ -1312,7 +1312,7 @@
          </ser:peticionObtenerTerminosPedibles>\r
       </ser:obtenerTerminosPedibles>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/obtenerTerminosPedibles"/></con:call><con:call id="3d150d91-d71f-4d76-a1f6-45c6e15c74b3" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/obtenerTerminosPedibles"/><con:wsrmConfig version="1.2"/></con:call><con:call id="3d150d91-d71f-4d76-a1f6-45c6e15c74b3" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerTerminosPedibles>\r
@@ -1329,7 +1329,7 @@
          </ser:peticionObtenerTerminosPedibles>\r
       </ser:obtenerTerminosPedibles>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/obtenerTerminosPedibles"/></con:call><con:call id="9334823b-b2b9-44d6-a87e-29bf45c36119" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/obtenerTerminosPedibles"/><con:wsrmConfig version="1.2"/></con:call><con:call id="9334823b-b2b9-44d6-a87e-29bf45c36119" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerTerminosPedibles>\r
@@ -1342,7 +1342,7 @@
          </ser:peticionObtenerTerminosPedibles>\r
       </ser:obtenerTerminosPedibles>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/obtenerTerminosPedibles"/></con:call></con:operation><con:operation id="313b3e1d-0b87-47c5-a50d-92b0f899ccca" isOneWay="false" action="" name="refSetsPorIdDescripcion" bindingOperationName="refSetsPorIdDescripcion" type="Request-Response" outputName="refSetsPorIdDescripcionResponse" inputName="refSetsPorIdDescripcion" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="1f239fc1-7bde-4235-89d6-76d74adf3a59" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/obtenerTerminosPedibles"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="313b3e1d-0b87-47c5-a50d-92b0f899ccca" isOneWay="false" action="" name="refSetsPorIdDescripcion" bindingOperationName="refSetsPorIdDescripcion" type="Request-Response" outputName="refSetsPorIdDescripcionResponse" inputName="refSetsPorIdDescripcion" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="1f239fc1-7bde-4235-89d6-76d74adf3a59" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:refSetsPorIdDescripcion>\r
@@ -3061,15 +3061,12 @@
    <soapenv:Body>\r
       <ser:obtenerTerminosPedibles>\r
          <peticionObtenerTerminosPedibles>\r
-            <!--Zero or more repetitions:-->\r
-            <nombreCategoria>Concepto Especial</nombreCategoria>\r
-            <!--Zero or more repetitions:-->\r
-            <nombreRefSet>nuevo refset con conceptos</nombreRefSet>\r
-            <pedible>Si</pedible>\r
-            <!--Optional:-->\r
-            <numeroPagina>0</numeroPagina>\r
-            <!--Optional:-->\r
-            <tamanoPagina>10</tamanoPagina>\r
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreRefSet>Refset 3</nombreRefSet>
+            <nombreRefSet>Refset 4</nombreRefSet>
+            <pedible>false</pedible>\r
          </peticionObtenerTerminosPedibles>\r
       </ser:obtenerTerminosPedibles>\r
    </soapenv:Body>\r
@@ -3115,7 +3112,7 @@
          </peticionRefSetsPorIdDescripcion>\r
       </ser:refSetsPorIdDescripcion>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="c65f94e9-d993-4d08-8c89-cca80d71d5c9" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="06f11fa8-65b4-4b54-83bd-9785c9256393" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/refSetsPorIdDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="b1fee864-b27f-41a0-854b-a5cf202815a3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="conceptoPorId TestCase" searchProperties="true"><con:settings/><con:properties/></con:testCase><con:testCase id="e8906201-03df-427d-9934-fb3ba1b09d86" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="crossmapSets TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="4a244670-ea0b-4a23-922f-0353a46edc25" name="crossmapSets - Request 1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossmapSets</con:operation><con:request name="crossmapSets - Request 1" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="734ebde1-b43b-48af-ad2d-bcb79626d6c7"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="c65f94e9-d993-4d08-8c89-cca80d71d5c9" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="06f11fa8-65b4-4b54-83bd-9785c9256393" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/refSetsPorIdDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="e8906201-03df-427d-9934-fb3ba1b09d86" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="crossmapSets TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="4a244670-ea0b-4a23-922f-0353a46edc25" name="crossmapSets - Request 1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossmapSets</con:operation><con:request name="crossmapSets - Request 1" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="734ebde1-b43b-48af-ad2d-bcb79626d6c7"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:crossmapSets>?</ser:crossmapSets>\r

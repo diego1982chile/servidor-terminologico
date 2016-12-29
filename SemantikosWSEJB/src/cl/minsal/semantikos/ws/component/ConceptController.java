@@ -41,12 +41,12 @@ public class ConceptController {
     private PaginationController paginationController;
     @EJB
     private CategoryController categoryController;
-
     @EJB
     private RefSetController refSetController;
-
     @EJB
     private PendingTermsManager pendingTermManager;
+    @EJB
+    private CrossmapController crossmapController;
 
     /**
      * Este método es responsable de recperar los conceptos relacionados (hijos...) de un concepto que se encuentran en
@@ -255,8 +255,9 @@ public class ConceptController {
         this.loadSnomedCTRelationships(res, conceptSMTK);
         this.loadAttributes(res, conceptSMTK);
         this.loadRefSets(res, conceptSMTK);
+        this.loadIndirectCrossmaps(res, conceptSMTK);
+        this.loadDirectCrossmaps(res, conceptSMTK);
         res.setForREQWS028();
-        // TODO: Agregar crossmaps a la respuesta (Alfonso)
         return res;
     }
 
@@ -354,6 +355,24 @@ public class ConceptController {
             }
             ConceptMapper.appendRefSets(conceptResponse, source);
         }
+        return conceptResponse;
+    }
+
+    public ConceptResponse loadIndirectCrossmaps(@NotNull ConceptResponse res, @NotNull ConceptSMTK conceptSMTK) {
+        if ( res.getIndirectCrossMaps() == null || res.getIndirectCrossMaps().isEmpty() ) {
+            IndirectCrossMapSearchResponse indirectCrossMapSearchResponse = this.crossmapController.getIndirectCrossmapsByDescriptionID(conceptSMTK.getDescriptionFavorite().getDescriptionId());
+            res.setIndirectCrossMaps(indirectCrossMapSearchResponse.getIndirectCrossMapResponses());
+        }
+
+        return res;
+    }
+
+    private ConceptResponse loadDirectCrossmaps(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK conceptSMTK) {
+        if ( conceptResponse.getCrossmapSetMember() == null || conceptResponse.getCrossmapSetMember().isEmpty() ) {
+            CrossmapSetMembersResponse crossmapSetMembersResponse = this.crossmapController.getDirectCrossmapsSetMembersByDescriptionID(conceptSMTK.getDescriptionFavorite().getDescriptionId());
+            conceptResponse.setCrossmapSetMember(crossmapSetMembersResponse.getCrossmapSetMemberResponses());
+        }
+
         return conceptResponse;
     }
 

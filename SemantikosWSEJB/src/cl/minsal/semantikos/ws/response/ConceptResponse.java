@@ -66,12 +66,22 @@ public class ConceptResponse implements Serializable {
     @XmlElement(name = "relacionSnomedCT")
     private List<SnomedCTRelationshipResponse> snomedCTRelationshipResponses;
 
+    @XmlElementWrapper(name = "crossmapsIndirectos")
+    @XmlElement(name = "crossmapIndirecto")
+    private List<IndirectCrossMapResponse> indirectCrossMaps;
+
+    @XmlElementWrapper(name = "crossmapsDirectos")
+    @XmlElement(name = "crossmapDirecto")
+    private List<CrossmapSetMemberResponse> crossmapSetMember;
+
     public ConceptResponse() {
         this.relationships = new ArrayList<>();
         this.attributes = new ArrayList<>();
         this.descriptions = new ArrayList<>();
         this.refsets = new ArrayList<>();
         this.snomedCTRelationshipResponses = new ArrayList<>();
+        this.indirectCrossMaps = new ArrayList<>();
+        this.crossmapSetMember = new ArrayList<>();
     }
 
     public ConceptResponse(ConceptSMTK conceptSMTK) {
@@ -129,6 +139,8 @@ public class ConceptResponse implements Serializable {
         this.isPublished = null;
         this.relationships = null;
         this.refsets = null;
+        this.indirectCrossMaps = null;
+        this.crossmapSetMember = null;
 
         for ( DescriptionResponse descriptionResponse : this.descriptions ) {
             descriptionResponse.setForREQWS002();
@@ -269,6 +281,22 @@ public class ConceptResponse implements Serializable {
 
     public void setSnomedCTRelationshipResponses(List<SnomedCTRelationshipResponse> snomedCTRelationshipResponses) {
         this.snomedCTRelationshipResponses = snomedCTRelationshipResponses;
+    }
+
+    public List<IndirectCrossMapResponse> getIndirectCrossMaps() {
+        return indirectCrossMaps;
+    }
+
+    public void setIndirectCrossMaps(List<IndirectCrossMapResponse> indirectCrossMaps) {
+        this.indirectCrossMaps = indirectCrossMaps;
+    }
+
+    public List<CrossmapSetMemberResponse> getCrossmapSetMember() {
+        return crossmapSetMember;
+    }
+
+    public void setCrossmapSetMember(List<CrossmapSetMemberResponse> crossmapSetMember) {
+        this.crossmapSetMember = crossmapSetMember;
     }
 
     @Override
