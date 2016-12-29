@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project id="c7ffb853-dff4-47fd-ad36-6645be0f1842" activeEnvironment="Default" name="ServicioDeBusqueda" resourceRoot="" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="5a63a0e4-e884-43fe-b981-324b228bb00c" wsaVersion="NONE" name="ServicioDeBusquedaSoapBinding" type="wsdl" bindingName="{http://service.ws.semantikos.minsal.cl/}ServicioDeBusquedaSoapBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/jboss-eap-6.4/standalone/data/wsdl/SemantikosCentralEAR-2.0.0.ear/SemantikosWS-2.0.0.war/ServicioDeBusqueda.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/jboss-eap-6.4/standalone/data/wsdl/SemantikosCentralEAR-2.0.0.ear/SemantikosWS-2.0.0.war/ServicioDeBusqueda.wsdl"><con:part><con:url>file:/C:/jboss-eap-6.4/standalone/data/wsdl/SemantikosCentralEAR-2.0.0.ear/SemantikosWS-2.0.0.war/ServicioDeBusqueda.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="ServicioDeBusqueda" targetNamespace="http://service.ws.semantikos.minsal.cl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ws.semantikos.minsal.cl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+<con:soapui-project id="c7ffb853-dff4-47fd-ad36-6645be0f1842" activeEnvironment="Default" name="ServicioDeBusqueda" resourceRoot="" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="5a63a0e4-e884-43fe-b981-324b228bb00c" wsaVersion="NONE" name="ServicioDeBusquedaSoapBinding" type="wsdl" bindingName="{http://service.ws.semantikos.minsal.cl/}ServicioDeBusquedaSoapBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/jboss-eap-6.4/standalone/data/wsdl/SemantikosCentralEAR-2.2.3.ear/SemantikosWS-2.2.3.war/ServicioDeBusqueda.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/jboss-eap-6.4/standalone/data/wsdl/SemantikosCentralEAR-2.2.3.ear/SemantikosWS-2.2.3.war/ServicioDeBusqueda.wsdl"><con:part><con:url>file:/C:/jboss-eap-6.4/standalone/data/wsdl/SemantikosCentralEAR-2.2.3.ear/SemantikosWS-2.2.3.war/ServicioDeBusqueda.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="ServicioDeBusqueda" targetNamespace="http://service.ws.semantikos.minsal.cl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ws.semantikos.minsal.cl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
   <wsdl:types>
     <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.ws.semantikos.minsal.cl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="atributo" type="tns:Atributo"/>
@@ -11,22 +11,36 @@
       <xs:element name="categoria" type="tns:Categoria"/>
       <xs:element name="columnaTablaAuxiliar" type="tns:ColumnaTablaAuxiliar"/>
       <xs:element name="concepto" type="tns:Concepto"/>
-      <xs:element name="conceptoPorId" type="tns:conceptoPorId"/>
+      <xs:element name="conceptoLight" type="tns:ConceptoLight"/>
       <xs:element name="conceptoPorIdDescripcion" type="tns:conceptoPorIdDescripcion"/>
       <xs:element name="conceptoPorIdDescripcionResponse" type="tns:conceptoPorIdDescripcionResponse"/>
-      <xs:element name="conceptoPorIdResponse" type="tns:conceptoPorIdResponse"/>
       <xs:element name="conceptosPorCategoria" type="tns:conceptosPorCategoria"/>
       <xs:element name="conceptosPorCategoriaResponse" type="tns:conceptosPorCategoriaResponse"/>
       <xs:element name="conceptosPorRefSet" type="tns:conceptosPorRefSet"/>
       <xs:element name="conceptosPorRefSetResponse" type="tns:conceptosPorRefSetResponse"/>
+      <xs:element name="crossMapsDirectosPorIDDescripcion" type="tns:crossMapsDirectosPorIDDescripcion"/>
+      <xs:element name="crossMapsDirectosPorIDDescripcionResponse" type="tns:crossMapsDirectosPorIDDescripcionResponse"/>
+      <xs:element name="crossMapsIndirectosPorIDDescripcion" type="tns:crossMapsIndirectosPorIDDescripcion"/>
+      <xs:element name="crossMapsIndirectosPorIDDescripcionResponse" type="tns:crossMapsIndirectosPorIDDescripcionResponse"/>
+      <xs:element name="crossmapSet" type="tns:CrossmapSet"/>
+      <xs:element name="crossmapSetMember" type="tns:CrossmapSetMember"/>
+      <xs:element name="crossmapSetMembersDeCrossmapSet" type="tns:crossmapSetMembersDeCrossmapSet"/>
+      <xs:element name="crossmapSetMembersDeCrossmapSetResponse" type="tns:crossmapSetMembersDeCrossmapSetResponse"/>
+      <xs:element name="crossmapSetMembersResponse" type="tns:CrossmapSetMembersResponse"/>
+      <xs:element name="crossmapSets" nillable="true" type="xs:anyType"/>
+      <xs:element name="crossmapSetsResponse" type="tns:crossmapSetsResponse"/>
       <xs:element name="definicionObjetivo" type="tns:DefinicionObjetivo"/>
       <xs:element name="definicionRelacion" type="tns:DefinicionRelacion"/>
       <xs:element name="definicionRelacionAtributo" type="tns:DefinicionRelacionAtributo"/>
-      <xs:element name="definicionTipoBasico" type="tns:DefinicionTipoBasico"/>
       <xs:element name="descripcion" type="tns:Descripcion"/>
+      <xs:element name="descripcionNoValida" type="tns:DescripcionNoValida"/>
+      <xs:element name="descripcionPendiente" type="tns:DescripcionPendiente"/>
+      <xs:element name="descripcionPerfectMatch" type="tns:DescripcionPerfectMatch"/>
+      <xs:element name="descripcionSimplificada" type="tns:DescripcionSimplificada"/>
       <xs:element name="descripcionesPreferidasPorRefSet" type="tns:descripcionesPreferidasPorRefSet"/>
       <xs:element name="descripcionesPreferidasPorRefSetResponse" type="tns:descripcionesPreferidasPorRefSetResponse"/>
-      <xs:element name="intervalo" type="tns:Intervalo"/>
+      <xs:element name="indirectCrossmap" type="tns:IndirectCrossmap"/>
+      <xs:element name="indirectCrossmapsSearch" type="tns:IndirectCrossmapsSearch"/>
       <xs:element name="listaCategorias" type="tns:listaCategorias"/>
       <xs:element name="listaCategoriasResponse" type="tns:listaCategoriasResponse"/>
       <xs:element name="listaRefSet" type="tns:listaRefSet"/>
@@ -37,6 +51,7 @@
       <xs:element name="obtenerTerminosPediblesResponse" type="tns:obtenerTerminosPediblesResponse"/>
       <xs:element name="paginacion" type="tns:Paginacion"/>
       <xs:element name="peticionBuscarTermino" type="tns:PeticionBuscarTermino"/>
+      <xs:element name="peticionBuscarTerminoSimple" type="tns:PeticionBuscarTerminoSimple"/>
       <xs:element name="peticionConceptosPorCategoria" type="tns:PeticionConceptosPorCategoria"/>
       <xs:element name="peticionConceptosPorRefSet" type="tns:PeticionConceptosPorRefSet"/>
       <xs:element name="peticionObtenerTerminosPedibles" type="tns:PeticionObtenerTerminosPedibles"/>
@@ -45,15 +60,49 @@
       <xs:element name="refSetsPorIdDescripcion" type="tns:refSetsPorIdDescripcion"/>
       <xs:element name="refSetsPorIdDescripcionResponse" type="tns:refSetsPorIdDescripcionResponse"/>
       <xs:element name="relacion" type="tns:Relacion"/>
+      <xs:element name="relacionSnomedCT" type="tns:RelacionSnomedCT"/>
       <xs:element name="respuestaBuscarTermino" type="tns:RespuestaBuscarTermino"/>
+      <xs:element name="respuestaBuscarTerminoGenerica" type="tns:RespuestaBuscarTerminoGenerica"/>
       <xs:element name="respuestaConceptosPorCategoria" type="tns:RespuestaConceptosPorCategoria"/>
       <xs:element name="respuestaConceptosPorRefSet" type="tns:RespuestaConceptosPorRefSet"/>
-      <xs:element name="respuestaRefSetsPorIdDescripcion" type="tns:RespuestaRefSetsPorIdDescripcion"/>
       <xs:element name="tablaAuxiliar" type="tns:TablaAuxiliar"/>
-      <xs:element name="tagSMTK" type="tns:TagSMTK"/>
-      <xs:element name="tipoObjetivo" type="tns:TipoObjetivo"/>
-      <xs:element name="tipoTipoBasico" type="tns:TipoTipoBasico"/>
       <xs:element name="usuario" type="tns:Usuario"/>
+      <xs:complexType name="crossmapSetMembersDeCrossmapSet">
+        <xs:sequence>
+          <xs:element name="nombreAbreviadoCrossmapSet" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="crossmapSetMembersDeCrossmapSetResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="crossmapSetMember" type="tns:CrossmapSetMembersResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CrossmapSetMembersResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="crossmapSetMembers">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:crossmapSetMember"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CrossmapSetMember">
+        <xs:sequence>
+          <xs:element name="idCrossmapSetMember" type="xs:long"/>
+          <xs:element minOccurs="0" ref="tns:crossmapSet"/>
+          <xs:element minOccurs="0" name="code" type="xs:string"/>
+          <xs:element minOccurs="0" name="gloss" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CrossmapSet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="abbreviatedName" type="xs:string"/>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element name="version" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
       <xs:complexType name="conceptoPorIdDescripcion">
         <xs:sequence>
           <xs:element name="idDescripcion" type="xs:string"/>
@@ -61,7 +110,7 @@
       </xs:complexType>
       <xs:complexType name="conceptoPorIdDescripcionResponse">
         <xs:sequence>
-          <xs:element minOccurs="0" name="return" type="tns:Concepto"/>
+          <xs:element minOccurs="0" ref="tns:concepto"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="Concepto">
@@ -75,7 +124,6 @@
           <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
           <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime"/>
           <xs:element minOccurs="0" name="observacion" type="xs:string"/>
-          <xs:element minOccurs="0" ref="tns:tagSMTK"/>
           <xs:element minOccurs="0" ref="tns:categoria"/>
           <xs:element minOccurs="0" name="refSets">
             <xs:complexType>
@@ -105,11 +153,13 @@
               </xs:sequence>
             </xs:complexType>
           </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="TagSMTK">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="relacionesSnomedCT">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:relacionSnomedCT"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="Categoria">
@@ -117,12 +167,12 @@
           <xs:element minOccurs="0" name="nombre" type="xs:string"/>
           <xs:element minOccurs="0" name="nombreAbreviado" type="xs:string"/>
           <xs:element minOccurs="0" name="restringida" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="vigente" type="xs:boolean"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="RefSet">
         <xs:sequence>
           <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
           <xs:element minOccurs="0" name="validoHasta" type="xs:dateTime"/>
           <xs:element minOccurs="0" name="creadoEn" type="xs:dateTime"/>
           <xs:element minOccurs="0" name="institucion" type="xs:string"/>
@@ -166,15 +216,15 @@
       </xs:complexType>
       <xs:complexType name="Atributo">
         <xs:sequence>
-          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
           <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
           <xs:element minOccurs="0" name="valor" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="Relacion">
         <xs:sequence>
-          <xs:element minOccurs="0" name="definicion" type="tns:DefinicionRelacion"/>
           <xs:element minOccurs="0" ref="tns:objetivo"/>
+          <xs:element minOccurs="0" name="definicion" type="tns:DefinicionRelacion"/>
           <xs:element minOccurs="0" ref="tns:concepto"/>
           <xs:element minOccurs="0" name="atributos">
             <xs:complexType>
@@ -183,6 +233,56 @@
               </xs:sequence>
             </xs:complexType>
           </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Objetivo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+          <xs:element minOccurs="0" name="activo" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="idModulo" type="xs:long"/>
+          <xs:element minOccurs="0" name="estadoDefinicionId" type="xs:long"/>
+          <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="tiempoEfectivo" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="valor" type="xs:string"/>
+          <xs:element minOccurs="0" name="conceptoSMTK" type="tns:Concepto"/>
+          <xs:element minOccurs="0" ref="tns:relacion"/>
+          <xs:element minOccurs="0" ref="tns:tablaAuxiliar"/>
+          <xs:element name="fields">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element minOccurs="0" name="key" type="xs:string"/>
+                      <xs:element minOccurs="0" name="value" type="xs:string"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TablaAuxiliar">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombreTabla" type="xs:string"/>
+          <xs:element minOccurs="0" name="columnaTablaAuxiliar">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="columna" type="tns:ColumnaTablaAuxiliar"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ColumnaTablaAuxiliar">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nombreColumna" type="xs:string"/>
+          <xs:element minOccurs="0" name="esLlavePrimaria" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esBuscable" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="esMostrable" type="xs:boolean"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="DefinicionRelacion">
@@ -223,108 +323,22 @@
           <xs:element minOccurs="0" ref="tns:definicionObjetivo"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="Objetivo">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="tns:tipoObjetivo"/>
-          <xs:element minOccurs="0" name="activo" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="idModulo" type="xs:long"/>
-          <xs:element minOccurs="0" name="estadoDefinicionId" type="xs:long"/>
-          <xs:element minOccurs="0" name="valido" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="tiempoEfectivo" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="valor" type="xs:string"/>
-          <xs:element minOccurs="0" name="conceptoSMTK" type="tns:Concepto"/>
-          <xs:element minOccurs="0" ref="tns:relacion"/>
-          <xs:element minOccurs="0" ref="tns:tablaAuxiliar"/>
-          <xs:element name="fields">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
-                  <xs:complexType>
-                    <xs:sequence>
-                      <xs:element minOccurs="0" name="key" type="xs:string"/>
-                      <xs:element minOccurs="0" name="value" type="xs:string"/>
-                    </xs:sequence>
-                  </xs:complexType>
-                </xs:element>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="TipoObjetivo">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="tipo" type="xs:string"/>
-          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
-          <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
-          <xs:element minOccurs="0" name="definicionesObjetivo">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:definicionObjetivo"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-          <xs:element minOccurs="0" name="definicionesTipoBasico">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:definicionTipoBasico"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="DefinicionTipoBasico">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
-          <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
-          <xs:element minOccurs="0" ref="tns:intervalo"/>
-          <xs:element minOccurs="0" name="tipo" type="tns:TipoTipoBasico"/>
-          <xs:element minOccurs="0" name="dominios">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="dominio" type="xs:string"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Intervalo">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="limiteInferior" type="xs:string"/>
-          <xs:element minOccurs="0" name="limiteSuperior" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="TipoTipoBasico">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="nombreTipo" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="TablaAuxiliar">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
-          <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
-          <xs:element minOccurs="0" name="nombreTabla" type="xs:string"/>
-          <xs:element minOccurs="0" name="columnaTablaAuxiliar">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="columna" type="tns:ColumnaTablaAuxiliar"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="ColumnaTablaAuxiliar">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="nombreColumna" type="xs:string"/>
-          <xs:element minOccurs="0" name="esLlavePrimaria" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="esBuscable" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="esMostrable" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:complexType>
       <xs:complexType name="AtributoRelacion">
         <xs:sequence>
           <xs:element minOccurs="0" ref="tns:objetivo"/>
           <xs:element minOccurs="0" name="definicionAtributoRelacion" type="tns:DefinicionRelacionAtributo"/>
           <xs:element minOccurs="0" ref="tns:relacion"/>
+          <xs:element minOccurs="0" name="tipo" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+          <xs:element minOccurs="0" name="valor" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RelacionSnomedCT">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="tipoRelacion" type="xs:string"/>
+          <xs:element minOccurs="0" name="idConceptoSnomedCT" type="xs:string"/>
+          <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
+          <xs:element minOccurs="0" name="grupo" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="listaRefSet">
@@ -334,7 +348,7 @@
       </xs:complexType>
       <xs:complexType name="listaRefSetResponse">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:RefSet"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:refSet"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="conceptosPorRefSet">
@@ -351,7 +365,7 @@
       </xs:complexType>
       <xs:complexType name="conceptosPorRefSetResponse">
         <xs:sequence>
-          <xs:element minOccurs="0" name="return" type="tns:RespuestaConceptosPorRefSet"/>
+          <xs:element minOccurs="0" ref="tns:respuestaConceptosPorRefSet"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="RespuestaConceptosPorRefSet">
@@ -361,7 +375,7 @@
           <xs:element minOccurs="0" name="conceptos">
             <xs:complexType>
               <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="concepto" type="tns:ConceptoLight"/>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
@@ -374,6 +388,14 @@
           <xs:element minOccurs="0" name="registrosPorPagina" type="xs:int"/>
           <xs:element minOccurs="0" name="mostrandoDesde" type="xs:int"/>
           <xs:element minOccurs="0" name="mostrandoHasta" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConceptoLight">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="conceptID" type="xs:string"/>
+          <xs:element minOccurs="0" name="idDescripcionPreferida" type="xs:string"/>
+          <xs:element minOccurs="0" name="descripcionPreferida" type="xs:string"/>
+          <xs:element minOccurs="0" name="categoria" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="buscarTruncatePerfect">
@@ -392,7 +414,7 @@
       </xs:complexType>
       <xs:complexType name="buscarTruncatePerfectResponse">
         <xs:sequence>
-          <xs:element minOccurs="0" name="return" type="tns:RespuestaBuscarTermino"/>
+          <xs:element minOccurs="0" ref="tns:respuestaBuscarTermino"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="RespuestaBuscarTermino">
@@ -401,20 +423,32 @@
           <xs:element minOccurs="0" name="conceptos">
             <xs:complexType>
               <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="concepto" type="tns:ConceptoLight"/>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="conceptoPorId">
+      <xs:complexType name="crossmapSets">
         <xs:sequence>
-          <xs:element name="idConcepto" type="xs:string"/>
+          <xs:element name="idInstitucion" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="conceptoPorIdResponse">
+      <xs:complexType name="crossmapSetsResponse">
         <xs:sequence>
-          <xs:element minOccurs="0" name="return" type="tns:Concepto"/>
+          <xs:element minOccurs="0" name="crossmapSet" type="tns:CrossmapSets"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CrossmapSets">
+        <xs:sequence>
+          <xs:element name="cantidadRegistros" type="xs:int"/>
+          <xs:element minOccurs="0" name="crossmapSets">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:crossmapSet"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="refSetsPorIdDescripcion">
@@ -430,25 +464,7 @@
       </xs:complexType>
       <xs:complexType name="refSetsPorIdDescripcionResponse">
         <xs:sequence>
-          <xs:element minOccurs="0" name="return" type="tns:RespuestaRefSetsPorIdDescripcion"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="RespuestaRefSetsPorIdDescripcion">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="refSets">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:refSet"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-          <xs:element minOccurs="0" name="conceptos">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="refset" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="listaCategorias">
@@ -456,7 +472,17 @@
       </xs:complexType>
       <xs:complexType name="listaCategoriasResponse">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:Categoria"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:categoria"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="crossMapsDirectosPorIDDescripcion">
+        <xs:sequence>
+          <xs:element name="DescripcionID" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="crossMapsDirectosPorIDDescripcionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="crossmapSetMember" type="tns:CrossmapSetMembersResponse"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="conceptosPorCategoria">
@@ -473,7 +499,7 @@
       </xs:complexType>
       <xs:complexType name="conceptosPorCategoriaResponse">
         <xs:sequence>
-          <xs:element minOccurs="0" name="return" type="tns:RespuestaConceptosPorCategoria"/>
+          <xs:element minOccurs="0" ref="tns:respuestaConceptosPorCategoria"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="RespuestaConceptosPorCategoria">
@@ -496,7 +522,7 @@
       </xs:complexType>
       <xs:complexType name="descripcionesPreferidasPorRefSetResponse">
         <xs:sequence>
-          <xs:element minOccurs="0" name="return" type="tns:RespuestaConceptosPorRefSet"/>
+          <xs:element minOccurs="0" ref="tns:respuestaConceptosPorRefSet"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="obtenerTerminosPedibles">
@@ -509,23 +535,133 @@
           <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreCategoria" type="xs:string"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
           <xs:element name="pedible" type="xs:string"/>
-          <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
-          <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="obtenerTerminosPediblesResponse">
         <xs:sequence>
-          <xs:element minOccurs="0" name="return" type="tns:RespuestaBuscarTermino"/>
+          <xs:element minOccurs="0" ref="tns:respuestaBuscarTermino"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="buscarTermino">
         <xs:sequence>
-          <xs:element ref="tns:peticionBuscarTermino"/>
+          <xs:element name="peticionBuscarTermino" type="tns:PeticionBuscarTerminoSimple"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PeticionBuscarTerminoSimple">
+        <xs:sequence>
+          <xs:element name="termino" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreCategoria" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="buscarTerminoResponse">
         <xs:sequence>
-          <xs:element minOccurs="0" name="return" type="tns:RespuestaBuscarTermino"/>
+          <xs:element minOccurs="0" name="respuestaBuscarTermino" type="tns:RespuestaBuscarTerminoGenerica"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RespuestaBuscarTerminoGenerica">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="descripcionesPerfectMatch">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:descripcionPerfectMatch"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="descripcionesNoValidas">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:descripcionNoValida"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="descripcionesPendientes">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:descripcionPendiente"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DescripcionPerfectMatch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="idConcepto" type="xs:string"/>
+          <xs:element minOccurs="0" name="idDescripcion" type="xs:string"/>
+          <xs:element minOccurs="0" name="termino" type="xs:string"/>
+          <xs:element minOccurs="0" name="tipoDescripcion" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombreCategoria" type="xs:string"/>
+          <xs:element minOccurs="0" name="terminoPreferido" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DescripcionNoValida">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="razonNoValido" type="xs:string"/>
+          <xs:element minOccurs="0" name="validez" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="descripcionesSugeridas">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="descripcionSugerida" type="tns:DescripcionPerfectMatch"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="cantidadRegistros" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DescripcionPendiente">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="terminoPreferido" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombreCategoria" type="xs:string"/>
+          <xs:element minOccurs="0" name="pendienteCodificacion" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="validez" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="descripciones">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="descripcion" type="tns:DescripcionSimplificada"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DescripcionSimplificada">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="idConcepto" type="xs:string"/>
+          <xs:element minOccurs="0" name="idDescripcion" type="xs:string"/>
+          <xs:element minOccurs="0" name="termino" type="xs:string"/>
+          <xs:element minOccurs="0" name="tipoDescripcion" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="crossMapsIndirectosPorIDDescripcion">
+        <xs:sequence>
+          <xs:element name="DescripcionID" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="crossMapsIndirectosPorIDDescripcionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="indirectCrossmaps" type="tns:IndirectCrossmapsSearch"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="IndirectCrossmapsSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="indirectCrossmaps">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:indirectCrossmap"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="IndirectCrossmap">
+        <xs:sequence>
+          <xs:element name="mapGroup" type="xs:int"/>
+          <xs:element name="mapPriority" type="xs:int"/>
+          <xs:element minOccurs="0" name="mapRule" type="xs:string"/>
+          <xs:element minOccurs="0" name="mapAdvice" type="xs:string"/>
+          <xs:element minOccurs="0" name="mapTarget" type="xs:string"/>
+          <xs:element name="correlation" type="xs:long"/>
+          <xs:element name="idCrossmapCategory" type="xs:long"/>
+          <xs:element name="state" type="xs:boolean"/>
         </xs:sequence>
       </xs:complexType>
       <xs:element name="NotFoundFault" type="tns:NotFoundFault"/>
@@ -542,11 +678,11 @@
       </xs:complexType>
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name="conceptosPorRefSetResponse">
-    <wsdl:part element="tns:conceptosPorRefSetResponse" name="parameters"></wsdl:part>
+  <wsdl:message name="crossMapsIndirectosPorIDDescripcion">
+    <wsdl:part element="tns:crossMapsIndirectosPorIDDescripcion" name="parameters"></wsdl:part>
   </wsdl:message>
-  <wsdl:message name="conceptoPorId">
-    <wsdl:part element="tns:conceptoPorId" name="parameters"></wsdl:part>
+  <wsdl:message name="crossmapSetsResponse">
+    <wsdl:part element="tns:crossmapSetsResponse" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:message name="buscarTermino">
     <wsdl:part element="tns:buscarTermino" name="parameters"></wsdl:part>
@@ -556,9 +692,6 @@
   </wsdl:message>
   <wsdl:message name="listaCategorias">
     <wsdl:part element="tns:listaCategorias" name="parameters"></wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="listaRefSet">
-    <wsdl:part element="tns:listaRefSet" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:message name="buscarTruncatePerfect">
     <wsdl:part element="tns:buscarTruncatePerfect" name="parameters"></wsdl:part>
@@ -572,23 +705,14 @@
   <wsdl:message name="buscarTruncatePerfectResponse">
     <wsdl:part element="tns:buscarTruncatePerfectResponse" name="parameters"></wsdl:part>
   </wsdl:message>
-  <wsdl:message name="refSetsPorIdDescripcionResponse">
-    <wsdl:part element="tns:refSetsPorIdDescripcionResponse" name="parameters"></wsdl:part>
+  <wsdl:message name="crossmapSetMembersDeCrossmapSet">
+    <wsdl:part element="tns:crossmapSetMembersDeCrossmapSet" name="parameters"></wsdl:part>
   </wsdl:message>
-  <wsdl:message name="listaRefSetResponse">
-    <wsdl:part element="tns:listaRefSetResponse" name="parameters"></wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="conceptoPorIdResponse">
-    <wsdl:part element="tns:conceptoPorIdResponse" name="parameters"></wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="conceptosPorCategoria">
-    <wsdl:part element="tns:conceptosPorCategoria" name="parameters"></wsdl:part>
+  <wsdl:message name="crossMapsDirectosPorIDDescripcion">
+    <wsdl:part element="tns:crossMapsDirectosPorIDDescripcion" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:message name="listaCategoriasResponse">
     <wsdl:part element="tns:listaCategoriasResponse" name="parameters"></wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="conceptosPorCategoriaResponse">
-    <wsdl:part element="tns:conceptosPorCategoriaResponse" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:message name="buscarTerminoResponse">
     <wsdl:part element="tns:buscarTerminoResponse" name="parameters"></wsdl:part>
@@ -599,22 +723,56 @@
   <wsdl:message name="refSetsPorIdDescripcion">
     <wsdl:part element="tns:refSetsPorIdDescripcion" name="parameters"></wsdl:part>
   </wsdl:message>
-  <wsdl:message name="descripcionesPreferidasPorRefSetResponse">
-    <wsdl:part element="tns:descripcionesPreferidasPorRefSetResponse" name="parameters"></wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="NotFoundFault">
-    <wsdl:part element="tns:NotFoundFault" name="NotFoundFault"></wsdl:part>
+  <wsdl:message name="crossmapSets">
+    <wsdl:part element="tns:crossmapSets" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:message name="IllegalInputFault">
     <wsdl:part element="tns:IllegalInputFault" name="IllegalInputFault"></wsdl:part>
   </wsdl:message>
+  <wsdl:message name="NotFoundFault">
+    <wsdl:part element="tns:NotFoundFault" name="NotFoundFault"></wsdl:part>
+  </wsdl:message>
   <wsdl:message name="descripcionesPreferidasPorRefSet">
     <wsdl:part element="tns:descripcionesPreferidasPorRefSet" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conceptosPorRefSetResponse">
+    <wsdl:part element="tns:conceptosPorRefSetResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="crossMapsDirectosPorIDDescripcionResponse">
+    <wsdl:part element="tns:crossMapsDirectosPorIDDescripcionResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listaRefSet">
+    <wsdl:part element="tns:listaRefSet" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="crossmapSetMembersDeCrossmapSetResponse">
+    <wsdl:part element="tns:crossmapSetMembersDeCrossmapSetResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="refSetsPorIdDescripcionResponse">
+    <wsdl:part element="tns:refSetsPorIdDescripcionResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listaRefSetResponse">
+    <wsdl:part element="tns:listaRefSetResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conceptosPorCategoria">
+    <wsdl:part element="tns:conceptosPorCategoria" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="conceptosPorCategoriaResponse">
+    <wsdl:part element="tns:conceptosPorCategoriaResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="descripcionesPreferidasPorRefSetResponse">
+    <wsdl:part element="tns:descripcionesPreferidasPorRefSetResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="crossMapsIndirectosPorIDDescripcionResponse">
+    <wsdl:part element="tns:crossMapsIndirectosPorIDDescripcionResponse" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:message name="conceptosPorRefSet">
     <wsdl:part element="tns:conceptosPorRefSet" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:portType name="SearchService">
+    <wsdl:operation name="crossmapSetMembersDeCrossmapSet">
+      <wsdl:input message="tns:crossmapSetMembersDeCrossmapSet" name="crossmapSetMembersDeCrossmapSet"></wsdl:input>
+      <wsdl:output message="tns:crossmapSetMembersDeCrossmapSetResponse" name="crossmapSetMembersDeCrossmapSetResponse"></wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="conceptoPorIdDescripcion">
       <wsdl:input message="tns:conceptoPorIdDescripcion" name="conceptoPorIdDescripcion"></wsdl:input>
       <wsdl:output message="tns:conceptoPorIdDescripcionResponse" name="conceptoPorIdDescripcionResponse"></wsdl:output>
@@ -636,18 +794,24 @@
       <wsdl:fault message="tns:IllegalInputFault" name="IllegalInputFault"></wsdl:fault>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault"></wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="conceptoPorId">
-      <wsdl:input message="tns:conceptoPorId" name="conceptoPorId"></wsdl:input>
-      <wsdl:output message="tns:conceptoPorIdResponse" name="conceptoPorIdResponse"></wsdl:output>
-      <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault"></wsdl:fault>
+    <wsdl:operation name="crossmapSets">
+      <wsdl:input message="tns:crossmapSets" name="crossmapSets"></wsdl:input>
+      <wsdl:output message="tns:crossmapSetsResponse" name="crossmapSetsResponse"></wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="refSetsPorIdDescripcion">
       <wsdl:input message="tns:refSetsPorIdDescripcion" name="refSetsPorIdDescripcion"></wsdl:input>
       <wsdl:output message="tns:refSetsPorIdDescripcionResponse" name="refSetsPorIdDescripcionResponse"></wsdl:output>
+      <wsdl:fault message="tns:IllegalInputFault" name="IllegalInputFault"></wsdl:fault>
+      <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault"></wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="listaCategorias">
       <wsdl:input message="tns:listaCategorias" name="listaCategorias"></wsdl:input>
       <wsdl:output message="tns:listaCategoriasResponse" name="listaCategoriasResponse"></wsdl:output>
+      <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="crossMapsDirectosPorIDDescripcion">
+      <wsdl:input message="tns:crossMapsDirectosPorIDDescripcion" name="crossMapsDirectosPorIDDescripcion"></wsdl:input>
+      <wsdl:output message="tns:crossMapsDirectosPorIDDescripcionResponse" name="crossMapsDirectosPorIDDescripcionResponse"></wsdl:output>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault"></wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="conceptosPorCategoria">
@@ -671,9 +835,23 @@
       <wsdl:fault message="tns:IllegalInputFault" name="IllegalInputFault"></wsdl:fault>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault"></wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="crossMapsIndirectosPorIDDescripcion">
+      <wsdl:input message="tns:crossMapsIndirectosPorIDDescripcion" name="crossMapsIndirectosPorIDDescripcion"></wsdl:input>
+      <wsdl:output message="tns:crossMapsIndirectosPorIDDescripcionResponse" name="crossMapsIndirectosPorIDDescripcionResponse"></wsdl:output>
+      <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault"></wsdl:fault>
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ServicioDeBusquedaSoapBinding" type="tns:SearchService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="crossmapSetMembersDeCrossmapSet">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="crossmapSetMembersDeCrossmapSet">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="crossmapSetMembersDeCrossmapSetResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="conceptoPorIdDescripcion">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="conceptoPorIdDescripcion">
@@ -725,17 +903,14 @@
         <soap:fault name="NotFoundFault" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="conceptoPorId">
+    <wsdl:operation name="crossmapSets">
       <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="conceptoPorId">
+      <wsdl:input name="crossmapSets">
         <soap:body use="literal"/>
       </wsdl:input>
-      <wsdl:output name="conceptoPorIdResponse">
+      <wsdl:output name="crossmapSetsResponse">
         <soap:body use="literal"/>
       </wsdl:output>
-      <wsdl:fault name="NotFoundFault">
-        <soap:fault name="NotFoundFault" use="literal"/>
-      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="listaCategorias">
       <soap:operation soapAction="" style="document"/>
@@ -757,6 +932,24 @@
       <wsdl:output name="refSetsPorIdDescripcionResponse">
         <soap:body use="literal"/>
       </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault name="IllegalInputFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault name="NotFoundFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="crossMapsDirectosPorIDDescripcion">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="crossMapsDirectosPorIDDescripcion">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="crossMapsDirectosPorIDDescripcionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault name="NotFoundFault" use="literal"/>
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="conceptosPorCategoria">
       <soap:operation soapAction="" style="document"/>
@@ -809,6 +1002,18 @@
         <soap:fault name="NotFoundFault" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="crossMapsIndirectosPorIDDescripcion">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="crossMapsIndirectosPorIDDescripcion">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="crossMapsIndirectosPorIDDescripcionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NotFoundFault">
+        <soap:fault name="NotFoundFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="ServicioDeBusqueda">
     <wsdl:port binding="tns:ServicioDeBusquedaSoapBinding" name="SearchServicePort">
@@ -849,6 +1054,19 @@
          </ser:peticionBuscarTermino>\r
       </ser:buscarTermino>\r
    </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/></con:call><con:call id="9edb7570-cc14-4a51-a913-97cd1d275fa1" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>?</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>?</nombreCategoria>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreRefSet>?</nombreRefSet>\r
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/></con:call></con:operation><con:operation id="cc2b5471-887a-47a7-9740-d8d1079fb203" isOneWay="false" action="" name="buscarTruncatePerfect" bindingOperationName="buscarTruncatePerfect" type="Request-Response" outputName="buscarTruncatePerfectResponse" inputName="buscarTruncatePerfect" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="38ceb0d3-0521-4dfa-b1de-63ced4c0d551" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
@@ -883,6 +1101,23 @@
          </ser:peticionBuscarTermino>\r
       </ser:buscarTruncatePerfect>\r
    </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTruncatePerfect"/></con:call><con:call id="54f09e86-15d1-4e88-aa1c-5f6563fa4bc2" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTruncatePerfect>\r
+         <ser:peticionBuscarTermino>\r
+            <termino>?</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>?</nombreCategoria>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreRefSet>?</nombreRefSet>\r
+            <!--Optional:-->\r
+            <numeroPagina>0</numeroPagina>\r
+            <!--Optional:-->\r
+            <tamanoPagina>10</tamanoPagina>\r
+         </ser:peticionBuscarTermino>\r
+      </ser:buscarTruncatePerfect>\r
+   </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTruncatePerfect"/></con:call></con:operation><con:operation id="0efba693-3449-4c7f-83e6-00d1418c4f0f" isOneWay="false" action="" name="conceptoPorIdDescripcion" bindingOperationName="conceptoPorIdDescripcion" type="Request-Response" outputName="conceptoPorIdDescripcionResponse" inputName="conceptoPorIdDescripcion" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d9d62cee-c44a-41c8-91db-a6fa211b4631" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
@@ -891,6 +1126,13 @@
       </ser:conceptoPorIdDescripcion>\r
    </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/conceptoPorIdDescripcion"/><con:wsrmConfig version="1.2"/></con:call><con:call id="6de0ef05-96c0-4a83-ac49-8b3a4cfae755" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptoPorIdDescripcion>\r
+         <idDescripcion>?</idDescripcion>\r
+      </ser:conceptoPorIdDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/conceptoPorIdDescripcion"/></con:call><con:call id="4cec27af-fa18-4892-82e8-5c20a2798b79" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:conceptoPorIdDescripcion>\r
@@ -911,6 +1153,19 @@
       </ser:conceptosPorCategoria>\r
    </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/conceptosPorCategoria"/><con:wsrmConfig version="1.2"/></con:call><con:call id="a2d01e80-b097-4d68-aa10-4a0c3c2b8c87" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorCategoria>\r
+         <ser:peticionConceptosPorCategoria>\r
+            <nombreCategoria>?</nombreCategoria>\r
+            <!--Optional:-->\r
+            <numeroPagina>0</numeroPagina>\r
+            <!--Optional:-->\r
+            <tamanoPagina>10</tamanoPagina>\r
+         </ser:peticionConceptosPorCategoria>\r
+      </ser:conceptosPorCategoria>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/conceptosPorCategoria"/></con:call><con:call id="60cabbe9-c971-4bc3-9eb0-95c4170d4d54" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:conceptosPorCategoria>\r
@@ -949,6 +1204,19 @@
          </ser:peticionConceptosPorRefSet>\r
       </ser:conceptosPorRefSet>\r
    </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/conceptosPorRefSet"/></con:call><con:call id="b1f6de1e-2b43-4396-9d44-a80d19cfe17b" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:conceptosPorRefSet>\r
+         <ser:peticionConceptosPorRefSet>\r
+            <nombreRefSet>?</nombreRefSet>\r
+            <!--Optional:-->\r
+            <numeroPagina>0</numeroPagina>\r
+            <!--Optional:-->\r
+            <tamanoPagina>10</tamanoPagina>\r
+         </ser:peticionConceptosPorRefSet>\r
+      </ser:conceptosPorRefSet>\r
+   </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/conceptosPorRefSet"/></con:call></con:operation><con:operation id="3cbdb5f9-325f-415c-a3e2-2d5b3555f980" isOneWay="false" action="" name="descripcionesPreferidasPorRefSet" bindingOperationName="descripcionesPreferidasPorRefSet" type="Request-Response" outputName="descripcionesPreferidasPorRefSetResponse" inputName="descripcionesPreferidasPorRefSet" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ed118c25-da46-4bfd-b29f-e67d311651ec" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
@@ -975,12 +1243,30 @@
          </ser:peticionConceptosPorRefSet>\r
       </ser:descripcionesPreferidasPorRefSet>\r
    </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/descripcionesPreferidasPorRefSet"/></con:call><con:call id="8dcbe06a-9c0a-4391-957f-75446b08c6eb" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:descripcionesPreferidasPorRefSet>\r
+         <ser:peticionConceptosPorRefSet>\r
+            <nombreRefSet>?</nombreRefSet>\r
+            <!--Optional:-->\r
+            <numeroPagina>0</numeroPagina>\r
+            <!--Optional:-->\r
+            <tamanoPagina>10</tamanoPagina>\r
+         </ser:peticionConceptosPorRefSet>\r
+      </ser:descripcionesPreferidasPorRefSet>\r
+   </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/descripcionesPreferidasPorRefSet"/></con:call></con:operation><con:operation id="244ee3d9-9ab1-4c42-bb19-22c4ab13cfc2" isOneWay="false" action="" name="listaCategorias" bindingOperationName="listaCategorias" type="Request-Response" outputName="listaCategoriasResponse" inputName="listaCategorias" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="e4807ff8-ce15-47b9-8d0a-b02635ae7805" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:listaCategorias/>\r
    </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/listaCategorias"/></con:call><con:call id="66e4a101-34eb-45a7-a6cd-c4fc527f4040" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:listaCategorias/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/listaCategorias"/></con:call><con:call id="e88746a9-90e6-482c-a764-9b333e8371f7" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:listaCategorias/>\r
@@ -994,6 +1280,14 @@
       </ser:listaRefSet>\r
    </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/listaRefSet"/><con:wsrmConfig version="1.2"/></con:call><con:call id="358f44bf-7d74-4d59-b345-bdb60508efd4" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:listaRefSet>\r
+         <!--Optional:-->\r
+         <incluyeEstablecimientos>true</incluyeEstablecimientos>\r
+      </ser:listaRefSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/listaRefSet"/></con:call><con:call id="0692dd36-9916-4415-8057-cc95a8c5e582" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:listaRefSet>\r
@@ -1035,6 +1329,19 @@
          </ser:peticionObtenerTerminosPedibles>\r
       </ser:obtenerTerminosPedibles>\r
    </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/obtenerTerminosPedibles"/></con:call><con:call id="9334823b-b2b9-44d6-a87e-29bf45c36119" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerTerminosPedibles>\r
+         <ser:peticionObtenerTerminosPedibles>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>?</nombreCategoria>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreRefSet>?</nombreRefSet>\r
+            <pedible>?</pedible>\r
+         </ser:peticionObtenerTerminosPedibles>\r
+      </ser:obtenerTerminosPedibles>\r
+   </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/obtenerTerminosPedibles"/></con:call></con:operation><con:operation id="313b3e1d-0b87-47c5-a50d-92b0f899ccca" isOneWay="false" action="" name="refSetsPorIdDescripcion" bindingOperationName="refSetsPorIdDescripcion" type="Request-Response" outputName="refSetsPorIdDescripcionResponse" inputName="refSetsPorIdDescripcion" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="1f239fc1-7bde-4235-89d6-76d74adf3a59" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
@@ -1059,14 +1366,45 @@
          </ser:peticionRefSetsPorIdDescripcion>\r
       </ser:refSetsPorIdDescripcion>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/refSetsPorIdDescripcion"/></con:call></con:operation><con:operation id="978960d9-7c1f-4233-8fc4-eb71ca871fcc" isOneWay="false" action="" name="conceptoPorId" bindingOperationName="conceptoPorId" type="Request-Response" outputName="conceptoPorIdResponse" inputName="conceptoPorId" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ed972077-5494-48b6-8693-95a73f600271" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/refSetsPorIdDescripcion"/></con:call><con:call id="eb66761c-9f0b-4b6b-b972-a9222abfa599" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
-      <ser:conceptoPorId>\r
-         <idConcepto>?</idConcepto>\r
-      </ser:conceptoPorId>\r
+      <ser:refSetsPorIdDescripcion>\r
+         <ser:peticionRefSetsPorIdDescripcion>\r
+            <!--1 or more repetitions:-->\r
+            <idDescripcion>?</idDescripcion>\r
+            <!--Optional:-->\r
+            <incluyeEstablecimientos>true</incluyeEstablecimientos>\r
+         </ser:peticionRefSetsPorIdDescripcion>\r
+      </ser:refSetsPorIdDescripcion>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/conceptoPorId"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="8a813a4f-b9e7-4aaf-85c3-47bf3c8adcb8" name="ServicioDeBusquedaSoapBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="4da6e7c9-723d-4de1-939f-9a48bc1181eb" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="buscarTermino TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="e22efc58-7c97-425c-871b-960a24d1f617" name="buscarTermino"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/refSetsPorIdDescripcion"/></con:call></con:operation><con:operation id="c9c94192-16f1-4a65-8898-a5cce4040c34" isOneWay="false" action="" name="crossmapSetMembersDeCrossmapSet" bindingOperationName="crossmapSetMembersDeCrossmapSet" type="Request-Response" outputName="crossmapSetMembersDeCrossmapSetResponse" inputName="crossmapSetMembersDeCrossmapSet" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="3fd39d6a-5967-43b7-8562-1fbedf9433d4" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossmapSetMembersDeCrossmapSet>\r
+         <nombreAbreviadoCrossmapSet>?</nombreAbreviadoCrossmapSet>\r
+      </ser:crossmapSetMembersDeCrossmapSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossmapSetMembersDeCrossmapSet"/></con:call></con:operation><con:operation id="e35abd46-41e0-4f06-a24a-9441fb41c2ff" isOneWay="false" action="" name="crossmapSets" bindingOperationName="crossmapSets" type="Request-Response" outputName="crossmapSetsResponse" inputName="crossmapSets" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="b21ca39c-154d-4551-b884-d91ef85d4199" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossmapSets>?</ser:crossmapSets>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossmapSets"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="bc1aed5e-87e9-4e09-8c68-4ea00a0b0a0e" isOneWay="false" action="" name="crossMapsDirectosPorIDDescripcion" bindingOperationName="crossMapsDirectosPorIDDescripcion" type="Request-Response" outputName="crossMapsDirectosPorIDDescripcionResponse" inputName="crossMapsDirectosPorIDDescripcion" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="2c9e964e-7f69-423e-ac7a-f7d608aa4b40" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossMapsDirectosPorIDDescripcion>\r
+         <DescripcionID>?</DescripcionID>\r
+      </ser:crossMapsDirectosPorIDDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossMapsDirectosPorIDDescripcion"/></con:call></con:operation><con:operation id="0e95d403-17ff-457d-8ddb-470a61d2a277" isOneWay="false" action="" name="crossMapsIndirectosPorIDDescripcion" bindingOperationName="crossMapsIndirectosPorIDDescripcion" type="Request-Response" outputName="crossMapsIndirectosPorIDDescripcionResponse" inputName="crossMapsIndirectosPorIDDescripcion" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="35fd80bd-a0e7-409a-995a-8de35637f33c" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossMapsIndirectosPorIDDescripcion>\r
+         <DescripcionID>?</DescripcionID>\r
+      </ser:crossMapsIndirectosPorIDDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossMapsIndirectosPorIDDescripcion"/></con:call></con:operation></con:interface><con:testSuite id="8a813a4f-b9e7-4aaf-85c3-47bf3c8adcb8" name="ServicioDeBusquedaSoapBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="4da6e7c9-723d-4de1-939f-9a48bc1181eb" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="buscarTermino TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="e22efc58-7c97-425c-871b-960a24d1f617" name="buscarTermino"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:buscarTermino>\r
@@ -2412,6 +2750,55 @@
          </peticionBuscarTermino>\r
       </ser:buscarTermino>\r
    </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="1a4c3646-5bea-4ac4-b8d2-fee7d8b9da89" name="buscarTermino36"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTermino</con:operation><con:request name="buscarTermino36" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c2c8949a-d9f9-468e-9685-6576c6ec9c36"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:buscarTermino>\r
+         <peticionBuscarTermino>\r
+            <termino>lamivudina</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreCategoria>Ambiente o localización geográfica</nombreCategoria>
+            <nombreCategoria>Áreas institucionales</nombreCategoria>
+            <nombreCategoria>Calificador</nombreCategoria>
+            <nombreCategoria>Concepto Especial</nombreCategoria>
+            <nombreCategoria>Contexto Social</nombreCategoria>
+            <nombreCategoria>Dispositivos Medicos</nombreCategoria>
+            <nombreCategoria>Elemento de Registro</nombreCategoria>
+            <nombreCategoria>Entidad Observable</nombreCategoria>
+            <nombreCategoria>Especialidad</nombreCategoria>
+            <nombreCategoria>Espécimen</nombreCategoria>
+            <nombreCategoria>Estadificación y Escalas</nombreCategoria>
+            <nombreCategoria>Estructura Corporal</nombreCategoria>
+            <nombreCategoria>Evento</nombreCategoria>
+            <nombreCategoria>Fármacos - Familia de Productos</nombreCategoria>
+            <nombreCategoria>Fármacos - Grupo de Familia de Producto</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Básico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico</nombreCategoria>
+            <nombreCategoria>Fármacos - Medicamento Clínico con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial</nombreCategoria>
+            <nombreCategoria>Fármacos - Producto Comercial con Envase</nombreCategoria>
+            <nombreCategoria>Fármacos - Sustancia</nombreCategoria>
+            <nombreCategoria>Fuerza Física</nombreCategoria>
+            <nombreCategoria>Imagenología</nombreCategoria>
+            <nombreCategoria>Indicaciones de Laboratorio</nombreCategoria>
+            <nombreCategoria>Indicaciones Generales</nombreCategoria>
+            <nombreCategoria>Insumos</nombreCategoria>
+            <nombreCategoria>Interconsultas</nombreCategoria>
+            <nombreCategoria>Objeto Físico</nombreCategoria>
+            <nombreCategoria>Organismo</nombreCategoria>
+            <nombreCategoria>Problemas</nombreCategoria>
+            <nombreCategoria>Procedimientos</nombreCategoria>
+            <nombreCategoria>Profesión</nombreCategoria>
+            <nombreCategoria>Subespecialidad</nombreCategoria>
+            <!--Zero or more repetitions:-->\r
+            <!--<nombreRefSet>nuevo refset</nombreRefSet>\r-->
+            <!--Optional:-->\r
+            <!--<numeroPagina>0</numeroPagina>\r-->
+            <!--Optional:-->\r
+            <!--<tamanoPagina>10</tamanoPagina>\r-->
+         </peticionBuscarTermino>\r
+      </ser:buscarTermino>\r
+   </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="a10c35e4-d13d-42ac-98bf-adf430f4f0bc" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="942c0d9e-8a19-49e5-a8ac-b6c2eac94c87" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/buscarTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="6b0e2e01-8676-47d4-a283-7b26e7f1ab6c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="buscarTruncatePerfect TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="db306163-3e18-4032-9f3a-ef95d12607cb" name="buscarTruncatePerfect"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>buscarTruncatePerfect</con:operation><con:request name="buscarTruncatePerfect" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e4d9c9c-d755-4288-b741-9abfca42b9c1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
@@ -2531,7 +2918,7 @@
          <idDescripcion>10149e64-1</idDescripcion>
       </ser:conceptoPorIdDescripcion>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="c631c8e8-256d-443e-ad13-1f405b15a07a" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="22e7719c-f880-4327-b382-9af149aa7db0" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/conceptoPorIdDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="6e4ac3a8-9959-40e5-90d0-577fe99284a2" name="conceptoPorIdDescripcion4"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>conceptoPorIdDescripcion</con:operation><con:request name="conceptoPorIdDescripcion4" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="4bb7d336-5f91-4971-82e6-157ad3166be5"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="c631c8e8-256d-443e-ad13-1f405b15a07a" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/conceptoPorIdDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="6e4ac3a8-9959-40e5-90d0-577fe99284a2" name="conceptoPorIdDescripcion4"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>conceptoPorIdDescripcion</con:operation><con:request name="conceptoPorIdDescripcion4" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="4bb7d336-5f91-4971-82e6-157ad3166be5"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:conceptoPorIdDescripcion>\r
@@ -2728,11 +3115,99 @@
          </peticionRefSetsPorIdDescripcion>\r
       </ser:refSetsPorIdDescripcion>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="c65f94e9-d993-4d08-8c89-cca80d71d5c9" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="06f11fa8-65b4-4b54-83bd-9785c9256393" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/refSetsPorIdDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="b1fee864-b27f-41a0-854b-a5cf202815a3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="conceptoPorId TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="6c30276f-444e-4e8c-8c74-38ff8d4db311" name="conceptoPorId"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>conceptoPorId</con:operation><con:request name="conceptoPorId" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="eef5f885-bd7e-4075-bba2-24838da15ba6"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="c65f94e9-d993-4d08-8c89-cca80d71d5c9" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="06f11fa8-65b4-4b54-83bd-9785c9256393" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/refSetsPorIdDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="b1fee864-b27f-41a0-854b-a5cf202815a3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="conceptoPorId TestCase" searchProperties="true"><con:settings/><con:properties/></con:testCase><con:testCase id="e8906201-03df-427d-9934-fb3ba1b09d86" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="crossmapSets TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="4a244670-ea0b-4a23-922f-0353a46edc25" name="crossmapSets - Request 1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossmapSets</con:operation><con:request name="crossmapSets - Request 1" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="734ebde1-b43b-48af-ad2d-bcb79626d6c7"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
-      <ser:conceptoPorId>\r
-         <idConcepto>?</idConcepto>\r
-      </ser:conceptoPorId>\r
+      <ser:crossmapSets>?</ser:crossmapSets>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="b783b311-b936-40f5-8603-a8719e51a5c6" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="14ea5d84-3803-47c3-8d20-a4626edeef75" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/conceptoPorId"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="5bd0a0a8-24b0-46fc-8b85-b6c572c32a30" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossmapSets"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="bd30617b-1d67-45ac-9e27-aaeab869c70a" name="crossmapSets - Request 2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossmapSets</con:operation><con:request name="crossmapSets - Request 2" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="734ebde1-b43b-48af-ad2d-bcb79626d6c7"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossmapSets>MINSAL</ser:crossmapSets>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="5bd0a0a8-24b0-46fc-8b85-b6c572c32a30" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossmapSets"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="06cb82b0-d6d0-4986-a857-de1f31feecd2" name="crossmapSets - Request 3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossmapSets</con:operation><con:request name="crossmapSets - Request 3" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="734ebde1-b43b-48af-ad2d-bcb79626d6c7"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossmapSets>Hospital X</ser:crossmapSets>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="5bd0a0a8-24b0-46fc-8b85-b6c572c32a30" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossmapSets"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="2256ca37-348d-495f-ae2e-61adfb31a2d6" name="crossmapSets - Request 4"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossmapSets</con:operation><con:request name="crossmapSets - Request 4" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="734ebde1-b43b-48af-ad2d-bcb79626d6c7"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossmapSets>Instituto del Cáncer</ser:crossmapSets>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="5bd0a0a8-24b0-46fc-8b85-b6c572c32a30" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossmapSets"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="08b6ba5f-a33d-4da0-bc67-2538a3963179" name="crossmapSets - Request 5"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossmapSets</con:operation><con:request name="crossmapSets - Request 5" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="734ebde1-b43b-48af-ad2d-bcb79626d6c7"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossmapSets>centro Oftalmológico Buena Vista </ser:crossmapSets>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="5bd0a0a8-24b0-46fc-8b85-b6c572c32a30" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossmapSets"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="f7007d26-f860-4271-8157-89324b0d2aab" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="crossmapSetMembersDeCrossmapSet TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="bedf78b5-d24f-43c8-850c-b16b752b8039" name="crossmapSetMembersDeCrossmapSet - Request 1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossmapSetMembersDeCrossmapSet</con:operation><con:request name="crossmapSetMembersDeCrossmapSet - Request 1" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="fca68612-e742-495b-ac73-9e79782b95b5"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossmapSetMembersDeCrossmapSet>\r
+         <nombreAbreviadoCrossmapSet>CIE-10</nombreAbreviadoCrossmapSet>\r
+      </ser:crossmapSetMembersDeCrossmapSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="47f4f5f9-7661-4dba-b1bd-c26199050ac1" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossmapSetMembersDeCrossmapSet"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="c4c852aa-a837-44fb-8048-30a845aacdc1" name="crossmapSetMembersDeCrossmapSet - Request 2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossmapSetMembersDeCrossmapSet</con:operation><con:request name="crossmapSetMembersDeCrossmapSet - Request 2" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="fca68612-e742-495b-ac73-9e79782b95b5"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossmapSetMembersDeCrossmapSet>\r
+         <nombreAbreviadoCrossmapSet>CIE-9-MC</nombreAbreviadoCrossmapSet>\r
+      </ser:crossmapSetMembersDeCrossmapSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="47f4f5f9-7661-4dba-b1bd-c26199050ac1" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossmapSetMembersDeCrossmapSet"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="2e336b53-aef7-4202-95af-52041afa8582" name="crossmapSetMembersDeCrossmapSet - Request 3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossmapSetMembersDeCrossmapSet</con:operation><con:request name="crossmapSetMembersDeCrossmapSet - Request 3" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="fca68612-e742-495b-ac73-9e79782b95b5"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossmapSetMembersDeCrossmapSet>\r
+         <nombreAbreviadoCrossmapSet>CIE-O</nombreAbreviadoCrossmapSet>\r
+      </ser:crossmapSetMembersDeCrossmapSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="47f4f5f9-7661-4dba-b1bd-c26199050ac1" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossmapSetMembersDeCrossmapSet"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="e1bc8f6c-f555-4059-99bc-c3b0b696f8f3" name="crossmapSetMembersDeCrossmapSet - Request 4"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossmapSetMembersDeCrossmapSet</con:operation><con:request name="crossmapSetMembersDeCrossmapSet - Request 4" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="fca68612-e742-495b-ac73-9e79782b95b5"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossmapSetMembersDeCrossmapSet>\r
+         <nombreAbreviadoCrossmapSet>CIE-OCIE-OCIE-OCIE-OCIE-O</nombreAbreviadoCrossmapSet>\r
+      </ser:crossmapSetMembersDeCrossmapSet>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="47f4f5f9-7661-4dba-b1bd-c26199050ac1" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossmapSetMembersDeCrossmapSet"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="de00baf0-b602-4c31-bdb0-5285b74418b0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="crossMapsIndirectosPorIDDescripcion TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="2eefec09-6490-43fa-bfc4-7181c9110228" name="crossMapsIndirectosPorIDDescripcion - Request 1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossMapsIndirectosPorIDDescripcion</con:operation><con:request name="crossMapsIndirectosPorIDDescripcion - Request 1" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="08b1c890-d603-4cf5-8eb8-0a69b896b61d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossMapsIndirectosPorIDDescripcion>\r
+         <DescripcionID>?</DescripcionID>\r
+      </ser:crossMapsIndirectosPorIDDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="515a4993-3519-4cbb-8e1a-1b99e1a6c3e5" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossMapsIndirectosPorIDDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="29d5d1ca-c459-400f-8b2f-6907dd2949d6" name="crossMapsIndirectosPorIDDescripcion - Request 2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossMapsIndirectosPorIDDescripcion</con:operation><con:request name="crossMapsIndirectosPorIDDescripcion - Request 2" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="08b1c890-d603-4cf5-8eb8-0a69b896b61d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossMapsIndirectosPorIDDescripcion>\r
+         <DescripcionID>48102c87-9</DescripcionID>\r
+      </ser:crossMapsIndirectosPorIDDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="515a4993-3519-4cbb-8e1a-1b99e1a6c3e5" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossMapsIndirectosPorIDDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="b0adee4b-8ea9-4e6f-a3bc-1629a9129eb6" name="crossMapsIndirectosPorIDDescripcion - Request 3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossMapsIndirectosPorIDDescripcion</con:operation><con:request name="crossMapsIndirectosPorIDDescripcion - Request 3" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="08b1c890-d603-4cf5-8eb8-0a69b896b61d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossMapsIndirectosPorIDDescripcion>\r
+         <DescripcionID>4a31ece7-9</DescripcionID>\r
+      </ser:crossMapsIndirectosPorIDDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="515a4993-3519-4cbb-8e1a-1b99e1a6c3e5" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossMapsIndirectosPorIDDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="6e060dcc-6972-41c9-8b4e-24c37d799be6" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="crossMapsDirectosPorIDDescripcion TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="1b1429fa-fdb0-4e46-8759-9853ab5d085b" name="crossMapsDirectosPorIDDescripcion - Request 1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossMapsDirectosPorIDDescripcion</con:operation><con:request name="crossMapsDirectosPorIDDescripcion - Request 1" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="22f5223e-5c83-462d-8a1f-c1aa798a8211"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossMapsDirectosPorIDDescripcion>\r
+         <DescripcionID>?</DescripcionID>\r
+      </ser:crossMapsDirectosPorIDDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="abaa5cd0-2b95-47fc-b324-0a7464bc3af5" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossMapsDirectosPorIDDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="c243f132-8cb7-4dc5-893d-5458308018f8" name="crossMapsDirectosPorIDDescripcion - Request 2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossMapsDirectosPorIDDescripcion</con:operation><con:request name="crossMapsDirectosPorIDDescripcion - Request 2" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="22f5223e-5c83-462d-8a1f-c1aa798a8211"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossMapsDirectosPorIDDescripcion>\r
+         <DescripcionID>9f1508e8-c</DescripcionID>\r
+      </ser:crossMapsDirectosPorIDDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="abaa5cd0-2b95-47fc-b324-0a7464bc3af5" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossMapsDirectosPorIDDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="0faf4571-8f5e-4404-a668-ec6156c048fa" name="crossMapsDirectosPorIDDescripcion - Request 3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeBusquedaSoapBinding</con:interface><con:operation>crossMapsDirectosPorIDDescripcion</con:operation><con:request name="crossMapsDirectosPorIDDescripcion - Request 3" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="22f5223e-5c83-462d-8a1f-c1aa798a8211"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeBusqueda</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:crossMapsDirectosPorIDDescripcion>\r
+         <DescripcionID>672606a4-2</DescripcionID>\r
+      </ser:crossMapsDirectosPorIDDescripcion>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="abaa5cd0-2b95-47fc-b324-0a7464bc3af5" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/SearchService/crossMapsDirectosPorIDDescripcion"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

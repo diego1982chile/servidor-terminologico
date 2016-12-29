@@ -417,23 +417,45 @@
    <soapenv:Body>\r
       <ser:codificacionDeNuevoTermino>\r
          <peticionCodificacionDeNuevoTermino>\r
-            <establecimiento>?</establecimiento>\r
-            <idConcepto>?</idConcepto>\r
-            <termino>?</termino>\r
+            <establecimiento>Hospital X</establecimiento>\r
+            <idConcepto>ba74a8d3-6</idConcepto>\r
+            <termino>abocavir</termino>\r
             <!--Optional:-->\r
             <tipoDescripcion>Preferida</tipoDescripcion>\r
             <!--Optional:-->\r
             <esSensibleAMayusculas>false</esSensibleAMayusculas>\r
             <!--Optional:-->\r
-            <email>?</email>\r
+            <email>alfunkso@hotmail.com</email>\r
             <!--Optional:-->\r
-            <observacion>?</observacion>\r
+            <observacion>pls</observacion>\r
             <!--Optional:-->\r
-            <profesional>?</profesional>\r
+            <profesional>profesional</profesional>\r
             <!--Optional:-->\r
-            <profesion>?</profesion>\r
+            <profesion>profesion</profesion>\r
             <!--Optional:-->\r
-            <especialidad>?</especialidad>\r
+            <especialidad>especialidad</especialidad>\r
+            <sub-especialidad>subespecialidad</sub-especialidad>
+            <categoria>Fármacos - Producto Comercial</categoria>
+         </peticionCodificacionDeNuevoTermino>\r
+      </ser:codificacionDeNuevoTermino>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="30a3d50e-d66e-4557-b074-5e958d4b8332" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/ServicioDeIngreso/codificacionDeNuevoTermino"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="89ecaef1-be8c-4626-a1f8-2a03ecdfc746" name="codificacionDeNuevoTermino2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeIngresoSoapBinding</con:interface><con:operation>codificacionDeNuevoTermino</con:operation><con:request name="codificacionDeNuevoTermino2" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="50b73e05-1e0c-4c21-9083-a3552beae033"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeIngreso</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:codificacionDeNuevoTermino>\r
+         <peticionCodificacionDeNuevoTermino>\r
+            <establecimiento>Hospital X</establecimiento>\r
+            <idConcepto>ba74a8d3-6</idConcepto>\r
+            <termino>abocavir</termino>\r
+            <!--Optional:-->\r
+            <tipoDescripcion>Preferida</tipoDescripcion>\r
+            <!--Optional:-->\r
+            <esSensibleAMayusculas>false</esSensibleAMayusculas>\r
+            <!--Optional:-->\r
+            <email>alfunkso@hotmail.com</email>\r
+            <!--Optional:-->\r
+            <observacion>pls</observacion>\r
+            <categoria>Fármacos - Producto Comercial</categoria>
          </peticionCodificacionDeNuevoTermino>\r
       </ser:codificacionDeNuevoTermino>\r
    </soapenv:Body>\r
@@ -441,7 +463,14 @@
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:incrementarContadorDescripcionConsumida>\r
-         <descriptionID>?</descriptionID>\r
+         <descriptionID>8079b965-3</descriptionID>\r
+      </ser:incrementarContadorDescripcionConsumida>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="9621036f-b751-4b16-8405-30e2a24ca8c2" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/ServicioDeIngreso/incrementarContadorDescripcionConsumida"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="6fa0ef6c-9f82-48d0-950f-4e5a4c9cfef9" name="incrementarContadorDescripcionConsumida2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeIngresoSoapBinding</con:interface><con:operation>incrementarContadorDescripcionConsumida</con:operation><con:request name="incrementarContadorDescripcionConsumida2" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="0331ace8-14f0-4e8d-a704-37e0f5e05cab"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeIngreso</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:incrementarContadorDescripcionConsumida>\r
+         <descriptionID>5cd3a8f7-1</descriptionID>\r
       </ser:incrementarContadorDescripcionConsumida>\r
    </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="9621036f-b751-4b16-8405-30e2a24ca8c2" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.ws.semantikos.minsal.cl/ServicioDeIngreso/incrementarContadorDescripcionConsumida"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
