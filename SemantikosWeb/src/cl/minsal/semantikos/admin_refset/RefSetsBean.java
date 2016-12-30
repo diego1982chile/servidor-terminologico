@@ -246,8 +246,11 @@ public class RefSetsBean implements Serializable {
                 addConcept(refSet,smtk);
             }
         }
-
-
+        if(!conceptSMTKListSelected.isEmpty()){
+            for (ConceptSMTK smtk : conceptSMTKListSelected) {
+                addConcept(refSet,smtk);
+            }
+        }
     }
 
     /**
