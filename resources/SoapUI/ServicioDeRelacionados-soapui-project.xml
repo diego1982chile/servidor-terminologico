@@ -3016,4 +3016,59 @@
          </peticionSugerenciasDeDescripciones>\r
       </ser:sugerenciasDeDescripciones>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="cee36855-b641-4828-86fe-58e4f808b241" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/sugerenciasDeDescripciones" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="cee36855-b641-4828-86fe-58e4f808b241" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/sugerenciasDeDescripciones" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="ceb6985d-022c-4407-b10f-8a6ee2bf7ccf" name="sugerenciasDeDescripciones2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>sugerenciasDeDescripciones</con:operation><con:request name="sugerenciasDeDescripciones2" id="2d7d3752-db36-40bf-bccd-a3e7e654020f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:sugerenciasDeDescripciones>\r
+         <peticionSugerenciasDeDescripciones>\r
+            <termino>lamivudina</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreRefSet>Refset 4</nombreRefSet>\r
+         </peticionSugerenciasDeDescripciones>\r
+      </ser:sugerenciasDeDescripciones>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="cee36855-b641-4828-86fe-58e4f808b241" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/sugerenciasDeDescripciones" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="fcb35cf3-9816-4344-90e5-d8be222adfa6" name="sugerenciasDeDescripciones3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>sugerenciasDeDescripciones</con:operation><con:request name="sugerenciasDeDescripciones3" id="2d7d3752-db36-40bf-bccd-a3e7e654020f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:sugerenciasDeDescripciones>\r
+         <peticionSugerenciasDeDescripciones>\r
+            <termino>lam</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreRefSet>Refset 4</nombreRefSet>\r
+         </peticionSugerenciasDeDescripciones>\r
+      </ser:sugerenciasDeDescripciones>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="cee36855-b641-4828-86fe-58e4f808b241" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/sugerenciasDeDescripciones" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="b42c9ee2-8afc-4b02-9486-b3e9db87222e" name="sugerenciasDeDescripciones4"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>sugerenciasDeDescripciones</con:operation><con:request name="sugerenciasDeDescripciones4" id="2d7d3752-db36-40bf-bccd-a3e7e654020f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:sugerenciasDeDescripciones>\r
+         <peticionSugerenciasDeDescripciones>\r
+            <termino>la</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreRefSet>Refset 4</nombreRefSet>\r
+         </peticionSugerenciasDeDescripciones>\r
+      </ser:sugerenciasDeDescripciones>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="cee36855-b641-4828-86fe-58e4f808b241" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/sugerenciasDeDescripciones" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="a67a4e73-46de-4ba6-889c-668c1820577d" name="sugerenciasDeDescripciones5"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>sugerenciasDeDescripciones</con:operation><con:request name="sugerenciasDeDescripciones5" id="2d7d3752-db36-40bf-bccd-a3e7e654020f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:sugerenciasDeDescripciones>\r
+         <peticionSugerenciasDeDescripciones>\r
+            <termino>no</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreRefSet>Refset 4</nombreRefSet>\r
+         </peticionSugerenciasDeDescripciones>\r
+      </ser:sugerenciasDeDescripciones>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="cee36855-b641-4828-86fe-58e4f808b241" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/sugerenciasDeDescripciones" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="a4bd4e12-d2f7-4ca1-96d6-ff086b6f47da" name="sugerenciasDeDescripciones6"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>sugerenciasDeDescripciones</con:operation><con:request name="sugerenciasDeDescripciones6" id="2d7d3752-db36-40bf-bccd-a3e7e654020f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:sugerenciasDeDescripciones>\r
+         <peticionSugerenciasDeDescripciones>\r
+            <termino>n</termino>\r
+            <!--Zero or more repetitions:-->\r
+            <nombreRefSet>Refset 4</nombreRefSet>\r
+         </peticionSugerenciasDeDescripciones>\r
+      </ser:sugerenciasDeDescripciones>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="cee36855-b641-4828-86fe-58e4f808b241" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="1224d299-0e69-48aa-84b9-701b5fb2250a" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/sugerenciasDeDescripciones" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

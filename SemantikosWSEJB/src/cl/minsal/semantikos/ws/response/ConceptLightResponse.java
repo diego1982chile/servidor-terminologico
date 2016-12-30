@@ -32,6 +32,9 @@ public class ConceptLightResponse implements Serializable {
     @XmlElement(name = "categoria")
     private String categoryName;
 
+    @XmlElement(name = "esValido")
+    private Boolean valid;
+
     public ConceptLightResponse() {
     }
 
@@ -75,6 +78,14 @@ public class ConceptLightResponse implements Serializable {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public Boolean getValid() {
+        return valid;
+    }
+
+    public void setValid(Boolean valid) {
+        this.valid = valid;
     }
 
     @Override

@@ -33,13 +33,24 @@ public class RelatedService {
             @XmlElement(required = true)
             @WebParam(name = "peticionSugerenciasDeDescripciones")
             DescriptionsSuggestionsRequest request
-    ) throws IllegalInputFault {
-        if ((request.getCategoryNames() == null && request.getRefSetNames() == null)
-                || (request.getCategoryNames().isEmpty() && request.getRefSetNames().isEmpty())) {
+    ) throws IllegalInputFault, NotFoundFault {
+        if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())
+                && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty())) {
             throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");
         }
-        // TODO: Terminar servicio.
-        return null;
+        if (request.getTerm() == null || "".equals(request.getTerm())) {
+            throw new IllegalInputFault("Debe ingresar un Termino a buscar");
+        }
+        if ( request.getTerm().length() < 2 ) {
+            throw new IllegalInputFault("El termino a buscar debe tener minimo 2 caracteres de largo");
+        }
+        TermSearchResponse res = this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames(), request.getRefSetNames(), 0, 5);
+
+        PaginationResponse paginationResponse = new PaginationResponse();
+        paginationResponse.setTotalCount(res.getConcepts().size());
+        res.setPagination(paginationResponse);
+
+        return res;
     }
 
     // REQ-WS-010...021

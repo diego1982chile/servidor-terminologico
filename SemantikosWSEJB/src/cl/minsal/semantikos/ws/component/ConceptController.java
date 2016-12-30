@@ -229,7 +229,9 @@ public class ConceptController {
 
         if (conceptSMTKS != null) {
             for (ConceptSMTK source : conceptSMTKS) {
-                conceptResponses.add(new ConceptLightResponse(source));
+                ConceptLightResponse conceptLightResponse = new ConceptLightResponse(source);
+                conceptLightResponse.setValid(!("Concepto no válido".equals(source.getDescriptionFavorite().getTerm())));
+                conceptResponses.add(conceptLightResponse);
             }
         }
 
