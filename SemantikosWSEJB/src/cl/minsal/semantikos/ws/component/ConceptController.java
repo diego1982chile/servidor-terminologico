@@ -2,11 +2,14 @@ package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.ws.Util;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
+import cl.minsal.semantikos.ws.mapping.ISPRegisterMapper;
+import cl.minsal.semantikos.ws.mapping.RelationshipMapper;
 import cl.minsal.semantikos.ws.request.NewTermRequest;
 import cl.minsal.semantikos.ws.response.*;
 import org.slf4j.Logger;
@@ -313,6 +316,40 @@ public class ConceptController {
             }
         }
         res.setConcepts(conceptResponses);
+
+        return res;
+    }
+
+    public List<ISPRegisterResponse> getBioequivalentes(String conceptId, String descriptionId) throws IllegalInputFault, NotFoundFault {
+        if ( (conceptId == null || "".equals(conceptId))
+                && (descriptionId == null || "".equals(descriptionId)) ) {
+            throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
+        }
+        ConceptSMTK conceptSMTK = null;
+
+        try {
+            if (descriptionId != null) {
+                conceptSMTK = this.conceptManager.getConceptByDescriptionID(descriptionId);
+            } else {
+                conceptSMTK = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
+            }
+        } catch ( Exception e ) {
+            throw new NotFoundFault("Concepto no encontrado: " + (conceptId != null ? conceptId : "") + (descriptionId != null ? descriptionId : ""));
+        }
+
+        if ( conceptSMTK == null ) {
+            throw new NotFoundFault("Concepto no encontrado: " + (conceptId != null ? conceptId : "") + (descriptionId != null ? descriptionId : ""));
+        }
+
+        this.conceptManager.loadRelationships(conceptSMTK);
+
+        List<ISPRegisterResponse> res = new ArrayList<>(conceptSMTK.getRelationships().size());
+
+        for (Relationship relationship : conceptSMTK.getRelationships()) {
+            if ( relationship.getRelationshipDefinition().isBioequivalente() ) {
+                res.add(ISPRegisterMapper.map(relationship));
+            }
+        }
 
         return res;
     }

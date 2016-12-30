@@ -2204,19 +2204,607 @@
          </peticionConceptosRelacionadosPorCategoria>\r
       </ser:conceptosRelacionadosLite>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="3f855e0b-f98a-49ac-a4a2-7a085ade6be2" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/conceptosRelacionadosLite" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="100617d0-ec0c-4f20-919a-6c6ce5a171dd" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerBioequivalentes TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="bd87baf0-c201-413c-b9da-b727b3e3af93" name="obtenerBioequivalentes"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="3f855e0b-f98a-49ac-a4a2-7a085ade6be2" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/conceptosRelacionadosLite" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="100617d0-ec0c-4f20-919a-6c6ce5a171dd" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerBioequivalentes TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="bd87baf0-c201-413c-b9da-b727b3e3af93" name="obtenerBioequivalentes"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerBioequivalentes>\r
-         <ser:peticionConceptosRelacionados>\r
+         <peticionConceptosRelacionados>\r
             <!--Optional:-->\r
-            <idConcepto>?</idConcepto>\r
+            <idConcepto>7dba6c15-a</idConcepto>
             <!--Optional:-->\r
-            <idDescripcion>?</idDescripcion>\r
-         </ser:peticionConceptosRelacionados>\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
       </ser:obtenerBioequivalentes>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="64c17a4b-1875-45d9-a7f8-fd79e51a7832" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerFamiliaProducto TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="4ed58a0c-5db0-48c2-874a-c1fbc8fe2d0e" name="obtenerFamiliaProducto"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerFamiliaProducto</con:operation><con:request name="obtenerFamiliaProducto" id="6e400de2-08f8-4235-8efd-5ea73be25519"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="96246cf2-dc38-459f-a43b-3e1128e9d997" name="obtenerBioequivalentes2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes2" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>2a43116e-5</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="90801d5c-8671-498a-ba88-22f4350bdb18" name="obtenerBioequivalentes3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes3" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>1ad918bf-8</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="0aac6dfc-7bbb-41e0-b92a-dd4636545f9a" name="obtenerBioequivalentes4"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes4" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>c931e6c6-2</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="33892d02-040b-4d9a-a286-c941548d1491" name="obtenerBioequivalentes5"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes5" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>48b43334-4</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="7998a9a4-9c77-4ade-a70f-3cc6e387ee80" name="obtenerBioequivalentes6"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes6" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>db79dabe-8</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="d43ec2c0-68fc-4757-b953-6d0c86d3f374" name="obtenerBioequivalentes7"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes7" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>ebe2a67b-0</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="cf2a08c0-2437-4ba3-bed8-0feaa7385c91" name="obtenerBioequivalentes8"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes8" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>84436bb4-a</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="096f98f8-a962-4be6-bb40-e5a435995c21" name="obtenerBioequivalentes9"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes9" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>436308b6-1</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="6b3d7ff2-741a-4963-b332-d2e733f5e7df" name="obtenerBioequivalentes10"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes10" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>45ddb227-0</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="1cf2101a-dc7d-43e4-a649-6b1d2b4702c6" name="obtenerBioequivalentes11"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes11" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>db62b8df-c</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="3287766b-1682-4b72-8771-1fa4d975e22b" name="obtenerBioequivalentes12"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes12" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>23720a54-7</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="3fea554e-06e3-4c3e-84b5-18724e53e5bf" name="obtenerBioequivalentes13"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes13" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>7ef5cb15-7</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="60bc96c2-5aa2-4a5c-9372-e7a7a0fe523e" name="obtenerBioequivalentes14"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes14" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>9e0a9665-b</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="0a118558-c277-49a0-bd0c-a367e75dd744" name="obtenerBioequivalentes15"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes15" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>f5077241-f</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="e7d4397b-8b14-4589-91dd-f2363adde22a" name="obtenerBioequivalentes16"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes16" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>7cec694a-8</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="4bfdb72d-c171-4a6b-9c39-f064f9a74ad8" name="obtenerBioequivalentes17"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes17" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>f47b1c21-4</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="8c433270-1c5d-4477-9312-4392f8dca0d3" name="obtenerBioequivalentes18"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes18" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>d78aaddf-b</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="5abda6cf-0961-45a2-b5eb-dff29bdff956" name="obtenerBioequivalentes19"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes19" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>ba74a8d3-6</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="96279b48-7962-48f3-a397-c2fb58fb0010" name="obtenerBioequivalentes20"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes20" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>d8905766-4</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="1f06e714-49a9-4e40-b966-02cd304fa396" name="obtenerBioequivalentes21"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes21" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>83c0f905-2</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="86bbe636-c3f1-47f1-aeb4-2225aa583d49" name="obtenerBioequivalentes22"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes22" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>f8582aac-d</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="a3d5c9d9-79e3-4f75-b7b2-b04c4dd9b8a8" name="obtenerBioequivalentes23"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes23" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>98a6f75a-a</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="3bc2a7fc-e908-49dc-866c-055535dbf9db" name="obtenerBioequivalentes24"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes24" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>4505f937-0</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="4d9fb9a8-1d5c-4e96-af18-ed83732f3918" name="obtenerBioequivalentes25"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes25" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>bd9f7559-9</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="d59c137e-91d9-435a-8f3a-7ccf4d63186f" name="obtenerBioequivalentes26"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes26" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>31494bb0-f</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="8c9e568a-bf4f-4e79-ac51-379595171018" name="obtenerBioequivalentes27"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes27" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>62423a0a-3</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="7a1beebe-ba67-4939-beb8-a8d045bc7bc0" name="obtenerBioequivalentes28"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes28" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>c9a54b76-c</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="aaf77df7-e69a-4a9b-bd1d-c1250515539d" name="obtenerBioequivalentes29"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes29" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>e22c51d7-5</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="5da0a1a4-5b13-4a0f-bae8-ada0dfd6286c" name="obtenerBioequivalentes30"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes30" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>3c3c767f-b</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="002bdaa9-8997-48b5-bc57-c9ba2176b0c5" name="obtenerBioequivalentes31"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes31" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>c7413d06-9</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="3b62b030-1d1f-4bff-8888-b60218813227" name="obtenerBioequivalentes32"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes32" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>bd0cb372-c</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="088cd183-8f7f-469f-a083-41297f691d46" name="obtenerBioequivalentes33"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes33" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>3523cc7e-3</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="b3d04d74-5f5e-4cdb-94af-b72190ea9152" name="obtenerBioequivalentes34"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes34" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>9a710252-3</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="526fad06-de21-4ae1-a3e5-9688aeec2893" name="obtenerBioequivalentes35"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes35" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>734ef1d9-0</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="20d561a3-4350-41d1-aa96-ae44ec4b9d27" name="obtenerBioequivalentes36"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes36" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>308fbb61-1</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="318fd276-000e-4466-924b-3cadc100ca90" name="obtenerBioequivalentes37"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes37" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>4623918e-0</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="6faa9e2b-8676-4784-aff3-67a724b00bbf" name="obtenerBioequivalentes38"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes38" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>a810fb38-b</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="bb8cd0e5-355a-423f-8542-7984113facc1" name="obtenerBioequivalentes39"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes39" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>df3347d6-a</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="a48348b2-b01f-430c-ab92-793fc709a90c" name="obtenerBioequivalentes40"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes40" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>7146b06d-c</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="69f8de91-8b30-43de-9596-b597730ef3cb" name="obtenerBioequivalentes41"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes41" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>8fa2ca8f-9</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="01e4f112-2a93-4817-ac7b-2fb8a7f347e7" name="obtenerBioequivalentes42"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes42" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>ec24b6e2-b</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="d7f8761b-6e8d-4851-93a2-671e4e923540" name="obtenerBioequivalentes43"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes43" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>bfae9ffe-d</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="7cbcd157-3a73-460b-a330-27310c8de52a" name="obtenerBioequivalentes44"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes44" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>e763164f-2</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="9bbf4a52-15d4-409d-811e-8e3b87d36517" name="obtenerBioequivalentes45"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes45" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>8e891274-a</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="e67e493a-c9b4-4b09-8e86-4c4ecc142e94" name="obtenerBioequivalentes46"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes46" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>fa4308a5-4</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="35b30be6-e77c-42fc-add8-710d046c99b9" name="obtenerBioequivalentes47"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes47" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>c0083154-7</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="1ce747e2-278c-4563-ad8b-4c35d33ec2af" name="obtenerBioequivalentes48"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes48" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>bab42b92-7</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="62843ff9-e3ea-4c65-8355-259710317759" name="obtenerBioequivalentes49"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes49" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>96cfcd5e-6</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="fa891fcc-4563-4350-98c9-1cfc3db8d1d4" name="obtenerBioequivalentes50 Ok"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerBioequivalentes</con:operation><con:request name="obtenerBioequivalentes50 Ok" id="4e35cb44-0df1-4ad1-abdb-689297ee19e0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerBioequivalentes>\r
+         <peticionConceptosRelacionados>\r
+            <!--Optional:-->\r
+            <idConcepto>98a6f75a-a</idConcepto>
+            <!--Optional:-->\r
+            <!--<idDescripcion>?</idDescripcion>\r-->
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerBioequivalentes>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="69a1fe2d-c159-4db8-82fc-3f0c48b88c31" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerBioequivalentes" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="64c17a4b-1875-45d9-a7f8-fd79e51a7832" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerFamiliaProducto TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="4ed58a0c-5db0-48c2-874a-c1fbc8fe2d0e" name="obtenerFamiliaProducto"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerFamiliaProducto</con:operation><con:request name="obtenerFamiliaProducto" id="6e400de2-08f8-4235-8efd-5ea73be25519"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:obtenerFamiliaProducto>\r

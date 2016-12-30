@@ -6,9 +6,7 @@ import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.request.DescriptionsSuggestionsRequest;
 import cl.minsal.semantikos.ws.request.RelatedConceptsByCategoryRequest;
 import cl.minsal.semantikos.ws.request.RelatedConceptsRequest;
-import cl.minsal.semantikos.ws.response.RelatedConceptsLiteResponse;
-import cl.minsal.semantikos.ws.response.RelatedConceptsResponse;
-import cl.minsal.semantikos.ws.response.TermSearchResponse;
+import cl.minsal.semantikos.ws.response.*;
 
 import javax.ejb.EJB;
 import javax.jws.WebMethod;
@@ -16,6 +14,7 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
+import java.util.List;
 
 /**
  * Created by Development on 2016-11-18.
@@ -228,15 +227,14 @@ public class RelatedService {
     }
 
     // REQ-WS-021
-    @WebResult(name = "respuestaConceptosRelacionados")
+    @WebResult(name = "registroBioequivalente")
     @WebMethod(operationName = "obtenerBioequivalentes")
-    public RelatedConceptsResponse obtenerBioequivalentes(
+    public List<ISPRegisterResponse> obtenerBioequivalentes(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        // TODO: Bioequivalentes es una categoria? Como obtener esta respuesta?
-        return this.conceptosRelacionados(makeRequest(request, "Elemento de Registro"));
+        return this.conceptController.getBioequivalentes(request.getConceptId(), request.getDescriptionId());
     }
 
     private static RelatedConceptsByCategoryRequest makeRequest(RelatedConceptsRequest source, String category) {
