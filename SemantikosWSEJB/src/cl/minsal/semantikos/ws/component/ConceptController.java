@@ -325,6 +325,40 @@ public class ConceptController {
                 && (descriptionId == null || "".equals(descriptionId)) ) {
             throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
         }
+
+        ConceptSMTK conceptSMTK = getConcept(conceptId, descriptionId);
+        this.conceptManager.loadRelationships(conceptSMTK);
+        List<ISPRegisterResponse> res = new ArrayList<>(conceptSMTK.getRelationships().size());
+
+        for (Relationship relationship : conceptSMTK.getRelationships()) {
+            if ( relationship.getRelationshipDefinition().isBioequivalente() ) {
+                res.add(ISPRegisterMapper.map(relationship));
+            }
+        }
+
+        return res;
+    }
+
+    public List<ISPRegisterResponse> getRegistrosISP(String conceptId, String descriptionId) throws IllegalInputFault, NotFoundFault {
+        if ( (conceptId == null || "".equals(conceptId))
+                && (descriptionId == null || "".equals(descriptionId)) ) {
+            throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
+        }
+
+        ConceptSMTK conceptSMTK = getConcept(conceptId, descriptionId);
+        this.conceptManager.loadRelationships(conceptSMTK);
+        List<ISPRegisterResponse> res = new ArrayList<>(conceptSMTK.getRelationships().size());
+
+        for (Relationship relationship : conceptSMTK.getRelationships()) {
+            if ( relationship.getRelationshipDefinition().isISP() ) {
+                res.add(ISPRegisterMapper.map(relationship));
+            }
+        }
+
+        return res;
+    }
+
+    private ConceptSMTK getConcept(String conceptId, String descriptionId) throws NotFoundFault {
         ConceptSMTK conceptSMTK = null;
 
         try {
@@ -341,17 +375,7 @@ public class ConceptController {
             throw new NotFoundFault("Concepto no encontrado: " + (conceptId != null ? conceptId : "") + (descriptionId != null ? descriptionId : ""));
         }
 
-        this.conceptManager.loadRelationships(conceptSMTK);
-
-        List<ISPRegisterResponse> res = new ArrayList<>(conceptSMTK.getRelationships().size());
-
-        for (Relationship relationship : conceptSMTK.getRelationships()) {
-            if ( relationship.getRelationshipDefinition().isBioequivalente() ) {
-                res.add(ISPRegisterMapper.map(relationship));
-            }
-        }
-
-        return res;
+        return conceptSMTK;
     }
 
     public ConceptResponse loadAttributes(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) {

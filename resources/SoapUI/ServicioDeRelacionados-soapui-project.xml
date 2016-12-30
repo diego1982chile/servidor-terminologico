@@ -2982,6 +2982,15 @@
          </peticionConceptosRelacionados>\r
       </ser:obtenerRegistroISP>\r
    </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="de84e697-26d2-4f3a-9594-9d1a8a1d5d12" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerRegistroISP" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="3e1cef01-ec09-453a-9cf8-1f3d832e7659" name="obtenerRegistroISP4"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerRegistroISP</con:operation><con:request name="obtenerRegistroISP4" id="cb45a434-a53b-46b8-99ff-54f4f2fa40f1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:obtenerRegistroISP>\r
+         <peticionConceptosRelacionados>\r
+            <idConcepto>98a6f75a-a</idConcepto>\r
+         </peticionConceptosRelacionados>\r
+      </ser:obtenerRegistroISP>\r
+   </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="de84e697-26d2-4f3a-9594-9d1a8a1d5d12" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://service.ws.semantikos.minsal.cl/RelatedService/obtenerRegistroISP" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="f71cf8eb-99cf-407e-aa94-d4a41d29ba0e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="obtenerSustancia TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="180502ff-b73f-4ac0-a1bb-c19e3f344f66" name="obtenerSustancia"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ServicioDeRelacionadosSoapBinding</con:interface><con:operation>obtenerSustancia</con:operation><con:request name="obtenerSustancia" id="ab598aca-367c-4849-ba88-dec6aba4e69f"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ServicioDeRelacionados</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.ws.semantikos.minsal.cl/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r

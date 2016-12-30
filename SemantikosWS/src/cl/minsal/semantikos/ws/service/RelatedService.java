@@ -215,15 +215,14 @@ public class RelatedService {
     }
 
     // REQ-WS-020
-    @WebResult(name = "respuestaConceptosRelacionados")
+    @WebResult(name = "registroISP")
     @WebMethod(operationName = "obtenerRegistroISP")
-    public RelatedConceptsResponse obtenerRegistroISP(
+    public List<ISPRegisterResponse> obtenerRegistroISP(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosRelacionados")
             RelatedConceptsRequest request
     ) throws IllegalInputFault, NotFoundFault {
-        // TODO: Farías: Rehacer esto
-        return this.conceptosRelacionados(makeRequest(request, "Elemento de Registro"));
+        return this.conceptController.getRegistrosISP(request.getConceptId(), request.getDescriptionId());
     }
 
     // REQ-WS-021

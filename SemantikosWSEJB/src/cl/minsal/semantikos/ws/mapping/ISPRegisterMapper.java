@@ -15,7 +15,7 @@ import java.util.Map;
 public class ISPRegisterMapper {
 
     public static ISPRegisterResponse map(@NotNull Relationship relationship) {
-        if ( !relationship.getRelationshipDefinition().isBioequivalente() && !!relationship.getRelationshipDefinition().isISP() ) {
+        if ( !relationship.getRelationshipDefinition().isBioequivalente() && !relationship.getRelationshipDefinition().isISP() ) {
             throw new IllegalArgumentException("Solo se permiten mapear relacioens Bioequivalente e ISP");
         }
 
