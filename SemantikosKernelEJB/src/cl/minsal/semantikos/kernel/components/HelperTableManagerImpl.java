@@ -80,7 +80,12 @@ public class HelperTableManagerImpl implements HelperTableManager {
         new HelperTableSearchBR().validatePreConditions(helperTable, columnName, pattern);
 
         /* Se delega la búsqueda al DAO, ya que pasaron las pre-condiciones */
-        return helperTableDAO.findRecordsByPattern(helperTable, columnName, pattern, validity);
+        List<HelperTableRecord> foundRecords = helperTableDAO.findRecordsByPattern(helperTable, columnName, pattern, validity);
+
+        /* Se aplican reglas de negocio sobre los resultados retornados */
+        new HelperTableSearchBR().applyPostActions(foundRecords);
+
+        return foundRecords;
     }
 
     @Override

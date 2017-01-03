@@ -23,8 +23,8 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
 
                     <p:selectOneMenu id="institution" value="#{refsetsBean.institutionSelected}"
-                                     converter="omnifaces.SelectItemsConverter" panelStyle="width:60%"
-                                     effect="fade" var="i" style="width:90%" filter="true"
+                                     converter="omnifaces.SelectItemsConverter" panelStyle="width:300px;"
+                                     effect="fade" var="i" style="width:80%" filter="true"
                                      filterMatchMode="startsWith">
                         <f:selectItem itemLabel="Seleccione la institución" itemDisabled="true"/>
                         <f:selectItems value="#{authenticationBean.loggedUser.institutions}" var="institution"
@@ -40,8 +40,8 @@
                 <div class="ui-g-12 ui-md-6 ui-lg-4">
 
                     <p:selectOneMenu id="parentTag" value="#{refsetsBean.refSetSelect}"
-                                     converter="omnifaces.SelectItemsConverter" panelStyle="width:60%"
-                                     effect="fade" var="r" style="width:90%" filter="true"
+                                     converter="omnifaces.SelectItemsConverter" panelStyle="width:300px;"
+                                     effect="fade" var="r" style="width:80%" filter="true"
                                      filterMatchMode="startsWith"
                     styleClass="refsetInstitution">
 
@@ -79,7 +79,10 @@
             <p:column rendered="#{conceptBean.editable}">
                 <p:commandButton title="Eliminar RefSet" icon="fa fa-trash"
                                  actionListener="#{refsetsBean.removeConcept(refset,conceptBean.concept)}"
-                                 update="@(.refsetClass)"></p:commandButton>
+                                 update="@(.refsetClass)">
+                    <p:confirm header="Confirmación"
+                               message="¿Está seguro de eliminar este concepto del RefSet?"></p:confirm>
+                </p:commandButton>
             </p:column>
         </p:dataTable>
 

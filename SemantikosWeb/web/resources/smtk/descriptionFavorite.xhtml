@@ -15,26 +15,49 @@
 </composite:interface>
 
 <composite:implementation>
-    <h:panelGrid  columns="4"  style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
-        <p:outputLabel for="favorite" value="Preferida *"/>
-        <p:inputText id="favorite"
-                     styleClass="terms"
-                     name="description"
-                     validator="#{validatorBean.validateRequiredInput}"
-                     value="#{cc.attrs.description.term}"
-                     style="width:90%"
-                     disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
-                     autocomplete="off">
-            <p:ajax event="change" update="@this" process="@this" delay="100" />
-        </p:inputText>
-        <p:inputText value="DESCID " rendered="#{not cc.attrs.description.persistent}" disabled="true" style="width: 70%" />
-        <p:inputText value="DESCID: #{cc.attrs.description.descriptionId}" disabled="true" rendered="#{cc.attrs.description.persistent}" style="width: 70%" />
-        <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="grid" columns="2"
-                          disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}" style="width: 60%">
-            <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
-            <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
-            <p:ajax></p:ajax>
-        </p:selectOneRadio>
-    </h:panelGrid>
+    <div class="ui-fluid">
+
+        <div class="Container">
+
+            <div class="Container20 White Responsive">
+                <div class="ContainerIndent">
+                    <p:outputLabel for="favorite" value="Preferida *"/>
+                </div>
+            </div>
+
+            <div class="Container30 White Responsive">
+                <div class="ContainerIndent">
+                    <p:inputTextarea id="favorite"
+                                 styleClass="terms"
+                                 name="description"
+                                 rows="1"
+                                 validator="#{validatorBean.validateRequiredInput}"
+                                 value="#{cc.attrs.description.term}"
+                                 disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
+                                 autocomplete="off">
+                        <p:ajax event="change" update="@this" process="@this" delay="100" />
+                    </p:inputTextarea>
+                </div>
+            </div>
+
+            <div class="Container20 White Responsive">
+                <div class="ContainerIndent">
+                    <p:inputText value="DESCID " rendered="#{not cc.attrs.description.persistent}" disabled="true" />
+                    <p:inputText value="DESCID: #{cc.attrs.description.descriptionId}" disabled="true" rendered="#{cc.attrs.description.persistent}" />
+                </div>
+            </div>
+
+
+            <div class="Container30 White Responsive">
+                <div class="ContainerIndent">
+                    <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="grid" columns="2"
+                                      disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}">
+                        <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
+                        <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
+                    </p:selectOneRadio>
+                </div>
+            </div>
+        </div>
+    </div>
 </composite:implementation>
 </html>

@@ -29,8 +29,9 @@
                                         </p:breadCrumb>
                                         <p:spacer />
                                         <smtk:descriptionBrowserFilter descriptionQuery="#{descriptionsBrowserBean.descriptionQuery}" />
+                                        <p:spacer />
                                         <p:dataTable id="descriptionTable"
-                                                     styleClass="descriptionBrowserTable"
+                                                     styleClass="browserTable"
                                                      value="#{descriptionsBrowserBean.descriptions}"
                                                      var="description"
                                                      rows="30"

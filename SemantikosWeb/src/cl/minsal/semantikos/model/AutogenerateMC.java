@@ -47,6 +47,9 @@ public class AutogenerateMC {
         String vol = relationship.getTarget().toString();
         volumen = vol;
     }
+    public void setVolumenEmpty() {
+        volumen = "";
+    }
 
     public String getUnidadVolumen() {
         return unidadVolumen;
@@ -54,6 +57,9 @@ public class AutogenerateMC {
 
     public void setUnidadVolumen(RelationshipAttribute relationshipAttribute) {
         this.unidadVolumen = (((HelperTableRecord) relationshipAttribute.getTarget()).getValueColumn("description"));
+    }
+    public void setUnidadVolumenEmpty() {
+        this.unidadVolumen = "";
     }
 
     /**
@@ -74,7 +80,7 @@ public class AutogenerateMC {
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 9)
                 attributes[1] = (((HelperTableRecord) relationshipAttribute.getTarget()).getValueColumn("description"));
             if (relationshipAttribute.getRelationAttributeDefinition().getId() == 10) {
-                if (Integer.parseInt(relationshipAttribute.getTarget().toString()) > 1) {
+                if (Float.parseFloat(relationshipAttribute.getTarget().toString()) != 1) {
                     attributes[2] = "/" + relationshipAttribute.getTarget().toString()+" ";
                 } else {
                     attributes[2] = "/";
@@ -94,6 +100,9 @@ public class AutogenerateMC {
 
     public void addFFA(Relationship relationship) {
         ffa.add(((HelperTableRecord) relationship.getTarget()).getValueColumn("description") + "");
+    }
+    public void voidRemoveFFA(Relationship relationship) {
+        ffa.remove(((HelperTableRecord) relationship.getTarget()).getValueColumn("description") + "");
     }
 
     public void addVol(Relationship relationship) {

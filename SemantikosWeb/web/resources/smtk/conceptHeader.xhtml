@@ -17,41 +17,82 @@
 
 
     <!-- Indicadores -->
-    <h:panelGrid  columns="4"  style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
-        <p:outputLabel for="toBeReviewedCheck" value="Indicadores"/>
-        <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
-            <p:selectBooleanCheckbox id="toBeReviewedCheck" itemLabel="Revisar" disabled="#{not cc.attrs.concept.editable}"
-                                     value="#{cc.attrs.concept.toBeReviewed}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
-            <p:selectBooleanCheckbox id="toBeConsultatedCheck" itemLabel="Consultar" disabled="#{not cc.attrs.concept.editable}"
-                                     value="#{cc.attrs.concept.toBeConsulted}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
-        </p:panelGrid>
-        <p:outputLabel for="toBeReviewedCheck" value="Grado de Definición" />
-        <p:selectOneRadio id="city" value="#{conceptBean.fullyDefined}"  layout="grid" columns="2" style="width: 95%" disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept) or not conceptBean.editable}">
-            <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
-            <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
-            <p:ajax event="change" listener="#{conceptBean.changeFullyDefined(conceptBean.concept)}" process="@this" update="@(.conceptHeader)" />
-        </p:selectOneRadio>
-    </h:panelGrid>
+    <div class="ui-fluid">
 
-    <!-- Tag Semantikos -->
-    <h:panelGrid  columns="4"  style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
-        <p:outputLabel for="tagSemantikos2" value="Tag Semantiko"/>
-        <p:selectOneMenu id="tagSemantikos2"
-                         value="#{cc.attrs.concept.tagSMTK}"
-                         converter="omnifaces.SelectItemsConverter"
-                         disabled="#{not cc.attrs.concept.editable}"
-                         filter="true" filterMatchMode="startsWith"
-                         autoWidth="false"
-                         style="width:60%">
-            <p:ajax event="itemSelect"
-                    update="@(.FSN)"
-                    process="@this" />
-            <f:selectItem itemLabel="Seleccione tipo" itemValue=""/>
-            <f:selectItems value="#{conceptBean.tagSMTKs}" var="tag"
-                           itemValue="#{tag}"/>
-        </p:selectOneMenu>
-        <p:outputPanel />
-    </h:panelGrid>
+        <div class="Container">
+
+            <div class="Container20 White Responsive">
+                <div class="ContainerIndent">
+                    <p:outputLabel for="toBeReviewedCheck" value="Indicadores"/>
+                </div>
+            </div>
+
+            <div class="Container30 White Responsive">
+                <div class="ContainerIndent">
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                        <p:selectBooleanCheckbox id="toBeReviewedCheck" itemLabel="Revisar" disabled="#{not cc.attrs.concept.editable}"
+                                                 value="#{cc.attrs.concept.toBeReviewed}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
+                        <p:selectBooleanCheckbox id="toBeConsultatedCheck" itemLabel="Consultar" disabled="#{not cc.attrs.concept.editable}"
+                                                 value="#{cc.attrs.concept.toBeConsulted}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
+                    </p:panelGrid>
+                </div>
+            </div>
+
+            <div class="Container20 White Responsive">
+                <div class="ContainerIndent">
+                    <p:outputLabel for="toBeReviewedCheck" value="Grado de Definición" />
+                </div>
+            </div>
+
+            <div class="Container30 White Responsive">
+                <div class="ContainerIndent">
+
+                    <p:selectOneRadio id="city" value="#{conceptBean.fullyDefined}" layout="grid" columns="2"
+                                      disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept) or not conceptBean.editable}">
+                        <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
+                        <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
+                        <p:ajax event="change" listener="#{conceptBean.changeFullyDefined(conceptBean.concept)}" process="@this" update="@(.conceptHeader)" />
+                    </p:selectOneRadio>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Tag Semantiko -->
+    <div class="ui-fluid">
+
+        <div class="Container">
+
+            <div class="Container20 White Responsive">
+                <div class="ContainerIndent">
+                    <p:outputLabel for="tagSemantikos" value="Tag Semantiko"/>
+                </div>
+            </div>
+
+            <div class="Container30 White Responsive">
+                <div class="ContainerIndent">
+                    <p:selectOneMenu id="tagSemantikos"
+                                     value="#{cc.attrs.concept.tagSMTK}"
+                                     converter="omnifaces.SelectItemsConverter"
+                                     disabled="#{not cc.attrs.concept.editable}"
+                                     filter="true" filterMatchMode="startsWith"
+                                     autoWidth="false">
+                        <p:ajax event="itemSelect"
+                                update="@(.FSN)"
+                                process="@this" />
+                        <f:selectItem itemLabel="Seleccione tipo" itemValue=""/>
+                        <f:selectItems value="#{conceptBean.tagSMTKs}" var="tag"
+                                       itemValue="#{tag}"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+
+            <div class="Container50 White Responsive" >
+            </div>
+        </div>
+    </div>
 
     <!--Descripciones FSN y Preferida -->
     <smtk:descriptionFSN description="#{cc.attrs.concept.getValidDescriptionFSN()}" editable="#{cc.attrs.concept.editable}" />
@@ -60,16 +101,29 @@
 
 
     <!-- Observación -->
-    <h:panelGrid  columns="4"  style="width: 100%" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
-        <p:outputLabel for="observation" value="Observación"/>
-        <p:inputTextarea id="observation"
-                         name="observation"
-                         disabled="#{not cc.attrs.concept.editable}"
-                         value="#{cc.attrs.concept.observation}"
-                         style="width:90%">
-            <p:ajax />
-        </p:inputTextarea>
-    </h:panelGrid>
+    <div class="ui-fluid">
+
+        <div class="Container">
+
+            <div class="Container20 White Responsive">
+                <div class="ContainerIndent">
+                    <p:outputLabel for="observation" value="Observación"/>
+                </div>
+            </div>
+
+            <div class="Container60 White Responsive">
+                <div class="ContainerIndent">
+                    <p:inputTextarea id="observation"
+                                     name="observation"
+                                     disabled="#{not cc.attrs.concept.editable}"
+                                     value="#{cc.attrs.concept.observation}"
+                                     style="width:90%">
+                        <p:ajax />
+                    </p:inputTextarea>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <br/>
 

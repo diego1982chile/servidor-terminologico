@@ -471,7 +471,7 @@ public class ConceptBean implements Serializable {
         this.conceptSMTK = conceptSMTK;
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = new ConceptSMTKWeb(conceptSMTK);
-        if(!concept.isModeled() && autoGenerateList.isEmpty())autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+        if(!concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
         // Se crea una copia con la imagen original del concepto
         _concept = new ConceptSMTKWeb(conceptSMTK);
 
@@ -703,7 +703,7 @@ public class ConceptBean implements Serializable {
                 order++;
             }
         }
-        autogenerateBeans.autogenerateRemoveRelationship(rd,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
+        autogenerateBeans.autogenerateRemoveRelationship(rd,r,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
         autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC);
         crossmapBean.refreshCrossmapIndirect(concept);
 
@@ -714,6 +714,8 @@ public class ConceptBean implements Serializable {
      */
     public void removeRelationshipAttribute(Relationship r, RelationshipAttribute ra) {
         r.getRelationshipAttributes().remove(ra);
+        autogenerateBeans.autogenerateRemoveAttribute(ra.getRelationAttributeDefinition(),concept,autogenerateMC);
+
     }
 
     /**
@@ -926,7 +928,7 @@ public class ConceptBean implements Serializable {
             conceptManager.delete(concept, user);
             messageBean.messageSuccess("Acción exitosa", "Concepto eliminado");
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptBrowser.xhtml?idCategory=" + category.getId());
+            eContext.redirect(eContext.getRequestContextPath() + "/views/browser/generalBrowser.xhtml?idCategory=" + category.getId());
         } else {
             conceptManager.invalidate(concept, user);
             messageBean.messageSuccess("Acción exitosa", "Concepto invalidado");
