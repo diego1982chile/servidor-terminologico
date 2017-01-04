@@ -1,10 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.browser.GeneralQuery;
-import cl.minsal.semantikos.model.browser.DescriptionQuery;
-import cl.minsal.semantikos.model.browser.NoValidQuery;
-import cl.minsal.semantikos.model.browser.PendingQuery;
+import cl.minsal.semantikos.model.browser.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
@@ -43,6 +40,13 @@ public interface QueryManager {
      */
     public PendingQuery getDefaultPendingQuery();
 
+
+    /**
+     * Este método es responsable de inicializar un objeto de consulta para el browser,
+     *
+     */
+    public BrowserQuery getDefaultBrowserQuery();
+
     /**
      * Este método es responsable de ejecutar una consulta en el navegador de categorías,
      * Dado el objeto de consulta correspondiente
@@ -76,6 +80,14 @@ public interface QueryManager {
     public List<PendingTerm> executeQuery(PendingQuery query);
 
     /**
+     * Este método es responsable de ejecutar una consulta en el browser,
+     * Dado el objeto de consulta correspondiente
+     *
+     * @param query El objeto de consulta para el browser
+     */
+    public List<ConceptSMTK> executeQuery(BrowserQuery query);
+
+    /**
      * Este método es responsable de contabilizar los resultados de una consulta en el navegador de categorías,
      * Dado el objeto de consulta correspondiente
      *
@@ -106,6 +118,14 @@ public interface QueryManager {
      * @param query El objeto de consulta para el navegador de pendientes
      */
     public int countQueryResults(PendingQuery query);
+
+    /**
+     * Este método es responsable de contabilizar los resultados de una consulta en el browser,
+     * Dado el objeto de consulta correspondiente
+     *
+     * @param query El objeto de consulta para el browser
+     */
+    public int countQueryResults(BrowserQuery query);
 
     /**
      * Este método es responsable de obtener los atributos filtrables de una categoría para el navegador de categorias,

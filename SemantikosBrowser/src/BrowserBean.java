@@ -1,10 +1,26 @@
+import cl.minsal.semantikos.kernel.auth.UserManager;
+import cl.minsal.semantikos.kernel.components.*;
+import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.browser.BrowserQuery;
+import cl.minsal.semantikos.model.browser.GeneralQuery;
+import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import org.primefaces.extensions.model.layout.LayoutOptions;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @ManagedBean
 @ViewScoped
@@ -12,6 +28,9 @@ public class BrowserBean implements Serializable {
 
     private static final long serialVersionUID = 20120925L;
 
+    /**
+     * Variables para el layout
+     */
     private String stateOne;
     private String stateTwo;
     private boolean layoutOneShown = true;
@@ -19,8 +38,57 @@ public class BrowserBean implements Serializable {
     private LayoutOptions layoutOptionsOne;
     private LayoutOptions layoutOptionsTwo;
 
+    /**
+     * Variables para el browser
+     */
+    static final Logger logger = LoggerFactory.getLogger(BrowserBean.class);
+
+    @EJB
+    QueryManager queryManager;
+
+    @EJB
+    TagManager tagManager;
+
+
+    /**
+     * Objeto de consulta: contiene todos los filtros y columnas necesarios para el despliegue de los resultados en el navegador
+     */
+    private BrowserQuery browserQuery;
+
+    /**
+     * Lista de categorías para el despliegue del filtro por categorías
+     */
+    private List<Category> categories = new ArrayList<Category>();
+
+    /**
+     * Lista de tags para el despliegue del filtro por tags
+     */
+    private List<Tag> tags = new ArrayList<Tag>();
+
+
+    /**
+
+     * Lista de conceptos para el despliegue del resultado de la consulta
+     */
+    private LazyDataModel<ConceptSMTK> concepts;
+
+    private ConceptSMTK conceptSelected;
+
+
+    @EJB
+    private CategoryManager categoryManager;
+
+    @EJB
+    private ConceptManager conceptManager;
+
+
     @PostConstruct
     protected void initialize() {
+
+        tags = tagManager.getAllTags();
+        categories = categoryManager.getCategories();
+
+
         // 1. set options for first layout  
         layoutOptionsOne = new LayoutOptions();
 
@@ -63,6 +131,117 @@ public class BrowserBean implements Serializable {
         childEastOptions.setSouthOptions(eastSouth);
     }
 
+    /**
+     * Este método es el responsable de ejecutar la consulta
+     */
+    public void executeQuery() {
+
+        /**
+         * Si el objeto de consulta no está inicializado, inicializarlo
+         */
+        if(browserQuery == null)
+            browserQuery = queryManager.getDefaultBrowserQuery();
+
+        /**
+         * Ejecutar la consulta
+         */
+        concepts = new LazyDataModel<ConceptSMTK>() {
+            @Override
+            public List<ConceptSMTK> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+
+                //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
+
+                if(browserQuery.isFiltered() && first > 0)
+                    browserQuery.setPageNumber(0);
+                else
+                    browserQuery.setPageNumber(first);
+                browserQuery.setPageSize(pageSize);
+                browserQuery.setOrder(new Integer(sortField));
+
+                if(sortOrder.name().substring(0,3).toLowerCase().equals("asc"))
+                    browserQuery.setAsc(sortOrder.name().substring(0,3).toLowerCase());
+                else
+                    browserQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
+
+                List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(browserQuery);
+                //this.setRowCount(queryManager.countQueryResults(browserQuery));
+                this.setRowCount(15);
+
+                return conceptSMTKs;
+            }
+
+        };
+
+    }
+
+    public LazyDataModel<ConceptSMTK> getConcepts() {
+        return concepts;
+    }
+
+    public void setConcepts(LazyDataModel<ConceptSMTK> concepts) {
+        this.concepts = concepts;
+    }
+
+    public ConceptSMTK getConceptSelected() {
+        return conceptSelected;
+    }
+
+    public void setConceptSelected(ConceptSMTK conceptSelected) {
+        this.conceptSelected = conceptSelected;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public CategoryManager getCategoryManager() {
+        return categoryManager;
+    }
+
+    public void setCategoryManager(CategoryManager categoryManager) {
+        this.categoryManager = categoryManager;
+    }
+
+    public ConceptManager getConceptManager() {
+        return conceptManager;
+    }
+
+    public void setConceptManager(ConceptManager conceptManager) {
+        this.conceptManager = conceptManager;
+    }
+
+    public BrowserQuery getBrowserQuery() {
+        return browserQuery;
+    }
+
+    public void setBrowserQuery(BrowserQuery browserQuery) {
+        this.browserQuery = browserQuery;
+    }
+
+    public QueryManager getQueryManager() {
+        return queryManager;
+    }
+
+    public void setQueryManager(QueryManager queryManager) {
+        this.queryManager = queryManager;
+    }
+
+    public TagManager getTagManager() {
+        return tagManager;
+    }
+
+    public void setTagManager(TagManager tagManager) {
+        this.tagManager = tagManager;
+    }
+
     public String getStateOne() {
         return stateOne;
     }
@@ -93,5 +272,19 @@ public class BrowserBean implements Serializable {
 
     public LayoutOptions getLayoutOptionsTwo() {
         return layoutOptionsTwo;
+    }
+
+    public List<Description> getOtherDescriptions(ConceptSMTK concept){
+        if(concept == null)
+            return null;
+
+        List<Description> otherDescriptions = new ArrayList<Description>();
+
+        for (Description description : concept.getDescriptions()) {
+            if(DescriptionTypeFactory.getInstance().getDescriptionTypesButFSNandFavorite().contains(description.getDescriptionType()))
+                otherDescriptions.add(description);
+        }
+
+        return otherDescriptions;
     }
 }  

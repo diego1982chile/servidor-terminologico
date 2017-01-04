@@ -436,9 +436,7 @@
                                 itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
                                 emptyMessage="No se encontraron conceptos relacionados"
                                 placeholder="Buscar concepto por término"
-                                               forceSelection="true"
-
-                                >
+                                forceSelection="true">
                                    <p:ajax event="itemSelect" listener="#{conceptBean.addSuggest}" update="@(.tableConceptSuggest)"></p:ajax>
                                        </p:autoComplete>
                             </div>
