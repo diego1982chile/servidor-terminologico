@@ -203,6 +203,8 @@ public class ConceptBean implements Serializable {
 
     private ConceptSMTK conceptSMTK;
 
+    private ConceptSMTK conceptSMTKAttributeSelected;
+
     private ConceptSMTK conceptSelected;
 
     private ConceptSCT conceptSCTSelected;
@@ -1234,6 +1236,14 @@ public class ConceptBean implements Serializable {
 
     public void setHelperTableValuePlaceholder(int helperTableValuePlaceholder) {
         this.helperTableValuePlaceholder = helperTableValuePlaceholder;
+    }
+
+    public ConceptSMTK getConceptSMTKAttributeSelected() {
+        return conceptSMTKAttributeSelected;
+    }
+
+    public void setConceptSMTKAttributeSelected(ConceptSMTK conceptSMTKAttributeSelected) {
+        this.conceptSMTKAttributeSelected = conceptSMTKAttributeSelected;
     }
 
     public List<Category> getCategoryList() {

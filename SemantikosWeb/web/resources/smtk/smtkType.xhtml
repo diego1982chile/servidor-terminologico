@@ -293,6 +293,13 @@
                                                        concept="#{cc.attrs.concept}"
                                                        rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable}"
                         />
+
+                        <smtk:smtkTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                                relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                                targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                                concept="#{cc.attrs.concept}"
+                                                rendered="#{relationshipAttributeDefinition.targetDefinition.SMTKType}"
+                        />
                     </p:repeat>
                     <div class="Container20 White Responsive">
 

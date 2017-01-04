@@ -11,6 +11,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -54,7 +56,8 @@ public class FindConcept implements Serializable{
      */
     public void getConceptByCategory(){
        if(pattern==null || pattern.trim().length()==0){
-           findConcepts=conceptManager.findConceptBy(categorySelected);
+           categoryArrayID= new Long[] {categorySelected.getId()};
+           findConcepts =conceptManager.findConceptBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
        }else{
            getConceptSearchInputAndCategories(pattern);
        }
@@ -96,6 +99,32 @@ public class FindConcept implements Serializable{
         }
         return null;
     }
+
+    /**
+     * Este método es el encargado de relaizar la búsqueda por patrón de texto y categorías seleccionadas
+     * @param pattern
+     * @return
+     */
+    public List<ConceptSMTK> getConceptSearchInputCategoryContext(String pattern) {
+
+        if (pattern != null) {
+            if (pattern.trim().length() >= 2) {
+                if(standardizationPattern(pattern).length()<=1)return null;
+
+                if(categorySelected==null){
+
+                    FacesContext context = FacesContext.getCurrentInstance();
+                    Category category = (Category) UIComponent.getCurrentComponent(context).getAttributes().get("category");
+                    categoryArrayID= new Long[] {category.getId()};
+                }
+
+                findConcepts=conceptManager.findConceptBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
+                return findConcepts;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Este método realiza la búsqueda de concepto por todas las categorías
