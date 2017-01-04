@@ -31,7 +31,7 @@
 
             <div class="Container30 White Responsive">
                 <div class="ContainerIndentRight">
-                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" style="padding-top: 0.3em">
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" style="padding-top: 0.5em">
                         <p:selectBooleanCheckbox id="toBeReviewedCheck" itemLabel="Revisar" disabled="#{not cc.attrs.concept.editable}"
                                                  value="#{cc.attrs.concept.toBeReviewed}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
                         <p:selectBooleanCheckbox id="toBeConsultatedCheck" itemLabel="Consultar" disabled="#{not cc.attrs.concept.editable}"
@@ -48,7 +48,7 @@
 
             <div class="Container30 White Responsive">
                 <div class="ContainerIndentRight">
-                    <p:selectOneRadio id="city" value="#{conceptBean.fullyDefined}" layout="grid" columns="2" style="padding-top: 0.3em"
+                    <p:selectOneRadio id="city" value="#{conceptBean.fullyDefined}" layout="grid" columns="2" style="padding-top: 0.5em"
                                       disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept) or not conceptBean.editable}">
                         <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
                         <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>

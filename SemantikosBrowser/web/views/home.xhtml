@@ -3,39 +3,67 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
                 template="/WEB-INF/template/template.xhtml">
 
     <ui:define name="content">
         <div class="Container100">
             <div class="ContainerIndent">
                 <h:form id="form2" onkeypress="return event.keyCode != 13">
-                    <div style="margin-top: 65px" class="Card ShadowEffect TexAlCenter">
-                        <div class="ui-grid-responsive">
-                            <div class="ui-grid-col-5">
-                                <p:inputText value="#{navBrowser.pattern}" style="width: 90%; margin: 10px;"
-                                             placeholder="Buscar...">
-                                    <p:ajax event="keyup" update="conceptTable" />
-                                </p:inputText>
-                            </div>
+                    <div style="margin-top: 65px" class="Card ShadowEffect">
+                        <pe:layout fullPage="false" style="width: inherit; height: 800px" styleClass="browserLayout"
+                                   options="#{browserBean.layoutOptionsOne}"
+                                   rendered="#{browserBean.layoutOneShown}"
+                                   state="#{browserBean.stateOne}">
+                            <pe:layoutPane position="west" resizable="true">
+                                <h2>Filtros</h2>
+                                <p:separator />
+                                <div class="ui-fluid">
 
-                            <div class="ui-grid-col-4">
-                                <p:selectCheckboxMenu style="width: 100%; margin: 10px;" id="menu"
-                                                      value="#{navBrowser.selectedCategories}" label="Categorías"
-                                                      filter="true" filterMatchMode="startsWith">
-                                    <f:selectItems value="#{navBrowser.categories}" var="category"
-                                                   itemLabel="#{category.name}" itemValue="#{category.id}"/>
+                                    <div class="Container">
 
-                                    <p:ajax event="toggleSelect" update="conceptTable" />
-                                    <p:ajax update="conceptTable" />
-                                </p:selectCheckboxMenu>
-                            </div>
-                        </div>
-                        <div class="ui-grid-responsive">
-                            <div class="ui-grid-col-12">
+                                        <div class="Container100 Responsive">
 
-                                <p:dataTable id="conceptTable" value="#{navBrowser.concepts}" var="conceptSMTK"
+                                            <div class="ContainerIndent">
+                                                <span class="FontBold">
+                                                    Patrón
+                                                </span>
+                                                <p:inputText value="#{navBrowser.pattern}"
+                                                             placeholder="Buscar...">
+                                                    <p:ajax event="keyup" update="conceptTable" />
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+
+                                        <div class="Container100 Responsive">
+
+                                            <div class="ContainerIndent">
+                                                <span class="FontBold">
+                                                    Categoría
+                                                </span>
+                                                <p:selectCheckboxMenu id="menu"
+                                                                      value="#{navBrowser.selectedCategories}"
+                                                                      label="Categorías"
+                                                                      filter="true" filterMatchMode="startsWith">
+                                                    <f:selectItems value="#{navBrowser.categories}" var="category"
+                                                                   itemLabel="#{category.name}" itemValue="#{category.id}"/>
+
+                                                    <p:ajax event="toggleSelect" update="conceptTable" />
+                                                    <p:ajax update="conceptTable" />
+                                                </p:selectCheckboxMenu>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </pe:layoutPane>
+                            <pe:layoutPane position="center">
+
+                                <p:dataTable id="conceptTable" value="#{navBrowser.concepts}" var="conceptSMTK" styleClass="TexAlCenter"
                                              rows="15"
                                              paginator="true" lazy="true" dynamic="true"
+                                             reflow="true"
                                              paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                              emptyMessage="No se han encontrado conceptos con los criterios utilizados">
                                     <f:facet name="{Exporters}">
@@ -61,19 +89,20 @@
                                     </p:column>
 
                                     <p:column exportable="false" style="width:32px;text-align: center">
-                                        <p:commandButton update=":form:conceptDetail"
-                                                         oncomplete="PF('conceptDialog').show()"
-                                                         icon="fa fa-bars" title="View">
+                                        <p:commandLink update=":form:conceptDetail"
+                                                       oncomplete="PF('conceptDialog').show()"
+                                                       title="Ver Detalle">
+                                            <i class="fa fa-bars fa-lg" />
                                             <f:setPropertyActionListener value="#{conceptSMTK}"
                                                                          target="#{navBrowser.conceptSelected}"/>
-                                        </p:commandButton>
+                                        </p:commandLink>
                                     </p:column>
 
                                 </p:dataTable>
 
-                            </div>
 
-                        </div>
+                            </pe:layoutPane>
+                        </pe:layout>
 
                     </div>
 

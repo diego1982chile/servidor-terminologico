@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="Container30 White Responsive">
-                    <div class="ContainerIndentRight">
+                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
                         <p:outputPanel styleClass="search">
                             <p:autoComplete id="findHTRecords1" scrollHeight="200"
                                             completeMethod="#{helperTableBean.getRecordSearchInput}"
@@ -104,7 +104,7 @@
                     </div>
 
                     <div class="Container30 White Responsive">
-                        <div class="ContainerIndentRight">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.fields['description']}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
                                 <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.fields['dsc_completa_atc']}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
@@ -144,7 +144,7 @@
 
                 <div class="Container20 White Responsive">
 
-                    <div class="ContainerIndentRight">
+                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                         <p:outputPanel styleClass="search">
 
@@ -232,7 +232,7 @@
                     </div>
 
                     <div class="Container30 White Responsive">
-                        <div class="ContainerIndentRight">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                             <p:outputPanel styleClass="search">
                                 <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target.fields['description']}" />
@@ -552,7 +552,7 @@
 
                     <div class="Container20 White Responsive">
 
-                        <div class="ContainerIndentRight">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                             <p:outputPanel styleClass="search">
 
@@ -611,7 +611,7 @@
                         />
                     </p:repeat>
                     <div class="Container20 White Responsive">
-                        <div class="ContainerIndentRight">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
                             <p:commandButton
                                     process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                     action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"

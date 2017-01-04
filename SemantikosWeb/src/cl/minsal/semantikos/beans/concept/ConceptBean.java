@@ -603,9 +603,9 @@ public class ConceptBean implements Serializable {
                 if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
                 autogenerateBeans.autogenerateRelationship(relationshipDefinition, relationship, target,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
-                if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<String>) target).getValue().equalsIgnoreCase("Si"))
+                if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<Boolean>) target).getValue())
                     changeMultiplicityNotRequiredRelationshipDefinitionMC();
-                if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<String>) target).getValue().equalsIgnoreCase("No"))
+                if (relationshipDefinition.getId() == 74 && !((BasicTypeValue<Boolean>) target).getValue())
                     changeMultiplicityToRequiredRelationshipDefinitionMC();
                 break;
             }
@@ -614,9 +614,9 @@ public class ConceptBean implements Serializable {
         if (!isRelationshipFound) {
             relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
             this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
-            if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<String>) target).getValue().equalsIgnoreCase("Si"))
+            if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<Boolean>) target).getValue())
                 changeMultiplicityNotRequiredRelationshipDefinitionMC();
-            if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<String>) target).getValue().equalsIgnoreCase("No"))
+            if (relationshipDefinition.getId() == 74 && !((BasicTypeValue<Boolean>) target).getValue())
                 changeMultiplicityToRequiredRelationshipDefinitionMC();
         }
         //Autogenerado

@@ -115,7 +115,10 @@ public class PendingBrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
-                pendingQuery.setPageNumber(first);
+                if(pendingQuery.isFiltered() && first > 0)
+                    pendingQuery.setPageNumber(0);
+                else
+                    pendingQuery.setPageNumber(first);
                 pendingQuery.setPageSize(pageSize);
                 pendingQuery.setOrder(new Integer(sortField));
 

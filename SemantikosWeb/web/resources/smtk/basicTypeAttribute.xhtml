@@ -20,7 +20,7 @@
 
     <div class="Container20 White Responsive" style="text-align: center">
 
-        <div class="ContainerIndentRight">
+        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
             <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes}">
 
 

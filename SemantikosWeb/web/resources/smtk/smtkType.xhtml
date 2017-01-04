@@ -235,7 +235,7 @@
 
                     <div class="Container20 White Responsive">
 
-                        <div class="ContainerIndentRight">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                             <p:outputPanel styleClass="search">
 
@@ -379,7 +379,7 @@
 
                         <div class="Container30 White Responsive">
 
-                            <div class="ContainerIndentRight">
+                            <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                                 <p:outputPanel styleClass="search">
 
@@ -444,7 +444,9 @@
                                 </div>
 
                                 <div class="Container30 White Responsive">
-                                    <div class="ContainerIndentRight">
+
+                                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+
                                         <p:outputPanel styleClass="search">
                                             <p:inputText disabled="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.term}" />
 
@@ -455,7 +457,9 @@
                                                 <i class="fa fa-close fa-lg"  />
                                             </p:commandLink>
                                         </p:outputPanel>
+
                                     </div>
+
                                 </div>
 
                                 <div class="Container20 Responsive">
@@ -465,9 +469,11 @@
                                 </div>
 
                                 <div class="Container30 White Responsive">
-                                    <div class="ContainerIndentRight">
+
+                                    <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
                                         <p:inputText value="#{relationship.target.conceptID}" disabled="true" />
                                     </div>
+
                                 </div>
                             </div>
                         </div>

@@ -108,6 +108,11 @@ public class NoValidBrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
+                if(noValidQuery.isFiltered() && first > 0)
+                    noValidQuery.setPageNumber(0);
+                else
+                    noValidQuery.setPageNumber(first);
+
                 noValidQuery.setPageNumber(first);
                 noValidQuery.setPageSize(pageSize);
                 noValidQuery.setOrder(new Integer(sortField));

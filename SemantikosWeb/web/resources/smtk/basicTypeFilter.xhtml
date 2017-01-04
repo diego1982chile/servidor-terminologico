@@ -5,7 +5,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:composite="http://java.sun.com/jsf/composite"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk">
 
 <composite:interface>
     <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
@@ -15,83 +16,11 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container20 White Responsive">
-
-        <div class="ContainerIndent">
-
-            <p:selectCheckboxMenu id="basicTypeMultipleSelection"
-                                  value="#{cc.attrs.targets}"
-                                  converter="omnifaces.SelectItemsConverter"
-                                  label="#{cc.attrs.relationshipDefinition.name}"
-                                  filter="true"
-                                  filterMatchMode="startsWith"
-                                  rendered="#{cc.attrs.targetDefinition.discreteDomain and cc.attrs.multiple }">
-                <p:ajax event="change"
-                        update="@(.browserFIlters)"
-                        process="@this" />
-                <f:selectItems value="#{cc.attrs.targetDefinition.domain}"
-                               var="domain"
-                               itemLabel="#{domain}"
-                               itemValue="#{domain}"/>
-            </p:selectCheckboxMenu>
-
-            <p:autoComplete id="findHTRecords1" scrollHeight="200"
-                            completeMethod="#{basicTypeBean.getRecordSearchInput}"
-                            dropdown="true"
-                            forceSelection="true"
-                            var="basicTypeValue"
-                            placeholder="#{cc.attrs.relationshipDefinition.name}..."
-                            value="#{generalBrowserBean.basicTypeValue.value}"
-                            rendered="#{cc.attrs.targets.isEmpty() and not cc.attrs.multiple }"
-                            itemLabel="#{basicTypeValue}"
-                            itemValue="#{basicTypeValue}">
-                <!-- Parámetros del buscador -->
-                <f:attribute name="basicTypeDefinition" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
-                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
-                <!-- Parámetros del validador -->
-                <f:attribute name="basicTypeValue" value="#{generalBrowserBean.basicTypeValue}"  />
-                <!---->
-                <p:column>
-                    <h:outputText value="#{basicTypeValue}"/>
-                </p:column>
-
-                <p:ajax event="itemSelect"
-                        listener="#{generalBrowserBean.setSimpleSelection(cc.attrs.relationshipDefinition, generalBrowserBean.basicTypeValue)}"
-                        update="@(.browserFIlters)"
-                        process="@this" />
-
-                <p:ajax event="itemSelect" update="@(.browserTable)" />
-
-            </p:autoComplete>
-
-            <p:repeat  value="#{cc.attrs.targets}"
-                       offset="0"
-                       size="#{cc.attrs.targets.size()}"
-                       step="1"
-                       var="target"
-                       varStatus="var">
-
-                <p:outputPanel styleClass="search">
-                    <p:inputText disabled="true" id="itemSelected" value="#{target}" />
-                    <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
-                                   process="@this"
-                                   update="@(.browserFIlters),@(.browserTable)"
-                                   action="#{generalBrowserBean.removeTarget(cc.attrs.relationshipDefinition,target)}">
-                        <i class="fa fa-close fa-lg"  />
-                    </p:commandLink>
-                </p:outputPanel>
-
-
-            </p:repeat>
-
-        </div>
-    </div>
-
-    <h:outputStylesheet id="customCSS">
-        .ui-selectonemenu .ui-selectonemenu-label {
-            overflow: visible;
-        }
-    </h:outputStylesheet>
+    <smtk:basicTypeBooleanFilter
+            targetDefinition="#{cc.attrs.targetDefinition}"
+            relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+            targets="#{cc.attrs.targets}"
+            rendered="#{cc.attrs.targetDefinition.type.typeName eq 'boolean'}"/>
 
 
 </composite:implementation>
