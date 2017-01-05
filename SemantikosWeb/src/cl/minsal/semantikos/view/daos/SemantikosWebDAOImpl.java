@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.DescriptionWeb;
+import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
 import org.slf4j.Logger;
@@ -64,6 +65,11 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
         }
 
         return new ExtendedRelationshipDefinitionInfo(idComposite, order, defaultValue);
+    }
+
+    @Override
+    public ExtendedRelationshipAttributeDefinitionInfo getCompositeOf(Category category, RelationshipAttributeDefinition relationshipAttributeDefinition) {
+        return null;
     }
 
     @Override
