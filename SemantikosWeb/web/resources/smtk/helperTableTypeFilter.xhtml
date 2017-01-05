@@ -16,11 +16,15 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container20 White Responsive">
+    <p:row>
+        <p:column>
+            <div class="ui-fluid">
+                <div class="Container">
+                    <div class="ContainerIndent BoldGray FontBold">
 
-        <div class="ContainerIndent">
+                        <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
 
-            <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() }" styleClass="search">
+                        <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() }" styleClass="search">
 
                 <p:autoComplete id="findHTRecords1" scrollHeight="200"
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
@@ -52,7 +56,7 @@
                 <i class="fa fa-search fa-lg" />
             </p:outputPanel>
 
-            <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }" styleClass="search">
+                        <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }" styleClass="search">
 
                 <p:repeat  value="#{cc.attrs.targets}"
                            offset="0"
@@ -71,8 +75,11 @@
                 </p:repeat>
             </p:outputPanel>
 
-        </div>
-    </div>
+                    </div>
+                </div>
+            </div>
+        </p:column>
+    </p:row>
 
 
 </composite:implementation>

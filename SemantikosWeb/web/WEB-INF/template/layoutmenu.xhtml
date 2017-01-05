@@ -21,15 +21,16 @@
         </ul>
         <div class="Separator"></div>
 
+        <pr:menu model="#{mainMenuBean.categoryMenuModel}"  />
 
         <pr:menu>
             <p:menuitem id="rm_users_web" value="Administracion Usuarios" icon="icon-two385" outcome="/views/users"/>
 
-            <p:menuitem id="rm_menu_principal" value="Menú Principal" icon="fa fa-home" outcome="/views/browser/mainMenu.xhtml"/>
+            <p:menuitem id="rm_menu_principal" value="Menú Principal" icon="fa fa-home" outcome="/views/browser/mainMenu.xhtml" rendered="false"/>
 
-            <p:menuitem id="rm_concept_draft" value="Conceptos en Borrador" icon="fa fa-pencil-square-o" outcome="/views/concept/conceptDraft.xhtml"/>
+            <p:menuitem id="rm_concept_draft" value="Conceptos en Borrador" icon="fa fa-pencil-square-o" outcome="/views/concept/conceptDraft.xhtml" rendered="false"/>
 
-            <p:menuitem id="rm_create_category" value="Crear categoria" icon="fa fa-list-alt" outcome="/views/category/createCategory.xhtml"/>
+            <p:menuitem id="rm_create_category" value="Crear categoria" icon="fa fa-list-alt" outcome="/views/category/createCategory.xhtml" rendered="false"/>
 
             <p:menuitem id="rm_admin_refsets" value="Administrador de RefSets" icon="fa fa-dropbox" outcome="/views/refsets/admin_refsets.xhtml"/>
 
@@ -38,8 +39,7 @@
             <p:separator />
 
             <p:submenu id="rm_administracion" label="Administración" icon="icon-planet29">
-
-                <p:menuitem id="rm_configuraciones" value="Configuaciones" icon="icon-planet29" outcome="/views/configuraciones.xhtml"/>
+                <p:menuitem id="rm_configuraciones" value="Configuaciones" icon="icon-planet29" outcome="/views/configuraciones.xhtml" update=""  />
             </p:submenu>
 
             <p:submenu id="rm_theme" label="Ejemplos Rio Theme" icon="icon-mountains14" rendered="false">
@@ -67,7 +67,7 @@
                 <p:menuitem id="rm_access" value="Access Denied Page" icon="icon-turn17" outcome="/views/errors/access-denied" />
             </p:submenu>
 
-            <p:submenu id="rm_docs" label="Documentation" icon="icon-receipt9" rendered="false">
+            <p:submenu id="rm_docs" label="Documentation" icon="icon-receipt9">
                 <p:submenu id="rm_docs_core" label="Core CSS Docs" icon="fa fa-code">
                     <p:menuitem id="rm_docs_1" value="Installation" icon="fa fa-book" outcome="/views/examples/docs/core/installation" />
                     <p:menuitem id="rm_docs_2" value="Menus" icon="fa fa-book" outcome="/views/examples/docs/core/menus" />
@@ -102,8 +102,6 @@
             </p:submenu>
             <p:separator />
         </pr:menu>
-
-
 
 
     </div>

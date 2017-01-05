@@ -31,9 +31,17 @@
                     <div class="Container20 White Responsive">
                         <div class="ContainerIndent">
 
-                            <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
-                                           value="#{cc.attrs.relationshipDefinition.name}"/>
-                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                            <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}">
+                                <span class="FontBold">
+                                    #{cc.attrs.relationshipDefinition.name}
+                                </span>
+                            </p:outputLabel>
+                            <p:outputLabel rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}">
+                                <span class="FontBold">
+                                    #{cc.attrs.relationshipDefinition.name} *
+                                </span>
+                            </p:outputLabel>
+
                         </div>
                     </div>
 
@@ -73,8 +81,16 @@
                     <div class="Container20 White Responsive">
                         <div class="ContainerIndent">
 
-                            <p:outputLabel for="basicTypeValue" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                            <p:outputLabel for="basicTypeValue" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}">
+                                <span class="FontBold">
+                                    #{cc.attrs.relationshipDefinition.name}
+                                </span>
+                            </p:outputLabel>
+                            <p:outputLabel rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}">
+                                <span class="FontBold">
+                                    #{cc.attrs.relationshipDefinition.name} *
+                                </span>
+                            </p:outputLabel>
 
                         </div>
                     </div>

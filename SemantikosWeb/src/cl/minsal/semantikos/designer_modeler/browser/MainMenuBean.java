@@ -54,11 +54,14 @@ public class MainMenuBean implements Serializable {
 
         //First submenu
         DefaultSubMenu categorySubmenu = new DefaultSubMenu("Categorías");
+        categorySubmenu.setIcon("fa fa-list-alt");
+        categorySubmenu.setId("rm_categories");
 
         for (Category category : categories) {
             DefaultMenuItem item = new DefaultMenuItem(category.getName());
             item.setUrl("/views/browser/generalBrowser.xhtml?idCategory="+category.getId());
-            item.setIcon("ui-menuitem-icon ui-icon fa fa-list-alt Fs15");
+            item.setIcon("fa fa-list-alt");
+            item.setId("rm_"+category.getName());
             categorySubmenu.addElement(item);
         }
 

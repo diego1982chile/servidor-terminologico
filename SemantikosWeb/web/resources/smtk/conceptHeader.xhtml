@@ -24,7 +24,9 @@
             <div class="Container20 White Responsive">
                 <div class="ContainerIndent">
                     <p:outputLabel for="toBeReviewedCheck">
-                        Indicadores
+                        <span class="FontBold">
+                            Indicadores
+                        </span>
                     </p:outputLabel>
                 </div>
             </div>
@@ -42,7 +44,11 @@
 
             <div class="Container20 White Responsive">
                 <div class="ContainerIndent">
-                    <p:outputLabel for="toBeReviewedCheck" value="Grado de Definición" />
+                    <p:outputLabel for="toBeReviewedCheck">
+                        <span class="FontBold">
+                            Grado de Definición
+                        </span>
+                    </p:outputLabel>
                 </div>
             </div>
 
@@ -67,7 +73,11 @@
 
             <div class="Container20 White Responsive">
                 <div class="ContainerIndent">
-                    <p:outputLabel for="tagSemantikos" value="Tag Semantiko" styleClass="FontBold" />
+                    <p:outputLabel for="tagSemantikos">
+                        <span class="FontBold">
+                            Tag Semantiko
+                        </span>
+                    </p:outputLabel>
                 </div>
             </div>
 
@@ -107,19 +117,23 @@
 
             <div class="Container20 White Responsive">
                 <div class="ContainerIndent">
-                    <p:outputLabel for="observation" value="Observación"/>
+                    <p:outputLabel for="observation">
+                        <span class="FontBold">
+                            Observación
+                        </span>
+                    </p:outputLabel>
                 </div>
             </div>
 
-            <div class="Container60 White Responsive">
-
+            <div class="Container50 White Responsive">
+                <div class="ContainerIndentRight">
                     <p:inputTextarea id="observation"
                                      name="observation"
                                      disabled="#{not cc.attrs.concept.editable}"
                                      value="#{cc.attrs.concept.observation}">
                         <p:ajax />
                     </p:inputTextarea>
-
+                </div>
             </div>
         </div>
     </div>
