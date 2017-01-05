@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.view.daos;
 
+import cl.minsal.semantikos.model.PersistentEntity;
 import cl.minsal.semantikos.model.relationships.Target;
 
 /**
@@ -7,7 +8,9 @@ import cl.minsal.semantikos.model.relationships.Target;
  */
 public class ExtendedRelationshipAttributeDefinitionInfo extends ExtendedRelationshipDefinitionInfo{
 
-    public ExtendedRelationshipAttributeDefinitionInfo(long idComposite, int order, Target defaultValue) {
-        super(idComposite,  order, defaultValue);
+    public static final ExtendedRelationshipAttributeDefinitionInfo DEFAULT_CONFIGURATION = new ExtendedRelationshipAttributeDefinitionInfo(PersistentEntity.NON_PERSISTED_ID, 0);
+
+    public ExtendedRelationshipAttributeDefinitionInfo(long idComposite, int order) {
+        super(idComposite,  order);
     }
 }

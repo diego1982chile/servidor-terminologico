@@ -3,6 +3,7 @@ package cl.minsal.semantikos.model.relationships;
 import cl.minsal.semantikos.model.Multiplicity;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @author Andrés Farías on 10/5/16.
@@ -17,6 +18,9 @@ public class RelationshipDefinitionWeb extends RelationshipDefinition implements
 
     /** Establece el estilo para el estado de error */
     private boolean isMultiplicitySatisfied = true;
+
+    /** Lista de Relationship Attribute Web **/
+    private List<RelationshipAttributeDefinitionWeb> relationshipAttributeDefinitionWebs;
 
     /** Establece el valor por defecto para esta definición */
     private Target defaultValue;
@@ -56,6 +60,13 @@ public class RelationshipDefinitionWeb extends RelationshipDefinition implements
         isMultiplicitySatisfied = multiplicitySatisfied;
     }
 
+    public List<RelationshipAttributeDefinitionWeb> getRelationshipAttributeDefinitionWebs() {
+        return relationshipAttributeDefinitionWebs;
+    }
+
+    public void setRelationshipAttributeDefinitionWebs(List<RelationshipAttributeDefinitionWeb> relationshipAttributeDefinitionWebs) {
+        this.relationshipAttributeDefinitionWebs = relationshipAttributeDefinitionWebs;
+    }
 
     @Override
     public int compareTo(@NotNull RelationshipDefinitionWeb relationshipDefinitionWeb) {

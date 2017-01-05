@@ -527,7 +527,10 @@ public class ConceptBean implements Serializable {
         } else {
             concept.setInherited(false);
         }
-
+        if (relationshipDefinition.getOrderAttributeDefinition() != null) {
+            RelationshipAttribute attribute = new RelationshipAttribute(relationshipDefinition.getOrderAttributeDefinition(), relationship, new BasicTypeValue(concept.getValidRelationshipsByRelationDefinition(relationshipDefinition).size() + 1));
+            relationship.getRelationshipAttributes().add(attribute);
+        }
         for (RelationshipAttributeDefinition attributeDefinition : relationshipDefinition.getRelationshipAttributeDefinitions()) {
             if ((!attributeDefinition.isOrderAttribute() && !relationship.isMultiplicitySatisfied(attributeDefinition)) || changeIndirectMultiplicity(relationship, relationshipDefinition, attributeDefinition)) {
                 messageBean.messageError("Información incompleta para agregar " + relationshipDefinition.getName());
@@ -537,10 +540,7 @@ public class ConceptBean implements Serializable {
             }
         }
 
-        if (relationshipDefinition.getOrderAttributeDefinition() != null) {
-            RelationshipAttribute attribute = new RelationshipAttribute(relationshipDefinition.getOrderAttributeDefinition(), relationship, new BasicTypeValue(concept.getValidRelationshipsByRelationDefinition(relationshipDefinition).size() + 1));
-            relationship.getRelationshipAttributes().add(attribute);
-        }
+
         if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
         autogenerateBeans.autogenerateRelationshipWithAttributes(relationshipDefinition, relationship,concept,autoGenerateList,autogenerateMC);
         // Se utiliza el constructor mínimo (sin id)
