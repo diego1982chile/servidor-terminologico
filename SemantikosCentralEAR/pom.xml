@@ -20,58 +20,6 @@
         <version>2.2.3</version>
     </parent>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.21</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosKernelEJB</artifactId>
-            <version>2.2.3</version>
-            <type>ejb</type>
-        </dependency>
-
-        <dependency>
-            <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosWSEJB</artifactId>
-            <version>2.2.3</version>
-            <type>ejb</type>
-        </dependency>
-
-        <dependency>
-            <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosWeb</artifactId>
-            <version>2.2.3</version>
-            <type>war</type>
-        </dependency>
-
-        <dependency>
-            <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosBrowser</artifactId>
-            <version>2.2.3</version>
-            <type>war</type>
-        </dependency>
-
-        <dependency>
-            <groupId>cl.minsal.semantikos</groupId>
-            <artifactId>SemantikosWS</artifactId>
-            <version>2.2.3</version>
-            <type>war</type>
-        </dependency>
-
-        <!-- Clases para validaciones básicas tipo @NotNull -->
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.0.0.GA</version>
-            <scope>compile</scope>
-        </dependency>
-
-    </dependencies>
-
     <build>
         <resources>
             <resource>
@@ -125,4 +73,62 @@
             </plugin>
         </plugins>
     </build>
+
+    <dependencies>
+
+        <!-- Proyecto de Componentes de Negocio Semantikos -->
+        <dependency>
+            <groupId>cl.minsal.semantikos</groupId>
+            <artifactId>SemantikosKernelEJB</artifactId>
+            <version>2.2.3</version>
+            <type>ejb</type>
+        </dependency>
+
+        <!-- Proyecto de Componentes para WS -->
+        <dependency>
+            <groupId>cl.minsal.semantikos</groupId>
+            <artifactId>SemantikosWSEJB</artifactId>
+            <version>2.2.3</version>
+            <type>ejb</type>
+        </dependency>
+
+        <!-- Proyecto Web para el Navegador -->
+        <dependency>
+            <groupId>cl.minsal.semantikos</groupId>
+            <artifactId>SemantikosWS</artifactId>
+            <version>2.2.3</version>
+            <type>war</type>
+        </dependency>
+
+        <!-- Proyecto Web para el modelamiento y diseño -->
+        <dependency>
+            <groupId>cl.minsal.semantikos</groupId>
+            <artifactId>SemantikosWeb</artifactId>
+            <version>2.2.3</version>
+            <type>war</type>
+        </dependency>
+
+        <!-- Proyecto Web para el Navegador -->
+        <dependency>
+            <groupId>cl.minsal.semantikos</groupId>
+            <artifactId>SemantikosBrowser</artifactId>
+            <version>2.2.3</version>
+            <type>war</type>
+        </dependency>
+
+        <!-- Para el log -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.21</version>
+        </dependency>
+
+        <!-- Clases para validaciones básicas tipo @NotNull -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 </project>

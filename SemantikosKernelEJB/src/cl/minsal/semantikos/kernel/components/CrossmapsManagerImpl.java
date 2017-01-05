@@ -179,7 +179,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
             }
         }
 
-        logger.info("Se cargaron " + indirectCrossmaps.size() + " indirectos para el concepto " + conceptSMTK + ": " + indirectCrossmaps);
+        logger.debug("Se cargaron " + indirectCrossmaps.size() + " indirectos para el concepto " + conceptSMTK + ": " + indirectCrossmaps);
         return indirectCrossmaps;
     }
 

@@ -8,6 +8,7 @@
     <file type="ejb" url="file://$PROJECT_DIR$/SemantikosWSEJB" />
     <file type="javaeeApplication" url="file://$PROJECT_DIR$/SemantikosCentralEAR" />
     <file type="web" url="file://$PROJECT_DIR$/SemantikosBrowser" />
+    <file type="web" url="file://$PROJECT_DIR$/SemantikosClientesWS/ClienteJava" />
     <file type="web" url="file://$PROJECT_DIR$/SemantikosWeb" />
     <file type="web" url="file://$PROJECT_DIR$/SemantikosWS" />
     <file type="web" url="file://$PROJECT_DIR$/TestWSRest" />
@@ -17,6 +18,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/SemantikosClientesWS/ClienteJava/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -28,4 +30,5 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/classes" />
   </component>
+  <component name="WebServicesPlugin" addRequiredLibraries="true" />
 </project>
