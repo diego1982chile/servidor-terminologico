@@ -42,4 +42,5 @@ public interface TargetDefinition extends IPersistentEntity {
      * @return <code>true</code> si es de tipo CrossMap y <code>false</code> si no.
      */
     public boolean isCrossMapType();
+
 }
