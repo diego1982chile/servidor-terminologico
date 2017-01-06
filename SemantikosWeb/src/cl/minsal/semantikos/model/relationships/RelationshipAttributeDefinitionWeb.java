@@ -13,10 +13,13 @@ public class RelationshipAttributeDefinitionWeb  extends RelationshipAttributeDe
     /** Establece el orden o posición */
     private int order;
 
-    public RelationshipAttributeDefinitionWeb(long id, TargetDefinition target, String name, Multiplicity multiplicity, long compositeID, int order) {
+    private RelationshipAttributeDefinition relationshipAttributeDefinition;
+
+    public RelationshipAttributeDefinitionWeb(long id, TargetDefinition target, String name, Multiplicity multiplicity, long compositeID, int order, RelationshipAttributeDefinition relationshipAttributeDefinition) {
         super(id, target,name, multiplicity);
         this.order =order;
         this.compositeID=compositeID;
+        this.relationshipAttributeDefinition= relationshipAttributeDefinition;
     }
 
     public long getCompositeID() {
@@ -33,5 +36,13 @@ public class RelationshipAttributeDefinitionWeb  extends RelationshipAttributeDe
 
     public void setOrder(int order) {
         this.order = order;
+    }
+
+    public RelationshipAttributeDefinition getRelationshipAttributeDefinition() {
+        return relationshipAttributeDefinition;
+    }
+
+    public void setRelationshipAttributeDefinition(RelationshipAttributeDefinition relationshipAttributeDefinition) {
+        this.relationshipAttributeDefinition = relationshipAttributeDefinition;
     }
 }

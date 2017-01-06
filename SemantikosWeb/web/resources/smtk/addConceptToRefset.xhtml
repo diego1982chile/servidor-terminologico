@@ -52,7 +52,7 @@
             </div>
 
 
-            <p:dataTable styleClass="findConcept" var="conceptToRefSet" value="#{findConceptBean.findConcepts}"  selection="#{refsetsBean.conceptSMTKListSelectedEdit}" rowKey="#{conceptToRefSet.id}">
+            <p:dataTable styleClass="findConcept" var="conceptToRefSet" value="#{findConceptBean.findConcepts}"  selection="#{refsetsBean.conceptSMTKListSelectedEdit}" rowKey="#{conceptToRefSet.id}" scrollable="true" scrollHeight="350">
                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                 <p:column headerText="Concept ID">
                     <h:outputText value="#{conceptToRefSet.conceptID}"/>
@@ -104,7 +104,7 @@
             </div>
 
 
-            <p:dataTable styleClass="findConcept" var="concept" value="#{findConceptBean.findConcepts}"  selection="#{refsetsBean.conceptSMTKListSelected}" rowKey="#{concept.id}">
+            <p:dataTable styleClass="findConcept" var="concept" value="#{findConceptBean.findConcepts}"  selection="#{refsetsBean.conceptSMTKListSelected}" rowKey="#{concept.id}" scrollable="true" scrollHeight="350">
                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                 <p:column headerText="Concept ID">
                     <h:outputText value="#{concept.conceptID}"/>

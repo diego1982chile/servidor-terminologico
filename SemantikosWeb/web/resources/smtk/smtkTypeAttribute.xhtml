@@ -32,7 +32,7 @@
                                 disabled="#{not cc.attrs.concept.editable }"
                                 var="smtk"
                                 placeholder="#{cc.attrs.relationshipAttributeDefinition.name}..."
-                                converter="omnifaces.SelectItemsConverter"
+                                converter="conceptConverter"
                                 value="#{conceptBean.conceptSMTKAttributeSelected}"
                                 itemLabel="#{smtk.descriptionFavorite.term}"
                                 itemValue="#{smtk}">
@@ -43,10 +43,9 @@
                     <p:column>
                         <h:outputText value="#{smtk.descriptionFavorite.term}"/>
                     </p:column>
-
+                    <p:ajax />
                     <p:ajax event="itemSelect"
-                            update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                            listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.conceptSMTKAttributeSelected)}"
+                            listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.conceptSMTKAttributeSelected)}"
                             process="@this" />
 
                 </p:autoComplete>
