@@ -27,7 +27,7 @@
 
                         <p:outputPanel styleClass="search">
                             <p:inputText value="#{cc.attrs.descriptionQuery.query}" placeholder="Buscar...">
-                                <p:ajax event="keyup" update="@(.browserTable),@(.browserFilters)" process="@this" />
+                                <p:ajax event="keyup" update="@(.browserTable)" process="@this" />
                             </p:inputText>
                             <i class="fa fa-search fa-lg" />
                         </p:outputPanel>
@@ -98,11 +98,11 @@
                 </div>
             </div>
         </div>
-        <p:spacer />
+
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.categories}" itemName="Categorías" />
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.descriptionTypes}" itemName="Tipo descriptor" />
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.refSets}" itemName="RefSets" />
-        <p:spacer />
+
     </p:outputPanel>
 
     <script type="text/javascript">

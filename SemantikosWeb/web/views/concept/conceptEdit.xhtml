@@ -85,12 +85,10 @@
 
                                                                 <p:outputPanel
                                                                         id="panelRelationshipDefiniton"
-                                                                        style="border:0px; margin: 0px; padding: 0px;"
                                                                         styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}"
                                                                         rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
 
                                                                     <p:growl id="growlAttributes" showDetail="true" showSummary="true"/>
-
 
                                                                     <smtk:smtkType
                                                                             rendered="#{relationshipDefinition.targetDefinition.SMTKType}"
@@ -99,7 +97,7 @@
                                                                             concept="#{conceptBean.concept}"/>
 
                                                                     <smtk:helperTableType
-                                                                            rendered="#{relationshipDefinition.targetDefinition.helperTable}"
+                                                                            rendered="#{relationshipDefinition.targetDefinition.helperTable and relationshipDefinition.compositeID eq 1}"
                                                                             relationshipDefinition="#{relationshipDefinition}"
                                                                             targetDefinition="#{relationshipDefinition.targetDefinition}"
                                                                             concept="#{conceptBean.concept}"/>
@@ -108,7 +106,11 @@
                                                                             targetDefinition="#{relationshipDefinition.targetDefinition}"
                                                                             relationshipDefinition="#{relationshipDefinition}"
                                                                             concept="#{conceptBean.concept}"
-                                                                            rendered="#{relationshipDefinition.targetDefinition.basicType}"/>
+                                                                            rendered="#{relationshipDefinition.targetDefinition.basicType and relationshipDefinition.compositeID eq 1}"/>
+
+                                                                    <smtk:customType relationshipDefinition="#{relationshipDefinition}"
+                                                                                     targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                                                                     concept="#{conceptBean.concept}" />
 
                                                                 </p:outputPanel>
 

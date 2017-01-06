@@ -21,13 +21,13 @@
               hideEffect="fade" resizable="true" style="margin:40px;">
         <p:outputPanel id="selectConceptPanel" styleClass="selectConcept">
             <div class="ui-g">
-                <div class="ui-g-12 ui-md-6 ui-lg-5">
-                    <p:inputText value="#{findConceptBean.pattern}">
-                        <p:ajax update="@(.findConcept)" listener="#{findConceptBean.getConceptSearchInputAndCategories(findConceptBean.pattern)}"></p:ajax>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:inputText value="#{findConceptBean.pattern}" style="width:90%;" placeholder="Buscar...">
+                        <p:ajax event="keyup" update="@(.findConcept)" process="@this" listener="#{findConceptBean.getConceptSearchInputAndCategories(findConceptBean.pattern)}"></p:ajax>
                     </p:inputText>
 
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <p:selectOneMenu value="#{findConceptBean.categorySelected}"
                                      converter="omnifaces.SelectItemsConverter"
                                      effect="fade" var="c" filter="true"
@@ -46,21 +46,22 @@
                                      actionListener="#{refsetsBean.addConcept(cc.attrs.refset)}" disabled="#{not cc.attrs.refset.valid}" oncomplete="PF('selectConcept').hide()">
                         <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTK}"/>
                         <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
+
                     </p:commandButton>
                 </div>
             </div>
 
 
-            <p:dataTable styleClass="findConcept" var="concept" value="#{findConceptBean.findConcepts}"  selection="#{refsetsBean.conceptSMTKListSelected}" rowKey="#{concept.id}">
+            <p:dataTable styleClass="findConcept" var="conceptToRefSet" value="#{findConceptBean.findConcepts}"  selection="#{refsetsBean.conceptSMTKListSelectedEdit}" rowKey="#{conceptToRefSet.id}">
                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                 <p:column headerText="Concept ID">
-                    <h:outputText value="#{concept.conceptID}"/>
+                    <h:outputText value="#{conceptToRefSet.conceptID}"/>
                 </p:column>
                 <p:column headerText="Descripción">
-                    <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                    <h:outputText value="#{conceptToRefSet.descriptionFavorite.term}"/>
                 </p:column>
                 <p:column headerText="Categoría">
-                    <h:outputText value="#{concept.category.name}"/>
+                    <h:outputText value="#{conceptToRefSet.category.name}"/>
                 </p:column>
             </p:dataTable>
 
@@ -73,13 +74,13 @@
               hideEffect="fade" resizable="true" style="margin:40px;">
         <p:outputPanel id="selectConceptPanelCreate" styleClass="selectConcept">
             <div class="ui-g">
-                <div class="ui-g-12 ui-md-6 ui-lg-5">
-                    <p:inputText value="#{findConceptBean.pattern}">
-                        <p:ajax update="@(.findConcept)" listener="#{findConceptBean.getConceptSearchInputAndCategories(findConceptBean.pattern)}"></p:ajax>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <p:inputText value="#{findConceptBean.pattern}" style="width:90%;" placeholder="Buscar...">
+                        <p:ajax event="keyup" update="@(.findConcept)"  process="@this" listener="#{findConceptBean.getConceptSearchInputAndCategories(findConceptBean.pattern)}"></p:ajax>
                     </p:inputText>
 
                 </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
                     <p:selectOneMenu value="#{findConceptBean.categorySelected}"
                                      converter="omnifaces.SelectItemsConverter"
                                      effect="fade" var="c" filter="true"

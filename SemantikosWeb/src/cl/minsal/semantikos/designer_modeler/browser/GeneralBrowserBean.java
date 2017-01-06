@@ -133,7 +133,10 @@ public class GeneralBrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
-                generalQuery.setPageNumber(first);
+                if(generalQuery.isFiltered() && first > 0)
+                    generalQuery.setPageNumber(0);
+                else
+                    generalQuery.setPageNumber(first);
                 generalQuery.setPageSize(pageSize);
                 generalQuery.setOrder(new Integer(sortField));
 

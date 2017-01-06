@@ -219,6 +219,11 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    public long conceptContain(Tag tag) {
+        return tagDAO.countConceptContainTag(tag);
+    }
+
+    @Override
     public boolean containTag(String nameTag) {
         return tagDAO.containTag(nameTag);
     }

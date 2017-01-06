@@ -322,10 +322,10 @@
 
             <div class="ui-fluid">
 
-                <div class="Container">
+                <div class="Container ContainerIndent">
 
                     <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                                 <p:selectOneMenu value="#{cc.attrs.targetDefinition}" autoWidth="false" converter="omnifaces.SelectItemsConverter">
                                     <f:selectItems itemLabel="#{crossmapSet.abbreviatedName}" value="#{crossmapBean.crossmapSets}" itemValue="#{crossmapSet}" var="crossmapSet" />
@@ -336,7 +336,7 @@
                         </div>
 
                     <div class="Container20 White Responsive">
-                        <div class="ContainerIndent">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                             <p:outputPanel styleClass="search">
 
@@ -399,14 +399,16 @@
                         />
                     </p:repeat>
 
-                    <div class="ui-panelgrid-cell Container10 Responsive">
-                        <p:commandButton
-                                process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
-                                action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
-                                update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                style="max-width: 100px"
-                                value="Agregar">
-                        </p:commandButton>
+                    <div class="Container20 Responsive">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                            <p:commandButton
+                                    process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
+                                    action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
+                                    update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.attributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                                    style="max-width: 100px"
+                                    value="Agregar">
+                            </p:commandButton>
+                        </div>
                     </div>
                 </div>
             </div>

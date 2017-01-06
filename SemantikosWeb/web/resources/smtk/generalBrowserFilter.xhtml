@@ -26,7 +26,7 @@
                     <div class="ContainerIndent">
                         <p:outputPanel styleClass="search">
                             <p:inputText value="#{cc.attrs.generalQuery.query}" placeholder="Buscar...">
-                                <p:ajax event="keyup" update="@(.browserTable),@(.browserFilters)" process="@this" />
+                                <p:ajax event="keyup" update="@(.browserTable)" process="@this" />
                             </p:inputText>
                             <i class="fa fa-search fa-lg" />
                         </p:outputPanel>
@@ -68,7 +68,7 @@
                         <p:selectCheckboxMenu id="tags"
                                               value="#{cc.attrs.generalQuery.tags}"
                                               converter="omnifaces.SelectItemsConverter"
-                                              label="#{ generalBrowserBean.stringifyTags(cc.attrs.generalQuery.tags) }"
+                                              label="Etiquetas..."
                                               autoWidth="false"
                                               filter="true"
                                               filterMatchMode="startsWith">
@@ -100,7 +100,7 @@
                                           targetDefinition="#{filter.definition.targetDefinition}"
                                           targets="#{filter.targets}"
                                           multiple="#{filter.multiple}"
-                                          rendered="#{filter.definition.targetDefinition.basicType and filter.definition.targetDefinition.discreteDomain}" />
+                                          rendered="#{filter.definition.targetDefinition.basicType}" />
 
                     <smtk:helperTableTypeFilter
                             relationshipDefinition="#{filter.definition}"

@@ -203,6 +203,8 @@ public class ConceptBean implements Serializable {
 
     private ConceptSMTK conceptSMTK;
 
+    private ConceptSMTK conceptSMTKAttributeSelected;
+
     private ConceptSMTK conceptSelected;
 
     private ConceptSCT conceptSCTSelected;
@@ -471,7 +473,6 @@ public class ConceptBean implements Serializable {
         this.conceptSMTK = conceptSMTK;
         // Se crea el concepto WEB a partir del concepto SMTK
         concept = new ConceptSMTKWeb(conceptSMTK);
-        if(!concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
         // Se crea una copia con la imagen original del concepto
         _concept = new ConceptSMTKWeb(conceptSMTK);
 
@@ -540,6 +541,7 @@ public class ConceptBean implements Serializable {
             RelationshipAttribute attribute = new RelationshipAttribute(relationshipDefinition.getOrderAttributeDefinition(), relationship, new BasicTypeValue(concept.getValidRelationshipsByRelationDefinition(relationshipDefinition).size() + 1));
             relationship.getRelationshipAttributes().add(attribute);
         }
+        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
         autogenerateBeans.autogenerateRelationshipWithAttributes(relationshipDefinition, relationship,concept,autoGenerateList,autogenerateMC);
         // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
@@ -600,10 +602,12 @@ public class ConceptBean implements Serializable {
                 relationshipWeb.setTarget(target);
                 relationship = relationshipWeb;
                 isRelationshipFound = true;
+                if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+
                 autogenerateBeans.autogenerateRelationship(relationshipDefinition, relationship, target,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
-                if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<String>) target).getValue().equalsIgnoreCase("Si"))
+                if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<Boolean>) target).getValue())
                     changeMultiplicityNotRequiredRelationshipDefinitionMC();
-                if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<String>) target).getValue().equalsIgnoreCase("No"))
+                if (relationshipDefinition.getId() == 74 && !((BasicTypeValue<Boolean>) target).getValue())
                     changeMultiplicityToRequiredRelationshipDefinitionMC();
                 break;
             }
@@ -612,12 +616,14 @@ public class ConceptBean implements Serializable {
         if (!isRelationshipFound) {
             relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
             this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
-            if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<String>) target).getValue().equalsIgnoreCase("Si"))
+            if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<Boolean>) target).getValue())
                 changeMultiplicityNotRequiredRelationshipDefinitionMC();
-            if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<String>) target).getValue().equalsIgnoreCase("No"))
+            if (relationshipDefinition.getId() == 74 && !((BasicTypeValue<Boolean>) target).getValue())
                 changeMultiplicityToRequiredRelationshipDefinitionMC();
         }
         //Autogenerado
+        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+
         autogenerateBeans.autogenerateRelationship(relationshipDefinition, relationship, target, concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
         // Se resetean los placeholder para los target de las relaciones
         resetPlaceHolders();
@@ -639,6 +645,8 @@ public class ConceptBean implements Serializable {
                     if (attribute.getRelationAttributeDefinition().equals(relationshipAttributeDefinition)) {
                         attribute.setTarget(target);
                         isAttributeFound = true;
+                        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+
                         autogenerateBeans.autogenerateAttributeDefinition(relationshipAttributeDefinition, target, attribute,concept, autogenerateMC, autogenerateMCCE);
                         break;
                     }
@@ -647,6 +655,8 @@ public class ConceptBean implements Serializable {
                 if (!isAttributeFound) {
                     RelationshipAttribute attribute = new RelationshipAttribute(relationshipAttributeDefinition, relationship, target);
                     relationship.getRelationshipAttributes().add(attribute);
+                    if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+
                     autogenerateBeans.autogenerateAttributeDefinition(relationshipAttributeDefinition, target, attribute,concept, autogenerateMC, autogenerateMCCE);
                 }
             }
@@ -703,6 +713,8 @@ public class ConceptBean implements Serializable {
                 order++;
             }
         }
+        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+
         autogenerateBeans.autogenerateRemoveRelationship(rd,r,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
         autogenerateBeans.autogenerateRemoveRelationshipWithAttributes(rd,r,concept,autoGenerateList,autogenerateMC);
         crossmapBean.refreshCrossmapIndirect(concept);
@@ -714,6 +726,8 @@ public class ConceptBean implements Serializable {
      */
     public void removeRelationshipAttribute(Relationship r, RelationshipAttribute ra) {
         r.getRelationshipAttributes().remove(ra);
+        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+
         autogenerateBeans.autogenerateRemoveAttribute(ra.getRelationAttributeDefinition(),concept,autogenerateMC);
 
     }
@@ -752,7 +766,7 @@ public class ConceptBean implements Serializable {
 
     public void saveConcept() {
         FacesContext context = FacesContext.getCurrentInstance();
-        if(descriptionPending!=null && concept.getRelationshipsSnomedCT().isEmpty()){
+        if(pendingTerms && concept.getRelationshipsSnomedCT().isEmpty()){
             messageBean.messageError("Cuando se crea un concepto desde pendientes, este puede ser guardado, sólo si cumple las condiciones para ser un concepto Modelado.");
             return;
         }
@@ -791,10 +805,14 @@ public class ConceptBean implements Serializable {
     private void persistConcept(FacesContext context) {
         try {
             conceptManager.persist(concept, user);
-            if (descriptionPending != null) {
-                ConceptSMTK conceptSource = descriptionPending.getConceptSMTK();
-                descriptionPending.setConceptSMTK(concept);
-                descriptionManager.moveDescriptionToConcept(conceptSource, descriptionPending, user);
+            if (pendingTerms) {
+                for (DescriptionWeb descriptionWeb : concept.getDescriptionsWeb()) {
+                    if(descriptionWeb.getConceptSMTK().equals(conceptManager.getPendingConcept())){
+                        ConceptSMTK conceptSource = descriptionWeb.getConceptSMTK();
+                        descriptionWeb.setConceptSMTK(concept);
+                        descriptionManager.moveDescriptionToConcept(conceptSource, descriptionWeb, user);
+                    }
+                }
             }
             context.addMessage(null, new FacesMessage("Successful", "Concepto guardado "));
             // Se resetea el concepto, como el concepto está persistido, se le pasa su id
@@ -967,6 +985,7 @@ public class ConceptBean implements Serializable {
 
     public void onRowReorder(ReorderEvent event) {
         FacesContext context = FacesContext.getCurrentInstance();
+        if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
 
         RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinition");
 
@@ -981,6 +1000,7 @@ public class ConceptBean implements Serializable {
 
         RelationshipDefinition relationshipDefinitionRowEdit = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinitionRowEdit");
         if(relationshipDefinitionRowEdit==null)relationshipDefinitionRowEdit=relationshipDefinition;
+
         autogenerateBeans.autogenerateOrder(concept,autoGenerateList,relationshipDefinitionRowEdit,autogenerateMC,event);
     }
 
@@ -1216,6 +1236,14 @@ public class ConceptBean implements Serializable {
 
     public void setHelperTableValuePlaceholder(int helperTableValuePlaceholder) {
         this.helperTableValuePlaceholder = helperTableValuePlaceholder;
+    }
+
+    public ConceptSMTK getConceptSMTKAttributeSelected() {
+        return conceptSMTKAttributeSelected;
+    }
+
+    public void setConceptSMTKAttributeSelected(ConceptSMTK conceptSMTKAttributeSelected) {
+        this.conceptSMTKAttributeSelected = conceptSMTKAttributeSelected;
     }
 
     public List<Category> getCategoryList() {

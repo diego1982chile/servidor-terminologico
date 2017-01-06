@@ -65,15 +65,12 @@
                                     <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
                                     <f:setPropertyActionListener value=""
                                                                  target="#{refsetsBean.conceptSMTKListSelected}"/>
+                                    <f:setPropertyActionListener value="" target="#{findConceptBean.categoryArrayID}"/>
                                     <f:setPropertyActionListener value=""
                                                                  target="#{findConceptBean.findConcepts}"/>
 
                                 </p:commandButton>
                             </div>
-
-
-                            <smtk:addConceptToRefset refset="#{refsetsBean.refSetToCreate}"/>
-
                             <smtk:conceptRefset refset="#{refsetsBean.refSetToCreate}"/>
                         </p:fieldset>
 
@@ -152,8 +149,11 @@
 
                 <p:dialog widgetVar="viewRefset" modal="true" showEffect="fade"
                           hideEffect="fade" resizable="true" style="margin:40px;"
-                          header="Refset #{refsetsBean.refSetSelect.name}">
+                          header="RefSet ">
                     <p:outputPanel id="viewRefsetPanel" styleClass="viewRefSet" style="text-align:center;">
+
+                        <h3>RefSet: #{refsetsBean.refSetSelect.name}  </h3>
+                        <h3> Total Conceptos:#{refsetsBean.refSetSelect.getCountConcepts()}</h3>
 
                         <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts"
                                      emptyMessage="El RefSet no contiene conceptos"
@@ -179,7 +179,7 @@
                           hideEffect="fade" resizable="true" style="margin:40px;">
                     <p:outputPanel id="editRefsetPanel" styleClass="editRefset">
 
-                        <h3>Refset #{refsetsBean.refSetEdit.name}  </h3>
+                        <h3>RefSet #{refsetsBean.refSetEdit.name}  </h3>
                         <h3> Total Conceptos:#{refsetsBean.refSetEdit.getCountConcepts()}</h3>
                         <div style="text-align: right">
                             <p:commandButton value="Agregar Conceptos" oncomplete="PF('selectConcept').show()"
@@ -187,19 +187,26 @@
 
                                 <f:setPropertyActionListener value="" target="#{findConceptBean.pattern}"/>
                                 <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
+                                <f:setPropertyActionListener value="" target="#{findConceptBean.categoryArrayID}"/>
                                 <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTKListSelected}"/>
-                                <f:setPropertyActionListener value=""
-                                                             target="#{findConceptBean.findConcepts}"/>
+                                <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTKListSelectedEdit}"/>
+                                <f:setPropertyActionListener value="" target="#{findConceptBean.findConcepts}"/>
+                                <p:ajax/>
                             </p:commandButton>
                         </div>
                         <br/>
                         <smtk:conceptRefset refset="#{refsetsBean.refSetEdit}"/>
 
                         <br/>
-                        <p:commandButton rendered="#{not refsetsBean.refSetEdit.valid}"
-                                         value="Vigente"
-                                         actionListener="#{refsetsBean.validRefset(refsetsBean.refSetEdit)}"
-                                         update="formRefset"></p:commandButton>
+                        <div style="text-align: right">
+                            <p:commandButton rendered="#{not refsetsBean.refSetEdit.valid}"
+                                             value="Pasar a vigente"
+                                             actionListener="#{refsetsBean.validRefset(refsetsBean.refSetEdit)}"
+                                             update="formRefset">
+                                <p:confirm header="Confirmation" message="¿Desea validar este RefSet?"
+                                           icon="ui-icon-alert"/>
+                            </p:commandButton>
+                        </div>
                     </p:outputPanel>
                 </p:dialog>
 
@@ -209,11 +216,13 @@
 
 
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes"
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"
                                      icon="ui-icon-check"/>
                     <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
                                      icon="ui-icon-close"/>
                 </p:confirmDialog>
+
+
             </h:form>
         </p:panel>
     </ui:define>

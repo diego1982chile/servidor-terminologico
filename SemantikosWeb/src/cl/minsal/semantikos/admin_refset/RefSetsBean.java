@@ -72,6 +72,8 @@ public class RefSetsBean implements Serializable {
 
     private List<ConceptSMTK> conceptSMTKListSelected;
 
+    private List<ConceptSMTK> conceptSMTKListSelectedEdit;
+
     @EJB
     AuditManager auditManager;
 
@@ -239,7 +241,11 @@ public class RefSetsBean implements Serializable {
      * @param refSet      refset que almacenara el concepto
      */
     public void addConcept(RefSet refSet) {
-
+        if(!conceptSMTKListSelectedEdit.isEmpty()){
+            for (ConceptSMTK smtk : conceptSMTKListSelectedEdit) {
+                addConcept(refSet,smtk);
+            }
+        }
         if(!conceptSMTKListSelected.isEmpty()){
             for (ConceptSMTK smtk : conceptSMTKListSelected) {
                 addConcept(refSet,smtk);
@@ -468,5 +474,13 @@ public class RefSetsBean implements Serializable {
 
     public void setConceptSMTKListSelected(List<ConceptSMTK> conceptSMTKListSelected) {
         this.conceptSMTKListSelected = conceptSMTKListSelected;
+    }
+
+    public List<ConceptSMTK> getConceptSMTKListSelectedEdit() {
+        return conceptSMTKListSelectedEdit;
+    }
+
+    public void setConceptSMTKListSelectedEdit(List<ConceptSMTK> conceptSMTKListSelectedEdit) {
+        this.conceptSMTKListSelectedEdit = conceptSMTKListSelectedEdit;
     }
 }

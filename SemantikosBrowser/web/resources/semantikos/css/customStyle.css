@@ -1,0 +1,31 @@
+
+.browserLayout .ui-widget-content {
+    border: 1px solid #d5d5d5;
+    background: #fff;
+    color: #222;
+}
+
+.browserLayout {
+    width:  100%;
+    height: auto;
+    overflow: hidden;
+}
+
+/*
+.ui-widget, .ui-widget .ui-widget
+{
+    font-size: 95% !important;
+}
+
+
+.ui-selectonemenu-label, .ui-selectonemenu .ui-selectonemenu-label
+{
+    font-size: 95% !important;
+}
+*/
+
+/*
+.ui-selectonemenu {
+    min-width: 223px !important;
+}
+*/

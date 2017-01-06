@@ -181,7 +181,7 @@
                     <p:commandButton value="Eliminar etiqueta del sistema" actionListener="#{tagBean.removeTag}"
                                      update="tags" oncomplete="PF('dialogEditTag').hide()">
                         <p:confirm header="Confirmacion"
-                                   message="La etiqueta se eliminara del sistema, todos los conceptos relacionados a esta etiqueta perderan su relacion ¿Esta seguro de eliminar la etiqueta?"
+                                   message="La etiqueta se eliminará del sistema, esta tiene #{tagBean.conceptContain(tagBean.tagEdit)} conceptos relacionados ¿Está seguro de eliminar la etiqueta?"
                                    icon="ui-icon-alert"/>
                     </p:commandButton>
                 </div>

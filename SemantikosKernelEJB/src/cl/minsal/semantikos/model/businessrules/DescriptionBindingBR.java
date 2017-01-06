@@ -19,4 +19,5 @@ public class DescriptionBindingBR {
     public void applyRules(ConceptSMTK concept, Description description, User user) {
 
     }
+
 }

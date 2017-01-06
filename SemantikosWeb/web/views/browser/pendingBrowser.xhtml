@@ -28,9 +28,8 @@
                                             <p:menuitem value="Pendientes" url="#" />
                                         </p:breadCrumb>
 
-                                        <p:spacer />
                                         <smtk:pendingBrowserFilter pendingQuery="#{pendingBrowserBean.pendingQuery}" />
-                                        <p:spacer />
+
                                         <p:dataTable id="pendingTable"
                                                      styleClass="browserTable"
                                                      value="#{pendingBrowserBean.pendingTerms}"
@@ -80,20 +79,11 @@
                                                 <f:facet name="header">
                                                     <p:outputPanel styleClass="globalActions">
                                                         <p:outputPanel rendered="#{not empty pendingBrowserBean.termsSelected}">
-                                                            <p:commandLink title="Trasladar a concepto" update="@(.pending-description)" oncomplete="PF('dialogTDP').show()" style="padding: 5px">
+                                                            <p:commandLink title="Trasladar a concepto" update="@(.browserTable),@(.pending-description)" oncomplete="PF('dialogTDP').show()" style="padding: 5px">
                                                                 <i class="fa fa-external-link fa-lg"/>
-                                                                <f:setPropertyActionListener value="#{pendingTerm}"
-                                                                                             target="#{pendingBrowserBean.termSelected}"/>
-                                                                <f:setPropertyActionListener value=""
-                                                                                             target="#{pendingBrowserBean.conceptSelected}"/>
-                                                                <f:setPropertyActionListener value=""
-                                                                                             target="#{findConceptBean.categorySelected}"/>
                                                             </p:commandLink>
-                                                            <p:commandLink oncomplete="PF('dialogNC').show()" title="Crear nuevo concepto" style="padding: 5px">
+                                                            <p:commandLink oncomplete="PF('dialogNC').show()" update="@(.browserTable),@(.create-concept)" title="Crear nuevo concepto" style="padding: 5px">
                                                                 <i class="fa fa-plus fa-lg"/>
-                                                                <f:setPropertyActionListener value="#{pendingTerm}"
-                                                                                             target="#{pendingBrowserBean.termSelected}"/>
-                                                                <f:setPropertyActionListener value="" target="#{pendingBrowserBean.categorySelected}" />
                                                             </p:commandLink>
                                                         </p:outputPanel>
                                                         <p:outputPanel rendered="#{ empty pendingBrowserBean.termsSelected}">
@@ -105,19 +95,15 @@
                                                     <p:commandLink title="Trasladar a concepto" oncomplete="PF('dialogTDP').show()"
                                                                    update="@(.browserTable),@(.pending-description)" style="padding: 5px">
                                                         <i class="fa fa-external-link fa-lg"/>
-                                                        <f:setPropertyActionListener value="#{pendingTerm}"
-                                                                                     target="#{pendingBrowserBean.termSelected}"/>
-                                                        <f:setPropertyActionListener value=""
-                                                                                     target="#{pendingBrowserBean.conceptSelected}"/>
-                                                        <f:setPropertyActionListener value=""
-                                                                                     target="#{findConceptBean.categorySelected}"/>
+                                                        <f:setPropertyActionListener value="#{pendingTerm}" target="#{pendingBrowserBean.termSelected}"/>
+                                                        <f:setPropertyActionListener value="" target="#{pendingBrowserBean.conceptSelected}"/>
+                                                        <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
                                                     </p:commandLink>
 
                                                     <p:commandLink oncomplete="PF('dialogNC').show()" title="Crear nuevo concepto" process="@this"
                                                                    update="@(.browserTable),@(.create-concept)" style="padding: 5px">
                                                         <i class="fa fa-plus fa-lg"/>
-                                                        <f:setPropertyActionListener value="#{pendingTerm}"
-                                                                                     target="#{pendingBrowserBean.termSelected}"/>
+                                                        <f:setPropertyActionListener value="#{pendingTerm}" target="#{pendingBrowserBean.termSelected}"/>
                                                         <f:setPropertyActionListener value="#{pendingTerm.category}" target="#{pendingBrowserBean.categorySelected}" />
                                                     </p:commandLink>
 
@@ -139,7 +125,7 @@
 
                                                 <p:ajax event="close" update="@(.pending-description)" />
 
-                                                <p:outputPanel rendered="#{pendingBrowserBean.termSelected != null}">
+                                                <p:outputPanel rendered="#{pendingBrowserBean.termSelected != null and empty pendingBrowserBean.termsSelected}">
 
                                                     <h3>Descripcion a trasladar</h3>
                                                     <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
@@ -156,7 +142,7 @@
 
                                                 </p:outputPanel>
 
-                                                <p:outputPanel rendered="#{pendingBrowserBean.termSelected eq null and not empty pendingBrowserBean.termsSelected }">
+                                                <p:outputPanel rendered="#{ not empty pendingBrowserBean.termsSelected }">
 
                                                     <h3>Descripciones a trasladar</h3>
                                                     <p:dataTable value="#{pendingBrowserBean.termsSelected}" scrollable="true" scrollHeight="150" var="pendingTerm" style="width: 500px">
@@ -315,8 +301,39 @@
 
                                             <p:panel styleClass="create-concept">
 
-                                                <div class="ui-fluid">
+                                                <p:outputPanel rendered="#{pendingBrowserBean.termSelected != null and empty pendingBrowserBean.termsSelected}">
 
+                                                    <h3>Descripcion a trasladar</h3>
+                                                    <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
+
+                                                        <p:outputLabel for="descidTrans2" value="DESCID"/>
+                                                        <h:outputText id="descidTrans2"
+                                                                      value="#{pendingBrowserBean.termSelected.relatedDescription.descriptionId}"/>
+
+                                                        <p:outputLabel for="descidTransTerm2" value="Termino"/>
+                                                        <h:outputText id="descidTransTerm2"
+                                                                      value="#{pendingBrowserBean.termSelected.relatedDescription.term}"/>
+
+                                                    </h:panelGrid>
+
+                                                </p:outputPanel>
+
+                                                <p:outputPanel rendered="#{ not empty pendingBrowserBean.termsSelected }">
+
+                                                    <h3>Descripciones a trasladar</h3>
+                                                    <p:dataTable value="#{pendingBrowserBean.termsSelected}" scrollable="true" scrollHeight="150" var="pendingTerm" style="width: 500px">
+                                                        <p:column headerText="DESCID">
+                                                            <h:outputText value="#{pendingTerm.relatedDescription.descriptionId}"/>
+                                                        </p:column>
+                                                        <p:column headerText="Termino">
+                                                            <h:outputText value="#{pendingTerm.relatedDescription.term}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+
+                                                </p:outputPanel>
+
+                                                <div class="ui-fluid">
+                                                    <h3>Categoría Destino</h3>
                                                     <h:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" width="100%">
 
                                                         <p:selectOneMenu id="parentTag" value="#{pendingBrowserBean.categorySelected}"

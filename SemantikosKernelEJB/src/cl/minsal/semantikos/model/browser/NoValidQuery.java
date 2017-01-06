@@ -123,6 +123,10 @@ public class NoValidQuery {
         }
     }
 
+    public boolean isFiltered(){
+        return ( getObservationNoValidValues() != null || getDescriptionTypeValues() != null  || getQuery() != null );
+    }
+
     public List<QueryParameter> getQueryParameters(){
 
         List<QueryParameter> queryParameters = new ArrayList<>();

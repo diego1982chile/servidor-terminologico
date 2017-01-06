@@ -112,6 +112,11 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    public BrowserQuery getDefaultBrowserQuery() {
+        return new BrowserQuery();
+    }
+
+    @Override
     public List<ConceptSMTK> executeQuery(GeneralQuery query) {
 
         //return conceptQueryDAO.callQuery(query);
@@ -213,6 +218,11 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    public List<ConceptSMTK> executeQuery(BrowserQuery query) {
+        return queryDAO.executeQuery(query);
+    }
+
+    @Override
     public int countQueryResults(GeneralQuery query) {
         return (int)queryDAO.countByQuery(query);
     }
@@ -230,6 +240,11 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public int countQueryResults(PendingQuery query) {
         return (int)queryDAO.countByQuery(query);
+    }
+
+    @Override
+    public int countQueryResults(BrowserQuery query) {
+        return 0;
     }
 
     @Override

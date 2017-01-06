@@ -18,12 +18,11 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container20 White Responsive">
-        <div class="ContainerIndent">
+    <div class="Container20 White Responsive" style="text-align: center">
 
+        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
             <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.relationship.relationshipAttributes}">
 
-                <!-- Multiplicidad 1 y nuevo atributo -->
 
                 <p:selectOneMenu id="basicTypeValue1"
                                  value="#{conceptBean.basicTypeValue.value}"
@@ -44,6 +43,17 @@
                                    itemLabel="#{domain}"
                                    itemValue="#{domain}"/>
                 </p:selectOneMenu>
+
+                <p:selectBooleanCheckbox id="basicTypeValue16"
+                                         value="#{conceptBean.basicTypeValue.value}"
+                                         itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}"
+                                         disabled="#{not cc.attrs.concept.editable}"
+                                         style="padding-top: 0.6em"
+                                         rendered="#{cc.attrs.targetDefinition.type.typeName=='boolean'}">
+                    <p:ajax event="change"
+                            listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}"
+                            process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
+                </p:selectBooleanCheckbox>
 
                 <p:inputNumber id="basicTypeValue2"
                                value="#{conceptBean.basicTypeValue.value}"
@@ -121,7 +131,6 @@
 
             </p:outputPanel>
 
-            <!-- Multiplicidad 1 y atributo existente -->
 
             <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.relationship.relationshipAttributes}">
 
@@ -148,8 +157,6 @@
 
             </p:outputPanel>
 
-            <!-- Multiplicidad N -->
-
             <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection}">
 
                 <p:selectOneMenu id="basicTypeValue11"
@@ -170,6 +177,18 @@
                                    itemLabel="#{domain}"
                                    itemValue="#{domain}"/>
                 </p:selectOneMenu>
+
+
+                <p:selectBooleanCheckbox id="basicTypeValue17"
+                                         value="#{conceptBean.basicTypeValue.value}"
+                                         itemLabel="#{cc.attrs.relationshipAttributeDefinition.name}"
+                                         style="padding-top: 0.6em; padding-bottom: 0.6em"
+                                         disabled="#{not cc.attrs.concept.editable}"
+                                         rendered="#{cc.attrs.targetDefinition.type.typeName=='boolean'}">
+                    <p:ajax event="change"
+                            listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.basicTypeValue)}"
+                            process="@this" />
+                </p:selectBooleanCheckbox>
 
                 <p:inputNumber id="basicTypeValue12"
                                value="#{conceptBean.basicTypeValue.value}"

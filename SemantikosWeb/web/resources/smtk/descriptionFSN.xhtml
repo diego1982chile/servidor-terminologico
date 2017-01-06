@@ -18,14 +18,14 @@
 
         <div class="Container">
 
-            <div class="Container20 White Responsive">
+            <div class="Container20 White Responsive" >
                 <div class="ContainerIndent">
                     <p:outputLabel for="FSN" value="#{cc.attrs.description.descriptionType.name} *"/>
                 </div>
             </div>
 
             <div class="Container30 White Responsive">
-                <div class="ContainerIndent">
+                <div class="ContainerIndentRight">
                     <p:inputTextarea id="FSN"
                                      styleClass="terms FSN"
                                      name="description"
@@ -40,15 +40,15 @@
             </div>
 
             <div class="Container20 White Responsive">
-                <div class="ContainerIndent">
+                <div class="ContainerIndentRight">
                     <p:inputText value="DESCID " rendered="#{not cc.attrs.description.persistent}" disabled="true" />
                     <p:inputText value="DESCID: #{cc.attrs.description.descriptionId}" rendered="#{cc.attrs.description.persistent}" disabled="true" />
                 </div>
             </div>
 
             <div class="Container30 White Responsive">
-                <div class="ContainerIndent">
-                    <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="grid" columns="2"
+                <div class="ContainerIndentRight">
+                    <p:selectOneRadio id="customRadio2" value="#{cc.attrs.description.caseSensitive}" layout="grid" columns="2" style="padding-top: 0.5em"
                                       disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}">
                         <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
                         <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>

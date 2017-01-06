@@ -106,8 +106,10 @@ public class DescriptionsBrowserBean implements Serializable {
             public List<Description> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
-
-                descriptionQuery.setPageNumber(first);
+                if(descriptionQuery.isFiltered() && first > 0)
+                    descriptionQuery.setPageNumber(0);
+                else
+                    descriptionQuery.setPageNumber(first);
                 descriptionQuery.setPageSize(pageSize);
                 descriptionQuery.setOrder(new Integer(sortField));
 
@@ -180,17 +182,8 @@ public class DescriptionsBrowserBean implements Serializable {
         this.authenticationBean = authenticationBean;
     }
 
-    public String stringifyCategories(List<Category> categories){
-        if(categories.isEmpty())
-            return "Categorías...";
-
-        String stringCategories= "";
-
-        for (Category category : categories) {
-            stringCategories= stringCategories.concat(category.getName()).concat(", ");
-        }
-
-        return  stringCategories;
+    public RefSetManager getRefSetManager() {
+        return refSetManager;
     }
 
     public List<Category> getCategories() {

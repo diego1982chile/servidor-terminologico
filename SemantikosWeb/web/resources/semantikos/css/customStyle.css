@@ -12,6 +12,10 @@ form.consult div.ui-selectonemenu.ui-state-disabled .ui-selectonemenu-label {
     background-color: #FFF !important;
 }
 
+.ContainerIndentRight{
+    margin-right: 10px !important;
+}
+
 form.consult div.ui-selectoneradio .ui-state-disabled {
     opacity: 100 !important;
 }
@@ -136,6 +140,20 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 #mainMenu .ui-menu .ui-menuitem .ui-menuitem-link {
     padding: 6px 0px;
 }
+
+
+/*
+.ui-widget, .ui-widget .ui-widget
+{
+    font-size: 95% !important;
+}
+
+
+.ui-selectonemenu-label, .ui-selectonemenu .ui-selectonemenu-label
+{
+    font-size: 95% !important;
+}
+*/
 
 /*
 .ui-selectonemenu {
