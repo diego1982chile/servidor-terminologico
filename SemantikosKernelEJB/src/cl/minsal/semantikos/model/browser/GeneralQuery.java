@@ -422,7 +422,7 @@ public class GeneralQuery {
 
 
     public boolean isFiltered(){
-        return ( getQuery() != null || getTagValues() != null || getConceptValues() != null || getHelperTableRecordValues() != null ||
+        return ( (getQuery() != null && !getQuery().isEmpty()) || getTagValues() != null || getConceptValues() != null || getHelperTableRecordValues() != null ||
                  getBasicTypeValues() != null || getToBeReviewed() != null || getToBeConsulted() != null || getModeled() != null ||
                  getUserValue() != null || getCreationDateSince() != null || getCreationDateTo() != null );
     }

@@ -3,7 +3,9 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:smtk="http://java.sun.com/jsf/composite/smtk">
 
     <h:head>
         <f:facet name="first">
@@ -32,36 +34,65 @@
         <f:facet name="last">
             <h:outputStylesheet name="semantikos/css/customStyle.css" />
         </f:facet>
-        
-        <ui:include src="topbar.xhtml" />
-        
-        <div id="wrapper">
-            <div id="wrapperIndent">
 
-                <ui:include src="layoutmenu.xhtml" />
+        <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-                <div id="layout-portlets-cover">
-                    
-                     <ui:insert name="content">
-                        Template
-                    </ui:insert>
-                    
+        <h:form id="mainForm">
+            <pe:layout id="fullPage" options="#{layoutBean.layoutOptions}"
+                       stateCookie="false" widgetVar="fpLayoutWidget" styleClass="browserLayout">
+                <p:ajax event="resize" listener="#{layoutBean.handleResize}" update=":growl"/>
+
+                <pe:layoutPane position="north" styleClassContent="northPane">
+                    <ui:include src="topbar.xhtml" />
+                </pe:layoutPane>
+
+                <pe:layoutPane position="center">
+
+                    <pe:layoutPane position="center">
+
+                        <ui:insert name="content">
+                            Template
+                        </ui:insert>
+
+                    </pe:layoutPane>
+
+                </pe:layoutPane>
+
+                <pe:layoutPane position="west" rendered="false">
+
+                    <pe:layoutPane position="north">
+                        West-North
+                    </pe:layoutPane>
+                    <pe:layoutPane position="center">
+                        West-Center
+                    </pe:layoutPane>
+                    <pe:layoutPane position="south">
+                        West-South
+                    </pe:layoutPane>
+
+                </pe:layoutPane>
+
+                <pe:layoutPane position="east">
+
+                </pe:layoutPane>
+
+                <pe:layoutPane position="south" styleClassContent="southPane">
                     <ui:include src="footer.xhtml" />
+                </pe:layoutPane>
 
-                </div>
-                
-                <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
-                    <f:facet name="start">
-                        <p:graphicImage name="images/preloader.gif" library="rio-layout"/>
-                    </f:facet>
+            </pe:layout>
 
-                    <f:facet name="complete">
-                        <h:outputText value="" />
-                    </f:facet>
-                </p:ajaxStatus>
-            </div>
-        </div>
+            <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+                <f:facet name="start">
+                    <p:graphicImage name="images/preloader.gif" library="rio-layout"/>
+                </f:facet>
 
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
+
+        </h:form>
         <h:outputStylesheet name="css/core-layout.css" library="rio-layout" />
         <h:outputStylesheet name="css/animate.css" library="rio-layout" />
         <h:outputStylesheet name="css/rio-font.css" library="rio-layout" />

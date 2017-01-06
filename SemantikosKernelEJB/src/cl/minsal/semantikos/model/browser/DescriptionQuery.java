@@ -155,7 +155,8 @@ public class DescriptionQuery {
     }
 
     public boolean isFiltered(){
-        return ( getCategoryValues() != null || getRefSetValues() != null || getDescriptionTypeValues() != null  || getQuery() != null );
+        return ( getCategoryValues() != null || getRefSetValues() != null || getDescriptionTypeValues() != null  ||
+                (getQuery() != null && !getQuery().isEmpty()) );
     }
 
     public List<QueryParameter> getQueryParameters(){

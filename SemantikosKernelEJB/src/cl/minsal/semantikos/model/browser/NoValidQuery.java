@@ -124,7 +124,7 @@ public class NoValidQuery {
     }
 
     public boolean isFiltered(){
-        return ( getObservationNoValidValues() != null || getDescriptionTypeValues() != null  || getQuery() != null );
+        return ( getObservationNoValidValues() != null || getDescriptionTypeValues() != null  || (getQuery() != null && !getQuery().isEmpty()) );
     }
 
     public List<QueryParameter> getQueryParameters(){

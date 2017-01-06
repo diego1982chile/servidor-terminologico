@@ -766,6 +766,7 @@ public class ConceptBean implements Serializable {
 
     public void saveConcept() {
         FacesContext context = FacesContext.getCurrentInstance();
+        resetPlaceHolders();
         if(pendingTerms && concept.getRelationshipsSnomedCT().isEmpty()){
             messageBean.messageError("Cuando se crea un concepto desde pendientes, este puede ser guardado, sólo si cumple las condiciones para ser un concepto Modelado.");
             return;
@@ -1394,7 +1395,7 @@ public class ConceptBean implements Serializable {
     public void changeMCSpecial() {
         for (Relationship relationship : concept.getValidRelationships()) {
             if (relationship.getRelationshipDefinition().getId() == 74) {
-                if (((BasicTypeValue<String>) relationship.getTarget()).getValue().equalsIgnoreCase("No")){
+                if (((BasicTypeValue<Boolean>) relationship.getTarget()).getValue()){
                     if(!concept.isModeled())changeMultiplicityToRequiredRelationshipDefinitionMC();
                 }
                 else{

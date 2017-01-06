@@ -5,10 +5,24 @@
     color: #222;
 }
 
+.ui-widget-content {
+    border: 1px solid #d5d5d5;
+    background: #fff;
+    color: #222;
+}
+
 .browserLayout {
     width:  100%;
     height: auto;
     overflow: hidden;
+}
+
+.northPane {
+    padding: 0;
+}
+
+.southPane {
+    padding: 0;
 }
 
 /*

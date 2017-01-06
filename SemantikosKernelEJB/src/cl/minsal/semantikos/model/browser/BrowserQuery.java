@@ -130,7 +130,7 @@ public class BrowserQuery {
     }
 
     public boolean isFiltered(){
-        return ( getCategoryValues() != null || getTags() != null  || getQuery() != null );
+        return ( getCategoryValues() != null || getTagValues() != null  || (getQuery() != null && !getQuery().isEmpty()) );
     }
 
     public List<QueryParameter> getQueryParameters(){

@@ -164,8 +164,7 @@ public class BrowserBean implements Serializable {
                     browserQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
 
                 List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(browserQuery);
-                //this.setRowCount(queryManager.countQueryResults(browserQuery));
-                this.setRowCount(15);
+                this.setRowCount(queryManager.countQueryResults(browserQuery));
 
                 return conceptSMTKs;
             }

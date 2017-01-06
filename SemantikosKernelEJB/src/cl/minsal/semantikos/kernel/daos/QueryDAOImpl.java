@@ -425,7 +425,36 @@ public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public long countByQuery(BrowserQuery query) {
-        return 0;
+        long pendingTermNumber = 0;
+
+        ConnectionBD connect = new ConnectionBD();
+
+        //TODO: hacer funcion en pg
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.count_concept_by_browser_query(?,?,?,?,?,?,?)}" )){
+
+            int paramNumber = 1;
+
+            for (QueryParameter queryParameter : query.getQueryParameters()) {
+                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
+                paramNumber++;
+            }
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+
+                pendingTermNumber = rs.getLong(1);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pendingTermNumber;
     }
 
     @Override

@@ -244,7 +244,7 @@ public class QueryManagerImpl implements QueryManager {
 
     @Override
     public int countQueryResults(BrowserQuery query) {
-        return 0;
+        return (int)queryDAO.countByQuery(query);
     }
 
     @Override

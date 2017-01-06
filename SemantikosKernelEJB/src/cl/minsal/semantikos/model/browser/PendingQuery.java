@@ -97,7 +97,7 @@ public class PendingQuery {
     }
 
     public boolean isFiltered(){
-        return ( getCategoryValues() != null || getQuery() != null );
+        return ( getCategoryValues() != null || (getQuery() != null && !getQuery().isEmpty()) );
     }
 
     public List<QueryParameter> getQueryParameters(){

@@ -140,23 +140,3 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 #mainMenu .ui-menu .ui-menuitem .ui-menuitem-link {
     padding: 6px 0px;
 }
-
-
-/*
-.ui-widget, .ui-widget .ui-widget
-{
-    font-size: 95% !important;
-}
-
-
-.ui-selectonemenu-label, .ui-selectonemenu .ui-selectonemenu-label
-{
-    font-size: 95% !important;
-}
-*/
-
-/*
-.ui-selectonemenu {
-    min-width: 223px !important;
-}
-*/

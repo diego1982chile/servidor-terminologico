@@ -3,7 +3,9 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
     
     
     <div id="layout-topbar">
@@ -12,6 +14,43 @@
             <a id="mobile-menu-button" class="Fright ShowOnMobile ripplelink Unselectable ShadowEffect"><i class="icon-add186"></i></a>
         </div>
         <a class="ripplelink WhiteBlue Fright ShowOnMobile" id="show-top-menu"><i class="icon-show8"></i></a>
+
+        <ul id="top-menu" class="ShowOnDesktop">
+
+            <li>
+                <h:outputLink styleClass="ripplelink" id="content" value="#">
+                    <i class="icon-round58 Fs40" />
+                </h:outputLink>
+            </li>
+        </ul>
+
+        <p:overlayPanel id="imagePanel" for="content" showEffect="fade" hideEffect="fade" dismissable="true" showEvent="mouseover">
+
+            <p:panelGrid style="width:100%;" styleClass="ui-panelgrid-blank">
+
+                <p:row>
+                    <p:column>
+                        <i class="fa fa-user Fs30" style="padding-right: 10px" />
+                        <h:outputText value="#{authenticationBean.loggedUser.fullName}" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="#{authenticationBean.loggedUser.rut}" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:commandLink style="color: #455a64" action="#{authenticationBean.logout}" styleClass="menulink ripplelink">
+                        <i class="icon-thermostat1 Fs16" /> Logout</p:commandLink>
+                    </p:column>
+                </p:row>
+
+            </p:panelGrid>
+
+        </p:overlayPanel>
     </div>
     
 </ui:composition>
