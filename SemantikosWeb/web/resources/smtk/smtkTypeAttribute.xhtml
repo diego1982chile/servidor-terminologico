@@ -27,6 +27,7 @@
             <p:outputPanel id="smtkTypeAttributeNew"  styleClass="search">
 
                 <p:autoComplete id="smtkTypeAttributeSimple" scrollHeight="200"
+
                                 completeMethod="#{findConceptBean.getConceptSearchInputCategoryContext}"
                                 forceSelection="true"
                                 disabled="#{not cc.attrs.concept.editable }"
