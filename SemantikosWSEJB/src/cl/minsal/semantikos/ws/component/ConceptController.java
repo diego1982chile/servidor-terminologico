@@ -9,16 +9,18 @@ import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
 import cl.minsal.semantikos.ws.mapping.ISPRegisterMapper;
-import cl.minsal.semantikos.ws.mapping.RelationshipMapper;
 import cl.minsal.semantikos.ws.request.NewTermRequest;
 import cl.minsal.semantikos.ws.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +52,9 @@ public class ConceptController {
     private PendingTermsManager pendingTermManager;
     @EJB
     private CrossmapController crossmapController;
+
+    @Resource
+    private SessionContext ctx;
 
     /**
      * Este método es responsable de recperar los conceptos relacionados (hijos...) de un concepto que se encuentran en
@@ -449,8 +454,7 @@ public class ConceptController {
      */
     public NewTermResponse requestTermCreation(NewTermRequest termRequest) throws IllegalInputFault {
 
-        // TODO: Recuperar el usuario.
-        User user = new User(-1, "demo", "Demo User", "demo", false);
+        User user = new User(1, "demo", "Demo User", "demo", false);
 
         Category category = categoryManager.getCategoryByName(termRequest.getCategory());
         if (category == null) {

@@ -55,7 +55,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "usos",
     "usuarioCreador",
     "concepto"
-})
+}, namespace = "" )
 public class Descripcion {
 
     protected String id;

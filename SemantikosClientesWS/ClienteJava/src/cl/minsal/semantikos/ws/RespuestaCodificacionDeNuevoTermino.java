@@ -59,4 +59,10 @@ public class RespuestaCodificacionDeNuevoTermino {
         this.idDescripcion = value;
     }
 
+    @Override
+    public String toString() {
+        return "RespuestaCodificacionDeNuevoTermino{" +
+                "idDescripcion='" + idDescripcion + '\'' +
+                '}';
+    }
 }

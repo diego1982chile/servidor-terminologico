@@ -217,7 +217,6 @@ public class Description extends PersistentEntity implements AuditableEntity {
     @Override
     public String toString() {
 
-
         if (this.getDescriptionType().equals(DescriptionType.FSN)) {
             String tagSMTKParenthesis = "(" + conceptSMTK.getTagSMTK().getName().toLowerCase() + ")";
             String descTerm = term.toLowerCase();
@@ -227,5 +226,13 @@ public class Description extends PersistentEntity implements AuditableEntity {
         }
 
         return this.term;
+    }
+
+    /**
+     * Este método tiene como responsabilidad imprimir mayor detalle sobre la descripcion.
+     * @return Un String con detalles.
+     */
+    public String fullToString(){
+        return this.term + "[ID=" + this.getId() + ", DESCRIPTION_ID=" + this.descriptionID + "]";
     }
 }

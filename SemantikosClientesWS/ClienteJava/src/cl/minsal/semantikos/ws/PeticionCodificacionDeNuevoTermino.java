@@ -56,21 +56,32 @@ public class PeticionCodificacionDeNuevoTermino {
 
     @XmlElement(required = true)
     protected String establecimiento;
+
     @XmlElement(required = true)
     protected String idConcepto;
+
     @XmlElement(required = true)
     protected String termino;
+
     @XmlElement(defaultValue = "Preferida")
     protected String tipoDescripcion;
+
     @XmlElement(defaultValue = "false")
     protected Boolean esSensibleAMayusculas;
+
     protected String email;
+
     protected String observacion;
+
     protected String profesional;
+
     protected String profesion;
+
     protected String especialidad;
+
     @XmlElement(name = "sub-especialidad", required = true)
     protected String subEspecialidad;
+
     @XmlElement(required = true)
     protected String categoria;
 
@@ -362,4 +373,21 @@ public class PeticionCodificacionDeNuevoTermino {
         this.categoria = value;
     }
 
+    @Override
+    public String toString() {
+        return "PeticionCodificacionDeNuevoTermino{" +
+                "establecimiento='" + establecimiento + '\'' +
+                ", idConcepto='" + idConcepto + '\'' +
+                ", termino='" + termino + '\'' +
+                ", tipoDescripcion='" + tipoDescripcion + '\'' +
+                ", esSensibleAMayusculas=" + esSensibleAMayusculas +
+                ", email='" + email + '\'' +
+                ", observacion='" + observacion + '\'' +
+                ", profesional='" + profesional + '\'' +
+                ", profesion='" + profesion + '\'' +
+                ", especialidad='" + especialidad + '\'' +
+                ", subEspecialidad='" + subEspecialidad + '\'' +
+                ", categoria='" + categoria + '\'' +
+                '}';
+    }
 }

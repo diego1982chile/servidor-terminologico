@@ -6,6 +6,8 @@ import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.request.NewTermRequest;
 import cl.minsal.semantikos.ws.response.DescriptionResponse;
 import cl.minsal.semantikos.ws.response.NewTermResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.jws.WebMethod;
@@ -21,6 +23,8 @@ import javax.xml.bind.annotation.XmlElement;
         name = "ServicioDeIngreso",
         targetNamespace = "http://service.ws.semantikos.minsal.cl/")
 public class UpdateService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UpdateService.class);
 
     @EJB
     private ConceptController conceptController;
@@ -41,7 +45,10 @@ public class UpdateService {
             @WebParam(name = "peticionCodificacionDeNuevoTermino")
                     NewTermRequest termRequest) throws IllegalInputFault {
 
-        return conceptController.requestTermCreation(termRequest);
+        NewTermResponse newTermResponse = conceptController.requestTermCreation(termRequest);
+        logger.info("codificacionDeNuevoTermino response: " + newTermResponse);
+
+        return newTermResponse;
     }
 
     // REQ-WS-030
