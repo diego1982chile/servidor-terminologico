@@ -50,28 +50,56 @@
                             </div>
                         </div>
 
-                        <p:fieldset toggleable="true" collapsed="true" legend="Conceptos">
+                        <p:fieldset legend="Conceptos" toggleable="true">
 
-                            <h:panelGrid columns="2" cellpadding="10">
-                                <i class="fa fa-info-circle Fs50 Fleft Blue"></i>
-                                <h:outputText value="El RefSet puede ser creado sin conceptos"/>
-                            </h:panelGrid>
-                            <br/>
-                            <div style="text-align: right">
-                                <p:commandButton value="Agregar Conceptos" oncomplete="PF('selectConceptCreate').show()"
-                                                 update="@(.selectConcept)"
-                                                 disabled="#{not refsetsBean.refSetToCreate.valid}">
-                                    <f:setPropertyActionListener value="" target="#{findConceptBean.pattern}"/>
-                                    <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
-                                    <f:setPropertyActionListener value=""
-                                                                 target="#{refsetsBean.conceptSMTKListSelected}"/>
-                                    <f:setPropertyActionListener value="" target="#{findConceptBean.categoryArrayID}"/>
-                                    <f:setPropertyActionListener value=""
-                                                                 target="#{findConceptBean.findConcepts}"/>
+                            <div class="Container">
 
-                                </p:commandButton>
+
+                                <div class="Fright Container100 MarAuto Responsive" style="text-align: right;">
+
+                                    <p:commandButton style="width: 150 px"
+
+                                                     icon="fa fa-plus"
+                                                     title="Agregar Conceptos"
+                                                     value="Agregar Conceptos"
+                                                     oncomplete="PF('selectConceptCreate').show()"
+                                                     update="@(.selectConcept)"
+                                                     disabled="#{not refsetsBean.refSetToCreate.valid}">
+                                        <f:setPropertyActionListener value="" target="#{findConceptBean.pattern}"/>
+                                        <f:setPropertyActionListener value=""
+                                                                     target="#{findConceptBean.categorySelected}"/>
+                                        <f:setPropertyActionListener value=""
+                                                                     target="#{refsetsBean.conceptSMTKListSelected}"/>
+                                        <f:setPropertyActionListener value=""
+                                                                     target="#{findConceptBean.categoryArrayID}"/>
+                                        <f:setPropertyActionListener value=""
+                                                                     target="#{findConceptBean.findConcepts}"/>
+
+                                    </p:commandButton>
+
+
+                                    <br/>
+
+                                </div>
+
+                                <div class="EmptyBox10"></div>
+
+                                <div class="Fleft Container100 MarAuto Responsive">
+                                    <smtk:conceptRefset scroll="false" refset="#{refsetsBean.refSetToCreate}"/>
+
+                                </div>
+
+                                <div class="EmptyBox10"></div>
+                                <div class="Fleft SoftBlue White  Container100 MarAuto Responsive"
+                                     style="text-align: right;">
+                                    <br/>
+                                    <i class="fa fa-info-circle  SoftBlue"/> El RefSet puede ser creado sin conceptos
+                                    <br/>
+                                </div>
+
                             </div>
-                            <smtk:conceptRefset refset="#{refsetsBean.refSetToCreate}"/>
+
+
                         </p:fieldset>
 
 
@@ -149,27 +177,48 @@
 
                 <p:dialog widgetVar="viewRefset" modal="true" showEffect="fade"
                           hideEffect="fade" resizable="true" style="margin:40px;"
-                          header="RefSet ">
+                          header="Consultar RefSet">
                     <p:outputPanel id="viewRefsetPanel" styleClass="viewRefSet" style="text-align:center;">
 
-                        <h3>RefSet: #{refsetsBean.refSetSelect.name}  </h3>
-                        <h3> Total Conceptos:#{refsetsBean.refSetSelect.getCountConcepts()}</h3>
+                        <div class="Container100">
+                            <div class="ContainerIndent">
+                                <div class="Card ShadowEffect ui-fluid">
+                                    <div class="Container33 Responsive50">
+                                        <div class="ContainerIndent">
+                                            <h3>Nombre RefSet:#{refsetsBean.refSetSelect.name}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="Container33 Responsive50">
+                                        <div class="ContainerIndent">
+                                            <h3>Total Conceptos:#{refsetsBean.refSetSelect.getCountConcepts()}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Container100">
+                            <div class="ContainerIndent">
+                                <div class="Card ShadowEffect ui-fluid">
 
-                        <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts"
-                                     emptyMessage="El RefSet no contiene conceptos"
-                        >
-                            <p:column headerText="Concepto">
-                                <h:outputText value="#{concepts.descriptionFavorite.term}"/>
-                            </p:column>
-                            <p:column headerText="Categoría">
-                                <h:outputText value="#{concepts.category.name}"/>
-                            </p:column>
-                            <p:column headerText="Fecha ingreso">
-                                <h:outputText
-                                        value="#{refsetsBean.conceptBindToRefsetHistory.get(concepts.id).actionDate}"/>
-                            </p:column>
-                        </p:dataTable>
-
+                                    <h3>Conceptos:</h3>
+                                    <br/>
+                                    <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts"
+                                                 emptyMessage="El RefSet no contiene conceptos"
+                                                 scrollable="true" scrollHeight="250">
+                                        <p:column headerText="Concepto">
+                                            <h:outputText value="#{concepts.descriptionFavorite.term}"/>
+                                        </p:column>
+                                        <p:column headerText="Categoría">
+                                            <h:outputText value="#{concepts.category.name}"/>
+                                        </p:column>
+                                        <p:column headerText="Fecha ingreso">
+                                            <h:outputText
+                                                    value="#{refsetsBean.conceptBindToRefsetHistory.get(concepts.id).actionDate}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
+                            </div>
+                        </div>
                     </p:outputPanel>
                 </p:dialog>
 
@@ -178,24 +227,48 @@
                 <p:dialog widgetVar="editRefset" modal="true" showEffect="fade"
                           hideEffect="fade" resizable="true" style="margin:40px;">
                     <p:outputPanel id="editRefsetPanel" styleClass="editRefset">
+                        <div class="Container100">
+                            <div class="ContainerIndent">
+                                <div class="Card ShadowEffect ui-fluid">
+                                    <div class="Container33 Responsive50">
+                                        <div class="ContainerIndent">
+                                            <h3>Nombre RefSet:#{refsetsBean.refSetEdit.name}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="Container33 Responsive50">
+                                        <div class="ContainerIndent">
+                                            <h3>Total Conceptos:#{refsetsBean.refSetEdit.getCountConcepts()}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="Container20 Responsive50">
+                                        <div class="ContainerIndent">
+                                            <p:commandButton value="Agregar Conceptos"
+                                                             oncomplete="PF('selectConcept').show()"
+                                                             update="@(.selectConcept)"
+                                                             disabled="#{not refsetsBean.refSetEdit.valid}">
 
-                        <h3>RefSet #{refsetsBean.refSetEdit.name}  </h3>
-                        <h3> Total Conceptos:#{refsetsBean.refSetEdit.getCountConcepts()}</h3>
-                        <div style="text-align: right">
-                            <p:commandButton value="Agregar Conceptos" oncomplete="PF('selectConcept').show()"
-                                             update="@(.selectConcept)" disabled="#{not refsetsBean.refSetEdit.valid}">
-
-                                <f:setPropertyActionListener value="" target="#{findConceptBean.pattern}"/>
-                                <f:setPropertyActionListener value="" target="#{findConceptBean.categorySelected}"/>
-                                <f:setPropertyActionListener value="" target="#{findConceptBean.categoryArrayID}"/>
-                                <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTKListSelected}"/>
-                                <f:setPropertyActionListener value="" target="#{refsetsBean.conceptSMTKListSelectedEdit}"/>
-                                <f:setPropertyActionListener value="" target="#{findConceptBean.findConcepts}"/>
-                                <p:ajax/>
-                            </p:commandButton>
+                                                <f:setPropertyActionListener value=""
+                                                                             target="#{findConceptBean.pattern}"/>
+                                                <f:setPropertyActionListener value=""
+                                                                             target="#{findConceptBean.categorySelected}"/>
+                                                <f:setPropertyActionListener value=""
+                                                                             target="#{findConceptBean.categoryArrayID}"/>
+                                                <f:setPropertyActionListener value=""
+                                                                             target="#{refsetsBean.conceptSMTKListSelected}"/>
+                                                <f:setPropertyActionListener value=""
+                                                                             target="#{refsetsBean.conceptSMTKListSelectedEdit}"/>
+                                                <f:setPropertyActionListener value=""
+                                                                             target="#{findConceptBean.findConcepts}"/>
+                                                <p:ajax/>
+                                            </p:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <br/>
-                        <smtk:conceptRefset refset="#{refsetsBean.refSetEdit}"/>
+
+
+                        <smtk:conceptRefset scroll="true" refset="#{refsetsBean.refSetEdit}"/>
 
                         <br/>
                         <div style="text-align: right">

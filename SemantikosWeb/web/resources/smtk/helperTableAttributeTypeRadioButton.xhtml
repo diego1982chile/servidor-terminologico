@@ -20,13 +20,13 @@
 <composite:implementation>
 
 
-    <div class="Container20 White Responsive">
+    <div class="Container30 White Responsive">
 
         <div>
 
             <p:outputPanel id="helperTableTypeAttributeNew" styleClass="search">
 
-                <p:selectOneRadio id="helperTableTypeAttributeSimpleCustom" value="#{conceptBean.selectedHelperTableRecord}" layout="grid" columns="3" converter="omnifaces.SelectItemsConverter">
+                <p:selectOneRadio id="helperTableTypeAttributeSimpleCustom"  style="padding-top: 0.9em" value="#{conceptBean.selectedHelperTableRecord}" layout="grid" columns="3" converter="omnifaces.SelectItemsConverter">
                     <f:selectItems value="#{helperTableBean.allRecord}"
                                    var="record"
                                    itemLabel="#{record.fields['description']}"
