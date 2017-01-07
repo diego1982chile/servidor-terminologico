@@ -140,3 +140,33 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 #mainMenu .ui-menu .ui-menuitem .ui-menuitem-link {
     padding: 6px 0px;
 }
+
+.browserLayout .ui-widget-content {
+    border: 1px solid #d5d5d5;
+    background: #fff;
+    color: #222;
+}
+
+.ui-widget-content {
+    border: 1px solid #d5d5d5;
+    background: #fff;
+    color: #222;
+}
+
+.browserLayout {
+    width:  100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.northPane, .southPane, .westPane, .centerPane {
+    padding: 0;
+}
+
+.layout-menu {
+    margin-top: 0px;
+}
+
+#logo {
+    width: 240px;
+}

@@ -25,11 +25,6 @@
     </h:head>
 
     <h:body>
-        <h:form id="timeout">
-            <p:idleMonitor timeout="1200000">
-                <p:ajax event="idle" listener="#{timeOutSessionBean.timeout}" />
-            </p:idleMonitor>
-        </h:form>
 
         <f:facet name="last">
             <h:outputStylesheet name="semantikos/css/customStyle.css" />
@@ -37,18 +32,23 @@
 
         <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-        <h:form id="mainForm">
-            <pe:layout id="fullPage" options="#{layoutBean.layoutOptions}"
-                       stateCookie="false" widgetVar="fpLayoutWidget" styleClass="browserLayout">
-                <p:ajax event="resize" listener="#{layoutBean.handleResize}" update=":growl"/>
+            <p:idleMonitor timeout="1200000">
+                <p:ajax event="idle" listener="#{timeOutSessionBean.timeout}" />
+            </p:idleMonitor>
+
+            <pe:layout id="fullPage" options="#{layoutBean.layoutOptions}" stateCookie="true" widgetVar="fpLayoutWidget" styleClass="browserLayout">
+
+                <p:ajax event="resize" listener="#{layoutBean.handleResize}" update=":growl" />
 
                 <pe:layoutPane position="north" styleClassContent="northPane">
-                    <ui:include src="topbar.xhtml" />
+                    <h:form prependId="false">
+                        <ui:include src="topbar.xhtml" />
+                    </h:form>
                 </pe:layoutPane>
 
-                <pe:layoutPane position="center">
+                <pe:layoutPane position="center" styleClassContent="centerPane">
 
-                    <pe:layoutPane position="center">
+                    <pe:layoutPane position="center" id="mainContent" styleContent="background:#f5f5f5">
 
                         <ui:insert name="content">
                             Template
@@ -58,25 +58,21 @@
 
                 </pe:layoutPane>
 
-                <pe:layoutPane position="west" rendered="false">
+                <pe:layoutPane position="west" styleClassContent="westPane">
 
-                    <pe:layoutPane position="north">
-                        West-North
-                    </pe:layoutPane>
                     <pe:layoutPane position="center">
-                        West-Center
-                    </pe:layoutPane>
-                    <pe:layoutPane position="south">
-                        West-South
+                        <ui:include src="layoutmenu.xhtml" />
                     </pe:layoutPane>
 
                 </pe:layoutPane>
 
-                <pe:layoutPane position="east">
-
+                <pe:layoutPane position="east" rendered="#{request.requestURI.contains('browser')}">
+                    <ui:insert name="nav">
+                        Template
+                    </ui:insert>
                 </pe:layoutPane>
 
-                <pe:layoutPane position="south" styleClassContent="southPane">
+                <pe:layoutPane position="south" styleClassContent="southPane" styleContent="background:#f5f5f5">
                     <ui:include src="footer.xhtml" />
                 </pe:layoutPane>
 
@@ -92,7 +88,38 @@
                 </f:facet>
             </p:ajaxStatus>
 
-        </h:form>
+            <p:overlayPanel id="imagePanel" for="content" showEffect="fade" hideEffect="fade" dismissable="true" showEvent="mouseover">
+
+                <p:panelGrid style="width:100%;" styleClass="ui-panelgrid-blank">
+
+                    <p:row>
+                        <p:column>
+                            <i class="fa fa-user Fs30" style="padding-right: 10px" />
+                            <h:outputText value="#{authenticationBean.loggedUser.fullName}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputText value="#{authenticationBean.loggedUser.rut}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:commandLink style="color: #455a64" action="#{authenticationBean.logout}" styleClass="menulink ripplelink">
+                                <i class="icon-thermostat1 Fs16" /> Logout</p:commandLink>
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+            </p:overlayPanel>
+
+        <script type="text/javascript">
+            Rio.restoreMenuState();
+        </script>
+
         <h:outputStylesheet name="css/core-layout.css" library="rio-layout" />
         <h:outputStylesheet name="css/animate.css" library="rio-layout" />
         <h:outputStylesheet name="css/rio-font.css" library="rio-layout" />

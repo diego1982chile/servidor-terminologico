@@ -68,7 +68,8 @@ public class LayoutBean implements Serializable {
 
         // options for west pane
         LayoutOptions west = new LayoutOptions();
-        west.addOption("size", 200);
+        west.addOption("size", 235);
+        west.addOption("resizable", false);
         layoutOptions.setWestOptions(west);
 
         // options for nested west layout

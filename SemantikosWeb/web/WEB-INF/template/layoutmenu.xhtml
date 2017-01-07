@@ -7,6 +7,7 @@
     xmlns:pr="http://primefaces.org/rio">
 
     <div class="Animated05" id="layout-menu-cover">
+
         <ul class="layout-menu">
             <li>
                 <a class="menulink ripplelink">
@@ -14,17 +15,27 @@
                     <span class="Fs18"><h:outputText value="#{authenticationBean.loggedUser.fullName}" /><i class="icon-downwards Fright Fs20" /><br /><span class="Fs12 FontRobotoLight"><h:outputText value="#{authenticationBean.loggedUser.rut}" /></span></span>
                 </a>
                 <ul>
-
                     <li><p:commandLink style="color: #455a64" action="#{authenticationBean.logout}" styleClass="menulink ripplelink"><i class="icon-thermostat1 Fs16" /> Logout</p:commandLink></li>
                 </ul>
             </li>
         </ul>
+
         <div class="Separator"></div>
 
-        <pr:menu model="#{mainMenuBean.categoryMenuModel}"  />
+        <pr:menu id="rm_categories" model="#{mainMenuBean.categoryMenuModel}" />
 
-        <pr:menu>
-            <p:menuitem id="rm_users_web" value="Administracion Usuarios" icon="icon-two385" outcome="/views/users"/>
+        <pr:menu id="rm_otros">
+            <p:submenu id="rm_otros_sm" label="Otros" icon="fa fa-plus-square">
+                <p:menuitem id="rm_descriptions" value="Descripciones" icon="fa fa-edit Fs15" url="/views/browser/descriptionBrowser.xhtml" />
+                <p:menuitem id="rm_drugs" value="Fármacos" icon="fa fa-medkit Fs15" url="/views/browser/drugsBrowser.xhtml" />
+                <p:menuitem id="rm_pendings" value="Pendientes" icon="fa fa-exclamation-triangle  Fs15" url="/views/browser/pendingBrowser.xhtml" />
+                <p:menuitem id="rm_no_valids" value="No Válidos" icon="fa fa-ban Fs15" url="/views/browser/noValidBrowser.xhtml" />
+            </p:submenu>
+        </pr:menu>
+
+        <pr:menu id="menu2">
+
+            <p:menuitem id="rm_users_web" value="Administracion Usuarios" icon="icon-two385" outcome="/views/users" />
 
             <p:menuitem id="rm_menu_principal" value="Menú Principal" icon="fa fa-home" outcome="/views/browser/mainMenu.xhtml" rendered="false"/>
 
@@ -102,6 +113,7 @@
             </p:submenu>
             <p:separator />
         </pr:menu>
+
 
 
     </div>

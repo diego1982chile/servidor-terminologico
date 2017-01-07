@@ -24,33 +24,6 @@
             </li>
         </ul>
 
-        <p:overlayPanel id="imagePanel" for="content" showEffect="fade" hideEffect="fade" dismissable="true" showEvent="mouseover">
-
-            <p:panelGrid style="width:100%;" styleClass="ui-panelgrid-blank">
-
-                <p:row>
-                    <p:column>
-                        <i class="fa fa-user Fs30" style="padding-right: 10px" />
-                        <h:outputText value="#{authenticationBean.loggedUser.fullName}" />
-                    </p:column>
-                </p:row>
-
-                <p:row>
-                    <p:column>
-                        <h:outputText value="#{authenticationBean.loggedUser.rut}" />
-                    </p:column>
-                </p:row>
-
-                <p:row>
-                    <p:column>
-                        <p:commandLink style="color: #455a64" action="#{authenticationBean.logout}" styleClass="menulink ripplelink">
-                        <i class="icon-thermostat1 Fs16" /> Logout</p:commandLink>
-                    </p:column>
-                </p:row>
-
-            </p:panelGrid>
-
-        </p:overlayPanel>
     </div>
     
 </ui:composition>

@@ -82,12 +82,12 @@
                         <div class="ContainerIndent">
 
                             <p:outputLabel for="basicTypeValue" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}">
-                                <span class="FontBold">
+                                <span class="">
                                     #{cc.attrs.relationshipDefinition.name}
                                 </span>
                             </p:outputLabel>
                             <p:outputLabel rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}">
-                                <span class="FontBold">
+                                <span class="">
                                     #{cc.attrs.relationshipDefinition.name} *
                                 </span>
                             </p:outputLabel>
