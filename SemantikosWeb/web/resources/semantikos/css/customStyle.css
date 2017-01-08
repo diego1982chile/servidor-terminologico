@@ -170,3 +170,16 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 #logo {
     width: 240px;
 }
+
+.pe-layout-pane-header {
+    background: #f5f5f5;
+}
+
+.pe-layout-pane-header {
+    padding: 4px 0.5em 0px 0.5em;
+    border-width: 0 0 1px;
+}
+
+.pe-layout-pane-header .ui-menuitem-icon {
+    padding-right: 0.5em;
+}

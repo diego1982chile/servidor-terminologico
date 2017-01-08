@@ -583,6 +583,7 @@ public class ConceptBean implements Serializable {
             resetPlaceHolders();
             return;
         }
+
         // Se utiliza el constructor mínimo (sin id)
         this.concept.addRelationshipWeb(new RelationshipWeb(relationship, relationship.getRelationshipAttributes()));
         // Resetear placeholder targets

@@ -125,6 +125,12 @@ public class RefSetManagerImpl implements RefSetManager {
     }
 
     @Override
+    public List<RefSet> getValidRefSets() {
+
+        return refsetDAO.getValidRefsets();
+    }
+
+    @Override
     public List<RefSet> getRefsetByInstitution(Institution institution) {
         if(institution.getId()==-1){
             return Collections.emptyList();

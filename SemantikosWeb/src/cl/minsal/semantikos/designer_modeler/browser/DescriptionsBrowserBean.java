@@ -83,7 +83,7 @@ public class DescriptionsBrowserBean implements Serializable {
     public void init(){
         categories = categoryManager.getCategories();
         descriptionTypes = DescriptionTypeFactory.getInstance().getDescriptionTypes();
-        refSets = refSetManager.getAllRefSets();
+        refSets = refSetManager.getValidRefSets();
 
     }
 

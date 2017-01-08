@@ -185,6 +185,12 @@
                             value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitionWebs}"
                             var="relationshipAttributeDefinition">
 
+                        <smtk:helperTableAttributeTypeRadioButton relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                                                  relationshipAttributeDefinition="#{relationshipAttributeDefinition.relationshipAttributeDefinition}"
+                                                                  targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
+                                                                  concept="#{cc.attrs.concept}"
+                                                                  rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable and relationshipAttributeDefinition.compositeID eq 6}"
+                        />
                         <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
                                                  relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                                  targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
@@ -196,12 +202,6 @@
                                                        targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
                                                        concept="#{cc.attrs.concept}"
                                                        rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable and relationshipAttributeDefinition.compositeID eq -1}"
-                        />
-                        <smtk:helperTableAttributeTypeRadioButton relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                              relationshipAttributeDefinition="#{relationshipAttributeDefinition.relationshipAttributeDefinition}"
-                                                              targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                              concept="#{cc.attrs.concept}"
-                                                              rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable and relationshipAttributeDefinition.compositeID eq 6}"
                         />
                     </p:repeat>
                     <div class="Container20 White Responsive">

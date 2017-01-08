@@ -12,11 +12,16 @@
         </f:metadata>
 
         <div class="Container100">
-            <div class="ContainerIndent">
 
+            <div class="ContainerIndent">
                 <div class="Card ShadowEffect">
 
-                    <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="TexAlCenter conceptTable"
+                    <div class="Container100">
+                        <div class="ContainerIndent">
+
+                            <h:form id="browserForm">
+
+                    <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
                                  rows="15"
                                  sortBy="#{1}"
                                  paginator="true" lazy="true" dynamic="true"
@@ -24,7 +29,7 @@
                                  paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                  emptyMessage="No se han encontrado conceptos con los criterios utilizados">
                         <f:facet name="{Exporters}">
-                            <p:commandButton ajax="false" value="Exportar a Excel"
+                            <p:commandButton ajax="false" value="Exportar a Excel" process="@this" update="@this"
                                              icon="fa fa-file-excel-o">
                                 <p:dataExporter type="xls" target="conceptTable"
                                                 fileName="conceptos"/>
@@ -45,6 +50,22 @@
                             <h:outputText value="#{conceptSMTK.category.name}"/>
                         </p:column>
 
+                        <p:column headerText="Etiquetas" styleClass="tags" exportable="false">
+
+                            <p:repeat
+                                    offset="0"
+                                    size="#{conceptSMTK.tags.size()}"
+                                    step="1"
+                                    varStatus="var"
+                                    value="#{conceptSMTK.tags}"
+                                    var="tag">
+
+                                <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+
+                            </p:repeat>
+
+                        </p:column>
+
                         <p:column exportable="false" style="width:32px;text-align: center">
                             <p:commandLink update="conceptTable,@(.conceptDetail)" oncomplete="PF('carOP').show('#{component.clientId}')"
                                            title="Ver Detalle">
@@ -57,8 +78,12 @@
 
                     </p:dataTable>
 
+                    </h:form>
+
                 </div>
             </div>
+        </div>
+        </div>
         </div>
 
         <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">

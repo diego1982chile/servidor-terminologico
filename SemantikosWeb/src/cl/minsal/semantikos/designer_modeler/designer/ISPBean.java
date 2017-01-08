@@ -18,6 +18,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import java.util.*;
 
 /**
@@ -131,6 +133,9 @@ public class ISPBean {
     public void fetchData(){
 
         RequestContext context = RequestContext.getCurrentInstance();
+        FacesContext fContext = FacesContext.getCurrentInstance();
+
+        RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(fContext).getAttributes().get("relationshipDefinition");
 
         //fetchedData = helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true).get(0).getFields();
         if(regnum.trim().equals("") || ano == null || ano == 0) {
@@ -140,14 +145,30 @@ public class ISPBean {
 
         ispRecord = null;
 
+        /**
+         * Primero se busca un registro isp local
+         */
         for (HelperTableRecord helperTableRecord : helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true)) {
             ispRecord = helperTableRecord;
             break;
         }
 
-        if(ispRecord==null)
+        /**
+         * Si no existe, se va a buscar a la página del registro isp
+         */
+        if(ispRecord==null) {
             //fetchedData = ispFetcher.getISPData(regnum+"/"+ano);
-            ispRecord = new HelperTableRecord(getISPHelperTable(), ispFetcher.getISPData(regnum+"/"+ano));
+            ispRecord = new HelperTableRecord(getISPHelperTable(), ispFetcher.getISPData(regnum + "/" + ano));
+        }
+        else {
+        /**
+         * Si se encuentra, se verifica que no exista actualmente una relación con este destino
+         */
+            if(!relationshipManager.getRelationshipsLike(relationshipDefinition,ispRecord).isEmpty()) {
+                conceptBean.getMessageBean().messageError("Este registro ISP está siendo actuálmente utilizado por un Producto Comercial");
+                return;
+            }
+        }
 
         context.execute("PF('ispfetcheddialog').show();");
     }

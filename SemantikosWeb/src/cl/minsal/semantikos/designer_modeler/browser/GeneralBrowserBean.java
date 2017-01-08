@@ -339,7 +339,7 @@ public class GeneralBrowserBean implements Serializable {
         // Si el concepto está persistido, invalidarlo
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
         String query = "";
-        if(concepts.getRowCount()==0)
+        if(generalQuery.isFiltered() && concepts.getRowCount()==0)
             query=generalQuery.getQuery();
         eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + idCategory +"&idConcept=0&favoriteDescription=" + query);
     }

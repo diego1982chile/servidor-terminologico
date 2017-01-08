@@ -18,61 +18,92 @@
 
     <p:outputPanel id="browserFilters" styleClass="browserFilters">
 
-        <div class="ui-fluid">
+        <p:panelGrid style="width:100%" styleClass="ui-panelgrid-blank">
 
-            <div class="Container">
+        <f:facet name="header">
+            <p:row>
+                <p:column>
+                    Filtros
+                </p:column>
+            </p:row>
+        </f:facet>
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
-
-                        <p:outputPanel styleClass="search">
-                            <p:inputText value="#{cc.attrs.noValidQuery.query}" placeholder="Buscar...">
-                                <p:ajax event="keyup" update="@(.browserTable),@(.browserFilters)" process="@this" />
-                            </p:inputText>
-                            <i class="fa fa-search fa-lg" />
-                        </p:outputPanel>
-
+        <p:row>
+            <p:column>
+                <div class="ui-fluid">
+                    <div class="Container">
+                        <div class="ContainerIndent BoldGray FontBold">
+                            <span>
+                                Patrón
+                            </span>
+                            <p:outputPanel styleClass="search">
+                                <p:inputText value="#{cc.attrs.noValidQuery.query}" placeholder="Buscar...">
+                                    <p:ajax event="keyup" update="@(.browserTable),@(.browserFilters)" process="@this" />
+                                </p:inputText>
+                                <i class="fa fa-search fa-lg" />
+                            </p:outputPanel>
+                        </div>
                     </div>
                 </div>
+            </p:column>
+        </p:row>
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
-                        <p:selectCheckboxMenu id="descriptionTypes"
-                                              value="#{cc.attrs.noValidQuery.descriptionTypes}"
-                                              converter="omnifaces.SelectItemsConverter"
-                                              label="Tipos...">
+        <p:row>
+            <p:column>
+                <div class="ui-fluid">
+                    <div class="Container">
+                        <div class="ContainerIndent BoldGray FontBold">
+                            <span>
+                                Tipo Descripción
+                            </span>
+                            <p:selectCheckboxMenu id="descriptionTypes"
+                                                  value="#{cc.attrs.noValidQuery.descriptionTypes}"
+                                                  converter="omnifaces.SelectItemsConverter"
+                                                  label="Seleccione...">
 
-                            <p:ajax event="change"
-                                    update="@(.browserTable),@(.browserFilters)"
-                                    process="@this" />
+                                <p:ajax event="change"
+                                        update="@(.browserTable),@(.browserFilters)"
+                                        process="@this" />
 
-                            <f:selectItems value="#{noValidBrowserBean.descriptionTypes}" var="descriptionType"
-                                           itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
+                                <f:selectItems value="#{noValidBrowserBean.descriptionTypes}" var="descriptionType"
+                                               itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
 
-                        </p:selectCheckboxMenu>
+                            </p:selectCheckboxMenu>
+                        </div>
                     </div>
                 </div>
+            </p:column>
+        </p:row>
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
-                        <p:selectCheckboxMenu id="observationTypes"
-                                              value="#{cc.attrs.noValidQuery.observationNoValids}"
-                                              converter="omnifaces.SelectItemsConverter"
-                                              label="Observación...">
+        <p:row>
+            <p:column>
+                <div class="ui-fluid">
+                    <div class="Container">
+                        <div class="ContainerIndent BoldGray FontBold">
+                            <span>
+                                Tipo Observación
+                            </span>
+                            <p:selectCheckboxMenu id="observationTypes"
+                                                  value="#{cc.attrs.noValidQuery.observationNoValids}"
+                                                  converter="omnifaces.SelectItemsConverter"
+                                                  label="Seleccione...">
 
-                            <p:ajax event="change"
-                                    update="@(.browserTable),@(.browserFilters)"
-                                    process="@this" />
+                                <p:ajax event="change"
+                                        update="@(.browserTable),@(.browserFilters)"
+                                        process="@this" />
 
-                            <f:selectItems value="#{noValidBrowserBean.observationTypes}" var="observationType"
-                                           itemLabel="#{observationType.description}" itemValue="#{observationType}"/>
+                                <f:selectItems value="#{noValidBrowserBean.observationTypes}" var="observationType"
+                                               itemLabel="#{observationType.description}" itemValue="#{observationType}"/>
 
-                        </p:selectCheckboxMenu>
-
+                            </p:selectCheckboxMenu>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </p:column>
+        </p:row>
+
+        </p:panelGrid>
+
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.descriptionTypes}" itemName="Tipo descriptor" />
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.observationNoValids}" itemName="Observación" />
     </p:outputPanel>
