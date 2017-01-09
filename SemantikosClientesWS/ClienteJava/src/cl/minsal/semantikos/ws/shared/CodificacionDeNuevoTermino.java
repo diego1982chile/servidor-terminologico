@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class CodificacionDeNuevoTermino {
 
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/", required = true)
+    @XmlElement(namespace = "", required = true)
     protected PeticionCodificacionDeNuevoTermino peticionCodificacionDeNuevoTermino;
 
     /**
