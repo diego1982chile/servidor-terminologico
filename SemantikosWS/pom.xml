@@ -67,7 +67,7 @@
             </resource>
         </resources>
 
-        <finalName>SemantikosWS</finalName>
+        <finalName>Semantikos WebServices</finalName>
 
         <plugins>
             <plugin>
