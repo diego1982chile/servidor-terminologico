@@ -25,14 +25,15 @@
     </h:head>
 
     <h:body>
+        <p:idleMonitor timeout="#{timeOutSessionBean.timeOut}">
+            <p:ajax event="idle" listener="#{timeOutSessionBean.timeout}" />
+        </p:idleMonitor>
 
         <f:facet name="last">
             <h:outputStylesheet name="semantikos/css/customStyle.css" />
         </f:facet>
 
-            <p:idleMonitor timeout="1200000">
-                <p:ajax event="idle" listener="#{timeOutSessionBean.timeout}" />
-            </p:idleMonitor>
+
 
             <pe:layout id="fullPage" options="#{layoutBean.layoutOptions}" stateCookie="true" widgetVar="fpLayoutWidget" styleClass="browserLayout">
 
