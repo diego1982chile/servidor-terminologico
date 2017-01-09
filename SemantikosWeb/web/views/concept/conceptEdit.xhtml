@@ -238,7 +238,7 @@
 
                                     <p:button outcome="conceptEdit" value="Editar Concepto" styleClass="CyanButton ui-priority-primary" style="float: right" rendered="#{ not conceptBean.editable}">
                                         <f:param name="editMode" value="#{true}" />
-                                        <f:param name="idConcept" value="#{cc.attrs.concept.id}" />
+                                        <f:param name="idConcept" value="#{conceptBean.concept.id}" />
                                     </p:button>
 
                                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">

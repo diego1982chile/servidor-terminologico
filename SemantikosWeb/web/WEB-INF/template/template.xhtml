@@ -70,7 +70,23 @@
 
                 </pe:layoutPane>
 
-                <pe:layoutPane position="east" rendered="#{request.requestURI.contains('browser')}">
+                <pe:layoutPane position="east" rendered="#{request.requestURI.contains('browser')}" styleContent="padding: 3px 0.5em;">
+
+                    <f:facet name="header">
+
+                        <p:panelGrid style="width:100%" styleClass="ui-panelgrid-blank">
+
+                            <f:facet name="header">
+                                <p:row>
+                                    <p:column>
+                                        Filtros
+                                    </p:column>
+                                </p:row>
+                            </f:facet>
+
+                        </p:panelGrid>
+
+                    </f:facet>
                     <ui:insert name="nav">
                         Template
                     </ui:insert>

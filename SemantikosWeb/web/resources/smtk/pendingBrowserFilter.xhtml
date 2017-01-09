@@ -18,41 +18,24 @@
 
     <p:outputPanel id="browserFilters" styleClass="browserFilters">
 
-        <p:panelGrid style="width:100%" styleClass="ui-panelgrid-blank">
-
-            <f:facet name="header">
-                <p:row>
-                    <p:column>
-                        Filtros
-                    </p:column>
-                </p:row>
-            </f:facet>
-
-            <p:row>
-            <p:column>
-                <div class="ui-fluid">
-                    <div class="Container">
-                        <div class="ContainerIndent BoldGray FontBold">
-                            <span>
-                                Patrón
-                            </span>
-                            <p:outputPanel styleClass="search">
-                                <p:inputText value="#{cc.attrs.pendingQuery.query}" placeholder="Buscar...">
-                                    <p:ajax event="keyup" update="@(.browserTable),@(.pendingQueryFilter)" process="@this" />
-                                </p:inputText>
-                                <i class="fa fa-search fa-lg" />
-                            </p:outputPanel>
-                        </div>
+        <div class="ui-fluid">
+            <div class="Container">
+                <div class="Container100">
+                    <div class="ContainerIndent BoldGray FontBold">
+                        <span>
+                            Patrón
+                        </span>
+                        <p:outputPanel styleClass="search">
+                            <p:inputText value="#{cc.attrs.pendingQuery.query}" placeholder="Buscar...">
+                                <p:ajax event="keyup" update="@(.browserTable),@(.pendingQueryFilter)" process="@this" />
+                            </p:inputText>
+                            <i class="fa fa-search fa-lg" />
+                        </p:outputPanel>
                     </div>
                 </div>
-            </p:column>
-        </p:row>
 
-            <p:row>
-            <p:column>
-                <div class="ui-fluid">
-                    <div class="Container">
-                        <div class="ContainerIndent BoldGray FontBold">
+                <div class="Container100">
+                    <div class="ContainerIndent BoldGray FontBold">
                         <span>
                             Categorías
                         </span>
@@ -73,10 +56,9 @@
                         </p:selectCheckboxMenu>
                     </div>
                 </div>
-                </div>
-            </p:column>
-        </p:row>
-        </p:panelGrid>
+            </div>
+        </div>
+
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.pendingQuery.categories}" itemName="Categoría" />
     </p:outputPanel>
 

@@ -1,5 +1,3 @@
-package cl.minsal.semantikos.model;
-
 /**
  * Created by root on 16-09-16.
  */

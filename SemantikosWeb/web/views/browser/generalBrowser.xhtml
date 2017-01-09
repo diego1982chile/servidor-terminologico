@@ -37,11 +37,14 @@
                                              var="concept"
                                              rows="30"
                                              sortBy="#{1}"
+                                             expandedRow="true"
                                              paginator="true" lazy="true" dynamic="true" reflow="true"
                                              paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {Exporters}"
                                              emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
                                     <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                                    <p:ajax event="rowToggle" listener="#{generalBrowserBean.onRowToggle}" />
 
                                     <f:facet name="{Exporters}">
                                         <p:commandButton actionListener="#{generalBrowserBean.createConcept}" icon="fa fa-plus"
@@ -80,7 +83,7 @@
                                         <h:outputText value="Modelado" rendered="#{concept.modeled}"/>
                                     </p:column>
 
-                                    <p:columns value="#{generalBrowserBean.generalQuery.columns}"
+                                    <p:columns value="#{generalBrowserBean.generalQuery.columns}" rendered="true"
                                                var="column"
                                                columnIndexVar="colIndex">
                                         <f:facet name="header">
@@ -92,6 +95,65 @@
                                             <smtk:smtkTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.SMTKType}" />
                                         </p:outputPanel>
                                     </p:columns>
+
+                                    <p:rowExpansion styleClass="browserTableDetail" rendered="false">
+
+                                        <div class="ui-fluid">
+
+                                            <p:panelGrid style="width:100%" styleClass="Responsive">
+
+                                                <f:facet name="header">
+
+                                                    <p:row>
+                                                        <p:repeat
+                                                                offset="0"
+                                                                size="#{generalBrowserBean.generalQuery.columns.size()}"
+                                                                step="1"
+                                                                varStatus="var"
+                                                                value="#{generalBrowserBean.generalQuery.columns}"
+                                                                var="column">
+
+                                                            <p:column>
+                                                                #{column.columnName}
+                                                            </p:column>
+
+                                                        </p:repeat>
+                                                    </p:row>
+                                                </f:facet>
+
+                                                <p:row>
+
+                                                    <p:repeat
+                                                            offset="0"
+                                                            size="#{generalBrowserBean.generalQuery.columns.size()}"
+                                                            step="1"
+                                                            varStatus="var"
+                                                            value="#{generalBrowserBean.generalQuery.columns}"
+                                                            var="column">
+
+                                                        <p:column>
+                                                            <f:facet name="header">
+                                                                <p:row>
+                                                                    <p:column>#{column.columnName}</p:column>
+                                                                </p:row>
+                                                            </f:facet>
+                                                            <smtk:basicTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}"
+                                                                                rendered="#{column.relationshipDefinition.targetDefinition.basicType}" />
+                                                            <smtk:helperTableTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}"
+                                                                                      rendered="#{column.relationshipDefinition.targetDefinition.helperTable}" />
+                                                            <smtk:smtkTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}"
+                                                                               rendered="#{column.relationshipDefinition.targetDefinition.SMTKType}" />
+                                                        </p:column>
+
+                                                    </p:repeat>
+
+                                                </p:row>
+
+                                            </p:panelGrid>
+
+                                        </div>
+
+                                    </p:rowExpansion>
 
                                     <p:column headerText="Acciones" exportable="false">
 

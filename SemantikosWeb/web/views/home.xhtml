@@ -10,7 +10,7 @@
             <div class="ContainerIndent">
                 <div class="Card ShadowEffect">
 
-                    <h:outputText value="${persistenceTestMBean.test}" />
+                    <h:outputText value="${persistenceTestMBean.test}" rendered="false" />
 
                     <!-- section -->
                     <div class="Container100">
@@ -18,27 +18,22 @@
                             <div class="Container50 Responsive50">
                                 <div class="ContainerIndent">
                                     <div class="Card ShadowEffect HeiAutoOnMobile">
-                                        <h2 class="CardTopic"><i class="icon-tack Fs20 Fleft MarRight10"></i> TO DO MANAGER
-                                            <h:form>
-                                                <p:commandButton id="todoMenu" type="button" icon="fa fa-ellipsis-v Gray Fs20" styleClass="Fright GrayButton" style="margin-top:-30px !important;"/>
-                                                <p:menu overlay="true" trigger="todoMenu" my="left top" at="left bottom">
-                                                    <p:menuitem value="New To Do +" icon="ui-icon-disk fa fa-square-o " />
-                                                    <p:menuitem value="Delete Selected" icon="ui-icon-disk fa fa-close"  disabled="true"/>
-                                                    <p:menuitem value="New To Do Group" icon="ui-icon-disk fa fa-folder" />
-                                                    <p:menuitem value="Set Reminder" icon="ui-icon-disk fa fa-clock-o" />
-                                                </p:menu>
-                                            </h:form>
-                                        </h2>
-                                        <div class="SeparatorFull"></div>
-                                        <p:selectBooleanCheckbox value="accept" itemLabel="Send Sales Reports To CEO" style="margin-left:10px;"/>
-                                        <a href="#" class=" DispInlBlock Fright"><i class="icon-set6 Pink Fs30"></i></a>
-                                        <div class="SeparatorFull"></div>
-                                        <p:selectBooleanCheckbox value="accept" itemLabel="Hangout with Product Manager at 12:30 AM" style="margin-left:10px;"/>
-                                        <a href="#" class=" DispInlBlock Fright"><i class="icon-set6 Pink Fs30"></i></a>
-                                        <div class="SeparatorFull"></div>
-                                        <p:selectBooleanCheckbox value="accept" itemLabel="Dinner with Walter Perkins at 3:00 PM" style="margin-left:10px;"/>
-                                        <a href="#" class=" DispInlBlock Fright"><i class="icon-set6 Pink Fs30"></i></a>
-                                        <div class="SeparatorFull"></div>
+                                        <div class="ui-panel-content ui-widget-content">
+                                            <i class="icon-round58 Fs60 Fleft Wid25 SoftBlue TexAlCenter" style="padding-top: 12px"></i>
+                                            <div class="Fs24 Fright MarTop10 leaden Wid70"><span class="SoftBlue">#{authenticationBean.loggedUser.fullName}</span>, Bienvenido</div>
+                                            <div class="Fs12 Fright leaden Wid70">You have <span class="red">3 unread messages</span> and <span class="red"> 32 tasks</span> !</div>
+                                            <div class="EmptyBox10"></div><hr id="j_idt18" class="ui-separator ui-state-default ui-corner-all Wid100" />
+                                            <div class="EmptyBox10"></div>
+                                            <div class="Fs16 Fright">
+                                                <a href="#" class="DispInlBlock Fleft Fs16 MarRight20"><i class="icon-briefcase hardblue"> Tasks (32)</i></a>
+                                                <a href="#" class="DispInlBlock Fleft Fs16 MarRight20"><i class="icon-bell-alt hardblue"> Messages (3)</i></a>
+                                                <a href="#" class="DispInlBlock Fleft Fs16 MarRight20"><i class="icon-cog-alt hardblue"> Settings</i></a>
+                                            </div>
+                                            <div class="EmptyBox10"></div><hr id="j_idt20" class="ui-separator ui-state-default ui-corner-all Wid100" />
+                                            <div class="EmptyBox10"></div>
+                                            <i class="icon-key softgray MarRight10 Fs14 Fright"> Your Last Login - 18.08.2014, 18:30</i>
+                                            <div class="EmptyBox10"></div><hr id="j_idt22" class="ui-separator ui-state-default ui-corner-all Wid100" /></div>
+
                                         <p:selectBooleanCheckbox value="accept" itemLabel="Send Sales Reports To CEO" style="margin-left:10px;"/>
                                         <a href="#" class=" DispInlBlock Fright"><i class="icon-set6 Pink Fs30"></i></a>
                                         <div class="SeparatorFull"></div>

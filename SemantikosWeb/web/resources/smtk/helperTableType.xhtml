@@ -304,6 +304,7 @@
                                             forceSelection="true"
                                             var="helperTableRecord"
                                             placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                                            validator="#{validatorBean.validateHelperTableRecord}"
                                             converter="helperTableRecordConverter"
                                             rendered="#{cc.attrs.concept.editable}"
                                             disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"

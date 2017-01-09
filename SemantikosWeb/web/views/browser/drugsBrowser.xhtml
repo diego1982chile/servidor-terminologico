@@ -71,67 +71,56 @@
     <ui:define name="nav">
         <h:form>
             <p:outputPanel styleClass="drugsFinder">
-                <p:panelGrid style="width:100%" styleClass="ui-panelgrid-blank">
 
-                <f:facet name="header">
-                    <p:row>
-                        <p:column>
-                            Buscar Fármaco
-                        </p:column>
-                    </p:row>
-                </f:facet>
+                <div class="ui-fluid">
+                    <div class="Container">
+                        <div class="Container100">
+                            <div class="ContainerIndent BoldGray FontBold">
 
-                <p:row>
-                    <p:column>
-                        <div class="ui-fluid">
-                            <div class="Container">
-                                <div class="ContainerIndent BoldGray FontBold">
+                                <p:outputPanel rendered="#{drugsBrowserBean.conceptSelected eq null}" styleClass="search">
+                                <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
+                                                placeholder="Buscar fármaco..."
+                                                forceSelection="true"
+                                                id="findConceptSMTK" scrollHeight="200" size="5"
+                                                completeMethod="#{drugsBrowserBean.getConceptSearchInput}"
+                                                converter="conceptConverter"
+                                                var="concept"
+                                                value="#{drugsBrowserBean.conceptSelected}"
+                                                itemLabel="#{concept.descriptionFavorite.term}"
+                                                itemValue="#{concept}">
 
-                                    <p:outputPanel rendered="#{drugsBrowserBean.conceptSelected eq null}" styleClass="search">
-                                    <p:autoComplete emptyMessage="No se encontraron conceptos relacionados"
-                                                    placeholder="Buscar fármaco..."
-                                                    forceSelection="true"
-                                                    id="findConceptSMTK" scrollHeight="200" size="5"
-                                                    completeMethod="#{drugsBrowserBean.getConceptSearchInput}"
-                                                    converter="conceptConverter"
-                                                    var="concept"
-                                                    value="#{drugsBrowserBean.conceptSelected}"
-                                                    itemLabel="#{concept.descriptionFavorite.term}"
-                                                    itemValue="#{concept}">
+                                    <p:column>
+                                        <h:outputText value="#{concept.descriptionFavorite.id}"/>
+                                    </p:column>
 
-                                        <p:column>
-                                            <h:outputText value="#{concept.descriptionFavorite.id}"/>
-                                        </p:column>
+                                    <p:column>
+                                        <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                    </p:column>
 
-                                        <p:column>
-                                            <h:outputText value="#{concept.descriptionFavorite.term}"/>
-                                        </p:column>
+                                    <p:column>
+                                        <h:outputText value="#{concept.category.name}"/>
+                                    </p:column>
 
-                                        <p:column>
-                                            <h:outputText value="#{concept.category.name}"/>
-                                        </p:column>
+                                    <p:ajax event="itemSelect" async="false" listener="#{drugsBrowserBean.setConceptSelected(concept)}" update=":browserForm,@(.drugsFinder)" process="@this" />
 
-                                        <p:ajax event="itemSelect" async="false" listener="#{drugsBrowserBean.setConceptSelected(concept)}" update=":browserForm,@(.drugsFinder)" process="@this" />
+                                </p:autoComplete>
+                                <i class="fa fa-search fa-lg"  />
+                            </p:outputPanel>
 
-                                    </p:autoComplete>
-                                    <i class="fa fa-search fa-lg"  />
+                                <p:outputPanel rendered="#{drugsBrowserBean.conceptSelected != null}" styleClass="search">
+                                    <p:inputText disabled="true" id="itemSelected" value="#{drugsBrowserBean.conceptSelected.descriptionFavorite}" />
+                                    <p:commandLink
+                                            process="@this"
+                                            update="@(.drugsFinder)"
+                                            action="#{drugsBrowserBean.resetConceptSelected}">
+                                        <i class="fa fa-close fa-lg"  />
+                                    </p:commandLink>
                                 </p:outputPanel>
-
-                                    <p:outputPanel rendered="#{drugsBrowserBean.conceptSelected != null}" styleClass="search">
-                                        <p:inputText disabled="true" id="itemSelected" value="#{drugsBrowserBean.conceptSelected.descriptionFavorite}" />
-                                        <p:commandLink
-                                                process="@this"
-                                                update="@(.drugsFinder)"
-                                                action="#{drugsBrowserBean.resetConceptSelected}">
-                                            <i class="fa fa-close fa-lg"  />
-                                        </p:commandLink>
-                                    </p:outputPanel>
-                                </div>
                             </div>
                         </div>
-                    </p:column>
-                </p:row>
-                </p:panelGrid>
+                    </div>
+                </div>
+
             </p:outputPanel>
         </h:form>
     </ui:define>

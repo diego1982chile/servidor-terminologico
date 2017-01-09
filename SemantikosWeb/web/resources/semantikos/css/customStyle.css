@@ -12,7 +12,11 @@ form.consult div.ui-selectonemenu.ui-state-disabled .ui-selectonemenu-label {
     background-color: #FFF !important;
 }
 
-.ContainerIndentRight{
+.ContainerIndentBottom {
+    margin-bottom: 5px !important;
+}
+
+.ContainerIndentRight {
     margin-right: 10px !important;
 }
 
@@ -147,7 +151,7 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     color: #222;
 }
 
-.ui-widget-content {
+.ui-widget-content.ui-layout-pane {
     border: 1px solid #d5d5d5;
     background: #fff;
     color: #222;
@@ -182,4 +186,8 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .pe-layout-pane-header .ui-menuitem-icon {
     padding-right: 0.5em;
+}
+
+.browserTableDetail .ui-column-title {
+    display: none;
 }

@@ -24,42 +24,58 @@
         <p:growl id="growl" showDetail="true" showSummary="true"/>
         <p:growl id="editMsgs" showDetail="true"/>
 
-        <p:fieldset legend="Agregar descripción" toggleable="true" collapsed="true" rendered="#{cc.attrs.editable}">
 
-            <div class="ui-fluid">
-                <h:panelGrid  columns="5"  style="width: 100%"
-                              columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-3,ui-grid-col-2,ui-grid-col-1"
-                              layout="grid" styleClass="ui-panelgrid-blank">
+        <div class="ui-fluid">
 
-                    <p:outputLabel for="otherTermino" value="Término"/>
+                <div class="Container ContainerIndentBottom">
 
-                    <p:inputText id="otherTermino" value="#{cc.attrs.otherTermino}" autocomplete="off" style="width:90%" />
+                    <div class="Container20 White Responsive">
+                        <div class="ContainerIndent">
+                            <p:outputLabel for="otherTermino" value="Término *"/>
+                        </div>
+                    </div>
 
-                    <p:selectOneRadio id="radio4" value="#{cc.attrs.otherSensibilidad}" style="width: 95%">
-                        <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
-                        <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
-                    </p:selectOneRadio>
+                    <div class="Container30 White Responsive">
+                        <div class="ContainerIndentRight">
+                            <p:inputText id="otherTermino" value="#{cc.attrs.otherTermino}" autocomplete="off" />
+                        </div>
+                    </div>
 
-                    <p:selectOneMenu id="console" value="#{cc.attrs.otherDescriptionType}" converter="omnifaces.SelectItemsConverter" style="width: 90%">
-                        <f:selectItem itemLabel="Seleccione tipo" itemValue=""/>
-                        <f:selectItems value="#{cc.attrs.descriptionTypes}" var="descriptionType"
-                                       itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
-                    </p:selectOneMenu>
+                    <div class="Container20 White Responsive">
+                        <div class="ContainerIndentRight">
+                            <p:selectOneMenu id="console" value="#{cc.attrs.otherDescriptionType}" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItem itemLabel="Seleccione tipo" itemValue=""/>
+                                <f:selectItems value="#{cc.attrs.descriptionTypes}" var="descriptionType"
+                                               itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
 
-                    <p:commandButton value="Agregar" id="btn" action="#{descriptionBeans.addDescription()}"
-                                     process="@(.otherDescriptionsPanel)"
-                                     update="@(.otherDescriptionsPanel)"
-                                     style="float: right" />
+                    <div class="Container20 White Responsive">
+                        <div class="ContainerIndentRight">
+                            <p:selectOneRadio id="radio4" value="#{cc.attrs.otherSensibilidad}" style="padding-top: 0.5em; text-align: center" >
+                                <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
+                                <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
+                            </p:selectOneRadio>
+                        </div>
+                    </div>
 
-                </h:panelGrid>
+                    <div class="Container10 White Responsive">
+                        <div class="ContainerIndentRight">
+
+                            <p:commandButton value="Agregar" id="btn" action="#{descriptionBeans.addDescription()}"
+                                             process="@(.otherDescriptionsPanel)"
+                                             update="@(.otherDescriptionsPanel)"
+                                             style="float: right" />
+                        </div>
+                    </div>
             </div>
-
-        </p:fieldset>
+        </div>
 
         <p:spacer rendered="#{cc.attrs.editable}" />
 
         <p:dataTable id="otherDescriptions"
-                     styleClass="otherDescriptions"
+                     styleClass="otherDescriptions TextAlCenter"
                      emptyMessage="El concepto no tiene otras descripciones"
                      var="description"
                      value="#{cc.attrs.descriptions}"
@@ -71,7 +87,7 @@
 
             <!--Columnas por defecto -->
 
-            <p:column headerText="DescId" style="width:5%">
+            <p:column headerText="DescId">
                 <div style="text-align: center;">
                     <h:outputText value="#{description.descriptionId}"/>
                 </div>
@@ -149,7 +165,7 @@
                 </div>
             </p:column>
 
-            <p:column headerText="Acción" rendered="#{cc.attrs.editable}" style="width: 6%">
+            <p:column headerText="Acción" rendered="#{cc.attrs.editable}">
 
                     <p:commandLink actionListener="#{descriptionBeans.removeDescription(description)}"
                                    ajax="true"
