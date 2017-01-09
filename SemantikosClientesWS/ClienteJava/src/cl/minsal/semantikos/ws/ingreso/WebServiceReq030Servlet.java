@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.ws.ingreso;
 
-import cl.minsal.semantikos.ws.Descripcion;
-import cl.minsal.semantikos.ws.ServicioDeIngreso_Service;
+import cl.minsal.semantikos.ws.shared.Descripcion;
+import cl.minsal.semantikos.ws.shared.ServicioDeIngreso_Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

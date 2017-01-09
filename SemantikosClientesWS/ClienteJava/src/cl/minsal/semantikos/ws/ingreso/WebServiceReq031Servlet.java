@@ -1,6 +1,9 @@
 package cl.minsal.semantikos.ws.ingreso;
 
-import cl.minsal.semantikos.ws.*;
+import cl.minsal.semantikos.ws.shared.IllegalInputFault_Exception;
+import cl.minsal.semantikos.ws.shared.PeticionCodificacionDeNuevoTermino;
+import cl.minsal.semantikos.ws.shared.RespuestaCodificacionDeNuevoTermino;
+import cl.minsal.semantikos.ws.shared.ServicioDeIngreso_Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -1,9 +1,9 @@
 package cl.minsal.semantikos.ws.ingreso.clients;
 
-import cl.minsal.semantikos.ws.IllegalInputFault_Exception;
-import cl.minsal.semantikos.ws.PeticionCodificacionDeNuevoTermino;
-import cl.minsal.semantikos.ws.ServicioDeIngreso;
-import cl.minsal.semantikos.ws.ServicioDeIngreso_Service;
+import cl.minsal.semantikos.ws.shared.IllegalInputFault_Exception;
+import cl.minsal.semantikos.ws.shared.PeticionCodificacionDeNuevoTermino;
+import cl.minsal.semantikos.ws.shared.ServicioDeIngreso;
+import cl.minsal.semantikos.ws.shared.ServicioDeIngreso_Service;
 
 /**
  * Esta clase tiene como objetivo el de invocar el cliente de WS de Ingreso
