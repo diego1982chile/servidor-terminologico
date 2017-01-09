@@ -50,7 +50,7 @@
                             <p:selectBooleanButton value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
                                 <p:ajax event="change"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
-                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
+                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptMarketed)" />
                             </p:selectBooleanButton>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                                                    disabled="#{conceptBean.isMCSpecial(cc.attrs.relationshipDefinition) and conceptBean.concept.isModeled()}">
                                 <p:ajax event="change"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,relationship.target)}"
-                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
+                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),,@(.conceptMarketed)" />
                             </p:selectBooleanButton>
                         </div>
                     </div>

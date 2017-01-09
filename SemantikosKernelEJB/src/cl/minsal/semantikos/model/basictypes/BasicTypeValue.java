@@ -87,6 +87,10 @@ public class BasicTypeValue<T extends Comparable> implements Target {
             return "null";
     }
 
+    public boolean isBoolean() {
+        return this.value.getClass().equals(Boolean.class);
+    }
+
     public boolean isDate() {
         return this.value.getClass().equals(Timestamp.class);
     }
