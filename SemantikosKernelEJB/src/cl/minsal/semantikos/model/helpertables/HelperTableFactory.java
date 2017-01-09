@@ -21,11 +21,7 @@ public class HelperTableFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(HelperTableFactory.class);
 
-    public static String ISP = "ISP";
-
-    public static String HT_ATC_NAME = "smtk_helper_table_atc";
-
-    public static String BIOEQUIVALENTE = "Bioequivalente";
+    public static final String HT_ATC_NAME = "smtk_helper_table_atc";
 
     /**
      * Este método es responsable de crear una lista de relaciones a partir de un arreglo json de relaciones.

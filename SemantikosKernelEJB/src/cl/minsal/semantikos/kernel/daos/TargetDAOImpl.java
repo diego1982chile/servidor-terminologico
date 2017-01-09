@@ -246,6 +246,9 @@ public class TargetDAOImpl implements TargetDAO {
 
 
                 //TODO: FIX
+                if (value.isBoolean()) {
+                    call.setBoolean(4, (Boolean) value.getValue());
+                }
 
                 if (value.isDate()) {
                     call.setTimestamp(2, (Timestamp) value.getValue());
@@ -314,6 +317,10 @@ public class TargetDAOImpl implements TargetDAO {
 
                 BasicTypeDefinition basicTypeDefinition = (BasicTypeDefinition) relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition();
                 BasicTypeValue value = (BasicTypeValue) relationshipAttribute.getTarget();
+
+                if (value.isBoolean()) {
+                    call.setBoolean(4, (Boolean) value.getValue());
+                }
 
                 if (value.isDate()) {
                     call.setTimestamp(2, (Timestamp) value.getValue());

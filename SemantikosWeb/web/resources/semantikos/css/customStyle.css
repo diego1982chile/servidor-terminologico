@@ -103,6 +103,7 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 .browserFilters .ui-autocomplete-token {
     margin: 0px !important;
     margin-right: 2px !important;
+    margin-bottom: 5px !important;
 }
 
 .browserFilters .ui-autocomplete-multiple-container {

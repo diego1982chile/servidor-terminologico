@@ -190,7 +190,7 @@ public class RelationshipDefinition {
     }
 
     public boolean isISP() {
-        return this.getName().equalsIgnoreCase(HelperTableFactory.ISP);
+        return this.getName().equalsIgnoreCase(TargetDefinition.ISP);
     }
 
     public boolean isATC(){
@@ -203,7 +203,11 @@ public class RelationshipDefinition {
     }
 
     public boolean isBioequivalente() {
-        return this.getName().equalsIgnoreCase(HelperTableFactory.BIOEQUIVALENTE);
+        return this.getName().equalsIgnoreCase(TargetDefinition.BIOEQUIVALENTE);
+    }
+
+    public boolean isComercializado() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.COMERCIALIZADO);
     }
 
     private final String SNOMEDCT="SNOMED CT";

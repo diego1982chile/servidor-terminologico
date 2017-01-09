@@ -610,9 +610,15 @@ public class ConceptBean implements Serializable {
                 relationshipWeb.setTarget(target);
                 relationship = relationshipWeb;
                 isRelationshipFound = true;
-                if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+
+                if(concept.isPersistent() &&! concept.isModeled() && autoGenerateList.isEmpty() && autogenerateMC.toString().trim().length()==0)
+                    autogenerateBeans.loadAutogenerate(concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE,autoGenerateList);
+
+                if(relationshipDefinition.isComercializado())
+                    changeMarketedBean.changeMarketedEvent(concept, relationshipDefinition, target);
 
                 autogenerateBeans.autogenerateRelationship(relationshipDefinition, relationship, target,concept,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
+
                 if (relationshipDefinition.getId() == 74 && ((BasicTypeValue<Boolean>) target).getValue())
                     changeMultiplicityNotRequiredRelationshipDefinitionMC();
                 if (relationshipDefinition.getId() == 74 && !((BasicTypeValue<Boolean>) target).getValue())
@@ -846,7 +852,7 @@ public class ConceptBean implements Serializable {
         changes = (refsetEditConcept) ? changes + 1 : changes;
 
         if (changes == 0)
-            context.addMessage(null, new FacesMessage("Warning", "No se ha realizado ningún cambio al concepto!!"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "No se ha realizado ningún cambio al concepto!!"));
         else {
             context.addMessage(null, new FacesMessage("Successful", "Se han registrado " + changes + " cambios en el concepto."));
             // Se restablece el concepto, como el concepto está persistido, se le pasa su id
