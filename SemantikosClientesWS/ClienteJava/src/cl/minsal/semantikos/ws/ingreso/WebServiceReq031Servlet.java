@@ -62,7 +62,7 @@ public class WebServiceReq031Servlet extends HttpServlet {
         }
 
 
-        req.getRequestDispatcher("/update_service/ServicioIngresoOp002WS-REQ-031.jsp").forward(req, resp);
+        req.getRequestDispatcher("/update_service/ServicioIngresoWS-REQ-003.jsp").forward(req, resp);
     }
 
     @Override

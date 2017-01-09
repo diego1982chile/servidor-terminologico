@@ -216,9 +216,9 @@ public class SearchService {
      *
      * @return Una lista de los crossmapSets existentes.
      */
-    @WebResult(name = "crossmapSet")
-    @WebMethod(operationName = "crossmapSets")
-    public CrossmapSetsResponse crossmapSets(
+    @WebResult(name = "crossmapSetResponse")
+    @WebMethod(operationName = "getCrossmapSets")
+    public CrossmapSetsResponse getCrossmapSets(
             @XmlElement(required = true)
             @WebParam(name = "idInstitucion")
             String idInstitution

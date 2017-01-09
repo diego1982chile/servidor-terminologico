@@ -4,7 +4,7 @@
 <html>
 
 <header>
-    <title>Semantikos - WS-REQ-030: Incrementar uso de un término</title>
+    <title>Semantikos - WS-REQ-003: Incrementar uso de un término</title>
 
     <!-- Bootstrap -->
     <link href="<%=request.getContextPath()%>/css/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet"

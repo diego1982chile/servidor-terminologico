@@ -35,7 +35,7 @@ public class WebServiceReq030Servlet extends HttpServlet {
         System.out.println("WebServiceReq030Servlet:doPost(): " + description_id.toString());
         req.setAttribute("serviceResponse", description_id);
 
-        req.getRequestDispatcher("/update_service/ServicioIngresoOp002WS-REQ-030.jsp").forward(req, resp);
+        req.getRequestDispatcher("/update_service/ServicioIngresoWS-REQ-030.jsp").forward(req, resp);
     }
 
     @Override

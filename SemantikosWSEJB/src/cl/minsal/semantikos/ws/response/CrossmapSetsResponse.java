@@ -11,8 +11,8 @@ import java.util.List;
  * @author Andrés Farías on 12/13/16.
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlRootElement(name = "crossmapSets", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "CrossmapSets", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlRootElement(name = "crossmapSetsResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "CrossmapSetsResponse", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class CrossmapSetsResponse {
 
     /** La lista de crossmaps indirectos (response) */

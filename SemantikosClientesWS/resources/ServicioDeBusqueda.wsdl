@@ -26,8 +26,7 @@
   <xs:element name="crossmapSetMembersDeCrossmapSet" type="tns:crossmapSetMembersDeCrossmapSet"/>
   <xs:element name="crossmapSetMembersDeCrossmapSetResponse" type="tns:crossmapSetMembersDeCrossmapSetResponse"/>
   <xs:element name="crossmapSetMembersResponse" type="tns:CrossmapSetMembersResponse"/>
-  <xs:element name="crossmapSets" nillable="true" type="xs:anyType"/>
-  <xs:element name="crossmapSetsResponse" type="tns:crossmapSetsResponse"/>
+  <xs:element name="crossmapSetsResponse" type="tns:CrossmapSetsResponse"/>
   <xs:element name="definicionObjetivo" type="tns:DefinicionObjetivo"/>
   <xs:element name="definicionRelacion" type="tns:DefinicionRelacion"/>
   <xs:element name="definicionRelacionAtributo" type="tns:DefinicionRelacionAtributo"/>
@@ -38,6 +37,8 @@
   <xs:element name="descripcionSimplificada" type="tns:DescripcionSimplificada"/>
   <xs:element name="descripcionesPreferidasPorRefSet" type="tns:descripcionesPreferidasPorRefSet"/>
   <xs:element name="descripcionesPreferidasPorRefSetResponse" type="tns:descripcionesPreferidasPorRefSetResponse"/>
+  <xs:element name="getCrossmapSets" type="tns:getCrossmapSets"/>
+  <xs:element name="getCrossmapSetsResponse" type="tns:getCrossmapSetsResponse"/>
   <xs:element name="indirectCrossmap" type="tns:IndirectCrossmap"/>
   <xs:element name="indirectCrossmapsSearch" type="tns:IndirectCrossmapsSearch"/>
   <xs:element name="listaCategorias" type="tns:listaCategorias"/>
@@ -66,6 +67,35 @@
   <xs:element name="respuestaConceptosPorRefSet" type="tns:RespuestaConceptosPorRefSet"/>
   <xs:element name="tablaAuxiliar" type="tns:TablaAuxiliar"/>
   <xs:element name="usuario" type="tns:Usuario"/>
+  <xs:complexType name="getCrossmapSets">
+    <xs:sequence>
+      <xs:element name="idInstitucion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCrossmapSetsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="crossmapSetResponse" type="tns:CrossmapSetsResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CrossmapSetsResponse">
+    <xs:sequence>
+      <xs:element name="cantidadRegistros" type="xs:int"/>
+      <xs:element minOccurs="0" name="crossmapSets">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:crossmapSet"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CrossmapSet">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="abbreviatedName" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element name="version" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="crossmapSetMembersDeCrossmapSet">
     <xs:sequence>
       <xs:element name="nombreAbreviadoCrossmapSet" type="xs:string"/>
@@ -93,13 +123,6 @@
       <xs:element minOccurs="0" ref="tns:crossmapSet"/>
       <xs:element minOccurs="0" name="code" type="xs:string"/>
       <xs:element minOccurs="0" name="gloss" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="CrossmapSet">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="abbreviatedName" type="xs:string"/>
-      <xs:element minOccurs="0" name="name" type="xs:string"/>
-      <xs:element name="version" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="conceptoPorIdDescripcion">
@@ -455,28 +478,6 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="crossmapSets">
-    <xs:sequence>
-      <xs:element name="idInstitucion" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="crossmapSetsResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="crossmapSet" type="tns:CrossmapSets"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="CrossmapSets">
-    <xs:sequence>
-      <xs:element name="cantidadRegistros" type="xs:int"/>
-      <xs:element minOccurs="0" name="crossmapSets">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:crossmapSet"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="refSetsPorIdDescripcion">
     <xs:sequence>
       <xs:element ref="tns:peticionRefSetsPorIdDescripcion"/>
@@ -696,10 +697,6 @@
     <wsdl:part element="tns:crossMapsIndirectosPorIDDescripcion" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="crossmapSetsResponse">
-    <wsdl:part element="tns:crossmapSetsResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="buscarTermino">
     <wsdl:part element="tns:buscarTermino" name="parameters">
     </wsdl:part>
@@ -752,16 +749,12 @@
     <wsdl:part element="tns:refSetsPorIdDescripcion" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="crossmapSets">
-    <wsdl:part element="tns:crossmapSets" name="parameters">
+  <wsdl:message name="NotFoundFault">
+    <wsdl:part element="tns:NotFoundFault" name="NotFoundFault">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="IllegalInputFault">
     <wsdl:part element="tns:IllegalInputFault" name="IllegalInputFault">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="NotFoundFault">
-    <wsdl:part element="tns:NotFoundFault" name="NotFoundFault">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="descripcionesPreferidasPorRefSet">
@@ -774,6 +767,10 @@
   </wsdl:message>
   <wsdl:message name="crossMapsDirectosPorIDDescripcionResponse">
     <wsdl:part element="tns:crossMapsDirectosPorIDDescripcionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCrossmapSets">
+    <wsdl:part element="tns:getCrossmapSets" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="listaRefSet">
@@ -800,6 +797,10 @@
     <wsdl:part element="tns:conceptosPorCategoriaResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="getCrossmapSetsResponse">
+    <wsdl:part element="tns:getCrossmapSetsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="descripcionesPreferidasPorRefSetResponse">
     <wsdl:part element="tns:descripcionesPreferidasPorRefSetResponse" name="parameters">
     </wsdl:part>
@@ -813,6 +814,12 @@
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="SearchService">
+    <wsdl:operation name="getCrossmapSets">
+      <wsdl:input message="tns:getCrossmapSets" name="getCrossmapSets">
+    </wsdl:input>
+      <wsdl:output message="tns:getCrossmapSetsResponse" name="getCrossmapSetsResponse">
+    </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="crossmapSetMembersDeCrossmapSet">
       <wsdl:input message="tns:crossmapSetMembersDeCrossmapSet" name="crossmapSetMembersDeCrossmapSet">
     </wsdl:input>
@@ -852,12 +859,6 @@
     </wsdl:fault>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault">
     </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="crossmapSets">
-      <wsdl:input message="tns:crossmapSets" name="crossmapSets">
-    </wsdl:input>
-      <wsdl:output message="tns:crossmapSetsResponse" name="crossmapSetsResponse">
-    </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="refSetsPorIdDescripcion">
       <wsdl:input message="tns:refSetsPorIdDescripcion" name="refSetsPorIdDescripcion">
@@ -939,6 +940,15 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getCrossmapSets">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getCrossmapSets">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCrossmapSetsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="conceptoPorIdDescripcion">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="conceptoPorIdDescripcion">
@@ -989,15 +999,6 @@
       <wsdl:fault name="NotFoundFault">
         <soap:fault name="NotFoundFault" use="literal"/>
       </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="crossmapSets">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="crossmapSets">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="crossmapSetsResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="listaCategorias">
       <soap:operation soapAction="" style="document"/>
