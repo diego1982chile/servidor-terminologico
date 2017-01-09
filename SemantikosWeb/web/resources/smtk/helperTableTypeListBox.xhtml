@@ -192,7 +192,7 @@
                                                                   rendered="#{relationshipAttributeDefinition.targetDefinition.helperTable and relationshipAttributeDefinition.compositeID eq 6}"
                         />
                         <smtk:basicTypeAttribute relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                                 relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
+                                                 relationshipAttributeDefinition="#{relationshipAttributeDefinition.relationshipAttributeDefinition}"
                                                  targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
                                                  concept="#{cc.attrs.concept}"
                                                  rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()}"
