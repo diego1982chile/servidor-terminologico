@@ -4,6 +4,7 @@ import cl.minsal.semantikos.designer_modeler.Constants;
 import cl.minsal.semantikos.kernel.auth.AuthenticationManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.view.components.TimeOutWeb;
 import org.primefaces.model.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,9 @@ public class AuthenticationBean {
 
     private User loggedUser;
 
+    @EJB
+    private TimeOutWeb timeOutWeb;
+
 
     public boolean isLoggedIn() {
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(AUTH_KEY) != null;
@@ -50,8 +54,7 @@ public class AuthenticationBean {
     public void login() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-
-
+        request.getSession().setMaxInactiveInterval(timeOutWeb.getTimeOut());
         try {
             //valida user y pass
             try{
