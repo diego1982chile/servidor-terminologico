@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.EJB;
@@ -17,6 +18,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -176,18 +178,33 @@ public class ValidatorBean {
 
         String msg;
 
-        RelationshipDefinition relationshipDefinition = (RelationshipDefinition) component.getAttributes().get("relationshipDefinition");
+        RelationshipDefinition concept = (RelationshipDefinition) component.getAttributes().get("concept");
 
-        HelperTable helperTable = (HelperTable) component.getAttributes().get("helperTable");
+        RelationshipDefinition relationshipDefinition = (RelationshipDefinition) component.getAttributes().get("relationshipDefinition");
 
         HelperTableRecord helperTableRecord = (HelperTableRecord) component.getAttributes().get("helperTableRecord");
 
+
         if(relationshipDefinition.isBioequivalente()) {
 
-            for (Relationship relationship : relationshipManager.getRelationshipsLike(relationshipDefinition, helperTableRecord)) {
-                if (relationship.getRelationshipDefinition().isISP()) {
-                    msg = "Este bioequivalente está actualmente siendo utilizado como ISP por el concepto "+relationship.getSourceConcept().getDescriptionFavorite();
-                    throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
+            if(helperTableRecord != null) {
+                /**
+                 * Verificar que no existan ISP apuntando a este bioequivalente
+                 */
+
+                /**
+                 * Primero verificar en el contexto no persistido
+                 */
+
+
+                /**
+                 * Luego verificar en el contexto persistido
+                 */
+                for (Relationship relationship : relationshipManager.getRelationshipsLike(relationshipDefinition, helperTableRecord)) {
+                    if (relationship.getRelationshipDefinition().isISP()) {
+                        msg = "Este bioequivalente está actualmente siendo utilizado como ISP por el concepto " + relationship.getSourceConcept().getDescriptionFavorite();
+                        throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
+                    }
                 }
             }
 

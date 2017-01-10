@@ -164,8 +164,8 @@ public class ISPBean {
         /**
          * Si se encuentra, se verifica que no exista actualmente una relación con este destino
          */
-            if(!relationshipManager.getRelationshipsLike(relationshipDefinition,ispRecord).isEmpty()) {
-                conceptBean.getMessageBean().messageError("Este registro ISP está siendo actuálmente utilizado por un Producto Comercial");
+            for (Relationship relationship : relationshipManager.findRelationshipsLike(relationshipDefinition,ispRecord)) {
+                conceptBean.getMessageBean().messageError("Este registro ISP está siendo actuálmente utilizado por el Producto Comercial "+relationship.getSourceConcept().getDescriptionFavorite());
                 return;
             }
         }
