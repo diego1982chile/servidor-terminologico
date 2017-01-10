@@ -233,6 +233,6 @@ public class Description extends PersistentEntity implements AuditableEntity {
      * @return Un String con detalles.
      */
     public String fullToString(){
-        return this.term + "[ID=" + this.getId() + ", DESCRIPTION_ID=" + this.descriptionID + "]";
+        return this.term + "[ID=" + this.getId() + ", DESCRIPTION_ID=" + this.descriptionID + " Type=" + this.descriptionType + "]";
     }
 }

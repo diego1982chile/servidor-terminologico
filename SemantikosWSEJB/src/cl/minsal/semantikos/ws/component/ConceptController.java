@@ -31,7 +31,9 @@ import java.util.List;
 @Stateless
 public class ConceptController {
 
-    /** El logger para la clase */
+    /**
+     * El logger para la clase
+     */
     private static final Logger logger = LoggerFactory.getLogger(ConceptController.class);
 
     @EJB
@@ -64,9 +66,7 @@ public class ConceptController {
      * @param conceptId     El CONCEPT_ID del concepto cuyos conceptos relacionados se desea recuperar. Este parámetro
      *                      es considerado únicamente si el DESCRIPTION_ID no fue especificado.
      * @param categoryName  El nombre de la categoría a la cual pertenecen los objetos relacionados que se buscan.
-     *
      * @return Los conceptos relacionados en un envelope apropiado.
-     *
      * @throws NotFoundFault Arrojada si no se encuentran resultados.
      */
     public RelatedConceptsResponse findRelated(String descriptionId, String conceptId, @NotNull String categoryName) throws NotFoundFault {
@@ -104,7 +104,6 @@ public class ConceptController {
      *                      recuperar.
      * @param conceptId     El <em>CONCEPT_ID</em> del concepto que se desea recuperar, sólo si
      *                      <code>descriptionId</code> es nulo.
-     *
      * @return El concepto buscado.
      */
     private ConceptSMTK getSourceConcept(String descriptionId, String conceptId) throws NotFoundFault {
@@ -172,11 +171,11 @@ public class ConceptController {
      * Este método es responsable de buscar un concepto segun una de sus descripciones que coincidan por perfect match
      * con el <em>TERM</em> dado en los REFSETS y Categorias indicadas.
      *
-     * @param term              El termino a buscar por perfect Match.
-     * @param categoriesNames   Nombres de las Categorias donde se deben hacer las búsquedas.
-     * @param refSetsNames      Nombres de los REFSETS donde se deben hacer las búsquedas.
-     * @return                  Conceptos buscados segun especificaciones de REQ-WS-001.
-     * @throws NotFoundFault    Si uno de los nombres de Categorias o REFSETS no existe.
+     * @param term            El termino a buscar por perfect Match.
+     * @param categoriesNames Nombres de las Categorias donde se deben hacer las búsquedas.
+     * @param refSetsNames    Nombres de los REFSETS donde se deben hacer las búsquedas.
+     * @return Conceptos buscados segun especificaciones de REQ-WS-001.
+     * @throws NotFoundFault Si uno de los nombres de Categorias o REFSETS no existe.
      */
     public GenericTermSearchResponse searchTermGeneric(
             String term,
@@ -192,21 +191,24 @@ public class ConceptController {
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
         List<Description> descriptions = this.descriptionManager.searchDescriptionsByTerm(term, categories, refSets);
+        logger.info("ws-req-001. descripciones encontradas: " + descriptions);
 
-        if ( descriptions != null ) {
-            for ( Description description : descriptions ) {
-                if ( "Concepto no válido".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm()) ) {
-                    NoValidDescription noValidDescription = this.descriptionManager.getNoValidDescriptionByID(description.getId());
-                    if ( noValidDescription != null ) {
-                        noValidDescriptions.add(new NoValidDescriptionResponse(noValidDescription));
-                    } else {
-                        perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
-                    }
-                } else if ( "Pendientes".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm()) ) {
-                    pendingDescriptions.add(new PendingDescriptionResponse(description));
+        for (Description description : descriptions) {
+
+            logger.info("ws-req-001. descripciones encontrada: " + description.fullToString());
+
+            /* Caso 1: es una descripcion del concepto especial No valido */
+            if ("Concepto no válido".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm())) {
+                NoValidDescription noValidDescription = this.descriptionManager.getNoValidDescriptionByID(description.getId());
+                if (noValidDescription != null) {
+                    noValidDescriptions.add(new NoValidDescriptionResponse(noValidDescription));
                 } else {
                     perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
                 }
+            } else if ("Pendientes".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm())) {
+                pendingDescriptions.add(new PendingDescriptionResponse(description));
+            } else {
+                perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
             }
         }
 
@@ -328,8 +330,8 @@ public class ConceptController {
     }
 
     public List<ISPRegisterResponse> getBioequivalentes(String conceptId, String descriptionId) throws IllegalInputFault, NotFoundFault {
-        if ( (conceptId == null || "".equals(conceptId))
-                && (descriptionId == null || "".equals(descriptionId)) ) {
+        if ((conceptId == null || "".equals(conceptId))
+                && (descriptionId == null || "".equals(descriptionId))) {
             throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
         }
 
@@ -338,7 +340,7 @@ public class ConceptController {
         List<ISPRegisterResponse> res = new ArrayList<>(conceptSMTK.getRelationships().size());
 
         for (Relationship relationship : conceptSMTK.getRelationships()) {
-            if ( relationship.getRelationshipDefinition().isBioequivalente() ) {
+            if (relationship.getRelationshipDefinition().isBioequivalente()) {
                 res.add(ISPRegisterMapper.map(relationship));
             }
         }
@@ -347,8 +349,8 @@ public class ConceptController {
     }
 
     public List<ISPRegisterResponse> getRegistrosISP(String conceptId, String descriptionId) throws IllegalInputFault, NotFoundFault {
-        if ( (conceptId == null || "".equals(conceptId))
-                && (descriptionId == null || "".equals(descriptionId)) ) {
+        if ((conceptId == null || "".equals(conceptId))
+                && (descriptionId == null || "".equals(descriptionId))) {
             throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
         }
 
@@ -357,7 +359,7 @@ public class ConceptController {
         List<ISPRegisterResponse> res = new ArrayList<>(conceptSMTK.getRelationships().size());
 
         for (Relationship relationship : conceptSMTK.getRelationships()) {
-            if ( relationship.getRelationshipDefinition().isISP() ) {
+            if (relationship.getRelationshipDefinition().isISP()) {
                 res.add(ISPRegisterMapper.map(relationship));
             }
         }
@@ -374,11 +376,11 @@ public class ConceptController {
             } else {
                 conceptSMTK = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
             }
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             throw new NotFoundFault("Concepto no encontrado: " + (conceptId != null ? conceptId : "") + (descriptionId != null ? descriptionId : ""));
         }
 
-        if ( conceptSMTK == null ) {
+        if (conceptSMTK == null) {
             throw new NotFoundFault("Concepto no encontrado: " + (conceptId != null ? conceptId : "") + (descriptionId != null ? descriptionId : ""));
         }
 
@@ -386,7 +388,7 @@ public class ConceptController {
     }
 
     public ConceptResponse loadAttributes(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) {
-        if ( conceptResponse.getAttributes() == null || conceptResponse.getAttributes().isEmpty() ) {
+        if (conceptResponse.getAttributes() == null || conceptResponse.getAttributes().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
                 conceptManager.loadRelationships(source);
             }
@@ -406,7 +408,7 @@ public class ConceptController {
     }
 
     public ConceptResponse loadSnomedCTRelationships(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) {
-        if ( conceptResponse.getSnomedCTRelationshipResponses() == null || conceptResponse.getSnomedCTRelationshipResponses().isEmpty() ) {
+        if (conceptResponse.getSnomedCTRelationshipResponses() == null || conceptResponse.getSnomedCTRelationshipResponses().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
                 conceptManager.loadRelationships(source);
             }
@@ -427,7 +429,7 @@ public class ConceptController {
     }
 
     public ConceptResponse loadIndirectCrossmaps(@NotNull ConceptResponse res, @NotNull ConceptSMTK conceptSMTK) {
-        if ( res.getIndirectCrossMaps() == null || res.getIndirectCrossMaps().isEmpty() ) {
+        if (res.getIndirectCrossMaps() == null || res.getIndirectCrossMaps().isEmpty()) {
             IndirectCrossMapSearchResponse indirectCrossMapSearchResponse = this.crossmapController.getIndirectCrossmapsByDescriptionID(conceptSMTK.getDescriptionFavorite().getDescriptionId());
             res.setIndirectCrossMaps(indirectCrossMapSearchResponse.getIndirectCrossMapResponses());
         }
@@ -436,7 +438,7 @@ public class ConceptController {
     }
 
     private ConceptResponse loadDirectCrossmaps(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK conceptSMTK) {
-        if ( conceptResponse.getCrossmapSetMember() == null || conceptResponse.getCrossmapSetMember().isEmpty() ) {
+        if (conceptResponse.getCrossmapSetMember() == null || conceptResponse.getCrossmapSetMember().isEmpty()) {
             CrossmapSetMembersResponse crossmapSetMembersResponse = this.crossmapController.getDirectCrossmapsSetMembersByDescriptionID(conceptSMTK.getDescriptionFavorite().getDescriptionId());
             conceptResponse.setCrossmapSetMember(crossmapSetMembersResponse.getCrossmapSetMemberResponses());
         }
@@ -449,7 +451,6 @@ public class ConceptController {
      * realizar la solicitud de creación de uno.
      *
      * @param termRequest La solicitud de creación de término.
-     *
      * @return La respuesta respecto a la descripción creada.
      */
     public NewTermResponse requestTermCreation(NewTermRequest termRequest) throws IllegalInputFault {
@@ -485,7 +486,6 @@ public class ConceptController {
      * @param categoryNames Nombres de las categorías en las que se desea realizar la búsqueda.
      * @param refSetNames   Nombres de los refsets en las que deben pertenecer los conceptos.
      * @param requestable   Indica si el atributo 'Pedible' tiene valor <code>true</code> o <code>false</code>.
-     *
      * @return La lista de Conceptos Light que satisfacen la búsqueda.
      */
     public TermSearchResponse searchRequestableDescriptions(List<String> categoryNames, List<String> refSetNames, String requestable) {
@@ -507,7 +507,6 @@ public class ConceptController {
      * Este método es responsable de retornar el atributo 'Pedible' de la categoría dada.
      *
      * @param aCategory La categoría cuyo atributo 'Pedible' se busca.
-     *
      * @return El atributo 'Pedible' de la categoría.
      */
     private RelationshipDefinition getRequestableAttribute(Category aCategory) {

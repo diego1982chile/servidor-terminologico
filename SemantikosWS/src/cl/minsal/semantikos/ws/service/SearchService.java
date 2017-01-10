@@ -10,6 +10,8 @@ import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.request.*;
 import cl.minsal.semantikos.ws.response.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.jws.WebMethod;
@@ -22,7 +24,6 @@ import java.util.List;
 
 /**
  * Created by Development on 2016-11-18.
- *
  */
 @WebService(serviceName = "ServicioDeBusqueda")
 public class SearchService {
@@ -42,6 +43,8 @@ public class SearchService {
     @EJB
     private CategoryManager categoryManager;
 
+    private static final Logger logger = LoggerFactory.getLogger(SearchService.class);
+
     // REQ-WS-001
     @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "buscarTermino")
@@ -57,6 +60,8 @@ public class SearchService {
         if (request.getTerm() == null || "".equals(request.getTerm())) {
             throw new IllegalInputFault("Debe ingresar un Termino a buscar");
         }
+
+        logger.info("ws-req-001: " + request.getTerm() + ", " + request.getCategoryNames() + " " + request.getRefSetNames());
         return this.conceptController.searchTermGeneric(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
     }
 
@@ -66,7 +71,7 @@ public class SearchService {
     public ConceptsByCategoryResponse conceptosPorCategoria(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosPorCategoria")
-            ConceptsByCategoryRequest request
+                    ConceptsByCategoryRequest request
     ) throws NotFoundFault {
         return this.conceptController.conceptsByCategory(request.getCategoryName(), request.getPageNumber(), request.getPageSize());
     }
@@ -83,7 +88,7 @@ public class SearchService {
     public TermSearchResponse buscarTruncatePerfect(
             @XmlElement(required = true)
             @WebParam(name = "peticionBuscarTermino")
-            SearchTermRequest request
+                    SearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault {
         if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())
                 && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty())) {
@@ -101,7 +106,6 @@ public class SearchService {
      * generales e indicaciones de laboratorio.
      *
      * @return Los términos solicitados
-     *
      * @throws cl.minsal.semantikos.ws.fault.IllegalInputFault
      */
     @WebResult(name = "respuestaBuscarTermino")
@@ -109,7 +113,7 @@ public class SearchService {
     public TermSearchResponse obtenerTerminosPedibles(
             @XmlElement(required = true)
             @WebParam(name = "peticionObtenerTerminosPedibles")
-            GetRequestableTermsRequest request
+                    GetRequestableTermsRequest request
     ) throws IllegalInputFault {
 
         /* Se hace una validación de los parámetros */
@@ -122,9 +126,8 @@ public class SearchService {
      * Este método es responsable de realizar la validación de los parámetros de entrada del servicio REQ-WS-005.
      *
      * @param request La petición con los parámetros de entrada.
-     *
      * @throws cl.minsal.semantikos.ws.fault.IllegalInputFault Arrojado si se solicitan cateogorías distintas a las objetivo de la búsqueda o que
-     *                           simplemente no existen. También se arroja si existen
+     *                                                         simplemente no existen. También se arroja si existen
      */
     private void obtenerTerminosPediblesParamValidation(GetRequestableTermsRequest request) throws IllegalInputFault {
 
@@ -151,7 +154,6 @@ public class SearchService {
      * Este método es responsable de validar que una petición posea al menos una categoría o un refset.
      *
      * @param request La petición enviada.
-     *
      * @throws cl.minsal.semantikos.ws.fault.IllegalInputFault Se arroja si se viola la condición.
      */
     private void validateAtLeastOneCategoryOrOneRefSet(GetRequestableTermsRequest request) throws IllegalInputFault {
@@ -167,7 +169,7 @@ public class SearchService {
     public List<String> refSetsPorIdDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "peticionRefSetsPorIdDescripcion")
-            RefSetsByDescriptionIdRequest request
+                    RefSetsByDescriptionIdRequest request
     ) throws NotFoundFault, IllegalInputFault {
         if (request.getDescriptionId() == null || request.getDescriptionId().isEmpty()) {
             throw new IllegalInputFault("Debe ingresar por lo menos un idDescripcion");
@@ -181,7 +183,7 @@ public class SearchService {
     public List<RefSetResponse> listaRefSet(
             @XmlElement(required = false, defaultValue = "true")
             @WebParam(name = "incluyeEstablecimientos")
-            Boolean includeInstitutions
+                    Boolean includeInstitutions
     ) throws NotFoundFault {
         return this.refSetController.refSetList(includeInstitutions);
     }
@@ -192,7 +194,7 @@ public class SearchService {
     public ConceptsByRefsetResponse descripcionesPreferidasPorRefSet(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosPorRefSet")
-            ConceptsByRefsetRequest request
+                    ConceptsByRefsetRequest request
     ) throws NotFoundFault {
         return this.conceptController.conceptsByRefset(request.getRefSetName(), request.getPageNumber(), request.getPageSize());
     }
@@ -203,7 +205,7 @@ public class SearchService {
     public ConceptsByRefsetResponse conceptosPorRefSet(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosPorRefSet")
-            ConceptsByRefsetRequest request
+                    ConceptsByRefsetRequest request
     ) throws NotFoundFault {
         return this.conceptController.conceptsByRefset(request.getRefSetName(), request.getPageNumber(), request.getPageSize());
     }
@@ -213,7 +215,6 @@ public class SearchService {
      * CrossMapsets (sets/vocabularios Mapeos) Ej.: CIE9; CIE10; CIEO.
      *
      * @param idInstitution Identificador de la institución.
-     *
      * @return Una lista de los crossmapSets existentes.
      */
     @WebResult(name = "crossmapSetResponse")
@@ -221,7 +222,7 @@ public class SearchService {
     public CrossmapSetsResponse getCrossmapSets(
             @XmlElement(required = true)
             @WebParam(name = "idInstitucion")
-            String idInstitution
+                    String idInstitution
     ) {
         return this.crossmapsController.getCrossmapSets(idInstitution);
     }
@@ -231,7 +232,6 @@ public class SearchService {
      * de un CrossMapset.
      *
      * @param crossmapSetAbbreviatedName El valor nombre abreviado de un crossmapSet.
-     *
      * @return Una lista de los crossmapSetMembers del crossmapSet dado como parámetro.
      */
     @WebResult(name = "crossmapSetMember")
@@ -239,7 +239,7 @@ public class SearchService {
     public CrossmapSetMembersResponse crossmapSetMembersDeCrossmapSet(
             @XmlElement(required = true)
             @WebParam(name = "nombreAbreviadoCrossmapSet")
-            String crossmapSetAbbreviatedName
+                    String crossmapSetAbbreviatedName
     ) {
         return this.crossmapsController.getCrossmapSetMembersByCrossmapSetAbbreviatedName(crossmapSetAbbreviatedName);
     }
@@ -250,20 +250,18 @@ public class SearchService {
      *
      * @param descriptionId El valor de negocio <em>DESCRIPTION_ID</em> de la descripción cuyo concepto posee los
      *                      crossmaps indirectos que se desea recuperar.
-     *
      * @return Una lista de crossmaps <em>indirectos</em> del concepto asociado a la descripción encapsulada en un
      * objeto mapeado
      * a un elemento XML.
-     *
      * @throws cl.minsal.semantikos.ws.fault.NotFoundFault Arrojada si no existe una descripción con <em>DESCRIPTION_ID</em> igual al indicado por el
-     *                       parámetro <code>descriptionId</code>.
+     *                                                     parámetro <code>descriptionId</code>.
      */
     @WebResult(name = "indirectCrossmaps")
     @WebMethod(operationName = "crossMapsIndirectosPorIDDescripcion")
     public IndirectCrossMapSearchResponse crossMapsIndirectosPorIDDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "DescripcionID")
-            String descriptionId
+                    String descriptionId
     ) throws NotFoundFault {
         return this.crossmapsController.getIndirectCrossmapsByDescriptionID(descriptionId);
     }
@@ -274,20 +272,18 @@ public class SearchService {
      *
      * @param descriptionId El valor de negocio <em>DESCRIPTION_ID</em> de la descripción cuyo concepto posee los
      *                      crossmaps indirectos que se desea recuperar.
-     *
      * @return Una lista de crossmaps <em>directos</em> del concepto asociado a la descripción encapsulada en un objeto
      * mapeado
      * a un elemento XML.
-     *
      * @throws cl.minsal.semantikos.ws.fault.NotFoundFault Arrojada si no existe una descripción con <em>DESCRIPTION_ID</em> igual al indicado por el
-     *                       parámetro <code>descriptionId</code>.
+     *                                                     parámetro <code>descriptionId</code>.
      */
     @WebResult(name = "crossmapSetMember")
     @WebMethod(operationName = "crossMapsDirectosPorIDDescripcion")
     public CrossmapSetMembersResponse crossmapSetMembersDirectosPorIDDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "DescripcionID")
-            String descriptionId
+                    String descriptionId
     ) throws NotFoundFault {
         return this.crossmapsController.getDirectCrossmapsSetMembersByDescriptionID(descriptionId);
     }
@@ -298,7 +294,7 @@ public class SearchService {
     public ConceptResponse conceptoPorIdDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "idDescripcion")
-            String descriptionId
+                    String descriptionId
     ) throws NotFoundFault {
         return this.conceptController.conceptByDescriptionId(descriptionId);
     }
