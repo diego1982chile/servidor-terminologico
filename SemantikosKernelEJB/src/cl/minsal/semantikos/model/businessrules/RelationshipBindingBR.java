@@ -7,7 +7,9 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
+import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.snomedct.SnomedCTSnapshotFactory;
 
 import javax.ejb.EJB;
@@ -306,7 +308,145 @@ public class RelationshipBindingBR implements RelationshipBindingBRInterface {
             throw new BusinessRuleException("BR-SCT-005", "Para que un Concepto Semantiko pueda ser publicado para su uso, deberá estar Modelado con al menos un tipo de relación “Es un” ó “Es un Mapeo”");
 
         }
+    }
 
+    /* BR-STK-001 Para agregar una relación a ISP, el REGNUM y REGAÑO deben ser únicos */
+    public void brSTK001(ConceptSMTK concept, Relationship relationship) {
+
+        boolean isTargetUnique = true;
+        ConceptSMTK conceptIssue = null;
+
+        /* Verificar en un contexto no persistido */
+        if (relationship.getRelationshipDefinition().isISP() && concept.contains(relationship)) {
+            isTargetUnique = false;
+            conceptIssue = concept;
+        }
+
+        /* Verificar en un contexto persistente */
+        if (relationship.getRelationshipDefinition().isISP()) {
+            for (Relationship relationship2 : relationshipManager.findRelationshipsLike(relationship.getRelationshipDefinition(), relationship.getTarget())) {
+                isTargetUnique = false;
+                conceptIssue = relationship2.getSourceConcept();
+            }
+        }
+
+        if(!isTargetUnique) {
+            throw new BusinessRuleException("BR-STK-001", "Para agregar una relación a ISP, el Regnum/RegAño debe ser único. Registro referenciado por concepto "+conceptIssue.getDescriptionFavorite());
+        }
+    }
+
+    /* BR-STK-002 Para agregar una relación a ISP, la dupla ProductoComercual-RegnumRegAño deben ser únicos */
+    public void brSTK002(ConceptSMTK concept, Relationship relationship) {
+
+        boolean isPairUnique = true;
+        ConceptSMTK conceptIssue = null;
+
+        if (relationship.getRelationshipDefinition().isISP()) {
+            for (Relationship relationship2 : relationshipManager.findRelationshipsLike(relationship.getRelationshipDefinition(), relationship.getTarget())) {
+                if(relationship2.getRelationshipDefinition().isISP() && relationship2.getSourceConcept().equals(concept)) {
+                    isPairUnique = false;
+                    conceptIssue = relationship2.getSourceConcept();
+                }
+            }
+        }
+
+        if(!isPairUnique) {
+            throw new BusinessRuleException("BR-STK-002", "Para agregar una relación a ISP, la dupla ProductoComercial-Regnum/RegAño deben ser únicos. Registro referenciado por concepto "+conceptIssue.getDescriptionFavorite());
+        }
+    }
+
+    /* BR-STK-003 Para agregar una relación a ISP, la dupla ProductoComercual-RegNumRegAño no debe existir como bioequivalente  */
+    public void brSTK003(ConceptSMTK concept, Relationship relationship) {
+
+        boolean isPairUnique = true;
+        ConceptSMTK conceptIssue = null;
+
+        /* Verificar en un contexto no persistido */
+        for (Relationship relationship2 : concept.getValidRelationships()) {
+            if(relationship2.getRelationshipDefinition().isBioequivalente() && relationship2.getTarget().equals(relationship.getTarget())) {
+                isPairUnique = false;
+                conceptIssue = relationship2.getSourceConcept();
+            }
+        }
+
+        /* Verificar en un contexto persistente */
+        if (relationship.getRelationshipDefinition().isISP()) {
+            for (Relationship relationship2 : relationshipManager.findRelationshipsLike(relationship.getRelationshipDefinition(), relationship.getTarget())) {
+                if(relationship2.getRelationshipDefinition().isBioequivalente() && relationship2.getSourceConcept().equals(concept)) {
+                    isPairUnique = false;
+                    conceptIssue = relationship2.getSourceConcept();
+                }
+            }
+        }
+
+        if(!isPairUnique) {
+            throw new BusinessRuleException("BR-STK-003", "Para agregar una relación a ISP, la dupla ProductoComercual-RegNumRegAño no debe existir como bioequivalente. Registro referenciado por concepto "+conceptIssue.getDescriptionFavorite());
+        }
+    }
+
+    /* BR-STK-004 Para agregar una relación a Bioequivalente, el REGNUM y REGAÑO deben ser único dentro del mismo concepto */
+    public void brSTK004(ConceptSMTK concept, Relationship relationship) {
+
+        boolean isTargetUnique = true;
+        ConceptSMTK conceptIssue = null;
+
+        /* Verificar en un contexto no persistido */
+        if (relationship.getRelationshipDefinition().isBioequivalente() && concept.contains(relationship)) {
+            isTargetUnique = false;
+            conceptIssue = concept;
+        }
+
+        if(!isTargetUnique) {
+            throw new BusinessRuleException("BR-STK-004", "Para agregar una relación a Bioequivalente, el REGNUM y REGAÑO deben ser único dentro del mismo concepto. Registro referenciado por concepto "+conceptIssue.getDescriptionFavorite());
+        }
+    }
+
+    /* BR-STK-005 Para agregar una relación a Bioequivalente, la dupla ProductoComercual-RegnumRegAño deben ser únicos */
+    public void brSTK005(ConceptSMTK concept, Relationship relationship) {
+
+        boolean isPairUnique = true;
+        ConceptSMTK conceptIssue = null;
+
+        if (relationship.getRelationshipDefinition().isBioequivalente()) {
+            for (Relationship relationship2 : relationshipManager.findRelationshipsLike(relationship.getRelationshipDefinition(), relationship.getTarget())) {
+                if(relationship2.getRelationshipDefinition().isBioequivalente() && relationship2.getSourceConcept().equals(concept)) {
+                    isPairUnique = false;
+                    conceptIssue = relationship2.getSourceConcept();
+                }
+            }
+        }
+
+        if(!isPairUnique) {
+            throw new BusinessRuleException("BR-STK-005", "Para agregar una relación a Bioequivalente, la dupla ProductoComercial-Regnum/RegAño deben ser únicos. Registro referenciado por concepto "+conceptIssue.getDescriptionFavorite());
+        }
+    }
+
+    /* BR-STK-006 Para agregar una relación a Bioequivalente, la dupla ProductoComercual-RegNumRegAño no debe existir como ISP  */
+    public void brSTK006(ConceptSMTK concept, Relationship relationship) {
+
+        boolean isPairUnique = true;
+        ConceptSMTK conceptIssue = null;
+
+        /* Verificar en un contexto no persistido */
+        for (Relationship relationship2 : concept.getValidRelationships()) {
+            if(relationship2.getRelationshipDefinition().isISP() && relationship2.getTarget().equals(relationship.getTarget())) {
+                isPairUnique = false;
+                conceptIssue = relationship2.getSourceConcept();
+            }
+        }
+
+        if (relationship.getRelationshipDefinition().isBioequivalente()) {
+            for (Relationship relationship2 : relationshipManager.findRelationshipsLike(relationship.getRelationshipDefinition(), relationship.getTarget())) {
+                if(relationship2.getRelationshipDefinition().isISP() && relationship2.getSourceConcept().equals(concept)) {
+                    isPairUnique = false;
+                    conceptIssue = relationship2.getSourceConcept();
+                }
+            }
+        }
+
+        if(!isPairUnique) {
+            throw new BusinessRuleException("BR-STK-006", "Para agregar una relación a Bioequivalente, la dupla ProductoComercual-RegNumRegAño no debe existir como ISP. Registro referenciado por concepto "+conceptIssue.getDescriptionFavorite());
+        }
     }
 
 

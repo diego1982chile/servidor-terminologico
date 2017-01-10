@@ -577,53 +577,19 @@ public class ConceptBean implements Serializable {
      * Este método es el encargado de agregar una nuva relacion con los parémetros que se indican.
      */
     public void addRelationship(RelationshipDefinition relationshipDefinition, Target target) {
+
         Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
 
-
-        if ((relationshipDefinition.isISP() || relationshipDefinition.isBioequivalente()) && concept.contains(relationship)) {
-            messageBean.messageError("Ya existe la relación '" + relationshipDefinition.getName() + "' con el destino '" + target.getRepresentation() + "' para este concepto");
-            resetPlaceHolders();
+        try{
+            relationshipBindingBR.brSTK001(concept, relationship);
+            relationshipBindingBR.brSTK002(concept, relationship);
+            relationshipBindingBR.brSTK003(concept, relationship);
+            relationshipBindingBR.brSTK004(concept, relationship);
+            relationshipBindingBR.brSTK005(concept, relationship);
+            relationshipBindingBR.brSTK006(concept, relationship);
+        }catch (EJBException e) {
+            messageBean.messageError(e.getMessage());
             return;
-        }
-
-        if (relationshipDefinition.isISP()) {
-            for (Relationship relationship2 : relationshipManager.findRelationshipsLike(relationshipDefinition, target)) {
-                if (relationship.getRelationshipDefinition().isISP()) {
-                    messageBean.messageError("Este ISP está actualmente siendo utilizado como ISP por el concepto " + relationship2.getSourceConcept().getDescriptionFavorite());
-                    resetPlaceHolders();
-                    return;
-                }
-            }
-        }
-
-        if(relationshipDefinition.isBioequivalente()) {
-
-            /**
-             * Verificar que no existan ISP apuntando a este bioequivalente
-             */
-
-            /**
-             * Primero verificar en el contexto no persistido
-             */
-            for (Relationship relationship2 : concept.getValidRelationships()) {
-                if(relationship2.getRelationshipDefinition().isISP() && relationship2.getTarget().equals(target)) {
-                    messageBean.messageError("Este bioequivalente está actualmente siendo utilizado como ISP por el concepto " + relationship2.getSourceConcept().getDescriptionFavorite());
-                    resetPlaceHolders();
-                    return;
-                }
-            }
-
-            /**
-             * Luego verificar en el contexto persistido
-             */
-            for (Relationship relationship2 : relationshipManager.findRelationshipsLike(relationshipDefinition, target)) {
-                if (relationship2.getRelationshipDefinition().isISP()) {
-                    messageBean.messageError("Este bioequivalente está actualmente siendo utilizado como ISP por el concepto " + relationship2.getSourceConcept().getDescriptionFavorite());
-                    resetPlaceHolders();
-                    return;
-                }
-            }
-
         }
 
         // Se utiliza el constructor mínimo (sin id)

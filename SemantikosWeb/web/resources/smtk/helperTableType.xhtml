@@ -385,17 +385,18 @@
                 </div>
             </p:column>
 
-            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
-                <p:commandButton
-                        icon="fa fa-trash"
-                        title="Eliminar"
-                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                        style="float: right"
-                        process="@this"
-                        immediate="true"
-                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                        styleClass="relationships"
-                />
+            <p:column headerText="Acción" rendered="#{cc.attrs.concept.editable}">
+                <div style="text-align: center">
+                    <p:commandButton
+                            icon="fa fa-trash"
+                            title="Eliminar"
+                            update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.search)"
+                            process="@this"
+                            immediate="true"
+                            actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                            styleClass="relationships"
+                    />
+                </div>
             </p:column>
         </p:dataTable>
 
@@ -515,17 +516,19 @@
                 </div>
             </p:column>
 
-            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
-                <p:commandButton
-                        icon="fa fa-trash"
-                        title="Eliminar"
-                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                        style="float: right"
-                        process="@this"
-                        immediate="true"
-                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                        styleClass="relationships"
-                />
+            <p:column style="" rendered="#{cc.attrs.concept.editable}">
+                <div style="text-align: center">
+                    <p:commandButton
+                            icon="fa fa-trash"
+                            title="Eliminar"
+                            update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                            style="float: right"
+                            process="@this"
+                            immediate="true"
+                            actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                            styleClass="relationships"
+                    />
+                </div>
             </p:column>
         </p:dataTable>
 
@@ -617,7 +620,7 @@
                         />
                     </p:repeat>
                     <div class="Container20 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}" style="text-align: center">
                             <p:commandButton
                                     process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                     action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
@@ -669,17 +672,19 @@
                 <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
             </p:columns>
 
-            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
-                <p:commandButton
-                        icon="fa fa-trash"
-                        title="Eliminar"
-                        update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                        style="float: right"
-                        process="@this"
-                        immediate="true"
-                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                        styleClass="relationships"
-                />
+            <p:column style="" rendered="#{cc.attrs.concept.editable}">
+                <div style="text-align: center">
+                    <p:commandButton
+                            icon="fa fa-trash"
+                            title="Eliminar"
+                            update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                            style="float: right"
+                            process="@this"
+                            immediate="true"
+                            actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                            styleClass="relationships"
+                    />
+                </div>
             </p:column>
         </p:dataTable>
     </p:panel>
