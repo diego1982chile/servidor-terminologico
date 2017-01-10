@@ -1,62 +1,117 @@
 package cl.minsal.semantikos.model.helpertables;
 
+import javax.persistence.*;
+
 /**
- * @author Andres Farías on 7/27/16.
+ * Created by BluePrints Developer on 14-12-2016.
  */
 public class HelperTableColumn {
+    private long id;
+    private String name;
+    private long helperTableId;
+    private long helperTableDataTypeId;
+    private long foreignKeyHelperTableId;
+    private HelperTable helperTable;
+    private HelperTable foreignKeyHelperTable;
+    private HelperTableDataType helperTableDataType;
+    private boolean foreignKey;
 
-    private String columnName;
-    private boolean isPK;
-    private boolean isSearchable;
-    private boolean isShowable;
-
-    public HelperTableColumn() {
+    public long getId() {
+        return id;
     }
 
-    /**
-     * This is the default and only constructor for HelperTableColumn.
-     *
-     * @param columnName The column physic name.
-     * @param isPK Is it a PK?
-     * @param isSearchable is it searchable?
-     * @param isShowable is to be shown or retrieved?
-     */
-    public HelperTableColumn(String columnName, boolean isPK, boolean isSearchable, boolean isShowable) {
-        this.columnName = columnName;
-        this.isPK = isPK;
-        this.isSearchable = isSearchable;
-        this.isShowable = isShowable;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getColumnName() {
-        return columnName;
+    public String getName() {
+        return name;
     }
 
-    public void setColumnName(String columnName) {
-        this.columnName = columnName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public boolean isShowable() {
-        return isShowable;
+    public long getHelperTableId() {
+        return helperTableId;
     }
 
-    public boolean isPK() {
-        return isPK;
+    public void setHelperTableId(long helperTableId) {
+        this.helperTableId = helperTableId;
     }
 
-    public boolean isSearchable() {
-        return isSearchable;
+    public HelperTable getHelperTable() {
+        return helperTable;
     }
 
-    public void setPK(boolean PK) {
-        isPK = PK;
+    public void setHelperTable(HelperTable helperTable) {
+        this.helperTable = helperTable;
     }
 
-    public void setSearchable(boolean searchable) {
-        isSearchable = searchable;
+    public HelperTable getForeignKeyHelperTable() {
+        return foreignKeyHelperTable;
     }
 
-    public void setShowable(boolean showable) {
-        isShowable = showable;
+    public void setForeignKeyHelperTable(HelperTable foreignKeyHelperTable) {
+        this.foreignKeyHelperTable = foreignKeyHelperTable;
+    }
+
+    public long getHelperTableDataTypeId() {
+        return helperTableDataTypeId;
+    }
+
+    public void setHelperTableDataTypeId(long helperTableDataTypeId) {
+        this.helperTableDataTypeId = helperTableDataTypeId;
+    }
+
+
+    public HelperTableDataType getHelperTableDataType() {
+        return helperTableDataType;
+    }
+
+    public void setHelperTableDataType(HelperTableDataType helperTableDataType) {
+        this.helperTableDataType = helperTableDataType;
+    }
+
+    public long getForeignKeyHelperTableId() {
+        return foreignKeyHelperTableId;
+    }
+
+    public void setForeignKeyHelperTableId(long foreignKeyTableId) {
+        this.foreignKeyHelperTableId = foreignKeyTableId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HelperTableColumn that = (HelperTableColumn) o;
+
+        if (id != that.id) return false;
+        if (helperTableId != that.helperTableId) return false;
+        if (helperTableDataTypeId != that.helperTableDataTypeId) return false;
+        if (foreignKeyHelperTableId != that.foreignKeyHelperTableId) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (int) (helperTableId ^ (helperTableId >>> 32));
+        result = 31 * result + (int) (helperTableDataTypeId ^ (helperTableDataTypeId >>> 32));
+        result = 31 * result + (int) (foreignKeyHelperTableId ^ (foreignKeyHelperTableId >>> 32));
+        return result;
+    }
+
+    public boolean isForeignKey() {
+        return foreignKey;
+    }
+
+    public void setForeignKey(boolean foreignKey) {
+        this.foreignKey = foreignKey;
     }
 }

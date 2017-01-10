@@ -1,7 +1,7 @@
 package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.EJBException;
@@ -9,8 +9,6 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
-
-import static cl.minsal.semantikos.model.helpertables.HelperTable.SYSTEM_COLUMN_DESCRIPTION;
 
 /**
  * Esta clase representa una relación hacia un concepto Snomed-CT.
@@ -105,14 +103,11 @@ public class SnomedCTRelationship extends Relationship {
 
             /* El atributo debe ser de tipo Helper Table (en particular a la tabla de tipos de relaciones */
             if (relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isHelperTable()) {
-                HelperTableRecord snomedType = (HelperTableRecord) relationshipAttribute.getTarget();
+                HelperTableRow row = (HelperTableRow) relationshipAttribute.getTarget();
 
                 /* Sin preguntar si es la tabla correcta, se ve si su campo descripción tienen los valores requeridos */
                 // TODO: Validar que el target es a la tabla correcta.
-                Map<String, String> fields = snomedType.getFields();
-                if (fields.containsKey(SYSTEM_COLUMN_DESCRIPTION.getColumnName())) {
-                    return fields.get(SYSTEM_COLUMN_DESCRIPTION.getColumnName());
-                }
+                return row.getDescription();
             }
         }
 

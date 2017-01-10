@@ -1,14 +1,13 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
 import cl.minsal.semantikos.beans.concept.ConceptBean;
+import cl.minsal.semantikos.beans.helpertables.HelperTableBean;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.auth.UserManager;
-import cl.minsal.semantikos.kernel.components.HelperTableManager;
+import cl.minsal.semantikos.kernel.components.HelperTablesManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.kernel.components.ispfetcher.ISPFetcher;
-import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.primefaces.context.RequestContext;
@@ -30,6 +29,8 @@ import java.util.*;
 public class ISPBean {
 
 
+    static private final long ISP_TABLE_ID=9;
+
     private Boolean existe;
     private String regnum;
     private Integer ano = null;
@@ -39,7 +40,7 @@ public class ISPBean {
 
     private Map<String,String> fetchedData;
 
-    private HelperTableRecord ispRecord = null;
+    private HelperTableRow ispRecord = null;
 
     public Map<String, String> getFetchedData() {
         return fetchedData;
@@ -53,13 +54,16 @@ public class ISPBean {
     ISPFetcher ispFetcher;
 
     @EJB
-    HelperTableManager helperTableManager;
+    HelperTablesManager helperTableManager;
 
     @EJB
     UserManager userManager;
 
     @EJB
     RelationshipManager relationshipManager;
+
+    @EJB
+    HelperTableRecordFactory helperTableRecordFactory;
 
     @ManagedProperty(value = "#{helperTableBean}")
     private HelperTableBean helperTableBean;
@@ -137,7 +141,7 @@ public class ISPBean {
 
         RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(fContext).getAttributes().get("relationshipDefinition");
 
-        //fetchedData = helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true).get(0).getFields();
+        //fetchedData = helperTableManager.searchRows(getISPHelperTable(),"description",regnum+"/"+ano,true).get(0).getFields();
         if(regnum.trim().equals("") || ano == null || ano == 0) {
             conceptBean.getMessageBean().messageError("Debe ingresar un valor para el dato 'RegNum' y 'RegAño'");
             return;
@@ -148,7 +152,7 @@ public class ISPBean {
         /**
          * Primero se busca un registro isp local
          */
-        for (HelperTableRecord helperTableRecord : helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true)) {
+        for (HelperTableRow helperTableRecord : helperTableManager.searchRows(getISPHelperTable(),regnum+"/"+ano)) {
             ispRecord = helperTableRecord;
             break;
         }
@@ -158,7 +162,10 @@ public class ISPBean {
          */
         if(ispRecord==null) {
             //fetchedData = ispFetcher.getISPData(regnum+"/"+ano);
-            ispRecord = new HelperTableRecord(getISPHelperTable(), ispFetcher.getISPData(regnum + "/" + ano));
+
+            fetchedData = ispFetcher.getISPData(regnum + "/" + ano);
+
+
         }
         else {
         /**
@@ -184,23 +191,30 @@ public class ISPBean {
 
     public List<String> getMapKeys(){
 
-        if (ispRecord == null )
+        if (fetchedData == null )
             return new ArrayList<String>();
 
-        List<String> ret = new ArrayList<>(ispRecord.getFields().size());
-        ret.addAll(ispRecord.getFields().keySet());
-        return ret;
+
+        List<String> result = new ArrayList<>();
+        result.addAll(fetchedData.keySet());
+
+        return result;
     }
 
 
     public void agregarISP(RelationshipDefinition relationshipDefinition){
 
 
-        if(!ispRecord.isPersistent()){
+        if(fetchedData != null){
             HelperTable ispHT = getISPHelperTable();
-            ispRecord.setFields(mapFetchedData(ispRecord.getFields()));
-            HelperTableRecord inserted = helperTableManager.insertRecord(ispHT,ispRecord,authenticationBean.getLoggedUser());
-            ispRecord = helperTableManager.getRecord(ispHT,inserted.getId());
+
+            ispRecord = helperTableManager.createRow(ispHT,authenticationBean.getUsername());
+
+
+            mapFetchedData(ispRecord,fetchedData);
+
+            HelperTableRow inserted = helperTableManager.updateRow(ispRecord,authenticationBean.getUsername());
+            ispRecord = inserted;
         }
 
         conceptBean.setSelectedHelperTableRecord(ispRecord);
@@ -217,28 +231,32 @@ public class ISPBean {
        ispRecord = null;
     }
 
-    private Map<String, String> mapFetchedData(Map<String, String> fetchedData) {
+    private void mapFetchedData(HelperTableRow row, Map<String, String> fetchedData) {
         Map<String, String> ret = new HashMap<String, String>();
 
-        ret.put("registro", fetchedData.get("Registro"));
-        ret.put("nombre", fetchedData.get("Nombre"));
-        ret.put("referencia_de_tramite", fetchedData.get("Referencia de Tramite"));
-        ret.put("equivalencia_terapeutica", fetchedData.get("Equivalencia Terapéutica"));
-        ret.put("titular", fetchedData.get("Titular"));
-        ret.put("estado_del_registro", fetchedData.get("Estado del Registro"));
-        ret.put("resolucion_inscribase", fetchedData.get("Resolución Inscríbase"));
-        ret.put("fecha_inscribase", fetchedData.get("Fecha Inscríbase"));
-        ret.put("ultima_renovacion", fetchedData.get("Ultima Renovación"));
-        ret.put("fecha_proxima_renovacion", fetchedData.get("Fecha Próxima renovación"));
-        ret.put("regimen", fetchedData.get("Régimen"));
-        ret.put("via_administracion", fetchedData.get("Vía Administración"));
-        ret.put("condicion_de_venta", fetchedData.get("Condición de Venta"));
-        ret.put("expende_tipo_establecimiento", fetchedData.get("Expende tipo establecimiento"));
-        ret.put("indicacion", fetchedData.get("Indicación"));
 
-        ret.put("description", fetchedData.get("Registro"));
+        for (HelperTableData cell: row.getCells()) {
+            if(cell.getColumn().getName().equals("Registro")) cell.setStringValue(fetchedData.get("Registro"));
+            if(cell.getColumn().getName().equals("Nombre")) cell.setStringValue(fetchedData.get("Nombre"));
+            if(cell.getColumn().getName().equals("Referencia de Tramite")) cell.setStringValue(fetchedData.get("Referencia de Tramite"));
+            if(cell.getColumn().getName().equals("Equivalencia Terapéutica")) cell.setStringValue(fetchedData.get("Equivalencia Terapéutica"));
+            if(cell.getColumn().getName().equals("Titular")) cell.setStringValue(fetchedData.get("Titular"));
+            if(cell.getColumn().getName().equals("Estado del Registro")) cell.setStringValue(fetchedData.get("Estado del Registro"));
+            if(cell.getColumn().getName().equals("Resolución Inscríbase")) cell.setStringValue(fetchedData.get("Resolución Inscríbase"));
+            if(cell.getColumn().getName().equals("Fecha Inscríbase")) cell.setStringValue(fetchedData.get("Fecha Inscríbase"));
+            if(cell.getColumn().getName().equals("Ultima Renovación")) cell.setStringValue(fetchedData.get("Ultima Renovación"));
+            if(cell.getColumn().getName().equals("Fecha Próxima renovación")) cell.setStringValue(fetchedData.get("Fecha Próxima renovación"));
+            if(cell.getColumn().getName().equals("Régimen")) cell.setStringValue(fetchedData.get("Régimen"));
+            if(cell.getColumn().getName().equals("Vía Administración")) cell.setStringValue(fetchedData.get("Vía Administración"));
+            if(cell.getColumn().getName().equals("Condición de Venta")) cell.setStringValue(fetchedData.get("Condición de Venta"));
+            if(cell.getColumn().getName().equals("Expende tipo establecimiento")) cell.setStringValue(fetchedData.get("Expende tipo establecimiento"));
+            if(cell.getColumn().getName().equals("Indicación")) cell.setStringValue(fetchedData.get("Indicación"));
 
-        return ret;
+
+            row.setValid(true);
+            row.setDescription(fetchedData.get("Registro"));
+
+        }
 
     }
 
@@ -247,11 +265,11 @@ public class ISPBean {
         if(ht == null) {
 
 
-            Collection<HelperTable> tablas = helperTableManager.getHelperTables();
+            List<HelperTable> tablas = helperTableManager.findAll();
 
 
             for (HelperTable ht1 : tablas) {
-                if (ht1.getName().equals("smtk_helper_table_isp")) {
+                if (ht1.getId()==ISP_TABLE_ID) {
                     ht = ht1;
                     break;
                 }
@@ -261,11 +279,11 @@ public class ISPBean {
         return ht;
     }
 
-    public HelperTableRecord getIspRecord() {
+    public HelperTableRow getIspRecord() {
         return ispRecord;
     }
 
-    public void setIspRecord(HelperTableRecord ispRecord) {
+    public void setIspRecord(HelperTableRow ispRecord) {
         this.ispRecord = ispRecord;
     }
 
@@ -300,10 +318,10 @@ public class ISPBean {
 verifica si el registro ya existe en la base de datos
  */
     public boolean getExisteRegistroISP(){
-        if(ispRecord==null || ispRecord.getFields().size()==0)
+        if(ispRecord==null )
             return false;
 
-        List<HelperTableRecord> records = helperTableManager.searchRecords(getISPHelperTable(),"description",regnum+"/"+ano,true);
+        List<HelperTableRow> records = helperTableManager.searchRows(getISPHelperTable(),regnum+"/"+ano);
 
         return  records.size() >0;
     }

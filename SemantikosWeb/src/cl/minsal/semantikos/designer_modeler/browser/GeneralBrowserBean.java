@@ -7,7 +7,7 @@ import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.browser.GeneralQuery;
 import cl.minsal.semantikos.model.browser.QueryFilter;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.LazyDataModel;
@@ -47,7 +47,7 @@ public class GeneralBrowserBean implements Serializable {
     TagManager tagManager;
 
     @EJB
-    HelperTableManager helperTableManager;
+    HelperTablesManager helperTablesManager;
 
     @EJB
     UserManager userManager;
@@ -87,7 +87,7 @@ public class GeneralBrowserBean implements Serializable {
     // Placeholders para los targets de los filtros, dados como elementos seleccionables
     private BasicTypeValue basicTypeValue = new BasicTypeValue(null);
 
-    private HelperTableRecord helperTableRecord = null;
+    private HelperTableRow helperTableRecord = null;
 
     private ConceptSMTK conceptSMTK = null;
 
@@ -229,12 +229,12 @@ public class GeneralBrowserBean implements Serializable {
         this.users = users;
     }
 
-    public HelperTableManager getHelperTableManager() {
-        return helperTableManager;
+    public HelperTablesManager getHelperTablesManager() {
+        return helperTablesManager;
     }
 
-    public void setHelperTableManager(HelperTableManager helperTableManager) {
-        this.helperTableManager = helperTableManager;
+    public void setHelperTablesManager(HelperTablesManager helperTablesManager) {
+        this.helperTablesManager = helperTablesManager;
     }
 
     public BasicTypeValue getBasicTypeValue() {
@@ -245,11 +245,11 @@ public class GeneralBrowserBean implements Serializable {
         this.basicTypeValue = basicTypeValue;
     }
 
-    public HelperTableRecord getHelperTableRecord() {
+    public HelperTableRow getHelperTableRecord() {
         return helperTableRecord;
     }
 
-    public void setHelperTableRecord(HelperTableRecord helperTableRecord) {
+    public void setHelperTableRecord(HelperTableRow helperTableRecord) {
         this.helperTableRecord = helperTableRecord;
     }
 

@@ -1,0 +1,132 @@
+package cl.minsal.semantikos.kernel.components;
+
+
+import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
+import cl.minsal.semantikos.model.User;
+import cl.minsal.semantikos.model.helpertables.*;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by BluePrints Developer on 14-12-2016.
+ */
+
+@Stateless
+public class HelperTablesManagerImpl implements HelperTablesManager {
+
+    private static final Logger logger = LoggerFactory.getLogger(HelperTablesManagerImpl.class);
+
+    @EJB
+    HelperTableDAO dao;
+
+    @Override
+    public HelperTable getById(long id) {
+        return null;
+    }
+
+    @Override
+    public List<HelperTable> findAll() {
+        return dao.findAll();
+    }
+
+
+    @Override
+    public HelperTableColumn updateColumn(HelperTableColumn column) {
+        return dao.updateColumn(column);
+    }
+
+    @Override
+    public List<HelperTableDataType> getAllDataTypes(){
+        return dao.getAllDataTypes();
+    }
+
+    @Override
+    public HelperTableColumn createColumn(HelperTableColumn column) {
+
+
+        HelperTableColumn createdColumn = dao.createColumn(column);
+
+
+
+        return createdColumn;
+    }
+
+    @Override
+    public List<HelperTableRow> getTableRows(long tableId) {
+        return dao.getTableRows(tableId);
+    }
+
+    @Override
+    public HelperTableRow createRow(HelperTable table, String username) {
+        HelperTableRow newRow = new HelperTableRow();
+
+        newRow.setCreationDate(new Date());
+        newRow.setCreationUsername(username);
+        newRow.setLastEditDate(new Date());
+        newRow.setLastEditUsername(username);
+
+        newRow.setDescription("Nuevo Elemento");
+        newRow.setValid(false);
+        newRow.setHelperTableId(table.getId());
+
+        newRow = dao.createRow(newRow);
+
+        newRow.setCells(new ArrayList<HelperTableData>());
+        for (HelperTableColumn column: table.getColumns()) {
+            HelperTableData data = createCell(column,newRow);
+        }
+
+        return dao.getRowById(newRow.getId());
+    }
+
+    @Override
+    public HelperTableData createCell(HelperTableColumn column, HelperTableRow row) {
+        HelperTableData data = new HelperTableData();
+        data.setColumn(column);
+        data.setColumnId(column.getId());
+        data.setRow(row);
+        data.setRowId(row.getId());
+
+
+        return dao.createData(data);
+    }
+
+    @Override
+    public HelperTableRow updateRow(HelperTableRow row, String username) {
+
+        row.setLastEditDate(new Date());
+        row.setLastEditUsername(username);
+
+        return dao.updateRow(row);
+    }
+
+    @Override
+    public HelperTableRow getRowById(long idRow) {
+        return dao.getRowById(idRow);
+    }
+
+    @Override
+    public List<HelperTableRow> searchRows(HelperTable helperTable, String pattern) {
+        return dao.searchRecords( helperTable, pattern);
+    }
+
+    @Override
+    public HelperTableImportReport loadFromFile(HelperTable helperTable, LoadMode loadModeSelected, Reader in, User loggedUser) {
+        throw new NotImplementedException();
+    }
+
+
+}
