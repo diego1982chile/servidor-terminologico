@@ -61,7 +61,7 @@ public class SearchService {
             throw new IllegalInputFault("Debe ingresar un Termino a buscar");
         }
 
-        logger.info("ws-req-001: " + request.getTerm() + ", " + request.getCategoryNames() + " " + request.getRefSetNames());
+        logger.debug("ws-req-001: " + request.getTerm() + ", " + request.getCategoryNames() + " " + request.getRefSetNames());
         return this.conceptController.searchTermGeneric(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
     }
 

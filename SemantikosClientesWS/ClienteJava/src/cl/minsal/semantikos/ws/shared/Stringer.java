@@ -23,7 +23,7 @@ public class Stringer {
         return result.append("]").toString();
     }
 
-    private static String toString(RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch descripcionesPerfectMatch) {
+    public static String toString(RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch descripcionesPerfectMatch) {
         StringBuilder result = new StringBuilder("[");
         for (DescripcionPerfectMatch descripcionPerfectMatch : descripcionesPerfectMatch.getDescripcionPerfectMatch()) {
             result.append(descripcionPerfectMatch);

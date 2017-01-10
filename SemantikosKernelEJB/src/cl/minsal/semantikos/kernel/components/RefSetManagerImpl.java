@@ -4,6 +4,8 @@ import cl.minsal.semantikos.kernel.daos.RefSetDAO;
 import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -22,6 +24,8 @@ import static java.lang.System.in;
 @Stateless
 public class RefSetManagerImpl implements RefSetManager {
 
+    private static final Logger logger = LoggerFactory.getLogger(RefSetManagerImpl.class);
+
     @EJB
     private RefSetDAO refsetDAO;
 
@@ -30,11 +34,10 @@ public class RefSetManagerImpl implements RefSetManager {
 
     @Override
     public RefSet createRefSet(RefSet refSet, User user) {
-        RefSet refsetPersist = createRefSet(refSet.getName(),refSet.getInstitution(),user);
+        RefSet refsetPersist = createRefSet(refSet.getName(), refSet.getInstitution(), user);
 
-            /* Se guardan los conceptos asignados al refset*/
-
-        for (ConceptSMTK concept: refSet.getConcepts()) {
+        /* Se guardan los conceptos asignados al refset*/
+        for (ConceptSMTK concept : refSet.getConcepts()) {
             bindConceptToRefSet(concept, refsetPersist, user);
             refsetPersist.bindConceptTo(concept);
         }
@@ -128,9 +131,9 @@ public class RefSetManagerImpl implements RefSetManager {
 
     @Override
     public List<RefSet> getRefsetByInstitution(Institution institution) {
-        if(institution.getId()==-1){
+        if (institution.getId() == -1) {
             return Collections.emptyList();
-        }else{
+        } else {
             return refsetDAO.getRefsetBy(institution);
         }
 
@@ -155,7 +158,7 @@ public class RefSetManagerImpl implements RefSetManager {
     @Override
     public RefSet getRefsetByName(String pattern) {
         List<RefSet> found = this.findRefsetsByName(pattern);
-        if ( found != null && !found.isEmpty() ) {
+        if (found != null && !found.isEmpty()) {
             return found.get(0);
         }
         return null;
@@ -163,15 +166,30 @@ public class RefSetManagerImpl implements RefSetManager {
 
     @Override
     public List<RefSet> findRefSetsByName(List<String> refSetNames) {
+
+        /* Logging */
+        logger.debug("RefSetManager.findRefSetsByName(" + refSetNames + ")");
+
+        /* Si se utilizó el método sin refsets se retorna de inmediato */
+        if (refSetNames == null || refSetNames.isEmpty()){
+            logger.debug("RefSetManager.findRefSetsByName(" + refSetNames + ") --> emptyList()");
+            return Collections.emptyList();
+        }
+
         List<RefSet> res = new ArrayList<>();
-        if ( refSetNames != null ) {
-            for ( String refSetName : refSetNames ) {
-                RefSet found = this.getRefsetByName(refSetName);
-                if ( found != null ) {
-                    res.add(found);
-                } else {
-                    throw new NoSuchElementException("RefSet no encontrado: " + refSetName);
-                }
+        for (String refSetName : refSetNames) {
+
+            /* Si por alguna razon el refset viene vacio se ignora */
+            if (refSetName == null || refSetName.trim().equals("")){
+                logger.debug("RefSetManager.findRefSetsByName(" + refSetNames + ")["+refSetName + "] --> ignored");
+                continue;
+            }
+
+            RefSet found = this.getRefsetByName(refSetName);
+            if (found != null) {
+                res.add(found);
+            } else {
+                throw new NoSuchElementException("RefSet no encontrado: " + refSetName);
             }
         }
         return res;
