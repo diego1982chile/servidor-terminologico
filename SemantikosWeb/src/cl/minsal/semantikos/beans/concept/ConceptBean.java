@@ -585,8 +585,6 @@ public class ConceptBean implements Serializable {
             relationshipBindingBR.brSTK002(concept, relationship);
             relationshipBindingBR.brSTK003(concept, relationship);
             relationshipBindingBR.brSTK004(concept, relationship);
-            relationshipBindingBR.brSTK005(concept, relationship);
-            relationshipBindingBR.brSTK006(concept, relationship);
         }catch (EJBException e) {
             messageBean.messageError(e.getMessage());
             return;

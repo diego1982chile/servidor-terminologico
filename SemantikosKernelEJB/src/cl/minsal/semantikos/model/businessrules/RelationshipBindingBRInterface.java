@@ -27,7 +27,4 @@ public interface RelationshipBindingBRInterface {
 
     public void brSTK004(ConceptSMTK concept, Relationship relationship);
 
-    public void brSTK005(ConceptSMTK concept, Relationship relationship);
-
-    public void brSTK006(ConceptSMTK concept, Relationship relationship);
 }
