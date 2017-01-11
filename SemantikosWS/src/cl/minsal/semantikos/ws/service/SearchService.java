@@ -68,12 +68,12 @@ public class SearchService {
     // REQ-WS-002
     @WebResult(name = "respuestaConceptosPorCategoria")
     @WebMethod(operationName = "conceptosPorCategoria")
-    public ConceptsByCategoryResponse conceptosPorCategoria(
+    public ConceptsResponse conceptosPorCategoria(
             @XmlElement(required = true)
             @WebParam(name = "peticionConceptosPorCategoria")
-                    ConceptsByCategoryRequest request
+                    CategoryRequest request
     ) throws NotFoundFault {
-        return this.conceptController.conceptsByCategory(request.getCategoryName(), request.getPageNumber(), request.getPageSize());
+        return this.conceptController.findConceptsByCategory(request.getCategoryName(), request.getIdStablishment());
     }
 
     @WebResult(name = "categoria")

@@ -20,7 +20,6 @@ import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -273,22 +272,31 @@ public class ConceptController {
         return res;
     }
 
-    public ConceptsByCategoryResponse conceptsByCategory(
+    /**
+     * Este metodo recupera los conceptos de una categoria
+     *
+     * @param categoryName      La Categoría
+     * @param idEstablecimiento El establecimiento.
+     * @return La lista de conceptos.
+     * @throws NotFoundFault
+     */
+    public ConceptsResponse findConceptsByCategory(
             String categoryName,
-            Integer pageNumber,
-            Integer pageSize
+            String idEstablecimiento
     ) throws NotFoundFault {
-        ConceptsByCategoryResponse res = new ConceptsByCategoryResponse();
 
-        Category category = this.categoryManager.getCategoryByName(categoryName);
-        CategoryResponse categoryResponse = this.categoryController.getResponse(category);
-        res.setCategoryResponse(categoryResponse);
+        /* Logging de invocación del servicio */
+        logger.info("SearchService:findConceptsByCategory(" + categoryName + ", " + idEstablecimiento + ")");
 
-        Integer total = this.conceptManager.countModeledConceptBy(category);
-        PaginationResponse paginationResponse = this.paginationController.getResponse(pageSize, pageNumber, total);
-        res.setPaginationResponse(paginationResponse);
+        /* Se recupera la categoría */
+        Category category;
+        try {
+            category = this.categoryManager.getCategoryByName(categoryName);
+        } catch (IllegalArgumentException iae) {
+            throw new NotFoundFault("No se encontró una categoría de nombre '" + categoryName + "'");
+        }
 
-        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptBy(category, pageSize, pageNumber);
+        List<ConceptSMTK> concepts = this.conceptManager.findConceptsBy(category);
         List<ConceptResponse> conceptResponses = new ArrayList<>();
         if (concepts != null) {
             for (ConceptSMTK source : concepts) {
@@ -298,6 +306,7 @@ public class ConceptController {
                 conceptResponses.add(conceptResponse);
             }
         }
+        ConceptsResponse res = new ConceptsResponse();
         res.setConceptResponses(conceptResponses);
 
         return res;

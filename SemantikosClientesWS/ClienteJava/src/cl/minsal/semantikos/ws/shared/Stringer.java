@@ -31,4 +31,26 @@ public class Stringer {
 
         return result.append("]").toString();
     }
+
+    public static String toString(PeticionPorCategoria peticion) {
+        StringBuilder result = new StringBuilder("[");
+        result.append("Categoría='").append(peticion.getNombreCategoria());
+        result.append(";ID Establecimiento=").append(peticion.getIdEstablecimiento());
+
+        return result.append("]").toString();
+    }
+
+    public static String toString(RespuestaConceptosPorCategoria response) {
+        StringBuilder result = new StringBuilder("[");
+
+        RespuestaConceptosPorCategoria.Conceptos conceptos = response.getConceptos();
+        for (Concepto concepto : conceptos.getConcepto()) {
+            result.append(toString(concepto));
+        }
+
+        return result.append("]").toString();    }
+
+    protected static String toString(Concepto concepto) {
+        return "Concepto[" + concepto.getId() + "]";
+    }
 }

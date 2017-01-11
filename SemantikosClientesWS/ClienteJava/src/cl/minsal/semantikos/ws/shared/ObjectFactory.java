@@ -33,8 +33,9 @@ public class ObjectFactory {
     private final static QName _ColumnaTablaAuxiliar_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "columnaTablaAuxiliar");
     private final static QName _RespuestaBuscarTermino_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaBuscarTermino");
     private final static QName _ConceptoPorIdDescripcionResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "conceptoPorIdDescripcionResponse");
-    private final static QName _RespuestaConceptosPorRefSet_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaConceptosPorRefSet");
     private final static QName _RefSetsPorIdDescripcion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "refSetsPorIdDescripcion");
+    private final static QName _RespuestaConceptosPorRefSet_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaConceptosPorRefSet");
+    private final static QName _PeticionPorCategoria_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "peticionPorCategoria");
     private final static QName _Paginacion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "paginacion");
     private final static QName _DescripcionesPreferidasPorRefSet_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionesPreferidasPorRefSet");
     private final static QName _DescripcionNoValida_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionNoValida");
@@ -61,7 +62,6 @@ public class ObjectFactory {
     private final static QName _ListaCategorias_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "listaCategorias");
     private final static QName _ObtenerTerminosPediblesResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "obtenerTerminosPediblesResponse");
     private final static QName _BuscarTruncatePerfect_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "buscarTruncatePerfect");
-    private final static QName _PeticionConceptosPorCategoria_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "peticionConceptosPorCategoria");
     private final static QName _ConceptoPorIdDescripcion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "conceptoPorIdDescripcion");
     private final static QName _ObtenerTerminosPedibles_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "obtenerTerminosPedibles");
     private final static QName _BuscarTruncatePerfectResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "buscarTruncatePerfectResponse");
@@ -266,6 +266,14 @@ public class ObjectFactory {
      */
     public cl.minsal.semantikos.ws.shared.ColumnaTablaAuxiliar createColumnaTablaAuxiliar() {
         return new cl.minsal.semantikos.ws.shared.ColumnaTablaAuxiliar();
+    }
+
+    /**
+     * Create an instance of {@link PeticionPorCategoria }
+     * 
+     */
+    public PeticionPorCategoria createPeticionPorCategoria() {
+        return new PeticionPorCategoria();
     }
 
     /**
@@ -474,14 +482,6 @@ public class ObjectFactory {
      */
     public BuscarTruncatePerfect createBuscarTruncatePerfect() {
         return new BuscarTruncatePerfect();
-    }
-
-    /**
-     * Create an instance of {@link PeticionConceptosPorCategoria }
-     * 
-     */
-    public PeticionConceptosPorCategoria createPeticionConceptosPorCategoria() {
-        return new PeticionConceptosPorCategoria();
     }
 
     /**
@@ -918,6 +918,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RefSetsPorIdDescripcion }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "refSetsPorIdDescripcion")
+    public JAXBElement<RefSetsPorIdDescripcion> createRefSetsPorIdDescripcion(RefSetsPorIdDescripcion value) {
+        return new JAXBElement<RefSetsPorIdDescripcion>(_RefSetsPorIdDescripcion_QNAME, RefSetsPorIdDescripcion.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link RespuestaConceptosPorRefSet }{@code >}}
      * 
      */
@@ -927,12 +936,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link RefSetsPorIdDescripcion }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link PeticionPorCategoria }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "refSetsPorIdDescripcion")
-    public JAXBElement<RefSetsPorIdDescripcion> createRefSetsPorIdDescripcion(RefSetsPorIdDescripcion value) {
-        return new JAXBElement<RefSetsPorIdDescripcion>(_RefSetsPorIdDescripcion_QNAME, RefSetsPorIdDescripcion.class, null, value);
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "peticionPorCategoria")
+    public JAXBElement<PeticionPorCategoria> createPeticionPorCategoria(PeticionPorCategoria value) {
+        return new JAXBElement<PeticionPorCategoria>(_PeticionPorCategoria_QNAME, PeticionPorCategoria.class, null, value);
     }
 
     /**
@@ -1167,15 +1176,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "buscarTruncatePerfect")
     public JAXBElement<BuscarTruncatePerfect> createBuscarTruncatePerfect(BuscarTruncatePerfect value) {
         return new JAXBElement<BuscarTruncatePerfect>(_BuscarTruncatePerfect_QNAME, BuscarTruncatePerfect.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link PeticionConceptosPorCategoria }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "peticionConceptosPorCategoria")
-    public JAXBElement<PeticionConceptosPorCategoria> createPeticionConceptosPorCategoria(PeticionConceptosPorCategoria value) {
-        return new JAXBElement<PeticionConceptosPorCategoria>(_PeticionConceptosPorCategoria_QNAME, PeticionConceptosPorCategoria.class, null, value);
     }
 
     /**

@@ -19,8 +19,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.ws.semantikos.minsal.cl/}categoria" minOccurs="0"/>
- *         &lt;element ref="{http://service.ws.semantikos.minsal.cl/}paginacion" minOccurs="0"/>
  *         &lt;element name="conceptos" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
@@ -42,65 +40,11 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RespuestaConceptosPorCategoria", propOrder = {
-    "categoria",
-    "paginacion",
     "conceptos"
 })
 public class RespuestaConceptosPorCategoria {
 
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
-    protected Categoria categoria;
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
-    protected Paginacion paginacion;
     protected RespuestaConceptosPorCategoria.Conceptos conceptos;
-
-    /**
-     * Gets the value of the categoria property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Categoria }
-     *     
-     */
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    /**
-     * Sets the value of the categoria property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Categoria }
-     *     
-     */
-    public void setCategoria(Categoria value) {
-        this.categoria = value;
-    }
-
-    /**
-     * Gets the value of the paginacion property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Paginacion }
-     *     
-     */
-    public Paginacion getPaginacion() {
-        return paginacion;
-    }
-
-    /**
-     * Sets the value of the paginacion property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Paginacion }
-     *     
-     */
-    public void setPaginacion(Paginacion value) {
-        this.paginacion = value;
-    }
 
     /**
      * Gets the value of the conceptos property.
@@ -152,7 +96,7 @@ public class RespuestaConceptosPorCategoria {
     })
     public static class Conceptos {
 
-        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+        @XmlElement(namespace = "")
         protected List<Concepto> concepto;
 
         /**

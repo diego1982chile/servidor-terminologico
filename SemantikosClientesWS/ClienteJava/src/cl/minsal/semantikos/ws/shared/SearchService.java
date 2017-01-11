@@ -182,8 +182,8 @@ public interface SearchService {
     @RequestWrapper(localName = "conceptosPorCategoria", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.ConceptosPorCategoria")
     @ResponseWrapper(localName = "conceptosPorCategoriaResponse", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.ConceptosPorCategoriaResponse")
     public RespuestaConceptosPorCategoria conceptosPorCategoria(
-        @WebParam(name = "peticionConceptosPorCategoria", targetNamespace = "http://service.ws.semantikos.minsal.cl/")
-        PeticionConceptosPorCategoria peticionConceptosPorCategoria)
+        @WebParam(name = "peticionConceptosPorCategoria", targetNamespace = "")
+        PeticionPorCategoria peticionConceptosPorCategoria)
         throws NotFoundFault_Exception
     ;
 

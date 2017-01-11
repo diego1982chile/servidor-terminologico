@@ -109,11 +109,11 @@ public class ConceptDAOImpl implements ConceptDAO {
 
     @Override
     public List<ConceptSMTK> getModeledConceptBy(Long categoryId, int pageSize, int pageNumber) {
-        return this.getConceptBy(new Long[]{categoryId}, true, pageSize, pageNumber);
+        return this.findConceptsBy(new Long[]{categoryId}, true, pageSize, pageNumber);
     }
 
     @Override
-    public List<ConceptSMTK> getConceptBy(Long[] categories, boolean modeled, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> findConceptsBy(Long[] categories, boolean modeled, int pageSize, int pageNumber) {
 
         List<ConceptSMTK> concepts = new ArrayList<>();
         ConnectionBD connect = new ConnectionBD();
@@ -145,7 +145,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> getConceptBy(Category category, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> findConceptsBy(Category category, int pageSize, int pageNumber) {
 
         List<ConceptSMTK> concepts = new ArrayList<>();
         ConnectionBD connect = new ConnectionBD();
@@ -173,24 +173,24 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> getConceptBy(Category category) {
+    public List<ConceptSMTK> findConceptsBy(Category category) {
 
+        logger.debug("ConceptDAO.findConceptsBy(" + category.getName() + ")");
         List<ConceptSMTK> concepts = new ArrayList<>();
+
+        /* Esta funcion recupera los ID's de los conceptos de una categoría */
         ConnectionBD connect = new ConnectionBD();
-        CallableStatement call;
-
-        try (Connection connection = connect.getConnection();) {
-
-            call = connection.prepareCall("{call semantikos.find_concept_by_category(?)}");
+        String sql = "{call semantikos.find_concept_by_category(?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
 
             call.setLong(1, category.getId());
-
             call.execute();
 
             ResultSet rs = call.getResultSet();
             while (rs.next()) {
-                ConceptSMTK e = this.getConceptByID(rs.getLong(1));
-                concepts.add(e);
+                long conceptId = rs.getLong("id");
+                concepts.add(this.getConceptByID(conceptId));
             }
             rs.close();
         } catch (SQLException e) {
@@ -198,11 +198,12 @@ public class ConceptDAOImpl implements ConceptDAO {
             throw new EJBException(e);
         }
 
+        logger.debug("ConceptDAO.findConceptsBy(" + category.getName() + "): " + concepts.size() + " conceptos recuperados.");
         return concepts;
     }
 
     @Override
-    public List<ConceptSMTK> getConceptBy(String[] pattern, boolean isModeled, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> findConceptsBy(String[] pattern, boolean isModeled, int pageSize, int pageNumber) {
         List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
         ConnectionBD connect = new ConnectionBD();
 
@@ -230,7 +231,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> getConceptBy(String[] pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber) {
 
         List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
         ConnectionBD connect = new ConnectionBD();
@@ -262,7 +263,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> getConceptBy(String[] pattern, Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber) {
+    public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber) {
         List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
         ConnectionBD connect = new ConnectionBD();
 
@@ -295,7 +296,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> getConceptBy(String PatternOrConceptId, Long[] Category, int pageNumber, int pageSize, boolean isModeled) {
+    public List<ConceptSMTK> findConceptsBy(String PatternOrConceptId, Long[] Category, int pageNumber, int pageSize, boolean isModeled) {
 
         List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
 
@@ -533,7 +534,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public ConceptSMTK getConceptBy(Category category, long id) {
+    public ConceptSMTK findConceptsBy(Category category, long id) {
         return null;
     }
 
@@ -716,7 +717,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     }
 
     @Override
-    public List<ConceptSMTK> getConceptBy(RefSet refSet) {
+    public List<ConceptSMTK> findConceptsBy(RefSet refSet) {
 
         List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
 
@@ -943,7 +944,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         }
 
         /* Luego se recuperan los conceptos de la categoría y se busca por el que tenga el FSN adecuado */
-        List<ConceptSMTK> specialConcepts = this.getConceptBy(specialConceptCategory);
+        List<ConceptSMTK> specialConcepts = this.findConceptsBy(specialConceptCategory);
         for (ConceptSMTK specialConcept : specialConcepts) {
             if (specialConcept.getDescriptionFavorite().getTerm().equalsIgnoreCase(PENDING_CONCEPT_FSN_DESCRIPTION)) {
                 PENDING_CONCEPT = specialConcept;

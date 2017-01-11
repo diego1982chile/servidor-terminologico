@@ -2,13 +2,11 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
-import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,10 +89,16 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public List<ConceptSMTK> findConceptBy(Category category) {
+    public List<ConceptSMTK> findConceptsBy(Category category) {
 
-        //Búsqueda por categoría
-        return conceptDAO.getConceptBy(category);
+        /* Se validan los parámetros */
+        if (category == null){
+            logger.error("Se solicitan los conceptos de categoría nula.");
+            return Collections.emptyList();
+        }
+
+        /* Se delega al DAO directamente */
+        return conceptDAO.findConceptsBy(category);
     }
 
     @Override
@@ -154,7 +158,7 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public List<ConceptSMTK> findConceptBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize) {
+    public List<ConceptSMTK> findConceptsBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize) {
 
 
         boolean isModeled = true;
@@ -170,9 +174,9 @@ public class ConceptManagerImpl implements ConceptManager {
         if ((categories.length != 0 && patternOrConceptID != null)) {
             if (patternOrConceptID.length() >= 2) {
                 if (arrayPattern.length >= 2) {
-                    return conceptDAO.getConceptBy(arrayPattern, categories, isModeled, pageSize, pageNumber);
+                    return conceptDAO.findConceptsBy(arrayPattern, categories, isModeled, pageSize, pageNumber);
                 } else {
-                    return conceptDAO.getConceptBy(arrayPattern[0], categories, pageNumber, pageSize, isModeled);
+                    return conceptDAO.findConceptsBy(arrayPattern[0], categories, pageNumber, pageSize, isModeled);
                 }
             }
         }
@@ -181,9 +185,9 @@ public class ConceptManagerImpl implements ConceptManager {
         if ((categories.length == 0 && patternOrConceptID != null)) {
             if (patternOrConceptID.length() >= 2) {
                 if (arrayPattern.length >= 2) {
-                    return conceptDAO.getConceptBy(arrayPattern, isModeled, pageSize, pageNumber);
+                    return conceptDAO.findConceptsBy(arrayPattern, isModeled, pageSize, pageNumber);
                 } else {
-                    return conceptDAO.getConceptBy(arrayPattern[0], categories, pageNumber, pageSize, isModeled);
+                    return conceptDAO.findConceptsBy(arrayPattern[0], categories, pageNumber, pageSize, isModeled);
                 }
             }
 
@@ -191,7 +195,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         //Búsqueda por categoría
         if (categories.length > 0) {
-            return conceptDAO.getConceptBy(categories, isModeled, pageSize, pageNumber);
+            return conceptDAO.findConceptsBy(categories, isModeled, pageSize, pageNumber);
         }
 
         //Búsqueda por largo (PageSize y PageNumber)
@@ -209,14 +213,14 @@ public class ConceptManagerImpl implements ConceptManager {
         pattern = standardizationPattern(pattern);
         String[] arrayPattern = patternToArray(pattern);
 
-        return conceptDAO.getConceptBy(arrayPattern, categories, refsets, isModeled, pageSize, pageNumber);
+        return conceptDAO.findConceptsBy(arrayPattern, categories, refsets, isModeled, pageSize, pageNumber);
     }
 
     @Override
-    public List<ConceptSMTK> findConceptBy(String pattern) {
+    public List<ConceptSMTK> findConceptsBy(String pattern) {
 
         /* Se realiza la búsqueda estándard */
-        List<ConceptSMTK> conceptSMTKList = findConceptBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
+        List<ConceptSMTK> conceptSMTKList = findConceptsBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
         if (conceptSMTKList.size() != 0) {
             return conceptSMTKList;
         }
@@ -224,7 +228,7 @@ public class ConceptManagerImpl implements ConceptManager {
         /* Si la búsqueda estándard no dio resultados, se intenta con una búsqueda truncada */
         else {
             pattern = truncatePattern(pattern);
-            return findConceptBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
+            return findConceptsBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
         }
 
     }
@@ -271,7 +275,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
     @Override
     public List<ConceptSMTK> getConceptBy(RefSet refSet) {
-        return conceptDAO.getConceptBy(refSet);
+        return conceptDAO.findConceptsBy(refSet);
 
     }
 

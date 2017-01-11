@@ -52,9 +52,9 @@
   <xs:element name="paginacion" type="tns:Paginacion"/>
   <xs:element name="peticionBuscarTermino" type="tns:PeticionBuscarTermino"/>
   <xs:element name="peticionBuscarTerminoSimple" type="tns:PeticionBuscarTerminoSimple"/>
-  <xs:element name="peticionConceptosPorCategoria" type="tns:PeticionConceptosPorCategoria"/>
   <xs:element name="peticionConceptosPorRefSet" type="tns:PeticionConceptosPorRefSet"/>
   <xs:element name="peticionObtenerTerminosPedibles" type="tns:PeticionObtenerTerminosPedibles"/>
+  <xs:element name="peticionPorCategoria" type="tns:PeticionPorCategoria"/>
   <xs:element name="peticionRefSetsPorIdDescripcion" type="tns:PeticionRefSetsPorIdDescripcion"/>
   <xs:element name="refSet" type="tns:RefSet"/>
   <xs:element name="refSetsPorIdDescripcion" type="tns:refSetsPorIdDescripcion"/>
@@ -514,14 +514,13 @@
   </xs:complexType>
   <xs:complexType name="conceptosPorCategoria">
     <xs:sequence>
-      <xs:element ref="tns:peticionConceptosPorCategoria"/>
+      <xs:element name="peticionConceptosPorCategoria" type="tns:PeticionPorCategoria"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="PeticionConceptosPorCategoria">
+  <xs:complexType name="PeticionPorCategoria">
     <xs:sequence>
       <xs:element name="nombreCategoria" type="xs:string"/>
-      <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
-      <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
+      <xs:element default="1" name="idEstablecimiento" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="conceptosPorCategoriaResponse">
@@ -531,8 +530,6 @@
   </xs:complexType>
   <xs:complexType name="RespuestaConceptosPorCategoria">
     <xs:sequence>
-      <xs:element minOccurs="0" ref="tns:categoria"/>
-      <xs:element minOccurs="0" ref="tns:paginacion"/>
       <xs:element minOccurs="0" name="conceptos">
         <xs:complexType>
           <xs:sequence>

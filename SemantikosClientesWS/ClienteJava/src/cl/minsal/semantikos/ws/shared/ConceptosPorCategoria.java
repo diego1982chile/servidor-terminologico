@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.ws.semantikos.minsal.cl/}peticionConceptosPorCategoria"/>
+ *         &lt;element name="peticionConceptosPorCategoria" type="{http://service.ws.semantikos.minsal.cl/}PeticionPorCategoria"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,18 +32,18 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ConceptosPorCategoria {
 
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/", required = true)
-    protected PeticionConceptosPorCategoria peticionConceptosPorCategoria;
+    @XmlElement(required = true)
+    protected PeticionPorCategoria peticionConceptosPorCategoria;
 
     /**
      * Gets the value of the peticionConceptosPorCategoria property.
      * 
      * @return
      *     possible object is
-     *     {@link PeticionConceptosPorCategoria }
+     *     {@link PeticionPorCategoria }
      *     
      */
-    public PeticionConceptosPorCategoria getPeticionConceptosPorCategoria() {
+    public PeticionPorCategoria getPeticionConceptosPorCategoria() {
         return peticionConceptosPorCategoria;
     }
 
@@ -52,10 +52,10 @@ public class ConceptosPorCategoria {
      * 
      * @param value
      *     allowed object is
-     *     {@link PeticionConceptosPorCategoria }
+     *     {@link PeticionPorCategoria }
      *     
      */
-    public void setPeticionConceptosPorCategoria(PeticionConceptosPorCategoria value) {
+    public void setPeticionConceptosPorCategoria(PeticionPorCategoria value) {
         this.peticionConceptosPorCategoria = value;
     }
 

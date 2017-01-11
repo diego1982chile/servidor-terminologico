@@ -88,7 +88,6 @@ public interface ConceptManager {
      * Este método es responsable de recuperar el concepto con DESCRIPTION_ID.
      *
      * @param conceptId El DESCRIPTION_ID (valor de negocio) del concepto que se desea recuperar.
-     *
      * @return Un objeto fresco de tipo <code>ConceptSMTK</code> con el Concepto solicitado.
      */
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptId);
@@ -97,7 +96,6 @@ public interface ConceptManager {
      * Este método es responsable de recuperar el concepto con id (de BD)
      *
      * @param id El identificador de BD del concepto.
-     *
      * @return Un concepto fresco de tipo <code>ConceptSMTK</code>.
      */
     public ConceptSMTK getConceptByID(long id);
@@ -111,14 +109,14 @@ public interface ConceptManager {
      *                           búsqueda.
      * @param pageNumber         El número de página que se desea obtener.
      * @param pageSize           La cantidad de resultados por página.
-     *
      * @return Una lista de conceptos (correspondiendo a la página solicitada), sin ningún orden particular, de los
      * conceptos que corresponden al criterio de búsqueda.
      */
-    public List<ConceptSMTK> findConceptBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize);
+    public List<ConceptSMTK> findConceptsBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize);
 
     /**
      * Lo mismo que el metodo anterior pero el match con el pattern se hace por truncate perfect.
+     *
      * @param pattern
      * @param categories
      * @param refsets
@@ -128,9 +126,13 @@ public interface ConceptManager {
      */
     public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize);
 
-    /*Método temporal para trabajar con el navegador de conceptos*/
-    @Deprecated
-    public List<ConceptSMTK> findConceptBy(Category category);
+    /**
+     * Este método es responsable de recuperar todos los conceptos que pertenecen a una categoría dada.
+     *
+     * @param category La Categoría especificada.
+     * @return Una lista con todos los conceptos de una categoría.
+     */
+    public List<ConceptSMTK> findConceptsBy(Category category);
 
     /**
      * Este método es responsable de buscar los conceptos que posean un atributo de tipo básico que tenga el valor
@@ -140,7 +142,6 @@ public interface ConceptManager {
      * @param refSetNames          Los refsets en los cuales deben encontrarse los conceptos.
      * @param requestableAttribute El atributo utilizado para filtrar la búsqueda.
      * @param value                El valor que debe tener el atributo.
-     *
      * @return Una lista fresca de conceptos, perezosamente incializados.
      */
     public List<ConceptSMTK> findConcepts(Category aCategory, List<String> refSetNames, RelationshipDefinition requestableAttribute, String value);
@@ -161,17 +162,15 @@ public interface ConceptManager {
      * texto en las tres primeras letras para luego realizar la búsqueda nuevamente.
      *
      * @param pattern cadena de texto
-     *
      * @return retorna lista de conceptos
      */
-    public List<ConceptSMTK> findConceptBy(String pattern);
+    public List<ConceptSMTK> findConceptsBy(String pattern);
 
     /**
      * Este método se encarga de entregar la cantidad de conceptos según patron y categoría
      *
      * @param pattern    patrón de búsqueda
      * @param categories arreglo de idś de categorías
-     *
      * @return retorna un entero con la cantidad
      */
     public int countConceptBy(String pattern, Long[] categories);
@@ -187,7 +186,6 @@ public interface ConceptManager {
      * Este método es responsable de recuperar todas las descripciones (vigentes) del concepto.
      *
      * @param concept El concepto cuyas descripciones se quieren recuperar.
-     *
      * @return Una lista de Description vigentes asociadas al <code>concept</code>
      */
     public List<Description> getDescriptionsBy(ConceptSMTK concept);
@@ -198,7 +196,6 @@ public interface ConceptManager {
      * como parámetro (<code>descriptionId</code>).
      *
      * @param descriptionId El <em>DESCRIPTION_ID</em> de la descripción cuyo concepto contenedor se desea recuperar.
-     *
      * @return El concepto que contiene la descripción cuyo <em>DESCRIPTION_ID</em> corresponde con el parámetro.
      */
     public ConceptSMTK getConceptByDescriptionID(String descriptionId);
@@ -207,7 +204,6 @@ public interface ConceptManager {
      * Este método es responsable de cargar las relaciones del concepto.
      *
      * @param concept El concepto cuyas relaciones son actualizadas.
-     *
      * @return La lista de relaciones actualizadas (que ya están asociadas al objeto <code>concepto</code>.
      */
     public List<Relationship> loadRelationships(ConceptSMTK concept);
@@ -216,7 +212,6 @@ public interface ConceptManager {
      * Este método es responsable de obtener las relaciones del concepto.
      *
      * @param concept El concepto cuyas relaciones son obtenidas.
-     *
      * @return La lista de relaciones obtenidas.
      */
     public List<Relationship> getRelationships(ConceptSMTK concept);
@@ -229,7 +224,6 @@ public interface ConceptManager {
      * esto son el destino en la relación.
      *
      * @param conceptSMTK El concepto origen cuyos objetos relacionados se piden.
-     *
      * @return Lista de conceptos relacionados (concepto --> relacionados)
      */
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);
@@ -240,7 +234,6 @@ public interface ConceptManager {
      *
      * @param conceptSMTK El concepto cuyos conceptos relacionados se desea recuperar.
      * @param categories  Las categorías a las cuales los conceptos relacionados deben pertenecer.
-     *
      * @return La lista de conceptos relacionados que pertenecen a alguna de las categorías en <code>categories</code>.
      */
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK, Category... categories);
@@ -264,7 +257,6 @@ public interface ConceptManager {
      *
      * @param conceptSMTK El concepto que se desea trasladar.
      * @param category    La categoría a la cual se desea trasladar el concepto.
-     *
      * @return El concepto con su categoría actualizada. Esto es necesario para cuando las llamadas al EJB sean remotas.
      */
     public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category, User user);

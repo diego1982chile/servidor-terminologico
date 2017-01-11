@@ -238,7 +238,7 @@ public class RefSetDAOImpl implements RefSetDAO {
         RefSet refSet= new RefSet(name,institution,timestamp);
         refSet.setId(id);
         refSet.setValidityUntil(validity);
-        refSet.setConcepts(conceptDAO.getConceptBy(refSet));
+        refSet.setConcepts(conceptDAO.findConceptsBy(refSet));
         return refSet;
     }
 

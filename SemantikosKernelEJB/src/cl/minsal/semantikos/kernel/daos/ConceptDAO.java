@@ -27,7 +27,6 @@ public interface ConceptDAO {
      * @param modeled    Si el concepto está modelado.
      * @param pageSize   El tamaño de la página.
      * @param pageNumber La página de resultados que se desea obtener.
-     *
      * @return Una lista de conceptos que coinciden con los parámetros de búsqueda (modelado o no).
      */
     public List<ConceptSMTK> getConceptsBy(boolean modeled, int pageSize, int pageNumber);
@@ -41,10 +40,9 @@ public interface ConceptDAO {
      * @param modeled    Los estados que deben satisfacer los conceptos a retornar.
      * @param pageSize   El tamaño de la página.
      * @param pageNumber La página de resultados que se desea obtener.
-     *
      * @return Una lista de <code>ConceptSMTK</code> que cumplen los criterios de búsqueda.
      */
-    public List<ConceptSMTK> getConceptBy(String[] pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber);
 
     /**
      * Este método es responsable de recuperar los conceptos que coincidan con un cierto patrón (<code>pattern</code>)
@@ -52,7 +50,7 @@ public interface ConceptDAO {
      *
      * @return
      */
-    public List<ConceptSMTK> getConceptBy(String[] pattern, Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber);
 
     /**
      * Este método es responsable de recuperar los conceptos que pertenecen a un conjunto de categorías.
@@ -61,23 +59,27 @@ public interface ConceptDAO {
      * @param modeled    El estado de los conceptos que se desea obtener.
      * @param pageSize   El tamaño de la página.
      * @param pageNumber La página de resultados que se desea obtener.
-     *
      * @return Una lista de <code>ConceptSMTK</code> que cumplen los criterios de búsqueda.
      */
-    public List<ConceptSMTK> getConceptBy(Long[] categories, boolean modeled, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findConceptsBy(Long[] categories, boolean modeled, int pageSize, int pageNumber);
 
     public List<ConceptSMTK> getModeledConceptBy(Long categoryId, int pageSize, int pageNumber);
 
     /*Método temporal para trabajar con el navegador de conceptos*/
     @Deprecated
-    public List<ConceptSMTK> getConceptBy(Category category, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findConceptsBy(Category category, int pageSize, int pageNumber);
 
-    @Deprecated
-    public List<ConceptSMTK> getConceptBy(Category category);
+    /**
+     * Este método es responsable de recuperar todos los conceptos asociados a una categoría.
+     *
+     * @param category La categoría de la cual se requieren sus conceptos.
+     * @return Una lista con los conceptos asociados a la categoría.
+     */
+    List<ConceptSMTK> findConceptsBy(Category category);
 
-    public List<ConceptSMTK> getConceptBy(String[] pattern, boolean isModeled, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findConceptsBy(String[] pattern, boolean isModeled, int pageSize, int pageNumber);
 
-    public List<ConceptSMTK> getConceptBy(String PatternOrConceptId, Long[] Category, int pageNumber, int pageSize, boolean isModeled);
+    public List<ConceptSMTK> findConceptsBy(String PatternOrConceptId, Long[] Category, int pageNumber, int pageSize, boolean isModeled);
 
     public int countConceptBy(String[] Pattern, Long[] category, boolean isModeled);
 
@@ -91,7 +93,6 @@ public interface ConceptDAO {
      * Este método es responsable de recuperar todos los objetos que están asociados a un Tag.
      *
      * @param tag El tag del cual los conceptos que están asociados se desean recuperar.
-     *
      * @return Una lista de conceptos, donde cada uno se encuentra asociado al Tag <code>tag</code>.
      */
     List<ConceptSMTK> findConceptsByTag(Tag tag);
@@ -100,14 +101,13 @@ public interface ConceptDAO {
      * Este método es responsable de recuperar el concepto con DESCRIPTION_ID.
      *
      * @param conceptID El DESCRIPTION_ID (valor de negocio) del concepto que se desea recuperar.
-     *
      * @return Un objeto fresco de tipo <code>ConceptSMTK</code> con el Concepto solicitado.
      */
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptID);
 
     public ConceptSMTK getConceptByID(long id);
 
-    public ConceptSMTK getConceptBy(Category category, long id);
+    public ConceptSMTK findConceptsBy(Category category, long id);
 
     /**
      * Este método es responsable persistir la entidad Concepto SMTK en la base de datos.
@@ -124,7 +124,7 @@ public interface ConceptDAO {
      */
     public void update(ConceptSMTK conceptSMTK);
 
-    public List<ConceptSMTK> getConceptBy(RefSet refSet);
+    public List<ConceptSMTK> findConceptsBy(RefSet refSet);
 
     public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize);
 
@@ -135,7 +135,6 @@ public interface ConceptDAO {
      * @param aCategory                 La categoría a la cual pertenecen los objetos buscados.
      * @param booleanBasicTypeAttribute El atributo buleano.
      * @param aString                   El valor buleano.
-     *
      * @return Una lista de conceptos con el atributo en el valor deseado.
      */
     public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, RelationshipDefinition booleanBasicTypeAttribute, String aString);
@@ -149,7 +148,6 @@ public interface ConceptDAO {
      * @param refsets                  Los refsets en los cuales debe encontrarse cada concepto (en uno al menos).
      * @param stringBasicTypeAttribute El atributo buleano.
      * @param aString                  El valor buleano.
-     *
      * @return Una lista de conceptos con el atributo en el valor deseado.
      */
     public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, ArrayList<RefSet> refsets, RelationshipDefinition stringBasicTypeAttribute, String aString);
@@ -189,7 +187,6 @@ public interface ConceptDAO {
      * Este método es responsable de obtener los conceptos que se relacionan con el concepto indicado como parametro
      *
      * @param conceptSMTK concepto que se relaciona con otros
-     *
      * @return Lista de conceptos relacionados
      */
     public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK);

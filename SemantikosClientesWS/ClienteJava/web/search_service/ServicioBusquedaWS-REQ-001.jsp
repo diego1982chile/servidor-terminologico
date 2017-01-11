@@ -14,7 +14,7 @@
 </header>
 
 <!-- Se incluye el índice de TABs -->
-<jsp:include page="ServicioIngresoHeader.html"/>
+<jsp:include page="ServicioBusquedaHeader.html"/>
 
 
 <div class="container">
