@@ -56,7 +56,7 @@
 
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-3">
-                    <p:commandButton value="Agregar al refset"
+                    <p:commandButton value="Agregar al RefSet"
                                      actionListener="#{refsetsBean.addConcept(refsetsBean.refSetSelect,conceptBean.concept)}"
                                      update="@(.refsetClass)"/>
                 </div>
@@ -64,13 +64,13 @@
         </p:panel>
 
         <p:dataTable var="refset" value="#{refsetsBean.conceptRefSetList}">
-            <p:column headerText="ID Refset">
+            <p:column headerText="ID RefSet">
                 <h:outputText value="#{refset.id}"/>
             </p:column>
             <p:column headerText="Nombre">
                 <h:outputText value="#{refset.name}"/>
             </p:column>
-            <p:column headerText="Tipo refset">
+            <p:column headerText="Tipo RefSet">
                 <h:outputText value="#{refset.institution.name}"/>
             </p:column>
             <p:column headerText="Fecha ingreso">
