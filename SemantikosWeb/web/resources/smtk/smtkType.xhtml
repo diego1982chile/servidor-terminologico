@@ -28,7 +28,7 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-6">
                 <p:inputText value="#{smtkBean.pattern}" style="width: 90%; margin: 10px;"
-                             placeholder="Buscar...">
+                             placeholder="Buscar #{cc.attrs.targetDefinition.name}...">
                     <p:ajax event="keyup"
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id})"/>
                 </p:inputText>
