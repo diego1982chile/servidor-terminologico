@@ -1,12 +1,13 @@
 <%@ page import="cl.minsal.semantikos.ws.shared.RespuestaBuscarTerminoGenerica" %>
 <%@ page import="cl.minsal.semantikos.ws.shared.Stringer" %>
+<%@ page import="cl.minsal.semantikos.ws.shared.RespuestaConceptosPorCategoria" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <header>
-    <title>Semantikos - WS-REQ-031: Proponer un término para codificación</title>
+    <title>Semantikos - WS-REQ-004: Buscar términos con Perfect Match</title>
 
     <!-- Bootstrap -->
     <link href="<%=request.getContextPath()%>/css/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet"
@@ -18,9 +19,9 @@
 
 
 <div class="container">
-    <h4>WS-REQ-001: Buscar <em>término</em> a codificar</h4>
+    <h4>Semantikos - WS-REQ-004: Buscar términos con Perfect Match</h4>
 
-    <form method="post" action="<%=request.getContextPath()%>/ws-req-001">
+    <form method="post" action="<%=request.getContextPath()%>/ws-req-004">
 
         <!-- El término a buscar -->
         <div class="form-group">
@@ -43,16 +44,21 @@
                    placeholder="Ingrese los RefSets ','">
         </div>
 
+        <!-- El término a buscar -->
+        <div class="form-group">
+            <label for="idStablishment">Identificador Establecimiento</label>
+            <input id="idStablishment" name="idStablishment" type="text" class="form-control" placeholder="Ingrese el identificador de su establecimiento"
+                   required="required">
+        </div>
+
         <button type="submit">Invocar Servicio</button>
 
         <c:if test="${requestScope.serviceResponse != null}">
             <div id="Response">
                 <jsp:useBean id="stringer" class="cl.minsal.semantikos.ws.shared.Stringer"
                              type="cl.minsal.semantikos.ws.shared.Stringer">
-                    Perfect: <%= Stringer.toString(((RespuestaBuscarTerminoGenerica) request.getAttribute("serviceResponse")).getDescripcionesPerfectMatch()) %>
+                    Conceptos encontrados: <%= Stringer.toString(((RespuestaConceptosPorCategoria) request.getAttribute("serviceResponse")).getConceptos()) %>
                     <br/>
-                    No validas: ${requestScope.serviceResponse.descripcionesNoValidas} <br/>
-                    Pendientes: ${requestScope.serviceResponse.descripcionesPendientes} <br/>
                 </jsp:useBean>
             </div>
         </c:if>

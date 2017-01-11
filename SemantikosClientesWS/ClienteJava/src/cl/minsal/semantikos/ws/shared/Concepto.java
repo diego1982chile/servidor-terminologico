@@ -770,7 +770,7 @@ public class Concepto {
     })
     public static class Descripciones {
 
-        @XmlElement(namespace = "")
+        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
         protected List<Descripcion> descripcion;
 
         /**

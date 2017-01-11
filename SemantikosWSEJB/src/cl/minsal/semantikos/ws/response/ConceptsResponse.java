@@ -2,6 +2,7 @@ package cl.minsal.semantikos.ws.response;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,11 +19,32 @@ public class ConceptsResponse implements Serializable {
     @XmlElement(name = "concepto")
     private List<ConceptResponse> conceptResponses;
 
+    @XmlElement(name = "cantidadRegistros")
+    private int quantity;
+
+    public ConceptsResponse() {
+        this.conceptResponses = new ArrayList<>();
+        this.quantity = 0;
+    }
+
+    public ConceptsResponse(List<ConceptResponse> conceptResponses) {
+        this.conceptResponses = conceptResponses;
+        this.quantity = conceptResponses.size();
+    }
+
     public List<ConceptResponse> getConceptResponses() {
         return conceptResponses;
     }
 
     public void setConceptResponses(List<ConceptResponse> conceptResponses) {
         this.conceptResponses = conceptResponses;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

@@ -218,39 +218,32 @@ public class ConceptController {
         return res;
     }
 
-    public TermSearchResponse searchTruncatePerfect(
-            String term,
-            List<String> categoriesNames,
-            List<String> refSetsNames,
-            Integer pageNumber,
-            Integer pageSize
-    ) throws NotFoundFault {
+    /**
+     * Este método... no fue comentado por Alfonso.
+     *
+     * @param term            El término buscado.
+     * @param categoriesNames Las categorías asociadas a los conceptos del dominio.
+     * @param refSetsNames    Los refsets asociados a los conceptos del dominio.
+     * @return Una lista de conceptos que satisfieron la búsqueda.
+     * @throws NotFoundFault Arrojada si... ?
+     */
+    public ConceptsResponse searchTruncatePerfect(String term, List<String> categoriesNames, List<String> refSetsNames)
+            throws NotFoundFault {
+
+        /* Se recuperan los objetos de negocio de las categorías y refsets */
         List<Category> categories = this.categoryController.findCategories(categoriesNames);
         List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
 
-        Long[] categoriesArray = Util.getIdArray(categories);
-        Long[] refSetsArray = Util.getIdArray(refSets);
-        List<ConceptSMTK> conceptSMTKS = this.conceptManager.findConceptTruncatePerfect(term, categoriesArray, refSetsArray, pageNumber, pageSize);
-        List<ConceptLightResponse> conceptResponses = new ArrayList<>();
+        /* Se realiza la búsqueda */
+        List<ConceptSMTK> conceptSMTKS = this.conceptManager.findConceptTruncatePerfect(term, categories, refSets);
 
-        if (conceptSMTKS != null) {
-            for (ConceptSMTK source : conceptSMTKS) {
-                ConceptLightResponse conceptLightResponse = new ConceptLightResponse(source);
-                conceptLightResponse.setValid(!("Concepto no válido".equals(source.getDescriptionFavorite().getTerm())));
-                conceptResponses.add(conceptLightResponse);
-            }
+        /* Se encapsulan los conceptos retornados en un wrapper XML */
+        List<ConceptResponse> conceptResponses = new ArrayList<>();
+        for (ConceptSMTK conceptSMTK : conceptSMTKS) {
+            conceptResponses.add(new ConceptResponse(conceptSMTK));
         }
 
-        TermSearchResponse response = new TermSearchResponse();
-        response.setConcepts(conceptResponses);
-        Integer total = this.conceptManager.countConceptBy(term, categoriesArray, refSetsArray);
-        response.setPagination(this.paginationController.getResponse(pageNumber, pageSize, total));
-
-        if (conceptResponses.isEmpty()) {
-            throw new NotFoundFault("Termino no encontrado");
-        }
-
-        return response;
+        return new ConceptsResponse(conceptResponses);
     }
 
     public ConceptResponse conceptByDescriptionId(String descriptionId)

@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
+ *         &lt;element name="cantidadRegistros" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -40,11 +41,13 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RespuestaConceptosPorCategoria", propOrder = {
-    "conceptos"
+    "conceptos",
+    "cantidadRegistros"
 })
 public class RespuestaConceptosPorCategoria {
 
     protected RespuestaConceptosPorCategoria.Conceptos conceptos;
+    protected int cantidadRegistros;
 
     /**
      * Gets the value of the conceptos property.
@@ -68,6 +71,22 @@ public class RespuestaConceptosPorCategoria {
      */
     public void setConceptos(RespuestaConceptosPorCategoria.Conceptos value) {
         this.conceptos = value;
+    }
+
+    /**
+     * Gets the value of the cantidadRegistros property.
+     * 
+     */
+    public int getCantidadRegistros() {
+        return cantidadRegistros;
+    }
+
+    /**
+     * Sets the value of the cantidadRegistros property.
+     * 
+     */
+    public void setCantidadRegistros(int value) {
+        this.cantidadRegistros = value;
     }
 
 
@@ -96,7 +115,7 @@ public class RespuestaConceptosPorCategoria {
     })
     public static class Conceptos {
 
-        @XmlElement(namespace = "")
+        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
         protected List<Concepto> concepto;
 
         /**

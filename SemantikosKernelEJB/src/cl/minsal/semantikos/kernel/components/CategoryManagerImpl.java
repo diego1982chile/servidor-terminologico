@@ -109,14 +109,21 @@ public class CategoryManagerImpl implements CategoryManager {
 
     @Override
     public List<Category> findCategories(List<String> categoriesNames) {
-        List<Category> res = new ArrayList<>();
 
+        List<Category> res = new ArrayList<>();
         for ( String categoryName : categoriesNames ) {
-            Category found = this.getCategoryByName(categoryName);
+            logger.debug("CategoryManager.findCategories: buscando '" + categoryName + "'");
+
+            /* Las categorias de nombre NULL o vacias se ignoran simplemente, no generan error */
+            if(categoryName == null || categoryName.trim().equals("")){
+                continue;
+            }
+
+            Category found = this.getCategoryByName(categoryName.trim());
             if ( found != null ) {
                 res.add(found);
             } else {
-                throw new NoSuchElementException("Categoria no encontrada: " + categoryName);
+                throw new IllegalArgumentException("Categoria no encontrada: " + categoryName);
             }
         }
 

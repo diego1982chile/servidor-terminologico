@@ -90,15 +90,15 @@ public interface SearchService {
      * 
      * @param peticionBuscarTermino
      * @return
-     *     returns cl.minsal.semantikos.ws.shared.RespuestaBuscarTermino
+     *     returns cl.minsal.semantikos.ws.shared.RespuestaConceptosPorCategoria
      * @throws NotFoundFault_Exception
      * @throws IllegalInputFault_Exception
      */
     @WebMethod
-    @WebResult(name = "respuestaBuscarTermino", targetNamespace = "http://service.ws.semantikos.minsal.cl/")
+    @WebResult(name = "respuestaConceptos", targetNamespace = "")
     @RequestWrapper(localName = "buscarTruncatePerfect", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.BuscarTruncatePerfect")
     @ResponseWrapper(localName = "buscarTruncatePerfectResponse", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.BuscarTruncatePerfectResponse")
-    public RespuestaBuscarTermino buscarTruncatePerfect(
+    public RespuestaConceptosPorCategoria buscarTruncatePerfect(
         @WebParam(name = "peticionBuscarTermino", targetNamespace = "http://service.ws.semantikos.minsal.cl/")
         PeticionBuscarTermino peticionBuscarTermino)
         throws IllegalInputFault_Exception, NotFoundFault_Exception
@@ -178,7 +178,7 @@ public interface SearchService {
      * @throws NotFoundFault_Exception
      */
     @WebMethod
-    @WebResult(name = "respuestaConceptosPorCategoria", targetNamespace = "http://service.ws.semantikos.minsal.cl/")
+    @WebResult(name = "respuestaConceptos", targetNamespace = "")
     @RequestWrapper(localName = "conceptosPorCategoria", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.ConceptosPorCategoria")
     @ResponseWrapper(localName = "conceptosPorCategoriaResponse", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.ConceptosPorCategoriaResponse")
     public RespuestaConceptosPorCategoria conceptosPorCategoria(

@@ -124,7 +124,24 @@ public interface ConceptManager {
      * @param pageSize
      * @return
      */
-    public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize);
+    List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize);
+
+    /**
+     * Este método es responsable de recuperar todos los conceptos que hacen truncate match con el termino
+     * <code>termPattern</code> y que pertenece a alguna de las categorías <code>categories</code> o a alguno de
+     * los refsets <code>refsets</code>.
+     * <p/>
+     * Si no se especifica alguna categoría, se busca por conceptos en cualquier categoría.
+     * <p/>
+     * Si no se especifica algún refset, se busca por conceptos que pertenezcan a cualquier RefSet. Esto excluye a
+     * conceptos que no se encuentren en algún RefSet.
+     *
+     * @param termPattern El patrón de búsqueda.
+     * @param categories  Las categorías a las que se quiere asociado el concepto.
+     * @param refSets     Los RefSets en los que podría estar el concepto.
+     * @return Una lista de conceptos que coinciden con el criterio de búsqueda.
+     */
+    List<ConceptSMTK> findConceptTruncatePerfect(String termPattern, List<Category> categories, List<RefSet> refSets);
 
     /**
      * Este método es responsable de recuperar todos los conceptos que pertenecen a una categoría dada.
@@ -261,12 +278,11 @@ public interface ConceptManager {
      */
     public ConceptSMTK transferConcept(ConceptSMTK conceptSMTK, Category category, User user);
 
+
     /**
      * Este método es responsable de retornar la instancia del concepto pendiente.
      *
      * @return La instancia (única) del concepto pendiente.
      */
     public ConceptSMTK getPendingConcept();
-
-
 }

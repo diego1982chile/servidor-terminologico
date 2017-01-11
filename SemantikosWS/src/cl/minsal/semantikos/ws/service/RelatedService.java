@@ -29,7 +29,7 @@ public class RelatedService {
     // REQ-WS-006
     @WebResult(name = "respuestaBuscarTermino")
     @WebMethod(operationName = "sugerenciasDeDescripciones")
-    public TermSearchResponse sugerenciasDeDescripciones(
+    public ConceptsResponse sugerenciasDeDescripciones(
             @XmlElement(required = true)
             @WebParam(name = "peticionSugerenciasDeDescripciones")
             DescriptionsSuggestionsRequest request
@@ -44,13 +44,8 @@ public class RelatedService {
         if ( request.getTerm().length() < 2 ) {
             throw new IllegalInputFault("El termino a buscar debe tener minimo 2 caracteres de largo");
         }
-        TermSearchResponse res = this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames(), request.getRefSetNames(), 0, 5);
 
-        PaginationResponse paginationResponse = new PaginationResponse();
-        paginationResponse.setTotalCount(res.getConcepts().size());
-        res.setPagination(paginationResponse);
-
-        return res;
+        return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
     }
 
     // REQ-WS-010...021

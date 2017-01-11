@@ -457,25 +457,24 @@
       <xs:element name="termino" type="xs:string"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreCategoria" type="xs:string"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
-      <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
-      <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
+      <xs:element name="idEstablecimiento" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="buscarTruncatePerfectResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" ref="tns:respuestaBuscarTermino"/>
+      <xs:element minOccurs="0" name="respuestaConceptos" type="tns:RespuestaConceptosPorCategoria"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="RespuestaBuscarTermino">
+  <xs:complexType name="RespuestaConceptosPorCategoria">
     <xs:sequence>
-      <xs:element minOccurs="0" ref="tns:paginacion"/>
       <xs:element minOccurs="0" name="conceptos">
         <xs:complexType>
           <xs:sequence>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="concepto" type="tns:ConceptoLight"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="cantidadRegistros" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="refSetsPorIdDescripcion">
@@ -525,18 +524,7 @@
   </xs:complexType>
   <xs:complexType name="conceptosPorCategoriaResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" ref="tns:respuestaConceptosPorCategoria"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="RespuestaConceptosPorCategoria">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="conceptos">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:concepto"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+      <xs:element minOccurs="0" name="respuestaConceptos" type="tns:RespuestaConceptosPorCategoria"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="descripcionesPreferidasPorRefSet">
@@ -564,6 +552,18 @@
   <xs:complexType name="obtenerTerminosPediblesResponse">
     <xs:sequence>
       <xs:element minOccurs="0" ref="tns:respuestaBuscarTermino"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RespuestaBuscarTermino">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:paginacion"/>
+      <xs:element minOccurs="0" name="conceptos">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="concepto" type="tns:ConceptoLight"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="buscarTermino">

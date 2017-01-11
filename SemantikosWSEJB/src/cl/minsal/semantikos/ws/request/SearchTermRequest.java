@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Development on 2016-11-23.
+ * @author Alfonso Cornejo on 2016-11-23.
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -15,14 +15,15 @@ public class SearchTermRequest implements Serializable {
 
     @XmlElement(required = true, name = "termino")
     private String term;
-    @XmlElement(required = false, name = "nombreCategoria")
+
+    @XmlElement(name = "nombreCategoria")
     private List<String> categoryNames;
-    @XmlElement(required = false, name = "nombreRefSet")
+
+    @XmlElement(name = "nombreRefSet")
     private List<String> refSetNames;
-    @XmlElement(required = false, defaultValue = "0", name = "numeroPagina")
-    private Integer pageNumber;
-    @XmlElement(required = false, defaultValue = "10", name = "tamanoPagina")
-    private Integer pageSize;
+
+    @XmlElement(required = true, name="idEstablecimiento")
+    private String idStablishment;
 
     public String getTerm() {
         return term;
@@ -48,19 +49,11 @@ public class SearchTermRequest implements Serializable {
         this.refSetNames = refSetNames;
     }
 
-    public Integer getPageNumber() {
-        return pageNumber;
+    public String getIdStablishment() {
+        return idStablishment;
     }
 
-    public void setPageNumber(Integer pageNumber) {
-        this.pageNumber = pageNumber;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
+    public void setIdStablishment(String idStablishment) {
+        this.idStablishment = idStablishment;
     }
 }

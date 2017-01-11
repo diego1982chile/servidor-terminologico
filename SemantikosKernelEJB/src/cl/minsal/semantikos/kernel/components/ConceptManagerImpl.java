@@ -27,7 +27,9 @@ import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 @Stateless
 public class ConceptManagerImpl implements ConceptManager {
 
-    /** El logger de la clase */
+    /**
+     * El logger de la clase
+     */
     private static final Logger logger = LoggerFactory.getLogger(ConceptManagerImpl.class);
 
     @EJB
@@ -60,8 +62,8 @@ public class ConceptManagerImpl implements ConceptManager {
     @EJB
     private ConceptTransferBR conceptTransferBR;
 
-     @EJB
-     private RelationshipBindingBRInterface relationshipBindingBR;
+    @EJB
+    private RelationshipBindingBRInterface relationshipBindingBR;
 
     @Override
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptId) {
@@ -92,7 +94,7 @@ public class ConceptManagerImpl implements ConceptManager {
     public List<ConceptSMTK> findConceptsBy(Category category) {
 
         /* Se validan los parámetros */
-        if (category == null){
+        if (category == null) {
             logger.error("Se solicitan los conceptos de categoría nula.");
             return Collections.emptyList();
         }
@@ -217,6 +219,47 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
+    public List<ConceptSMTK> findConceptTruncatePerfect(String termPattern, List<Category> categories, List<RefSet> refSets) {
+
+        /* En esta implementación se utiliza el método
+         * findConceptTruncatePerfect(
+         *      String pattern,
+         *      Long[] categories,
+         *      Long[] refsets,
+         *      int pageNumber,
+         *      int pageSize)
+         *
+         * Se recuperan de a 1000 conceptos
+         */
+        List<ConceptSMTK> concepts = new ArrayList<>();
+        int page = 1;
+        boolean thereAreMore;
+        do {
+            List<ConceptSMTK> conceptTruncatePerfect = findConceptTruncatePerfect(termPattern, getIdArray(categories), getIdArray(refSets), page++, 1000);
+            concepts.addAll(conceptTruncatePerfect);
+
+            /* Si la busqueda retorno 1000, quizás hay más */
+            thereAreMore = conceptTruncatePerfect.size() == 1000;
+        } while (thereAreMore);
+
+        return concepts;
+    }
+
+    private List<Long> getIdList(@NotNull Collection<? extends PersistentEntity> entities) {
+        List<Long> res = new ArrayList<>(entities.size());
+
+        for (PersistentEntity entity : entities) {
+            res.add(entity.getId());
+        }
+
+        return res;
+    }
+
+    private Long[] getIdArray(@NotNull Collection<? extends PersistentEntity> entities) {
+        return getIdList(entities).toArray(new Long[0]);
+    }
+
+    @Override
     public List<ConceptSMTK> findConceptsBy(String pattern) {
 
         /* Se realiza la búsqueda estándard */
@@ -311,13 +354,13 @@ public class ConceptManagerImpl implements ConceptManager {
         for (Tag tag : conceptSMTK.getTags()) {
             if (tag.isPersistent()) {
                 tagManager.persist(tag);
-                tagManager.assignTag(conceptSMTK,tag);
+                tagManager.assignTag(conceptSMTK, tag);
             }
         }
 
         /* Se deja registro en la auditoría sólo para conceptos modelados */
 
-            auditManager.recordNewConcept(conceptSMTK, user);
+        auditManager.recordNewConcept(conceptSMTK, user);
 
         logger.debug("El concepto " + conceptSMTK + " fue persistido.");
     }
@@ -328,7 +371,7 @@ public class ConceptManagerImpl implements ConceptManager {
         /* Se actualiza con el DAO */
         conceptDAO.update(updatedConcept);
 
-        if (updatedConcept.isModeled()){
+        if (updatedConcept.isModeled()) {
             auditManager.recordUpdateConcept(updatedConcept, user);
         }
     }
@@ -354,7 +397,7 @@ public class ConceptManagerImpl implements ConceptManager {
         invalidate(conceptSMTK, user);
 
         /* Se elimina físicamente si es borrador */
-        if (!conceptSMTK.isModeled()){
+        if (!conceptSMTK.isModeled()) {
             conceptDAO.delete(conceptSMTK);
         }
     }
@@ -412,7 +455,6 @@ public class ConceptManagerImpl implements ConceptManager {
      * Este método es responsable de validar que el concepto no se encuentre persistido.
      *
      * @param conceptSMTK El concepto sobre el cual se realiza la validación de persistencia.
-     *
      * @throws javax.ejb.EJBException Se arroja si el concepto tiene un ID de persistencia.
      */
     private void validatesIsNotPersistent(ConceptSMTK conceptSMTK) throws EJBException {
@@ -473,13 +515,13 @@ public class ConceptManagerImpl implements ConceptManager {
         /* Validacion de pre-condiciones */
         conceptTransferBR.validatePreConditions(conceptSMTK);
 
-        Category originalCategory= conceptSMTK.getCategory();
+        Category originalCategory = conceptSMTK.getCategory();
 
         /* Acciones de negocio */
         conceptSMTK.setCategory(category);
         conceptDAO.update(conceptSMTK);
 
-        auditManager.recordConceptCategoryChange(conceptSMTK,originalCategory,user);
+        auditManager.recordConceptCategoryChange(conceptSMTK, originalCategory, user);
 
         logger.info("Se ha trasladado un concepto de categoría.");
         return conceptSMTK;
@@ -525,7 +567,6 @@ public class ConceptManagerImpl implements ConceptManager {
      * Método encargado de convertir un string en una lista de string.
      *
      * @param pattern patrón de texto
-     *
      * @return retorna una lista de String
      */
 
@@ -557,7 +598,6 @@ public class ConceptManagerImpl implements ConceptManager {
      * le quita los signos de puntuación y ortográficos
      *
      * @param pattern patrón de texto a normalizar
-     *
      * @return patrón normalizado
      */
     //TODO: Falta quitar los StopWords (no se encuentran definidos)
@@ -576,7 +616,6 @@ public class ConceptManagerImpl implements ConceptManager {
      * Método encargado de truncar a un largo de 3 las palabras del String ingresado
      *
      * @param pattern arreglo de palabras
-     *
      * @return arreglo de String con las palabras truncadas
      */
     private String truncatePattern(String pattern) {

@@ -32,10 +32,29 @@ public class Stringer {
         return result.append("]").toString();
     }
 
+    public static String toString(RespuestaConceptosPorCategoria.Conceptos conceptosResponse) {
+        StringBuilder result = new StringBuilder("[");
+        for (Concepto aConcept : conceptosResponse.getConcepto()) {
+            result.append(aConcept);
+        }
+
+        return result.append("]").toString();
+    }
+
     public static String toString(PeticionPorCategoria peticion) {
         StringBuilder result = new StringBuilder("[");
         result.append("Categoría='").append(peticion.getNombreCategoria());
         result.append(";ID Establecimiento=").append(peticion.getIdEstablecimiento());
+
+        return result.append("]").toString();
+    }
+
+    public static String toString(PeticionBuscarTermino peticion) {
+        StringBuilder result = new StringBuilder("[");
+        result.append("Term='").append(peticion.getTermino());
+        result.append(", Categoría='").append(peticion.getNombreCategoria());
+        result.append(", RefSets='").append(peticion.getNombreRefSet());
+        //result.append(", ID Establecimiento=").append(peticion.getIdEstablecimiento());
 
         return result.append("]").toString();
     }
@@ -48,9 +67,25 @@ public class Stringer {
             result.append(toString(concepto));
         }
 
-        return result.append("]").toString();    }
+        return result.append("]").toString();
+    }
 
     protected static String toString(Concepto concepto) {
         return "Concepto[" + concepto.getId() + "]";
+    }
+
+    protected static String toString(ConceptoLight concepto) {
+        return "Concepto[" + concepto.getConceptID() + "]";
+    }
+
+    public static String toString(RespuestaBuscarTermino response) {
+        StringBuilder result = new StringBuilder("[");
+
+        RespuestaBuscarTermino.Conceptos conceptos = response.getConceptos();
+        for (ConceptoLight concepto : conceptos.getConcepto()) {
+            result.append(toString(concepto));
+        }
+
+        return result.append("]").toString();
     }
 }

@@ -3,7 +3,6 @@ package cl.minsal.semantikos.ws.shared;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -17,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.ws.semantikos.minsal.cl/}respuestaConceptosPorCategoria" minOccurs="0"/>
+ *         &lt;element name="respuestaConceptos" type="{http://service.ws.semantikos.minsal.cl/}RespuestaConceptosPorCategoria" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -28,35 +27,34 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "conceptosPorCategoriaResponse", propOrder = {
-    "respuestaConceptosPorCategoria"
+    "respuestaConceptos"
 })
 public class ConceptosPorCategoriaResponse {
 
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
-    protected RespuestaConceptosPorCategoria respuestaConceptosPorCategoria;
+    protected RespuestaConceptosPorCategoria respuestaConceptos;
 
     /**
-     * Gets the value of the respuestaConceptosPorCategoria property.
+     * Gets the value of the respuestaConceptos property.
      * 
      * @return
      *     possible object is
      *     {@link RespuestaConceptosPorCategoria }
      *     
      */
-    public RespuestaConceptosPorCategoria getRespuestaConceptosPorCategoria() {
-        return respuestaConceptosPorCategoria;
+    public RespuestaConceptosPorCategoria getRespuestaConceptos() {
+        return respuestaConceptos;
     }
 
     /**
-     * Sets the value of the respuestaConceptosPorCategoria property.
+     * Sets the value of the respuestaConceptos property.
      * 
      * @param value
      *     allowed object is
      *     {@link RespuestaConceptosPorCategoria }
      *     
      */
-    public void setRespuestaConceptosPorCategoria(RespuestaConceptosPorCategoria value) {
-        this.respuestaConceptosPorCategoria = value;
+    public void setRespuestaConceptos(RespuestaConceptosPorCategoria value) {
+        this.respuestaConceptos = value;
     }
 
 }

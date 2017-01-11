@@ -21,7 +21,7 @@ public class ServicioDeBusquedaClientWS001 {
         /* Se prepara la peticion */
         PeticionBuscarTerminoSimple peticionBuscarTermino = new PeticionBuscarTerminoSimple();
         peticionBuscarTermino.setTermino("Pierna");
-        peticionBuscarTermino.setNombreCategoria(singletonList("Estructura Corporal"));
+        //peticionBuscarTermino.setNombreCategoria(singletonList("Estructura Corporal"));
 
         ServicioDeBusqueda servicioDeBusqueda = new ServicioDeBusqueda();
         RespuestaBuscarTerminoGenerica respuestaBuscarTerminoGenerica = servicioDeBusqueda.getSearchServicePort().buscarTermino(peticionBuscarTermino);

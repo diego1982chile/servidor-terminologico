@@ -66,7 +66,7 @@ public class SearchService {
     }
 
     // REQ-WS-002
-    @WebResult(name = "respuestaConceptosPorCategoria")
+    @WebResult(name = "respuestaConceptos")
     @WebMethod(operationName = "conceptosPorCategoria")
     public ConceptsResponse conceptosPorCategoria(
             @XmlElement(required = true)
@@ -83,13 +83,14 @@ public class SearchService {
     }
 
     // REQ-WS-004
-    @WebResult(name = "respuestaBuscarTermino")
+    @WebResult(name = "respuestaConceptos")
     @WebMethod(operationName = "buscarTruncatePerfect")
-    public TermSearchResponse buscarTruncatePerfect(
+    public ConceptsResponse buscarTruncatePerfect(
             @XmlElement(required = true)
             @WebParam(name = "peticionBuscarTermino")
                     SearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault {
+
         if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())
                 && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty())) {
             throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");
@@ -97,7 +98,7 @@ public class SearchService {
         if (request.getTerm() == null || "".equals(request.getTerm())) {
             throw new IllegalInputFault("Debe ingresar un Termino a buscar");
         }
-        return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames(), request.getRefSetNames(), request.getPageNumber(), request.getPageSize());
+        return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
     }
 
     /**
