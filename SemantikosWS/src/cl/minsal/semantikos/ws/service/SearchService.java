@@ -166,7 +166,7 @@ public class SearchService {
 
     // REQ-WS-007
     // REQ-WS-009
-    @WebResult(name = "refset")
+    @WebResult(name = "refsetResponse")
     @WebMethod(operationName = "refSetsPorIdDescripcion")
     public RefSetsResponse refSetsPorIdDescripcion(
             @XmlElement(required = true)
@@ -187,12 +187,15 @@ public class SearchService {
     }
 
     // REQ-WS-008
-    @WebResult(name = "refSet")
+    @WebResult(name = "refsetResponse")
     @WebMethod(operationName = "listaRefSet")
-    public List<RefSetResponse> listaRefSet(
+    public RefSetsResponse listaRefSet(
             @XmlElement(required = false, defaultValue = "true")
             @WebParam(name = "incluyeEstablecimientos")
-                    Boolean includeInstitutions
+                    Boolean includeInstitutions,
+            @XmlElement(required = true)
+            @WebParam(name = "idStablishment")
+                    String idStablishment
     ) throws NotFoundFault {
         return this.refSetController.refSetList(includeInstitutions);
     }

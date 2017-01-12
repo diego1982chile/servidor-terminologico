@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="incluyeEstablecimientos" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="idStablishment" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -28,12 +29,15 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "listaRefSet", propOrder = {
-    "incluyeEstablecimientos"
+    "incluyeEstablecimientos",
+    "idStablishment"
 })
 public class ListaRefSet {
 
     @XmlElement(defaultValue = "true")
     protected Boolean incluyeEstablecimientos;
+    @XmlElement(required = true)
+    protected String idStablishment;
 
     /**
      * Gets the value of the incluyeEstablecimientos property.
@@ -57,6 +61,30 @@ public class ListaRefSet {
      */
     public void setIncluyeEstablecimientos(Boolean value) {
         this.incluyeEstablecimientos = value;
+    }
+
+    /**
+     * Gets the value of the idStablishment property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getIdStablishment() {
+        return idStablishment;
+    }
+
+    /**
+     * Sets the value of the idStablishment property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setIdStablishment(String value) {
+        this.idStablishment = value;
     }
 
 }

@@ -393,11 +393,23 @@
   <xs:complexType name="listaRefSet">
     <xs:sequence>
       <xs:element default="true" minOccurs="0" name="incluyeEstablecimientos" type="xs:boolean"/>
+      <xs:element name="idStablishment" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="listaRefSetResponse">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:refSet"/>
+      <xs:element minOccurs="0" name="refsetResponse" type="tns:RespuestaRefSets"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RespuestaRefSets">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="refsets">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="refset" type="tns:RefSet"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="conceptosPorRefSet">
@@ -492,18 +504,7 @@
   </xs:complexType>
   <xs:complexType name="refSetsPorIdDescripcionResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="refset" type="tns:RespuestaRefSets"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="RespuestaRefSets">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="refsets">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="refset" type="tns:RefSet"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+      <xs:element minOccurs="0" name="refsetResponse" type="tns:RespuestaRefSets"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="listaCategorias">

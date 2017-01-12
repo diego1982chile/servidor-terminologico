@@ -71,18 +71,21 @@ public interface SearchService {
 
     /**
      * 
+     * @param idStablishment
      * @param incluyeEstablecimientos
      * @return
-     *     returns java.util.List<cl.minsal.semantikos.ws.shared.RefSet>
+     *     returns cl.minsal.semantikos.ws.shared.RespuestaRefSets
      * @throws NotFoundFault_Exception
      */
     @WebMethod
-    @WebResult(name = "refSet", targetNamespace = "http://service.ws.semantikos.minsal.cl/")
+    @WebResult(name = "refsetResponse", targetNamespace = "")
     @RequestWrapper(localName = "listaRefSet", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.ListaRefSet")
     @ResponseWrapper(localName = "listaRefSetResponse", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.ListaRefSetResponse")
-    public List<RefSet> listaRefSet(
+    public RespuestaRefSets listaRefSet(
         @WebParam(name = "incluyeEstablecimientos", targetNamespace = "")
-        Boolean incluyeEstablecimientos)
+        Boolean incluyeEstablecimientos,
+        @WebParam(name = "idStablishment", targetNamespace = "")
+        String idStablishment)
         throws NotFoundFault_Exception
     ;
 
@@ -144,7 +147,7 @@ public interface SearchService {
      * @throws NotFoundFault_Exception
      */
     @WebMethod
-    @WebResult(name = "refset", targetNamespace = "")
+    @WebResult(name = "refsetResponse", targetNamespace = "")
     @RequestWrapper(localName = "refSetsPorIdDescripcion", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.RefSetsPorIdDescripcion")
     @ResponseWrapper(localName = "refSetsPorIdDescripcionResponse", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.RefSetsPorIdDescripcionResponse")
     public RespuestaRefSets refSetsPorIdDescripcion(

@@ -1,11 +1,8 @@
 
 package cl.minsal.semantikos.ws.shared;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -19,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.ws.semantikos.minsal.cl/}refSet" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="refsetResponse" type="{http://service.ws.semantikos.minsal.cl/}RespuestaRefSets" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -30,40 +27,34 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "listaRefSetResponse", propOrder = {
-    "refSet"
+    "refsetResponse"
 })
 public class ListaRefSetResponse {
 
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
-    protected List<RefSet> refSet;
+    protected RespuestaRefSets refsetResponse;
 
     /**
-     * Gets the value of the refSet property.
+     * Gets the value of the refsetResponse property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the refSet property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getRefSet().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link RefSet }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link RespuestaRefSets }
+     *     
      */
-    public List<RefSet> getRefSet() {
-        if (refSet == null) {
-            refSet = new ArrayList<RefSet>();
-        }
-        return this.refSet;
+    public RespuestaRefSets getRefsetResponse() {
+        return refsetResponse;
+    }
+
+    /**
+     * Sets the value of the refsetResponse property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link RespuestaRefSets }
+     *     
+     */
+    public void setRefsetResponse(RespuestaRefSets value) {
+        this.refsetResponse = value;
     }
 
 }

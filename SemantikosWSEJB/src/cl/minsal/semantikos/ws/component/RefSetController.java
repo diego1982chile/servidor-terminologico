@@ -32,7 +32,8 @@ public class RefSetController {
     @EJB
     private ConceptController conceptController;
 
-    public List<RefSet> findRefSetsByDescriptions(@NotNull String descriptionId, Boolean includeInstitutions, String idStablishment) throws NotFoundFault {
+    public List<RefSet> findRefSetsByDescriptions(@NotNull String descriptionId, Boolean includeInstitutions, String
+            idStablishment) throws NotFoundFault {
 
         /* Se recupera el concepto asociado a la descripción */
         ConceptSMTK conceptByDescriptionID;
@@ -54,14 +55,16 @@ public class RefSetController {
         List<RefSet> refSets;
         if (refSetsNames == null || refSetsNames.isEmpty()) {
             refSets = this.refSetManager.getAllRefSets();
-            logger.debug("RefSetController.findRefsets(" + refSetsNames + ") --> " + refSets.size() + " refsets retornados.");
+            logger.debug("RefSetController.findRefsets(" + refSetsNames + ") --> " + refSets.size() + " refsets " +
+                    "retornados.");
             return Collections.emptyList();
         }
 
         /* Se recuperan los refsets solicitados */
         try {
             refSets = this.refSetManager.findRefSetsByName(refSetsNames);
-            logger.debug("RefSetController.findRefsets(" + refSetsNames + ") --> " + refSets.size() + " refsets retornados.");
+            logger.debug("RefSetController.findRefsets(" + refSetsNames + ") --> " + refSets.size() + " refsets " +
+                    "retornados.");
         } catch (Exception e) {
             throw new NotFoundFault(e.getMessage());
         }
@@ -69,17 +72,16 @@ public class RefSetController {
         return refSets;
     }
 
-    public List<RefSetResponse> refSetList(Boolean includeAllInstitutions) throws NotFoundFault {
-        List<RefSetResponse> res = new ArrayList<>();
-        List<RefSet> refSets = this.refSetManager.getAllRefSets();
-        if (refSets != null) {
-            for (RefSet refSet : refSets) {
-                res.add(this.getResponse(refSet));
-            }
-        }
-        return res;
+    /**
+     * TODO: Claramente este método no fue implementado correctamente.
+     *
+     * @param includeAllInstitutions El parametro no considerado
+     * @return La lista de RefSets encapsulada.
+     * @throws NotFoundFault Arrojada si no ... ???
+     */
+    public RefSetsResponse refSetList(Boolean includeAllInstitutions) throws NotFoundFault {
+        return new RefSetsResponse(this.refSetManager.getAllRefSets());
     }
-
 
     public RefSetResponse getResponse(RefSet refSet) throws NotFoundFault {
         if (refSet == null) {

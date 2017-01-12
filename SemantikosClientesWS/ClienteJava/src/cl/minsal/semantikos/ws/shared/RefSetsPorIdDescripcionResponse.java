@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="refset" type="{http://service.ws.semantikos.minsal.cl/}RespuestaRefSets" minOccurs="0"/>
+ *         &lt;element name="refsetResponse" type="{http://service.ws.semantikos.minsal.cl/}RespuestaRefSets" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,34 +27,34 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "refSetsPorIdDescripcionResponse", propOrder = {
-    "refset"
+    "refsetResponse"
 })
 public class RefSetsPorIdDescripcionResponse {
 
-    protected RespuestaRefSets refset;
+    protected RespuestaRefSets refsetResponse;
 
     /**
-     * Gets the value of the refset property.
+     * Gets the value of the refsetResponse property.
      * 
      * @return
      *     possible object is
      *     {@link RespuestaRefSets }
      *     
      */
-    public RespuestaRefSets getRefset() {
-        return refset;
+    public RespuestaRefSets getRefsetResponse() {
+        return refsetResponse;
     }
 
     /**
-     * Sets the value of the refset property.
+     * Sets the value of the refsetResponse property.
      * 
      * @param value
      *     allowed object is
      *     {@link RespuestaRefSets }
      *     
      */
-    public void setRefset(RespuestaRefSets value) {
-        this.refset = value;
+    public void setRefsetResponse(RespuestaRefSets value) {
+        this.refsetResponse = value;
     }
 
 }
