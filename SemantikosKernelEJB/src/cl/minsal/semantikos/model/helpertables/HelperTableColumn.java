@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.model.helpertables;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 /**
@@ -32,10 +34,12 @@ public class HelperTableColumn {
         this.name = name;
     }
 
+    @JsonProperty("helper_table_id")
     public long getHelperTableId() {
         return helperTableId;
     }
 
+    @JsonProperty("helper_table_id")
     public void setHelperTableId(long helperTableId) {
         this.helperTableId = helperTableId;
     }
@@ -56,27 +60,32 @@ public class HelperTableColumn {
         this.foreignKeyHelperTable = foreignKeyHelperTable;
     }
 
+    @JsonProperty("helper_table_data_type_id")
     public long getHelperTableDataTypeId() {
         return helperTableDataTypeId;
     }
 
+    @JsonProperty("helper_table_data_type_id")
     public void setHelperTableDataTypeId(long helperTableDataTypeId) {
         this.helperTableDataTypeId = helperTableDataTypeId;
     }
 
-
+    @JsonProperty("helper_table_data_type")
     public HelperTableDataType getHelperTableDataType() {
         return helperTableDataType;
     }
 
+    @JsonProperty("helper_table_data_type")
     public void setHelperTableDataType(HelperTableDataType helperTableDataType) {
         this.helperTableDataType = helperTableDataType;
     }
 
+    @JsonProperty("foreign_key_table_id")
     public long getForeignKeyHelperTableId() {
         return foreignKeyHelperTableId;
     }
 
+    @JsonProperty("foreign_key_table_id")
     public void setForeignKeyHelperTableId(long foreignKeyTableId) {
         this.foreignKeyHelperTableId = foreignKeyTableId;
     }
@@ -107,10 +116,12 @@ public class HelperTableColumn {
         return result;
     }
 
+    @JsonProperty("foreign_key")
     public boolean isForeignKey() {
         return foreignKey;
     }
 
+    @JsonProperty("foreign_key")
     public void setForeignKey(boolean foreignKey) {
         this.foreignKey = foreignKey;
     }

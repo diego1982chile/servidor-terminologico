@@ -54,7 +54,7 @@ public class ISPBean {
     ISPFetcher ispFetcher;
 
     @EJB
-    HelperTablesManager helperTableManager;
+    HelperTablesManager helperTablesManager;
 
     @EJB
     UserManager userManager;
@@ -141,7 +141,7 @@ public class ISPBean {
 
         RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(fContext).getAttributes().get("relationshipDefinition");
 
-        //fetchedData = helperTableManager.searchRows(getISPHelperTable(),"description",regnum+"/"+ano,true).get(0).getFields();
+        //fetchedData = helperTablesManager.searchRows(getISPHelperTable(),"description",regnum+"/"+ano,true).get(0).getFields();
         if(regnum.trim().equals("") || ano == null || ano == 0) {
             conceptBean.getMessageBean().messageError("Debe ingresar un valor para el dato 'RegNum' y 'RegAño'");
             return;
@@ -152,7 +152,7 @@ public class ISPBean {
         /**
          * Primero se busca un registro isp local
          */
-        for (HelperTableRow helperTableRecord : helperTableManager.searchRows(getISPHelperTable(),regnum+"/"+ano)) {
+        for (HelperTableRow helperTableRecord : helperTablesManager.searchRows(getISPHelperTable(),regnum+"/"+ano)) {
             ispRecord = helperTableRecord;
             break;
         }
@@ -208,12 +208,12 @@ public class ISPBean {
         if(fetchedData != null){
             HelperTable ispHT = getISPHelperTable();
 
-            ispRecord = helperTableManager.createRow(ispHT,authenticationBean.getUsername());
+            ispRecord = helperTablesManager.createRow(ispHT,authenticationBean.getUsername());
 
 
             mapFetchedData(ispRecord,fetchedData);
 
-            HelperTableRow inserted = helperTableManager.updateRow(ispRecord,authenticationBean.getUsername());
+            HelperTableRow inserted = helperTablesManager.updateRow(ispRecord,authenticationBean.getUsername());
             ispRecord = inserted;
         }
 
@@ -265,7 +265,7 @@ public class ISPBean {
         if(ht == null) {
 
 
-            List<HelperTable> tablas = helperTableManager.findAll();
+            List<HelperTable> tablas = helperTablesManager.findAll();
 
 
             for (HelperTable ht1 : tablas) {
@@ -321,7 +321,7 @@ verifica si el registro ya existe en la base de datos
         if(ispRecord==null )
             return false;
 
-        List<HelperTableRow> records = helperTableManager.searchRows(getISPHelperTable(),regnum+"/"+ano);
+        List<HelperTableRow> records = helperTablesManager.searchRows(getISPHelperTable(),regnum+"/"+ano);
 
         return  records.size() >0;
     }

@@ -9,7 +9,7 @@ import java.util.List;
  * Created by BluePrints Developer on 09-01-2017.
  */
 public interface HelperTableDAO {
-    List<HelperTable> findAll();
+    List<HelperTable> getAllTables();
 
     HelperTableColumn updateColumn(HelperTableColumn column);
 

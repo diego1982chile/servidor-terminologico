@@ -64,6 +64,7 @@ public class HelperTableRecordFactory {
     }
 
     public List<HelperTable> createHelperTablesFromJSON(String jsonExpression) throws IOException {
+
         HelperTable[] jsonHelperTables = mapper.readValue(jsonExpression, HelperTable[].class);
         List<HelperTable> helperTableList = new ArrayList<>();
 

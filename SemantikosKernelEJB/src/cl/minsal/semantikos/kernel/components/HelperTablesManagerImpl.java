@@ -4,17 +4,12 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.helpertables.*;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.validation.constraints.NotNull;
-import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +34,7 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
 
     @Override
     public List<HelperTable> findAll() {
-        return dao.findAll();
+        return dao.getAllTables();
     }
 
 
@@ -69,6 +64,8 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         return dao.getTableRows(tableId);
     }
 
+
+
     @Override
     public HelperTableRow createRow(HelperTable table, String username) {
         HelperTableRow newRow = new HelperTableRow();
@@ -92,8 +89,8 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         return dao.getRowById(newRow.getId());
     }
 
-    @Override
-    public HelperTableData createCell(HelperTableColumn column, HelperTableRow row) {
+
+    private HelperTableData createCell(HelperTableColumn column, HelperTableRow row) {
         HelperTableData data = new HelperTableData();
         data.setColumn(column);
         data.setColumnId(column.getId());

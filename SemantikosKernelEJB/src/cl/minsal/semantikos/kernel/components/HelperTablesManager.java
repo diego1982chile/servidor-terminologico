@@ -24,9 +24,11 @@ public interface HelperTablesManager {
 
     List<HelperTableRow> getTableRows(long tableId);
 
-    HelperTableRow createRow(HelperTable table, String username);
+    /*
+    crea una nueva fila con campos por defecto para la tabla proporcionada
 
-    HelperTableData createCell(HelperTableColumn column, HelperTableRow row);
+     */
+    HelperTableRow createRow(HelperTable table, String username);
 
     HelperTableRow updateRow(HelperTableRow row, String username);
 
