@@ -71,6 +71,12 @@ public class PendingBrowserBean implements Serializable {
     private User user;
 
     /**
+     * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
+
+     */
+    private boolean isFilterChanged;
+
+    /**
      * Lista de términos pendientes para el despliegue del resultado de la consulta
      */
     private LazyDataModel<PendingTerm> pendingTerms;
@@ -115,10 +121,13 @@ public class PendingBrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
-                if(pendingQuery.isFiltered() && first > 0)
+                if(isFilterChanged)
                     pendingQuery.setPageNumber(0);
                 else
                     pendingQuery.setPageNumber(first);
+
+                isFilterChanged = false;
+
                 pendingQuery.setPageSize(pageSize);
                 pendingQuery.setOrder(new Integer(sortField));
 
@@ -297,6 +306,15 @@ public class PendingBrowserBean implements Serializable {
             this.termSelected = null;
         }
     }
+
+    public boolean isFilterChanged() {
+        return isFilterChanged;
+    }
+
+    public void setFilterChanged(boolean filterChanged) {
+        isFilterChanged = filterChanged;
+    }
+
 
 
 }

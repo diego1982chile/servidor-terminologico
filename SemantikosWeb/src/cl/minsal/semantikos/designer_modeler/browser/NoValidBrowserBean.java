@@ -72,6 +72,12 @@ public class NoValidBrowserBean implements Serializable {
 
     private User user;
 
+    /**
+     * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
+
+     */
+    private boolean isFilterChanged;
+
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
@@ -108,10 +114,12 @@ public class NoValidBrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
-                if(noValidQuery.isFiltered() && first > 0)
+                if(isFilterChanged)
                     noValidQuery.setPageNumber(0);
                 else
                     noValidQuery.setPageNumber(first);
+
+                isFilterChanged = false;
 
                 noValidQuery.setPageNumber(first);
                 noValidQuery.setPageSize(pageSize);
@@ -249,6 +257,14 @@ public class NoValidBrowserBean implements Serializable {
 
     public void setConceptSelected(ConceptSMTK conceptSelected) {
         this.conceptSelected = conceptSelected;
+    }
+
+    public boolean isFilterChanged() {
+        return isFilterChanged;
+    }
+
+    public void setFilterChanged(boolean filterChanged) {
+        isFilterChanged = filterChanged;
     }
 
 }

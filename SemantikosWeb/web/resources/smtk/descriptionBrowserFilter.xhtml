@@ -28,7 +28,7 @@
                         </span>
                         <p:outputPanel styleClass="search">
                             <p:inputText value="#{cc.attrs.descriptionQuery.query}" placeholder="Buscar...">
-                                <p:ajax event="keyup" update="@(.browserTable)" process="@this" />
+                                <p:ajax event="keyup" update="@(.browserTable)" process="@this" listener="#{descriptionsBrowserBean.setFilterChanged(true)}" />
                             </p:inputText>
                             <i class="fa fa-search fa-lg" />
                         </p:outputPanel>
@@ -47,7 +47,7 @@
                                               filter="true"
                                               filterMatchMode="startsWith">
 
-                            <p:ajax event="change"
+                            <p:ajax event="change" listener="#{descriptionsBrowserBean.setFilterChanged(true)}"
                                     update="@(.browserTable),@(.browserFilters)"
                                     process="@this" />
 
@@ -69,7 +69,7 @@
                                               converter="omnifaces.SelectItemsConverter"
                                               label="Tipos...">
 
-                            <p:ajax event="change"
+                            <p:ajax event="change" listener="#{descriptionsBrowserBean.setFilterChanged(true)}"
                                     update="@(.browserTable),@(.browserFilters)"
                                     process="@this" />
 
@@ -91,7 +91,7 @@
                                               scrollHeight="200"
                                               label="Seleccione...">
 
-                            <p:ajax event="change"
+                            <p:ajax event="change" listener="#{descriptionsBrowserBean.setFilterChanged(true)}"
                                     update="@(.browserTable),@(.browserFilters)"
                                     process="@this" />
 
