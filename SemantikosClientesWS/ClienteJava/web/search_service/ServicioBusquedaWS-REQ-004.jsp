@@ -44,7 +44,7 @@
                    placeholder="Ingrese los RefSets ','">
         </div>
 
-        <!-- El término a buscar -->
+        <!-- El Identificador del Establecimiento-->
         <div class="form-group">
             <label for="idStablishment">Identificador Establecimiento</label>
             <input id="idStablishment" name="idStablishment" type="text" class="form-control" placeholder="Ingrese el identificador de su establecimiento"

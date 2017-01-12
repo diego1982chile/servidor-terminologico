@@ -5,22 +5,24 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Development on 2016-11-23.
- *
+ * @author Alfonso Cornejo on 2016-11-23.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "peticionObtenerTerminosPedibles", namespace = "http://service.ws.semantikos.minsal.cl/")
-@XmlType(name = "PeticionObtenerTerminosPedibles", namespace = "http://service.ws.semantikos.minsal.cl/")
-public class GetRequestableTermsRequest implements Serializable {
-
-    @XmlElement(required = false, name = "nombreCategoria")
-    private List<String> categoryNames;
-
-    @XmlElement(required = false, name = "nombreRefSet")
-    private List<String> refSetNames;
+@XmlRootElement(name = "conceptosPedibles", namespace = "http://service.ws.semantikos.minsal.cl/")
+@XmlType(name = "PeticionConceptosPedibles", namespace = "http://service.ws.semantikos.minsal.cl/")
+public class RequestableConceptsRequest implements Serializable {
 
     @XmlElement(required = true, name = "pedible")
     private String requestable;
+
+    @XmlElement(name = "nombreCategoria")
+    private List<String> categoryNames;
+
+    @XmlElement(name = "nombreRefSet")
+    private List<String> refSetNames;
+
+    @XmlElement(required = true, name = "idEstablecimiento")
+    private String idStablishment;
 
     public List<String> getCategoryNames() {
         return categoryNames;
@@ -44,5 +46,13 @@ public class GetRequestableTermsRequest implements Serializable {
 
     public void setRequestable(String requestable) {
         this.requestable = requestable;
+    }
+
+    public String getIdStablishment() {
+        return idStablishment;
+    }
+
+    public void setIdStablishment(String idStablishment) {
+        this.idStablishment = idStablishment;
     }
 }

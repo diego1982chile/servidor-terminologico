@@ -6,9 +6,10 @@ import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.ws.Util;
 import cl.minsal.semantikos.ws.response.ConceptResponse;
 import cl.minsal.semantikos.ws.response.TargetResponse;
+
+import java.util.Date;
 
 /**
  * Created by Development on 2016-10-14.
@@ -33,7 +34,7 @@ public class TargetMapper {
 
             if (target instanceof ConceptSCT) {
                 ConceptSCT conceptSCT = (ConceptSCT) target;
-                res.setEffectiveTime(Util.toDate(conceptSCT.getEffectiveTime()));
+                res.setEffectiveTime(new Date(conceptSCT.getEffectiveTime().getTime()));
                 res.setActive(conceptSCT.isActive());
                 res.setModuleId(conceptSCT.getModuleId());
 //                res.setDefinitionStatusId(conceptSCT.getDefinitionStatusId());

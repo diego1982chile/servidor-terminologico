@@ -54,7 +54,17 @@ public class Stringer {
         result.append("Term='").append(peticion.getTermino());
         result.append(", Categoría='").append(peticion.getNombreCategoria());
         result.append(", RefSets='").append(peticion.getNombreRefSet());
-        //result.append(", ID Establecimiento=").append(peticion.getIdEstablecimiento());
+        result.append(", ID Establecimiento=").append(peticion.getIdEstablecimiento());
+
+        return result.append("]").toString();
+    }
+
+    public static String toString(PeticionConceptosPedibles peticion) {
+        StringBuilder result = new StringBuilder("[");
+        result.append("Pedible='").append(peticion.getPedible());
+        result.append(", Categoría='").append(peticion.getNombreCategoria());
+        result.append(", RefSets='").append(peticion.getNombreRefSet());
+        result.append(", ID Establecimiento=").append(peticion.getIdEstablecimiento());
 
         return result.append("]").toString();
     }
@@ -78,10 +88,29 @@ public class Stringer {
         return "Concepto[" + concepto.getConceptID() + "]";
     }
 
-    public static String toString(RespuestaBuscarTermino response) {
+    public static String toString(RespuestaBuscarTermino.Conceptos response) {
+
+        if (response == null || response.getConcepto() == null){
+            return "[null]";
+        }
+
+        List<ConceptoLight> conceptos = response.getConcepto();
         StringBuilder result = new StringBuilder("[");
+        for (ConceptoLight concepto : conceptos) {
+            result.append(toString(concepto));
+        }
+
+        return result.append("]").toString();
+    }
+
+    public static String toString(RespuestaBuscarTermino response) {
 
         RespuestaBuscarTermino.Conceptos conceptos = response.getConceptos();
+        if (conceptos == null || conceptos.getConcepto() == null || conceptos.getConcepto().isEmpty()) {
+            return "[null]";
+        }
+
+        StringBuilder result = new StringBuilder("[");
         for (ConceptoLight concepto : conceptos.getConcepto()) {
             result.append(toString(concepto));
         }

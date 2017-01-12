@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class BuscarTruncatePerfect {
 
-    @XmlElement(namespace = "", required = true)
+    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/", required = true)
     protected PeticionBuscarTermino peticionBuscarTermino;
 
     /**

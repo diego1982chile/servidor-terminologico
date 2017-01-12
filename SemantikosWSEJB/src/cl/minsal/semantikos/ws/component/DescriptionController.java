@@ -2,23 +2,12 @@ package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.ws.Util;
-import cl.minsal.semantikos.ws.fault.IllegalInputFault;
-import cl.minsal.semantikos.ws.fault.NotFoundFault;
-import cl.minsal.semantikos.ws.mapping.ConceptMapper;
-import cl.minsal.semantikos.ws.request.NewTermRequest;
 import cl.minsal.semantikos.ws.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author Andres Farias on 2016-11-17.

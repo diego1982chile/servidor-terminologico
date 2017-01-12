@@ -13,6 +13,7 @@
   <xs:element name="conceptoLight" type="tns:ConceptoLight"/>
   <xs:element name="conceptoPorIdDescripcion" type="tns:conceptoPorIdDescripcion"/>
   <xs:element name="conceptoPorIdDescripcionResponse" type="tns:conceptoPorIdDescripcionResponse"/>
+  <xs:element name="conceptosPedibles" type="tns:PeticionConceptosPedibles"/>
   <xs:element name="conceptosPorCategoria" type="tns:conceptosPorCategoria"/>
   <xs:element name="conceptosPorCategoriaResponse" type="tns:conceptosPorCategoriaResponse"/>
   <xs:element name="conceptosPorRefSet" type="tns:conceptosPorRefSet"/>
@@ -53,7 +54,6 @@
   <xs:element name="peticionBuscarTermino" type="tns:PeticionBuscarTermino"/>
   <xs:element name="peticionBuscarTerminoSimple" type="tns:PeticionBuscarTerminoSimple"/>
   <xs:element name="peticionConceptosPorRefSet" type="tns:PeticionConceptosPorRefSet"/>
-  <xs:element name="peticionObtenerTerminosPedibles" type="tns:PeticionObtenerTerminosPedibles"/>
   <xs:element name="peticionPorCategoria" type="tns:PeticionPorCategoria"/>
   <xs:element name="peticionRefSetsPorIdDescripcion" type="tns:PeticionRefSetsPorIdDescripcion"/>
   <xs:element name="refSet" type="tns:RefSet"/>
@@ -539,14 +539,15 @@
   </xs:complexType>
   <xs:complexType name="obtenerTerminosPedibles">
     <xs:sequence>
-      <xs:element ref="tns:peticionObtenerTerminosPedibles"/>
+      <xs:element name="peticionObtenerTerminosPedibles" type="tns:PeticionConceptosPedibles"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="PeticionObtenerTerminosPedibles">
+  <xs:complexType name="PeticionConceptosPedibles">
     <xs:sequence>
+      <xs:element name="pedible" type="xs:string"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreCategoria" type="xs:string"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
-      <xs:element name="pedible" type="xs:string"/>
+      <xs:element name="idEstablecimiento" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="obtenerTerminosPediblesResponse">
@@ -556,7 +557,6 @@
   </xs:complexType>
   <xs:complexType name="RespuestaBuscarTermino">
     <xs:sequence>
-      <xs:element minOccurs="0" ref="tns:paginacion"/>
       <xs:element minOccurs="0" name="conceptos">
         <xs:complexType>
           <xs:sequence>

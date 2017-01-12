@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.ws.mapping;
 
 import cl.minsal.semantikos.model.RefSet;
-import cl.minsal.semantikos.ws.Util;
 import cl.minsal.semantikos.ws.response.RefSetResponse;
 
 import java.util.Date;
@@ -17,7 +16,7 @@ public class RefSetMapper {
             RefSetResponse res = new RefSetResponse();
             res.setName(refSet.getName());
 
-            Date validityUntil = Util.toDate(refSet.getValidityUntil());
+            Date validityUntil = new Date(refSet.getValidityUntil().getTime());
             if ( validityUntil != null ) {
                 res.setValidityUntil(validityUntil);
                 res.setValid(validityUntil.after(new Date()));

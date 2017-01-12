@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -19,7 +18,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.ws.semantikos.minsal.cl/}paginacion" minOccurs="0"/>
  *         &lt;element name="conceptos" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
@@ -41,38 +39,11 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RespuestaBuscarTermino", propOrder = {
-    "paginacion",
     "conceptos"
 })
 public class RespuestaBuscarTermino {
 
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
-    protected Paginacion paginacion;
     protected RespuestaBuscarTermino.Conceptos conceptos;
-
-    /**
-     * Gets the value of the paginacion property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Paginacion }
-     *     
-     */
-    public Paginacion getPaginacion() {
-        return paginacion;
-    }
-
-    /**
-     * Sets the value of the paginacion property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Paginacion }
-     *     
-     */
-    public void setPaginacion(Paginacion value) {
-        this.paginacion = value;
-    }
 
     /**
      * Gets the value of the conceptos property.

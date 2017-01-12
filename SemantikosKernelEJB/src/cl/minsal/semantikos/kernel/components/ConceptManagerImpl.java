@@ -20,6 +20,7 @@ import java.text.Normalizer;
 import java.util.*;
 
 import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
+import static cl.minsal.semantikos.model.PersistentEntity.getIdArray;
 
 /**
  * @author Andrés Farías
@@ -243,20 +244,6 @@ public class ConceptManagerImpl implements ConceptManager {
         } while (thereAreMore);
 
         return concepts;
-    }
-
-    private List<Long> getIdList(@NotNull Collection<? extends PersistentEntity> entities) {
-        List<Long> res = new ArrayList<>(entities.size());
-
-        for (PersistentEntity entity : entities) {
-            res.add(entity.getId());
-        }
-
-        return res;
-    }
-
-    private Long[] getIdArray(@NotNull Collection<? extends PersistentEntity> entities) {
-        return getIdList(entities).toArray(new Long[0]);
     }
 
     @Override

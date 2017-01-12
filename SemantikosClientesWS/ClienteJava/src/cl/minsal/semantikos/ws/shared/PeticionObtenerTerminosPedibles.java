@@ -39,7 +39,9 @@ import javax.xml.bind.annotation.XmlType;
 public class PeticionObtenerTerminosPedibles {
 
     protected List<String> nombreCategoria;
+
     protected List<String> nombreRefSet;
+
     @XmlElement(required = true)
     protected String pedible;
 
@@ -125,4 +127,11 @@ public class PeticionObtenerTerminosPedibles {
         this.pedible = value;
     }
 
+    public void setNombreCategoria(List<String> nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
+
+    public void setNombreRefSet(List<String> nombreRefSet) {
+        this.nombreRefSet = nombreRefSet;
+    }
 }

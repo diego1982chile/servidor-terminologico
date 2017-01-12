@@ -91,8 +91,8 @@ public interface SearchService {
      * @param peticionBuscarTermino
      * @return
      *     returns cl.minsal.semantikos.ws.shared.RespuestaConceptosPorCategoria
-     * @throws NotFoundFault_Exception
      * @throws IllegalInputFault_Exception
+     * @throws NotFoundFault_Exception
      */
     @WebMethod
     @WebResult(name = "respuestaConceptos", targetNamespace = "")
@@ -140,8 +140,8 @@ public interface SearchService {
      * @param peticionRefSetsPorIdDescripcion
      * @return
      *     returns java.util.List<java.lang.String>
-     * @throws NotFoundFault_Exception
      * @throws IllegalInputFault_Exception
+     * @throws NotFoundFault_Exception
      */
     @WebMethod
     @WebResult(name = "refset", targetNamespace = "")
@@ -216,8 +216,8 @@ public interface SearchService {
     @RequestWrapper(localName = "obtenerTerminosPedibles", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.ObtenerTerminosPedibles")
     @ResponseWrapper(localName = "obtenerTerminosPediblesResponse", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.ObtenerTerminosPediblesResponse")
     public RespuestaBuscarTermino obtenerTerminosPedibles(
-        @WebParam(name = "peticionObtenerTerminosPedibles", targetNamespace = "http://service.ws.semantikos.minsal.cl/")
-        PeticionObtenerTerminosPedibles peticionObtenerTerminosPedibles)
+        @WebParam(name = "peticionObtenerTerminosPedibles", targetNamespace = "")
+        PeticionConceptosPedibles peticionObtenerTerminosPedibles)
         throws IllegalInputFault_Exception
     ;
 
@@ -226,8 +226,8 @@ public interface SearchService {
      * @param peticionBuscarTermino
      * @return
      *     returns cl.minsal.semantikos.ws.shared.RespuestaBuscarTerminoGenerica
-     * @throws NotFoundFault_Exception
      * @throws IllegalInputFault_Exception
+     * @throws NotFoundFault_Exception
      */
     @WebMethod
     @WebResult(name = "respuestaBuscarTermino", targetNamespace = "")

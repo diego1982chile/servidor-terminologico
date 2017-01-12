@@ -15,9 +15,6 @@ import java.util.List;
 @XmlType(name = "RespuestaBuscarTermino", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class TermSearchResponse implements Serializable {
 
-    @XmlElement(name = "paginacion")
-    private PaginationResponse pagination;
-
     @XmlElementWrapper(name = "conceptos")
     @XmlElement(name = "concepto")
     private List<ConceptLightResponse> concepts;
@@ -35,14 +32,6 @@ public class TermSearchResponse implements Serializable {
         for (ConceptSMTK requestableConcept : requestableConcepts) {
             concepts.add(new ConceptLightResponse(requestableConcept));
         }
-    }
-
-    public PaginationResponse getPagination() {
-        return pagination;
-    }
-
-    public void setPagination(PaginationResponse pagination) {
-        this.pagination = pagination;
     }
 
     public List<ConceptLightResponse> getConcepts() {

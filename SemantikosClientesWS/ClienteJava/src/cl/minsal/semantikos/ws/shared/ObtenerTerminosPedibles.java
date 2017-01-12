@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.ws.semantikos.minsal.cl/}peticionObtenerTerminosPedibles"/>
+ *         &lt;element name="peticionObtenerTerminosPedibles" type="{http://service.ws.semantikos.minsal.cl/}PeticionConceptosPedibles"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,18 +32,18 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ObtenerTerminosPedibles {
 
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/", required = true)
-    protected PeticionObtenerTerminosPedibles peticionObtenerTerminosPedibles;
+    @XmlElement(required = true)
+    protected PeticionConceptosPedibles peticionObtenerTerminosPedibles;
 
     /**
      * Gets the value of the peticionObtenerTerminosPedibles property.
      * 
      * @return
      *     possible object is
-     *     {@link PeticionObtenerTerminosPedibles }
+     *     {@link PeticionConceptosPedibles }
      *     
      */
-    public PeticionObtenerTerminosPedibles getPeticionObtenerTerminosPedibles() {
+    public PeticionConceptosPedibles getPeticionObtenerTerminosPedibles() {
         return peticionObtenerTerminosPedibles;
     }
 
@@ -52,10 +52,10 @@ public class ObtenerTerminosPedibles {
      * 
      * @param value
      *     allowed object is
-     *     {@link PeticionObtenerTerminosPedibles }
+     *     {@link PeticionConceptosPedibles }
      *     
      */
-    public void setPeticionObtenerTerminosPedibles(PeticionObtenerTerminosPedibles value) {
+    public void setPeticionObtenerTerminosPedibles(PeticionConceptosPedibles value) {
         this.peticionObtenerTerminosPedibles = value;
     }
 

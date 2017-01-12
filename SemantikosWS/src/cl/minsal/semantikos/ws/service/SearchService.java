@@ -114,7 +114,7 @@ public class SearchService {
     public TermSearchResponse obtenerTerminosPedibles(
             @XmlElement(required = true)
             @WebParam(name = "peticionObtenerTerminosPedibles")
-                    GetRequestableTermsRequest request
+                    RequestableConceptsRequest request
     ) throws IllegalInputFault {
 
         /* Se hace una validación de los parámetros */
@@ -130,7 +130,7 @@ public class SearchService {
      * @throws cl.minsal.semantikos.ws.fault.IllegalInputFault Arrojado si se solicitan cateogorías distintas a las objetivo de la búsqueda o que
      *                                                         simplemente no existen. También se arroja si existen
      */
-    private void obtenerTerminosPediblesParamValidation(GetRequestableTermsRequest request) throws IllegalInputFault {
+    private void obtenerTerminosPediblesParamValidation(RequestableConceptsRequest request) throws IllegalInputFault {
 
         /* Se valida que haya al menos 1 categoría o 1 refset */
         validateAtLeastOneCategoryOrOneRefSet(request);
@@ -157,7 +157,7 @@ public class SearchService {
      * @param request La petición enviada.
      * @throws cl.minsal.semantikos.ws.fault.IllegalInputFault Se arroja si se viola la condición.
      */
-    private void validateAtLeastOneCategoryOrOneRefSet(GetRequestableTermsRequest request) throws IllegalInputFault {
+    private void validateAtLeastOneCategoryOrOneRefSet(RequestableConceptsRequest request) throws IllegalInputFault {
         if (!(request.getCategoryNames().size() > 0 || request.getRefSetNames().size() > 0)) {
             throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet.");
         }
