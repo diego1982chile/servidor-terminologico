@@ -575,9 +575,16 @@ public class ConceptBean implements Serializable {
      * Este método es el encargado de agregar una nuva relacion con los parémetros que se indican.
      */
     public void addRelationship(RelationshipDefinition relationshipDefinition, Target target) {
+
         Relationship relationship = new Relationship(this.concept, target, relationshipDefinition, new ArrayList<RelationshipAttribute>(), null);
-        if ((relationshipDefinition.isISP() || relationshipDefinition.isBioequivalente()) && concept.contains(relationship)) {
-            messageBean.messageError("Ya existe la relación '" + relationshipDefinition.getName() + "' con el destino '" + target.getRepresentation() + "' para este concepto");
+
+        try{
+            relationshipBindingBR.brSTK001(concept, relationship);
+            relationshipBindingBR.brSTK002(concept, relationship);
+            relationshipBindingBR.brSTK003(concept, relationship);
+            relationshipBindingBR.brSTK004(concept, relationship);
+        }catch (EJBException e) {
+            messageBean.messageError(e.getMessage());
             resetPlaceHolders();
             return;
         }

@@ -18,4 +18,13 @@ public interface RelationshipBindingBRInterface {
     public void postActions(Relationship relationship, User user);
 
     public void brSCT005(ConceptSMTK concept);
+
+    public void brSTK001(ConceptSMTK concept, Relationship relationship);
+
+    public void brSTK002(ConceptSMTK concept, Relationship relationship);
+
+    public void brSTK003(ConceptSMTK concept, Relationship relationship);
+
+    public void brSTK004(ConceptSMTK concept, Relationship relationship);
+
 }

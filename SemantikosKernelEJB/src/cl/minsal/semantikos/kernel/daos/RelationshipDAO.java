@@ -70,6 +70,8 @@ public interface RelationshipDAO {
 
     public List<Relationship> getRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target);
 
+    public List<Relationship> findRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target);
+
     /**
      * Este método es responsable de obtener todas las relaciones que tienen como definicion un relationshipDefinition
      * en
