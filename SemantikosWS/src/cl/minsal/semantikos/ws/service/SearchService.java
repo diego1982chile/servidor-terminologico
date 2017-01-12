@@ -2,6 +2,7 @@ package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.ws.component.CategoryController;
 import cl.minsal.semantikos.ws.component.ConceptController;
 import cl.minsal.semantikos.ws.component.CrossmapController;
@@ -167,15 +168,22 @@ public class SearchService {
     // REQ-WS-009
     @WebResult(name = "refset")
     @WebMethod(operationName = "refSetsPorIdDescripcion")
-    public List<String> refSetsPorIdDescripcion(
+    public RefSetsResponse refSetsPorIdDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "peticionRefSetsPorIdDescripcion")
                     RefSetsByDescriptionIdRequest request
     ) throws NotFoundFault, IllegalInputFault {
-        if (request.getDescriptionId() == null || request.getDescriptionId().isEmpty()) {
+
+        String descriptionId = request.getDescriptionId();
+        Boolean includeInstitutions = request.getIncludeInstitutions();
+        String idStablishment = request.getIdStablishment();
+
+        if (descriptionId == null || descriptionId.isEmpty()) {
             throw new IllegalInputFault("Debe ingresar por lo menos un idDescripcion");
         }
-        return this.refSetController.findRefSetsByDescriptions(request.getDescriptionId(), request.getIncludeInstitutions());
+        List<RefSet> refSets = this.refSetController.findRefSetsByDescriptions(descriptionId, includeInstitutions, idStablishment);
+
+        return new RefSetsResponse(refSets);
     }
 
     // REQ-WS-008

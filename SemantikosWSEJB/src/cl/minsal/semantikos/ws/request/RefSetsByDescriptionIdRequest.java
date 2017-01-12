@@ -14,17 +14,13 @@ import java.util.List;
 public class RefSetsByDescriptionIdRequest implements Serializable {
 
     @XmlElement(required = true, name = "idDescripcion")
-    private List<String> descriptionId;
+    private String descriptionId;
+
     @XmlElement(required = false, defaultValue = "true", name = "incluyeEstablecimientos")
     private Boolean includeInstitutions;
 
-    public List<String> getDescriptionId() {
-        return descriptionId;
-    }
-
-    public void setDescriptionId(List<String> descriptionId) {
-        this.descriptionId = descriptionId;
-    }
+    @XmlElement(required = true, name = "idStablishment")
+    private String idStablishment;
 
     public Boolean getIncludeInstitutions() {
         return includeInstitutions;
@@ -32,5 +28,21 @@ public class RefSetsByDescriptionIdRequest implements Serializable {
 
     public void setIncludeInstitutions(Boolean includeInstitutions) {
         this.includeInstitutions = includeInstitutions;
+    }
+
+    public String getDescriptionId() {
+        return descriptionId;
+    }
+
+    public void setDescriptionId(String descriptionId) {
+        this.descriptionId = descriptionId;
+    }
+
+    public String getIdStablishment() {
+        return idStablishment;
+    }
+
+    public void setIdStablishment(String idStablishment) {
+        this.idStablishment = idStablishment;
     }
 }

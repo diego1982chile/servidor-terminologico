@@ -1,8 +1,6 @@
 
 package cl.minsal.semantikos.ws.shared;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -19,8 +17,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="idDescripcion" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
+ *         &lt;element name="idDescripcion" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="incluyeEstablecimientos" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="idStablishment" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,42 +31,40 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PeticionRefSetsPorIdDescripcion", propOrder = {
     "idDescripcion",
-    "incluyeEstablecimientos"
+    "incluyeEstablecimientos",
+    "idStablishment"
 })
 public class PeticionRefSetsPorIdDescripcion {
 
     @XmlElement(required = true)
-    protected List<String> idDescripcion;
+    protected String idDescripcion;
     @XmlElement(defaultValue = "true")
     protected Boolean incluyeEstablecimientos;
+    @XmlElement(required = true)
+    protected String idStablishment;
 
     /**
      * Gets the value of the idDescripcion property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the idDescripcion property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getIdDescripcion().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public List<String> getIdDescripcion() {
-        if (idDescripcion == null) {
-            idDescripcion = new ArrayList<String>();
-        }
-        return this.idDescripcion;
+    public String getIdDescripcion() {
+        return idDescripcion;
+    }
+
+    /**
+     * Sets the value of the idDescripcion property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setIdDescripcion(String value) {
+        this.idDescripcion = value;
     }
 
     /**
@@ -94,4 +91,31 @@ public class PeticionRefSetsPorIdDescripcion {
         this.incluyeEstablecimientos = value;
     }
 
+    /**
+     * Gets the value of the idStablishment property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getIdStablishment() {
+        return idStablishment;
+    }
+
+    /**
+     * Sets the value of the idStablishment property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setIdStablishment(String value) {
+        this.idStablishment = value;
+    }
+
+    public Boolean getIncluyeEstablecimientos() {
+        return incluyeEstablecimientos;
+    }
 }

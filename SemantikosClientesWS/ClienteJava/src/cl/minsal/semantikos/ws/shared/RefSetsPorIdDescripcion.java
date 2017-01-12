@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class RefSetsPorIdDescripcion {
 
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/", required = true)
+    @XmlElement(namespace = "", required = true)
     protected PeticionRefSetsPorIdDescripcion peticionRefSetsPorIdDescripcion;
 
     /**

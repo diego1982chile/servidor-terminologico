@@ -139,7 +139,7 @@ public interface SearchService {
      * 
      * @param peticionRefSetsPorIdDescripcion
      * @return
-     *     returns java.util.List<java.lang.String>
+     *     returns cl.minsal.semantikos.ws.shared.RespuestaRefSets
      * @throws IllegalInputFault_Exception
      * @throws NotFoundFault_Exception
      */
@@ -147,7 +147,7 @@ public interface SearchService {
     @WebResult(name = "refset", targetNamespace = "")
     @RequestWrapper(localName = "refSetsPorIdDescripcion", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.RefSetsPorIdDescripcion")
     @ResponseWrapper(localName = "refSetsPorIdDescripcionResponse", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.RefSetsPorIdDescripcionResponse")
-    public List<String> refSetsPorIdDescripcion(
+    public RespuestaRefSets refSetsPorIdDescripcion(
         @WebParam(name = "peticionRefSetsPorIdDescripcion", targetNamespace = "http://service.ws.semantikos.minsal.cl/")
         PeticionRefSetsPorIdDescripcion peticionRefSetsPorIdDescripcion)
         throws IllegalInputFault_Exception, NotFoundFault_Exception

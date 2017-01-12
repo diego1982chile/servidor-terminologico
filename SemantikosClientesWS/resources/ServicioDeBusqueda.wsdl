@@ -65,6 +65,7 @@
   <xs:element name="respuestaBuscarTerminoGenerica" type="tns:RespuestaBuscarTerminoGenerica"/>
   <xs:element name="respuestaConceptosPorCategoria" type="tns:RespuestaConceptosPorCategoria"/>
   <xs:element name="respuestaConceptosPorRefSet" type="tns:RespuestaConceptosPorRefSet"/>
+  <xs:element name="respuestaRefSets" type="tns:RespuestaRefSets"/>
   <xs:element name="tablaAuxiliar" type="tns:TablaAuxiliar"/>
   <xs:element name="usuario" type="tns:Usuario"/>
   <xs:complexType name="getCrossmapSets">
@@ -484,13 +485,25 @@
   </xs:complexType>
   <xs:complexType name="PeticionRefSetsPorIdDescripcion">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" name="idDescripcion" type="xs:string"/>
+      <xs:element name="idDescripcion" type="xs:string"/>
       <xs:element default="true" minOccurs="0" name="incluyeEstablecimientos" type="xs:boolean"/>
+      <xs:element name="idStablishment" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="refSetsPorIdDescripcionResponse">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="refset" type="xs:string"/>
+      <xs:element minOccurs="0" name="refset" type="tns:RespuestaRefSets"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RespuestaRefSets">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="refsets">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="refset" type="tns:RefSet"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="listaCategorias">

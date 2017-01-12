@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.util.*;
@@ -31,28 +32,18 @@ public class RefSetController {
     @EJB
     private ConceptController conceptController;
 
-    public List<String> findRefSetsByDescriptions(@NotNull List<String> descriptionIds, Boolean includeInstitutions) throws NotFoundFault {
-        Set<String> res = new HashSet<>(descriptionIds.size());
+    public List<RefSet> findRefSetsByDescriptions(@NotNull String descriptionId, Boolean includeInstitutions, String idStablishment) throws NotFoundFault {
 
-        Set<ConceptSMTK> conceptSMTKS = new HashSet<>(descriptionIds.size());
-        for (String descriptionId : descriptionIds) {
-            try {
-                conceptSMTKS.add(this.conceptManager.getConceptByDescriptionID(descriptionId));
-            } catch (Exception e) {
-                throw new NotFoundFault("Descripcion no encontrada: " + descriptionId);
-            }
+        /* Se recupera el concepto asociado a la descripción */
+        ConceptSMTK conceptByDescriptionID;
+        try {
+            conceptByDescriptionID = this.conceptManager.getConceptByDescriptionID(descriptionId);
+        } catch (EJBException e) {
+            throw new NotFoundFault("Descripcion no encontrada: " + descriptionId);
         }
 
-        for (ConceptSMTK conceptSMTK : conceptSMTKS) {
-            List<RefSet> refSets = refSetManager.findByConcept(conceptSMTK);
-            if (refSets != null) {
-                for (RefSet refSet : refSets) {
-                    res.add(refSet.getName());
-                }
-            }
-        }
-
-        return new ArrayList<>(res);
+        /* Se retornan los refsets asociados al concepto */
+        return refSetManager.findByConcept(conceptByDescriptionID);
     }
 
     public List<RefSet> findRefsets(List<String> refSetsNames) throws NotFoundFault {

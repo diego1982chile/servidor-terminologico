@@ -9,9 +9,12 @@ public class Stringer {
 
     public static String toString(RespuestaBuscarTerminoGenerica respuestaBuscarTerminoGenerica) {
 
-        RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch descripcionesPerfectMatch = respuestaBuscarTerminoGenerica.getDescripcionesPerfectMatch();
+        RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch descripcionesPerfectMatch =
+                respuestaBuscarTerminoGenerica.getDescripcionesPerfectMatch();
 
-        return "Perfect match (" + descripcionesPerfectMatch.getDescripcionPerfectMatch().size() + "): " + descripcionesPerfectMatch.getDescripcionPerfectMatch() + ", No validas: " + Stringer.toString(respuestaBuscarTerminoGenerica.getDescripcionesNoValidas());
+        return "Perfect match (" + descripcionesPerfectMatch.getDescripcionPerfectMatch().size() + "): " +
+                descripcionesPerfectMatch.getDescripcionPerfectMatch() + ", No validas: " + Stringer.toString
+                (respuestaBuscarTerminoGenerica.getDescripcionesNoValidas());
     }
 
     private static String toString(RespuestaBuscarTerminoGenerica.DescripcionesNoValidas descripcionesNoValidas) {
@@ -90,7 +93,7 @@ public class Stringer {
 
     public static String toString(RespuestaBuscarTermino.Conceptos response) {
 
-        if (response == null || response.getConcepto() == null){
+        if (response == null || response.getConcepto() == null) {
             return "[null]";
         }
 
@@ -116,5 +119,32 @@ public class Stringer {
         }
 
         return result.append("]").toString();
+    }
+
+    public static String toString(RespuestaRefSets response) {
+        return null;
+    }
+
+    public static String toString(PeticionRefSetsPorIdDescripcion peticion) {
+        return "[DESCRIPTION_ID=" + peticion.getIdDescripcion() + ", ID Establecimiento" + peticion.getIdStablishment
+                () + "Incluye=" + peticion.getIncluyeEstablecimientos() + "]";
+    }
+
+    public static String toString(RespuestaRefSets.Refsets serviceResponse) {
+        List<RefSet> refsets = serviceResponse.getRefset();
+        if (refsets == null || refsets.isEmpty()) {
+            return "[null]";
+        }
+
+        StringBuilder result = new StringBuilder("[");
+        for (RefSet refSet: refsets) {
+            result.append(toString(refSet));
+        }
+
+        return result.append("]").toString();
+    }
+
+    private static String toString(RefSet refSet) {
+        return "[" + refSet.getNombre() + "]";
     }
 }

@@ -74,6 +74,7 @@ public class ObjectFactory {
     private final static QName _IllegalInputFault_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "IllegalInputFault");
     private final static QName _NotFoundFault_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "NotFoundFault");
     private final static QName _DefinicionObjetivo_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "definicionObjetivo");
+    private final static QName _RespuestaRefSets_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaRefSets");
     private final static QName _DescripcionPendiente_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionPendiente");
     private final static QName _CrossmapSetMembersResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossmapSetMembersResponse");
     private final static QName _ConceptosPorRefSetResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "conceptosPorRefSetResponse");
@@ -146,6 +147,14 @@ public class ObjectFactory {
      */
     public DefinicionRelacion createDefinicionRelacion() {
         return new DefinicionRelacion();
+    }
+
+    /**
+     * Create an instance of {@link RespuestaRefSets }
+     * 
+     */
+    public RespuestaRefSets createRespuestaRefSets() {
+        return new RespuestaRefSets();
     }
 
     /**
@@ -749,6 +758,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link RespuestaRefSets.Refsets }
+     * 
+     */
+    public RespuestaRefSets.Refsets createRespuestaRefSetsRefsets() {
+        return new RespuestaRefSets.Refsets();
+    }
+
+    /**
      * Create an instance of {@link Objetivo.Fields.Entry }
      * 
      */
@@ -1284,6 +1301,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "definicionObjetivo")
     public JAXBElement<DefinicionObjetivo> createDefinicionObjetivo(DefinicionObjetivo value) {
         return new JAXBElement<DefinicionObjetivo>(_DefinicionObjetivo_QNAME, DefinicionObjetivo.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RespuestaRefSets }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "respuestaRefSets")
+    public JAXBElement<RespuestaRefSets> createRespuestaRefSets(RespuestaRefSets value) {
+        return new JAXBElement<RespuestaRefSets>(_RespuestaRefSets_QNAME, RespuestaRefSets.class, null, value);
     }
 
     /**

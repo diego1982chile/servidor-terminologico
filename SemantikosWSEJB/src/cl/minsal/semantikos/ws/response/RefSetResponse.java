@@ -1,7 +1,10 @@
 package cl.minsal.semantikos.ws.response;
 
+import cl.minsal.semantikos.model.RefSet;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,17 +19,34 @@ public class RefSetResponse implements Serializable {
 
     @XmlElement(name="nombre")
     private String name;
+
     @XmlElement(name="valido")
     private Boolean isValid;
+
     @XmlElement(name="validoHasta")
     private Date validityUntil;
+
     @XmlElement(name="creadoEn")
     private Date creationDate;
+
     @XmlElement(name="institucion")
     private String institution;
+
     @XmlElementWrapper(name = "conceptos")
     @XmlElement(name="concepto")
     private List<ConceptResponse> concepts;
+
+    public RefSetResponse() {
+    }
+
+    public RefSetResponse(RefSet refSet) {
+        this.name = refSet.getName();
+        this.isValid = refSet.isValid();
+        this.validityUntil = refSet.getValidityUntil();
+        this.creationDate = refSet.getCreationDate();
+        this.institution = refSet.getInstitution().getName();
+        this.concepts = new ArrayList<>();
+    }
 
     public String getName() {
         return name;

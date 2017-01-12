@@ -1,8 +1,6 @@
 
 package cl.minsal.semantikos.ws.shared;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -18,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="refset" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="refset" type="{http://service.ws.semantikos.minsal.cl/}RespuestaRefSets" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,35 +31,30 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class RefSetsPorIdDescripcionResponse {
 
-    protected List<String> refset;
+    protected RespuestaRefSets refset;
 
     /**
      * Gets the value of the refset property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the refset property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getRefset().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link RespuestaRefSets }
+     *     
      */
-    public List<String> getRefset() {
-        if (refset == null) {
-            refset = new ArrayList<String>();
-        }
-        return this.refset;
+    public RespuestaRefSets getRefset() {
+        return refset;
+    }
+
+    /**
+     * Sets the value of the refset property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link RespuestaRefSets }
+     *     
+     */
+    public void setRefset(RespuestaRefSets value) {
+        this.refset = value;
     }
 
 }
