@@ -53,7 +53,6 @@ public class HelperTableRecordFactory {
 
         HelperTableRow[] jSONecords = mapper.readValue(jsonExpression, HelperTableRow[].class);
 
-
         List<HelperTableRow> records = new ArrayList<>();
 
         for (HelperTableRow row: jSONecords ) {

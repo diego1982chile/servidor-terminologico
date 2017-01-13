@@ -2,6 +2,7 @@ package cl.minsal.semantikos.model.helpertables;
 
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.relationships.TargetType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -80,36 +81,43 @@ public class HelperTableRow implements Target{
         this.id = id;
     }
 
-
+    @JsonProperty("creation_date")
     public Date getCreationDate() {
         return creationDate;
     }
 
+    @JsonProperty("creation_date")
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
+    @JsonProperty("last_edit_date")
     public Date getLastEditDate() {
         return lastEditDate;
     }
 
+    @JsonProperty("last_edit_date")
     public void setLastEditDate(Date lastEditDate) {
         this.lastEditDate = lastEditDate;
     }
 
-
+    @JsonProperty("valid")
     public boolean isValid() {
         return valid;
     }
 
+    @JsonProperty("valid")
     public void setValid(boolean valid) {
         this.valid = valid;
     }
 
+    @JsonProperty("validity_until")
     public Date getValidityUntil() {
         return validityUntil;
     }
 
+
+    @JsonProperty("validity_until")
     public void setValidityUntil(Date validityUntil) {
         this.validityUntil = validityUntil;
     }
@@ -123,6 +131,7 @@ public class HelperTableRow implements Target{
         this.description = description;
     }
 
+
     public List<HelperTableData> getCells() {
         return cells;
     }
@@ -131,31 +140,40 @@ public class HelperTableRow implements Target{
         this.cells = cells;
     }
 
+
+    @JsonProperty("creation_user")
     public String getCreationUsername() {
         return creationUsername;
     }
 
+
+    @JsonProperty("creation_user")
     public void setCreationUsername(String creationUsername) {
         this.creationUsername = creationUsername;
     }
 
+    @JsonProperty("helper_table_id")
     public long getHelperTableId() {
 
         return helperTableId;
     }
 
+    @JsonProperty("helper_table_id")
+    public void setHelperTableId(long helperTableId) {
+        this.helperTableId = helperTableId;
+    }
 
+    @JsonProperty("last_edit_user")
     public String getLastEditUsername() {
         return lastEditUsername;
     }
 
+    @JsonProperty("last_edit_user")
     public void setLastEditUsername(String lastEditUsername) {
         this.lastEditUsername = lastEditUsername;
     }
 
-    public void setHelperTableId(long helperTableId) {
-        this.helperTableId = helperTableId;
-    }
+
 
     @Override
     public boolean equals(Object o) {

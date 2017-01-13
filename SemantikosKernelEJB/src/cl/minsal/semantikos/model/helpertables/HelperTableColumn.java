@@ -17,6 +17,13 @@ public class HelperTableColumn {
     private HelperTable foreignKeyHelperTable;
     private HelperTableDataType helperTableDataType;
     private boolean foreignKey;
+    private String description;
+    private boolean searchable;
+    private boolean editable;
+    private boolean sortable;
+    private boolean showable;
+    private boolean required;
+
 
     public long getId() {
         return id;
@@ -124,5 +131,64 @@ public class HelperTableColumn {
     @JsonProperty("foreign_key")
     public void setForeignKey(boolean foreignKey) {
         this.foreignKey = foreignKey;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @JsonProperty("searchable")
+    public boolean isSearchable() {
+        return searchable;
+    }
+
+    @JsonProperty("searchable")
+    public void setSearchable(boolean searchable) {
+        this.searchable = searchable;
+    }
+
+    @JsonProperty("editable")
+    public boolean isEditable() {
+        return editable;
+    }
+
+    @JsonProperty("editable")
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    @JsonProperty("sortable")
+    public boolean isSortable() {
+        return sortable;
+    }
+
+    @JsonProperty("sortable")
+    public void setSortable(boolean sortable) {
+        this.sortable = sortable;
+    }
+
+    @JsonProperty("showable")
+    public boolean isShowable() {
+        return showable;
+    }
+
+    @JsonProperty("showable")
+    public void setShowable(boolean showable) {
+        this.showable = showable;
+    }
+
+    @JsonProperty("required")
+    public boolean isRequired() {
+        return required;
+    }
+
+    @JsonProperty("required")
+    public void setRequired(boolean required) {
+        this.required = required;
     }
 }

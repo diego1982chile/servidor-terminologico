@@ -45,6 +45,7 @@ public class HelperTable implements TargetDefinition{
         this.description = description;
     }
 
+
     public List<HelperTableColumn> getColumns() {
         return columns;
     }

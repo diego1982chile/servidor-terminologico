@@ -101,13 +101,15 @@ public class HelperTableBean implements Serializable{
         HelperTableColumn newColumn = new HelperTableColumn();
 
         newColumn.setName("columna " + (selected.getColumns().size() +1));
+        newColumn.setDescription("columna " + (selected.getColumns().size() +1));
         //newColumn.setHelperTable(selected);
         newColumn.setHelperTableId(selected.getId());
         newColumn.setHelperTableDataTypeId(1);
 
+
         newColumn = manager.createColumn(newColumn);
 
-        this.selected.getColumns().add(newColumn);
+        this.selected = manager.getById(this.selected.getId());
     }
 
 

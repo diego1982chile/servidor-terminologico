@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.model.helpertables;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -29,50 +31,62 @@ public class HelperTableData {
         this.id = id;
     }
 
+    @JsonProperty("int_value")
     public long getIntValue() {
         return intValue;
     }
 
+    @JsonProperty("int_value")
     public void setIntValue(long intValue) {
         this.intValue = intValue;
     }
 
+    @JsonProperty("float_value")
     public Double getFloatValue() {
         return floatValue;
     }
 
+    @JsonProperty("float_value")
     public void setFloatValue(Double floatValue) {
         this.floatValue = floatValue;
     }
 
+    @JsonProperty("string_value")
     public String getStringValue() {
         return stringValue;
     }
 
+    @JsonProperty("string_value")
     public void setStringValue(String stringValue) {
         this.stringValue = stringValue;
     }
 
+    @JsonProperty("date_value")
     public Date getDateValue() {
         return dateValue;
     }
 
+    @JsonProperty("date_value")
     public void setDateValue(Date dateValue) {
         this.dateValue = dateValue;
     }
 
+    @JsonProperty("boolean_value")
     public boolean isBooleanValue() {
         return booleanValue;
     }
 
+    @JsonProperty("boolean_value")
     public void setBooleanValue(boolean booleanValue) {
         this.booleanValue = booleanValue;
     }
 
+    @JsonProperty("foreign_key_value")
     public long getForeignKeyValue() {
         return foreignKeyValue;
     }
 
+    @JsonProperty("foreign_key_value")
     public void setForeignKeyValue(long foreignKeyValue) {
         this.foreignKeyValue = foreignKeyValue;
     }
@@ -85,22 +99,26 @@ public class HelperTableData {
         this.row = row;
     }
 
+    @JsonProperty("row_id")
     public long getRowId() {
         return rowId;
     }
 
+    @JsonProperty("row_id")
     public void setRowId(long rowId) {
         this.rowId = rowId;
     }
 
-
+    @JsonProperty("column_id")
     public long getColumnId() {
         return columnId;
     }
 
+    @JsonProperty("column_id")
     public void setColumnId(long columnId) {
         this.columnId = columnId;
     }
+
 
     public HelperTableColumn getColumn() {
         return column;

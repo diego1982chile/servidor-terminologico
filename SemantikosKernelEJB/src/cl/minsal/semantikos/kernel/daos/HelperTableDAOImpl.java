@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,6 +43,12 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             ResultSet rs = call.getResultSet();
             if (rs.next()) {
                 recordFromJSON = this.helperTableRecordFactory.createHelperTablesFromJSON(rs.getString(1));
+
+                for (HelperTable table: recordFromJSON) {
+                    if(table.getColumns()==null)
+                        table.setColumns(new ArrayList<HelperTableColumn>());
+                }
+
             } else {
                 throw new EJBException("Error imposible en HelperTableDAOImpl");
             }
@@ -59,12 +66,45 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
 
     @Override
+    public HelperTableColumn createColumn(HelperTableColumn column) {
+
+        ConnectionBD connect = new ConnectionBD();
+        String UPDATE = "{call semantikos.create_helper_table_column(?,?,?,?,?,?)}";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(UPDATE)) {
+
+            call.setLong(1, column.getHelperTableDataTypeId());
+            call.setLong(2, column.getHelperTableId());
+            call.setLong(3, column.getForeignKeyHelperTableId());
+            call.setString(4,  column.getName());
+            call.setBoolean(5,column.isForeignKey());
+            call.setString(6,column.getDescription());
+
+            ResultSet rs = call.executeQuery();
+
+            if (rs.next()) {
+                column.setId(rs.getLong(1));
+            } else {
+                String errorMsg = "La columna no fue creada. Esta es una situación imposible. Contactar a Desarrollo";
+                logger.error(errorMsg);
+                throw new IllegalArgumentException(errorMsg);
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error al crear la columnas:" + column, e);
+        }
+
+        return column;
+    }
+
+    @Override
     public HelperTableColumn updateColumn(HelperTableColumn column) {
 
         // update_helper_table_column
 
         ConnectionBD connect = new ConnectionBD();
-        String UPDATE = "{call semantikos.update_helper_table_column(?,?,?,?,?,?)}";
+        String UPDATE = "{call semantikos.update_helper_table_column(?,?,?,?,?,?,?)}";
 
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(UPDATE)) {
@@ -75,6 +115,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.setLong(4, column.getForeignKeyHelperTableId());
             call.setString(5,  column.getName());
             call.setBoolean(6,column.isForeignKey());
+            call.setString(7,column.getDescription());
 
             call.execute();
         } catch (SQLException e) {
@@ -115,38 +156,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         return recordFromJSON;
     }
 
-    @Override
-    public HelperTableColumn createColumn(HelperTableColumn column) {
 
-        ConnectionBD connect = new ConnectionBD();
-        String UPDATE = "{call semantikos.create_helper_table_column(?,?,?,?,?)}";
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(UPDATE)) {
-
-
-            call.setLong(1, column.getHelperTableDataTypeId());
-            call.setLong(2, column.getHelperTableId());
-            call.setLong(3, column.getForeignKeyHelperTableId());
-            call.setString(4,  column.getName());
-            call.setBoolean(5,column.isForeignKey());
-
-            ResultSet rs = call.getResultSet();
-
-            if (rs.next()) {
-                column.setId(rs.getLong(1));
-            } else {
-                String errorMsg = "La columna no fue creada. Esta es una situación imposible. Contactar a Desarrollo";
-                logger.error(errorMsg);
-                throw new IllegalArgumentException(errorMsg);
-            }
-
-        } catch (SQLException e) {
-            logger.error("Error al crear la columnas:" + column, e);
-        }
-
-        return column;
-    }
 
     @Override
     public List<HelperTableRow> getTableRows(long tableId) {
@@ -162,7 +172,13 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.execute();
             ResultSet rs = call.getResultSet();
             if (rs.next()) {
-                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(rs.getString(1));
+
+                String json = rs.getString(1);
+                if(json==null)
+                    return new ArrayList<>();
+
+                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
+
             } else {
                 throw new EJBException("Error imposible en HelperTableDAOImpl");
             }
@@ -271,7 +287,14 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.execute();
             ResultSet rs = call.getResultSet();
             if (rs.next()) {
-                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(rs.getString(1));
+
+                String json = rs.getString(1);
+                if(json==null)
+                    return null;
+
+                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
+                if(recordFromJSON==null)
+                    throw new EJBException("Error imposible en HelperTableDAOImpl");
             } else {
                 throw new EJBException("Error imposible en HelperTableDAOImpl");
             }
@@ -369,11 +392,11 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.execute();
             ResultSet rs = call.getResultSet();
             if (rs.next()) {
-
-                 String json = rs.getString(1);
-                if(json== null)
-                    System.out.println("asdasdasd");
-                recordFromJSON = this.helperTableRecordFactory.createHelperTablesFromJSON(json);
+                recordFromJSON = this.helperTableRecordFactory.createHelperTablesFromJSON(rs.getString(1));
+                for (HelperTable table: recordFromJSON) {
+                    if(table.getColumns()==null)
+                        table.setColumns(new ArrayList<HelperTableColumn>());
+                }
             } else {
                 throw new EJBException("Error imposible en HelperTableDAOImpl");
             }
@@ -404,7 +427,13 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.execute();
             ResultSet rs = call.getResultSet();
             if (rs.next()) {
-                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(rs.getString(1));
+
+                String json = rs.getString(1);
+                if(json==null)
+                    return new ArrayList<>();
+
+                recordFromJSON = this.helperTableRecordFactory.createHelperTableRowsFromJSON(json);
+
             } else {
                 throw new EJBException("Error imposible en HelperTableDAOImpl");
             }
