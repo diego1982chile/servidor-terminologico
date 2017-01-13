@@ -83,6 +83,12 @@ public class GeneralBrowserBean implements Serializable {
      */
     private int idCategory;
 
+    /**
+     * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
+
+     */
+    private boolean isFilterChanged;
+
 
     // Placeholders para los targets de los filtros, dados como elementos seleccionables
     private BasicTypeValue basicTypeValue = new BasicTypeValue(null);
@@ -134,10 +140,13 @@ public class GeneralBrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
-                if(generalQuery.isFiltered() && first > 0)
+                if(isFilterChanged)
                     generalQuery.setPageNumber(0);
                 else
                     generalQuery.setPageNumber(first);
+
+                isFilterChanged = false;
+
                 generalQuery.setPageSize(pageSize);
                 generalQuery.setOrder(new Integer(sortField));
 
@@ -289,6 +298,8 @@ public class GeneralBrowserBean implements Serializable {
         if(target == null)
             return;
 
+        setFilterChanged(true);
+
         // Se busca el filtro
         for (QueryFilter queryFilter : generalQuery.getFilters()) {
             if (queryFilter.getDefinition().equals(relationshipDefinition)) {
@@ -307,8 +318,11 @@ public class GeneralBrowserBean implements Serializable {
     }
 
     public void removeTarget(RelationshipDefinition relationshipDefinition, Target target){
+
         if(target == null)
             return;
+
+        setFilterChanged(true);
 
         // Se busca el filtro
         for (QueryFilter queryFilter : generalQuery.getFilters()) {
@@ -350,6 +364,14 @@ public class GeneralBrowserBean implements Serializable {
 
         System.out.println(event.getVisibility());
 
+    }
+
+    public boolean isFilterChanged() {
+        return isFilterChanged;
+    }
+
+    public void setFilterChanged(boolean filterChanged) {
+        isFilterChanged = filterChanged;
     }
 
 }

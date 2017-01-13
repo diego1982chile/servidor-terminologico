@@ -97,7 +97,7 @@
                                                         <p:growl id="growlAttributes" showDetail="true" showSummary="true"/>
 
                                                         <smtk:smtkType
-                                                                rendered="#{relationshipDefinition.targetDefinition.SMTKType}"
+                                                                rendered="#{relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 1}"
                                                                 targetDefinition="#{relationshipDefinition.targetDefinition}"
                                                                 relationshipDefinition="#{relationshipDefinition}"
                                                                 concept="#{conceptBean.concept}"/>
@@ -153,7 +153,7 @@
                                             </h:dataTable>
                                         </p:outputPanel>
                                     </p:tab>
-                                    <p:tab title="Refset" rendered="#{conceptBean.concept.modeled}">
+                                    <p:tab title="RefSets" rendered="#{conceptBean.concept.modeled}">
                                         <smtk:refset/>
                                     </p:tab>
                                     <p:tab title="Crossmaps" rendered="#{ conceptBean.concept.persistent and conceptBean.concept.modeled }">
