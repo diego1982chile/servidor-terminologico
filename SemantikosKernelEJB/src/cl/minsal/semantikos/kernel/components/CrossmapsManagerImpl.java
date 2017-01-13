@@ -155,8 +155,7 @@ public class CrossmapsManagerImpl implements CrossmapsManager {
     public List<CrossmapSetMember> getCrossmapSetByAbbreviatedName(String crossmapSetAbbreviatedName) {
 
         /* Lo primero es recuperar el crossmapSet a partir de su nombre abreviado */
-
-        return null;
+        return crossmapsDAO.getCrossmapSetMemberByAbbreviatedName(crossmapSetAbbreviatedName);
     }
 
     @Override

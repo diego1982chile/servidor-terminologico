@@ -96,7 +96,7 @@ public class CrossmapSetMembersResponse {
     })
     public static class CrossmapSetMembers {
 
-        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+        @XmlElement(namespace = "")
         protected List<CrossmapSetMember> crossmapSetMember;
 
         /**

@@ -34,6 +34,10 @@ public class CrossmapSetMembersResponse {
     public CrossmapSetMembersResponse(List<CrossmapSetMember> crossmapSetMembers) {
         this();
 
+        if (crossmapSetMembers == null || crossmapSetMembers.isEmpty()){
+            return;
+        }
+
         for (CrossmapSetMember crossmapSetMember : crossmapSetMembers) {
             this.crossmapSetMemberResponses.add(new CrossmapSetMemberResponse(crossmapSetMember));
         }

@@ -5,11 +5,14 @@ import cl.minsal.semantikos.kernel.components.CrossmapsManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
+import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.ws.response.CrossmapSetMembersResponse;
 import cl.minsal.semantikos.ws.response.CrossmapSetsResponse;
 import cl.minsal.semantikos.ws.response.IndirectCrossMapSearchResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -25,9 +28,10 @@ public class CrossmapController {
     @EJB
     private CrossmapsManager crossmapManager;
 
+    private static final Logger logger = LoggerFactory.getLogger(CrossmapController.class);
+
     @EJB
     private DescriptionManager descriptionManager;
-
     @EJB
     private UserManager userManager;
 
@@ -36,13 +40,13 @@ public class CrossmapController {
      * identificador de negocio dado como parámetro.
      *
      * @param descriptionId El identificador de negocio <em>DESCRIPTION_ID</em> de la descripción.
-     *
      * @return La respuesta XML con la lista de los crossmaps indirectos asociados al concepto de la descripción
      * indicada.
      */
     public IndirectCrossMapSearchResponse getIndirectCrossmapsByDescriptionID(String descriptionId) {
 
-        /* Se recupera la descripción a partir de su identificador de negocio, y luego el concepto en la que se encuentra */
+        /* Se recupera la descripción a partir de su identificador de negocio, y luego el concepto en la que se
+        encuentra */
         Description theDescription = descriptionManager.getDescriptionByDescriptionID(descriptionId);
         ConceptSMTK conceptSMTK = theDescription.getConceptSMTK();
 
@@ -57,18 +61,19 @@ public class CrossmapController {
      * cuya descripción posee el identificador de negocio dado como parámetro.
      *
      * @param descriptionId El identificador de negocio <em>DESCRIPTION_ID</em> de la descripción.
-     *
      * @return La respuesta XML con la lista de los crossmapSetMembers directos asociados al concepto de la descripción
      * indicada.
      */
     public CrossmapSetMembersResponse getDirectCrossmapsSetMembersByDescriptionID(String descriptionId) {
 
-        /* Se recupera la descripción a partir de su identificador de negocio, y luego el concepto en la que se encuentra */
+        /* Se recupera la descripción a partir de su identificador de negocio, y luego el concepto en la que se
+        encuentra */
         Description theDescription = descriptionManager.getDescriptionByDescriptionID(descriptionId);
         ConceptSMTK conceptSMTK = theDescription.getConceptSMTK();
 
         /* Luego se recuperan los crossmapSetMembers directos del concepto */
-        List<CrossmapSetMember> directCrossmapsSetMembersOf = crossmapManager.getDirectCrossmapsSetMembersOf(conceptSMTK);
+        List<CrossmapSetMember> directCrossmapsSetMembersOf = crossmapManager.getDirectCrossmapsSetMembersOf
+                (conceptSMTK);
 
         return new CrossmapSetMembersResponse(directCrossmapsSetMembersOf);
     }
@@ -77,18 +82,21 @@ public class CrossmapController {
      * Este método es repsonsable de recuperar los crossmapSetMembers de un crossmapSet dado por su nombre abreviado.
      *
      * @param crossmapSetAbbreviatedName El nombre abreviado del crossmapSet que se quiere recuperar.
-     *
      * @return El response de un conjunto de crossmapsetMembers del crossmapSet <code>crossmapSetAbbreviatedName</code>.
      */
     public CrossmapSetMembersResponse getCrossmapSetMembersByCrossmapSetAbbreviatedName(String crossmapSetAbbreviatedName) {
-        return new CrossmapSetMembersResponse(crossmapManager.getCrossmapSetByAbbreviatedName(crossmapSetAbbreviatedName));
+
+        List<CrossmapSetMember> crossmapSetByAbbreviatedName = crossmapManager.getCrossmapSetByAbbreviatedName
+                (crossmapSetAbbreviatedName);
+        logger.debug("CrossmapController.getCrossmapSetMembersByCrossmapSetAbbreviatedName:: " +
+                "crossmapSetByAbbreviatedName=" + crossmapSetByAbbreviatedName);
+        return new CrossmapSetMembersResponse(crossmapSetByAbbreviatedName);
     }
 
     /**
      * Este método es responsable de recuperar todos los crossmapSets del sistema.
      *
      * @param idInstitution La institución desde la cual se realiza la petición.
-     *
      * @return Una lista (response) de crossmapSets.
      */
     public CrossmapSetsResponse getCrossmapSets(String idInstitution) {

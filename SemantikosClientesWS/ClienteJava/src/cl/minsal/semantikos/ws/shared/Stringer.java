@@ -186,4 +186,18 @@ public class Stringer {
         }
         return result.toString();
     }
+
+    public static String toString(CrossmapSetMembersResponse response) {
+
+        CrossmapSetMembersResponse.CrossmapSetMembers crossmapSetMembers = response.getCrossmapSetMembers();
+        if (crossmapSetMembers == null){
+            return "[Null]";
+        }
+
+        StringBuilder result = new StringBuilder("[");
+        for (CrossmapSetMember crossmapSetMember : crossmapSetMembers.getCrossmapSetMember()) {
+            result.append(crossmapSetMember.getCode() + "/" + crossmapSetMember.getGloss() + ", ");
+        }
+        return result.append("]").toString();
+    }
 }
