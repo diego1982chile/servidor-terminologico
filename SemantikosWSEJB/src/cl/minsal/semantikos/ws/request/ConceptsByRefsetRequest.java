@@ -14,10 +14,9 @@ public class ConceptsByRefsetRequest implements Serializable {
 
     @XmlElement(required = true, name = "nombreRefSet")
     private String refSetName;
-    @XmlElement(required = false, defaultValue = "0", name = "numeroPagina")
-    private Integer pageNumber;
-    @XmlElement(required = false, defaultValue = "10", name = "tamanoPagina")
-    private Integer pageSize;
+
+    @XmlElement(required = true, name = "idEstablecimiento")
+    private String idStablishment;
 
     public String getRefSetName() {
         return refSetName;
@@ -27,19 +26,11 @@ public class ConceptsByRefsetRequest implements Serializable {
         this.refSetName = refSetName;
     }
 
-    public Integer getPageNumber() {
-        return pageNumber;
+    public String getIdStablishment() {
+        return idStablishment;
     }
 
-    public void setPageNumber(Integer pageNumber) {
-        this.pageNumber = pageNumber;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
+    public void setIdStablishment(String idStablishment) {
+        this.idStablishment = idStablishment;
     }
 }

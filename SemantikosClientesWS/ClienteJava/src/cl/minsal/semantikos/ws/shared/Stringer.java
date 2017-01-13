@@ -131,6 +131,11 @@ public class Stringer {
     }
 
     public static String toString(RespuestaRefSets.Refsets serviceResponse) {
+
+        if(serviceResponse == null){
+            return "";
+        }
+
         List<RefSet> refsets = serviceResponse.getRefset();
         if (refsets == null || refsets.isEmpty()) {
             return "[null]";
@@ -146,5 +151,23 @@ public class Stringer {
 
     private static String toString(RefSet refSet) {
         return "[" + refSet.getNombre() + "]";
+    }
+
+    public static String toString(PeticionConceptosPorRefSet peticion) {
+        return "[RefSet=" + peticion.getNombreRefSet() + ", ID Establecimiento=" + peticion.getIdEstablecimiento() + "]";
+    }
+
+    public static String toString(RespuestaConceptosPorRefSet response) {
+        RespuestaConceptosPorRefSet.Conceptos conceptos = response.getConceptos();
+        if (conceptos == null || conceptos.getConcepto() == null) {
+            return "[null]";
+        }
+
+        StringBuilder result = new StringBuilder("[");
+        for (ConceptoLight conceptoLight: conceptos.getConcepto()) {
+            result.append(toString(conceptoLight));
+        }
+
+        return result.append("]").toString();
     }
 }

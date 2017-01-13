@@ -420,8 +420,7 @@
   <xs:complexType name="PeticionConceptosPorRefSet">
     <xs:sequence>
       <xs:element name="nombreRefSet" type="xs:string"/>
-      <xs:element default="0" minOccurs="0" name="numeroPagina" type="xs:int"/>
-      <xs:element default="10" minOccurs="0" name="tamanoPagina" type="xs:int"/>
+      <xs:element name="idEstablecimiento" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="conceptosPorRefSetResponse">

@@ -208,7 +208,7 @@ public class SearchService {
             @WebParam(name = "peticionConceptosPorRefSet")
                     ConceptsByRefsetRequest request
     ) throws NotFoundFault {
-        return this.conceptController.conceptsByRefset(request.getRefSetName(), request.getPageNumber(), request.getPageSize());
+        return this.conceptController.conceptsByRefset(request.getRefSetName());
     }
 
     // REQ-WS-023
@@ -219,7 +219,7 @@ public class SearchService {
             @WebParam(name = "peticionConceptosPorRefSet")
                     ConceptsByRefsetRequest request
     ) throws NotFoundFault {
-        return this.conceptController.conceptsByRefset(request.getRefSetName(), request.getPageNumber(), request.getPageSize());
+        return this.conceptController.conceptsByRefset(request.getRefSetName());
     }
 
     /**

@@ -67,7 +67,8 @@ public class ConceptController {
      * @return Los conceptos relacionados en un envelope apropiado.
      * @throws NotFoundFault Arrojada si no se encuentran resultados.
      */
-    public RelatedConceptsResponse findRelated(String descriptionId, String conceptId, @NotNull String categoryName) throws NotFoundFault {
+    public RelatedConceptsResponse findRelated(String descriptionId, String conceptId, @NotNull String categoryName)
+            throws NotFoundFault {
 
         /* Lo primero consiste en recuperar el concepto cuyos conceptos relacionados se quiere recuperar. */
         ConceptSMTK sourceConcept;
@@ -77,7 +78,8 @@ public class ConceptController {
         try {
             category = this.categoryManager.getCategoryByName(categoryName);
         }
-        /* Si no hay categoría con ese nombre se obtiene una excepción (pues debiera haberlo encontrado */ catch (EJBException e) {
+        /* Si no hay categoría con ese nombre se obtiene una excepción (pues debiera haberlo encontrado */ catch
+                (EJBException e) {
             logger.error("Se buscó una categoría inexistente: " + categoryName, e);
             throw e;
         }
@@ -131,7 +133,8 @@ public class ConceptController {
         return sourceConcept;
     }
 
-    public RelatedConceptsLiteResponse findRelatedLite(String conceptId, String descriptionId, String categoryName) throws NotFoundFault {
+    public RelatedConceptsLiteResponse findRelatedLite(String conceptId, String descriptionId, String categoryName)
+            throws NotFoundFault {
         RelatedConceptsLiteResponse res = new RelatedConceptsLiteResponse();
 
         Category category = this.categoryManager.getCategoryByName(categoryName);
@@ -197,7 +200,8 @@ public class ConceptController {
 
             /* Caso 1: es una descripcion del concepto especial No valido */
             if ("Concepto no válido".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm())) {
-                NoValidDescription noValidDescription = this.descriptionManager.getNoValidDescriptionByID(description.getId());
+                NoValidDescription noValidDescription = this.descriptionManager.getNoValidDescriptionByID(description
+                        .getId());
                 if (noValidDescription != null) {
                     noValidDescriptions.add(new NoValidDescriptionResponse(noValidDescription));
                 } else {
@@ -304,33 +308,40 @@ public class ConceptController {
         return res;
     }
 
-    public ConceptsByRefsetResponse conceptsByRefset(
-            String refSetName,
-            Integer pageNumber,
-            Integer pageSize
-    ) throws NotFoundFault {
+    /**
+     * Este método es responsable de recuperar todos los conceptos de un RefSet.
+     *
+     * @param refSetName El RefSet cuyos conceptos se desea recuperar.
+     * @return Una lista de conceptos que pertenecen al refset <code>refSetName</code>.
+     * @throws NotFoundFault Arrojada si...
+     */
+    public ConceptsByRefsetResponse conceptsByRefset(String refSetName) throws NotFoundFault {
         ConceptsByRefsetResponse res = new ConceptsByRefsetResponse();
 
         RefSet refSet = this.refSetManager.getRefsetByName(refSetName);
         res.setRefSet(this.refSetController.getResponse(refSet));
 
-        Integer total = this.conceptManager.countModeledConceptsBy(refSet);
-        PaginationResponse paginationResponse = this.paginationController.getResponse(pageNumber, pageSize, total);
-        res.setPagination(paginationResponse);
+        boolean conceptsLeft;
+        int page = 1;
+        List<ConceptSMTK> allConcepts = new ArrayList<>();
+        do {
+            List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptsBy(refSet, page++, 1000);
+            logger.debug("ConceptController.conceptsByRefset(" + refSetName +") --> " + concepts.size() + " conceptos.");
+            allConcepts.addAll(concepts);
+            conceptsLeft = concepts.size() == 1000;
+        } while (conceptsLeft);
 
-        List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptsBy(refSet, pageNumber, pageSize);
         List<ConceptLightResponse> conceptResponses = new ArrayList<>();
-        if (concepts != null) {
-            for (ConceptSMTK source : concepts) {
-                conceptResponses.add(new ConceptLightResponse(source));
-            }
+        for (ConceptSMTK aConcept : allConcepts) {
+            conceptResponses.add(new ConceptLightResponse(aConcept));
         }
         res.setConcepts(conceptResponses);
 
         return res;
     }
 
-    public List<ISPRegisterResponse> getBioequivalentes(String conceptId, String descriptionId) throws IllegalInputFault, NotFoundFault {
+    public List<ISPRegisterResponse> getBioequivalentes(String conceptId, String descriptionId) throws
+            IllegalInputFault, NotFoundFault {
         if ((conceptId == null || "".equals(conceptId))
                 && (descriptionId == null || "".equals(descriptionId))) {
             throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
@@ -349,7 +360,8 @@ public class ConceptController {
         return res;
     }
 
-    public List<ISPRegisterResponse> getRegistrosISP(String conceptId, String descriptionId) throws IllegalInputFault, NotFoundFault {
+    public List<ISPRegisterResponse> getRegistrosISP(String conceptId, String descriptionId) throws
+            IllegalInputFault, NotFoundFault {
         if ((conceptId == null || "".equals(conceptId))
                 && (descriptionId == null || "".equals(descriptionId))) {
             throw new IllegalInputFault("Debe indicar por lo menos un idConcepto o idDescripcion");
@@ -378,11 +390,13 @@ public class ConceptController {
                 conceptSMTK = this.conceptManager.getConceptByCONCEPT_ID(conceptId);
             }
         } catch (Exception e) {
-            throw new NotFoundFault("Concepto no encontrado: " + (conceptId != null ? conceptId : "") + (descriptionId != null ? descriptionId : ""));
+            throw new NotFoundFault("Concepto no encontrado: " + (conceptId != null ? conceptId : "") +
+                    (descriptionId != null ? descriptionId : ""));
         }
 
         if (conceptSMTK == null) {
-            throw new NotFoundFault("Concepto no encontrado: " + (conceptId != null ? conceptId : "") + (descriptionId != null ? descriptionId : ""));
+            throw new NotFoundFault("Concepto no encontrado: " + (conceptId != null ? conceptId : "") +
+                    (descriptionId != null ? descriptionId : ""));
         }
 
         return conceptSMTK;
@@ -408,8 +422,10 @@ public class ConceptController {
         return conceptResponse;
     }
 
-    public ConceptResponse loadSnomedCTRelationships(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK source) {
-        if (conceptResponse.getSnomedCTRelationshipResponses() == null || conceptResponse.getSnomedCTRelationshipResponses().isEmpty()) {
+    public ConceptResponse loadSnomedCTRelationships(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK
+            source) {
+        if (conceptResponse.getSnomedCTRelationshipResponses() == null || conceptResponse
+                .getSnomedCTRelationshipResponses().isEmpty()) {
             if (!source.isRelationshipsLoaded()) {
                 conceptManager.loadRelationships(source);
             }
@@ -431,16 +447,20 @@ public class ConceptController {
 
     public ConceptResponse loadIndirectCrossmaps(@NotNull ConceptResponse res, @NotNull ConceptSMTK conceptSMTK) {
         if (res.getIndirectCrossMaps() == null || res.getIndirectCrossMaps().isEmpty()) {
-            IndirectCrossMapSearchResponse indirectCrossMapSearchResponse = this.crossmapController.getIndirectCrossmapsByDescriptionID(conceptSMTK.getDescriptionFavorite().getDescriptionId());
+            IndirectCrossMapSearchResponse indirectCrossMapSearchResponse = this.crossmapController
+                    .getIndirectCrossmapsByDescriptionID(conceptSMTK.getDescriptionFavorite().getDescriptionId());
             res.setIndirectCrossMaps(indirectCrossMapSearchResponse.getIndirectCrossMapResponses());
         }
 
         return res;
     }
 
-    private ConceptResponse loadDirectCrossmaps(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK conceptSMTK) {
+    private ConceptResponse loadDirectCrossmaps(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK
+            conceptSMTK) {
         if (conceptResponse.getCrossmapSetMember() == null || conceptResponse.getCrossmapSetMember().isEmpty()) {
-            CrossmapSetMembersResponse crossmapSetMembersResponse = this.crossmapController.getDirectCrossmapsSetMembersByDescriptionID(conceptSMTK.getDescriptionFavorite().getDescriptionId());
+            CrossmapSetMembersResponse crossmapSetMembersResponse = this.crossmapController
+                    .getDirectCrossmapsSetMembersByDescriptionID(conceptSMTK.getDescriptionFavorite()
+                            .getDescriptionId());
             conceptResponse.setCrossmapSetMember(crossmapSetMembersResponse.getCrossmapSetMemberResponses());
         }
 
@@ -489,7 +509,8 @@ public class ConceptController {
      * @param requestable   Indica si el atributo 'Pedible' tiene valor <code>true</code> o <code>false</code>.
      * @return La lista de Conceptos Light que satisfacen la búsqueda.
      */
-    public TermSearchResponse searchRequestableDescriptions(List<String> categoryNames, List<String> refSetNames, String requestable) {
+    public TermSearchResponse searchRequestableDescriptions(List<String> categoryNames, List<String> refSetNames,
+                                                            String requestable) {
 
         List<ConceptSMTK> allRequestableConcepts = new ArrayList<>();
         for (String categoryName : categoryNames) {
@@ -497,7 +518,8 @@ public class ConceptController {
 
             /* Se recupera el atributo "Pedible " */
             RelationshipDefinition requestableAttribute = getRequestableAttribute(aCategory);
-            List<ConceptSMTK> requestableConcepts = conceptManager.findConcepts(aCategory, refSetNames, requestableAttribute, requestable);
+            List<ConceptSMTK> requestableConcepts = conceptManager.findConcepts(aCategory, refSetNames,
+                    requestableAttribute, requestable);
             allRequestableConcepts.addAll(requestableConcepts);
         }
 

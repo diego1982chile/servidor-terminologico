@@ -18,8 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="nombreRefSet" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="numeroPagina" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="tamanoPagina" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="idEstablecimiento" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -31,17 +30,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PeticionConceptosPorRefSet", propOrder = {
     "nombreRefSet",
-    "numeroPagina",
-    "tamanoPagina"
+    "idEstablecimiento"
 })
 public class PeticionConceptosPorRefSet {
 
     @XmlElement(required = true)
     protected String nombreRefSet;
-    @XmlElement(defaultValue = "0")
-    protected Integer numeroPagina;
-    @XmlElement(defaultValue = "10")
-    protected Integer tamanoPagina;
+
+    @XmlElement(required = true)
+    protected String idEstablecimiento;
 
     /**
      * Gets the value of the nombreRefSet property.
@@ -68,51 +65,26 @@ public class PeticionConceptosPorRefSet {
     }
 
     /**
-     * Gets the value of the numeroPagina property.
+     * Gets the value of the idEstablecimiento property.
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public Integer getNumeroPagina() {
-        return numeroPagina;
+    public String getIdEstablecimiento() {
+        return idEstablecimiento;
     }
 
     /**
-     * Sets the value of the numeroPagina property.
+     * Sets the value of the idEstablecimiento property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public void setNumeroPagina(Integer value) {
-        this.numeroPagina = value;
+    public void setIdEstablecimiento(String value) {
+        this.idEstablecimiento = value;
     }
-
-    /**
-     * Gets the value of the tamanoPagina property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getTamanoPagina() {
-        return tamanoPagina;
-    }
-
-    /**
-     * Sets the value of the tamanoPagina property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setTamanoPagina(Integer value) {
-        this.tamanoPagina = value;
-    }
-
 }

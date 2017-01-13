@@ -3,6 +3,7 @@ package cl.minsal.semantikos.ws.mapping;
 import cl.minsal.semantikos.model.RefSet;
 import cl.minsal.semantikos.ws.response.RefSetResponse;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -16,12 +17,11 @@ public class RefSetMapper {
             RefSetResponse res = new RefSetResponse();
             res.setName(refSet.getName());
 
-            Date validityUntil = new Date(refSet.getValidityUntil().getTime());
-            if ( validityUntil != null ) {
+            Timestamp validityUntil1 = refSet.getValidityUntil();
+            if (validityUntil1 != null){
+                Date validityUntil = new Date(validityUntil1.getTime());
                 res.setValidityUntil(validityUntil);
                 res.setValid(validityUntil.after(new Date()));
-            } else {
-                res.setValid(Boolean.TRUE);
             }
 
 //            res.setCreationDate(Util.toDate(refSet.getCreationDate()));
@@ -30,6 +30,7 @@ public class RefSetMapper {
             }
             return res;
         } else {
+            /* TODO: ARCH! */
             return null;
         }
     }
