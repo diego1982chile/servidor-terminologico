@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlType;
 public class CrossmapSetMember {
 
     protected long idCrossmapSetMember;
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+
+    @XmlElement(namespace = "")
     protected CrossmapSet crossmapSet;
     protected String code;
     protected String gloss;

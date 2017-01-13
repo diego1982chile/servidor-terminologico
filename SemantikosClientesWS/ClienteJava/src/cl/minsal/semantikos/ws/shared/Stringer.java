@@ -170,4 +170,20 @@ public class Stringer {
 
         return result.append("]").toString();
     }
+
+    public static String toString(String idStablishment) {
+        return "[" + idStablishment + "]";
+    }
+
+    public static String toString(CrossmapSetsResponse response) {
+        return "[" + toString(response.getCrossmapSets()) + "]";
+    }
+
+    public static String toString(CrossmapSetsResponse.CrossmapSets crossmapSets) {
+        StringBuilder result = new StringBuilder();
+        for (CrossmapSet crossmapSet : crossmapSets.getCrossmapSet()) {
+            result.append(crossmapSet.getName()).append("; ");
+        }
+        return result.toString();
+    }
 }

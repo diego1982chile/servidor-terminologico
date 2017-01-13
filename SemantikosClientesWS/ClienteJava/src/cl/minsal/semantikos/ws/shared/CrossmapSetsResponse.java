@@ -115,7 +115,7 @@ public class CrossmapSetsResponse {
     })
     public static class CrossmapSets {
 
-        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+        @XmlElement(namespace = "")
         protected List<CrossmapSet> crossmapSet;
 
         /**
