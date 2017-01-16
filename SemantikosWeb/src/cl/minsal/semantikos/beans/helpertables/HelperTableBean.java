@@ -141,4 +141,8 @@ public class HelperTableBean implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, title, message));
     }
 
+
+    public List<HelperTableRow> getAllTableRecords(HelperTable table){
+        return manager.getTableRows(table.getId());
+    }
 }

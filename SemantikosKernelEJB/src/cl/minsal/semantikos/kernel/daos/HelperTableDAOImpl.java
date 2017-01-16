@@ -427,7 +427,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
     @Override
     public List<HelperTableRow> searchRecords(HelperTable helperTable, String pattern) {
         ConnectionBD connectionBD = new ConnectionBD();
-        String selectRecord = "{call semantikos.get_helper_table_row(?)}";
+        String selectRecord = "{call semantikos.get_helper_table_rows(?,?)}";
         List<HelperTableRow> recordFromJSON;
         try (Connection connection = connectionBD.getConnection();
              CallableStatement call = connection.prepareCall(selectRecord)) {

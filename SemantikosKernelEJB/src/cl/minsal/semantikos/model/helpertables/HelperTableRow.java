@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.relationships.TargetType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -206,5 +207,44 @@ public class HelperTableRow implements Target{
 
     public boolean isPersistent() {
         return id != -1;
+    }
+
+
+    public String getColumnValue(HelperTableColumn column){
+
+        if (this.getCells()==null)
+            return null;
+
+
+        for (HelperTableData cell: getCells()) {
+
+            if(cell.getColumnId()==column.getId()){
+
+                if(column.isForeignKey())
+                    return cell.getForeignKeyValue()+"";
+
+                if (column.getHelperTableDataTypeId()==1)
+                    return cell.getStringValue();
+
+                if (column.getHelperTableDataTypeId()==2)
+                    return ""+cell.isBooleanValue();
+
+                if (column.getHelperTableDataTypeId()==3)
+                    return ""+cell.getIntValue();
+
+                if (column.getHelperTableDataTypeId()==4)
+                    return ""+cell.getFloatValue();
+
+                if (column.getHelperTableDataTypeId()==5)
+                    return ""+   new SimpleDateFormat("dd/MM/yyyy").format(cell.getDateValue());
+
+
+
+            }
+
+
+        }
+
+        return null;
     }
 }
