@@ -6,9 +6,7 @@ import cl.minsal.semantikos.model.helpertables.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.ejb.Stateless;
+import javax.ejb.*;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -213,10 +211,12 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.setString(4, row.getCreationUsername());
             call.setDate(5, new Date(row.getLastEditDate().getTime()));
             call.setString(6, row.getLastEditUsername());
-            call.setDate(7, new Date(row.getValidityUntil().getTime()));
+            call.setDate(7, row.getValidityUntil()!=null?new Date(row.getValidityUntil().getTime()):null);
             call.setBoolean(8, row.isValid());
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = call.executeQuery();
+
+
 
             if (rs.next()) {
                 row.setId(rs.getLong(1));
@@ -244,8 +244,14 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
              CallableStatement call = connection.prepareCall(UPDATE)) {
 
             call.setString(1, cell.getStringValue());
-            call.setDate(2, new Date(cell.getDateValue().getTime()));
-            call.setDouble(3, cell.getFloatValue());
+            call.setDate(2, cell.getDateValue()==null?null:new Date(cell.getDateValue().getTime()));
+
+
+            if(cell.getFloatValue()==null)
+                call.setNull(3, Types.NUMERIC);
+            else
+                call.setDouble(3, cell.getFloatValue());
+
             call.setLong(4, cell.getIntValue());
             call.setBoolean(5,cell.isBooleanValue());
             call.setLong(6, cell.getForeignKeyValue());
@@ -254,7 +260,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
 
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = call.executeQuery();
 
             if (rs.next()) {
                 cell.setId(rs.getLong(1));
@@ -271,8 +277,44 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
         return cell;
 
+    }
+
+
+    private HelperTableData updateData(HelperTableData cell) {
+
+
+        ConnectionBD connect = new ConnectionBD();
+        String UPDATE = "{call semantikos.update_helper_table_data(?,?,?,?,?,?,?)}";
+
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(UPDATE)) {
+
+            call.setLong(1, cell.getId());
+            call.setString(2, cell.getStringValue());
+            call.setDate(3, cell.getDateValue()==null?null:new Date(cell.getDateValue().getTime()));
+
+            if(cell.getFloatValue()==null)
+                call.setNull(4, Types.NUMERIC);
+            else
+                call.setDouble(4, cell.getFloatValue());
+
+            call.setLong(5, cell.getIntValue());
+            call.setBoolean(6,cell.isBooleanValue());
+            call.setLong(7, cell.getForeignKeyValue());
+
+
+            ResultSet rs = call.getResultSet();
+
+
+        } catch (SQLException e) {
+            logger.error("Error al crear la row:" + cell, e);
+        }
+
+        return cell;
+
 
     }
+
 
     @Override
     public HelperTableRow getRowById(long id) {
@@ -334,7 +376,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.setString(5, row.getCreationUsername());
             call.setDate(6, new Date(row.getLastEditDate().getTime()));
             call.setString(7, row.getLastEditUsername());
-            call.setDate(8, new Date(row.getValidityUntil().getTime()));
+            call.setDate(8, row.getValidityUntil()==null?null:new Date(row.getValidityUntil().getTime()));
             call.setBoolean(9, row.isValid());
 
 
@@ -345,36 +387,6 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
         }
 
         return row;
-
-    }
-
-    private HelperTableData updateData(HelperTableData cell) {
-
-
-        ConnectionBD connect = new ConnectionBD();
-        String UPDATE = "{call semantikos.update_helper_table_data(?,?,?,?,?,?,?)}";
-
-        try (Connection connection = connect.getConnection();
-             CallableStatement call = connection.prepareCall(UPDATE)) {
-
-            call.setLong(1, cell.getId());
-            call.setString(2, cell.getStringValue());
-            call.setDate(3, new Date(cell.getDateValue().getTime()));
-            call.setDouble(4, cell.getFloatValue());
-            call.setLong(5, cell.getIntValue());
-            call.setBoolean(6,cell.isBooleanValue());
-            call.setLong(7, cell.getForeignKeyValue());
-
-
-            ResultSet rs = call.getResultSet();
-
-
-        } catch (SQLException e) {
-            logger.error("Error al crear la row:" + cell, e);
-        }
-
-        return cell;
-
 
     }
 

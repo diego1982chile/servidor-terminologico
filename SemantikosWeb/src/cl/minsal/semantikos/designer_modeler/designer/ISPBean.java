@@ -19,6 +19,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -233,30 +235,47 @@ public class ISPBean {
        ispRecord = null;
     }
 
+    //llena los valores de las celdas del row con los valores del mapa recuperado de la pgina del ISP
     private void mapFetchedData(HelperTableRow row, Map<String, String> fetchedData) {
         Map<String, String> ret = new HashMap<String, String>();
 
 
-        for (HelperTableData cell: row.getCells()) {
-            if(cell.getColumn().getName().equals("Registro")) cell.setStringValue(fetchedData.get("Registro"));
-            if(cell.getColumn().getName().equals("Nombre")) cell.setStringValue(fetchedData.get("Nombre"));
-            if(cell.getColumn().getName().equals("Referencia de Tramite")) cell.setStringValue(fetchedData.get("Referencia de Tramite"));
-            if(cell.getColumn().getName().equals("Equivalencia Terapéutica")) cell.setStringValue(fetchedData.get("Equivalencia Terapéutica"));
-            if(cell.getColumn().getName().equals("Titular")) cell.setStringValue(fetchedData.get("Titular"));
-            if(cell.getColumn().getName().equals("Estado del Registro")) cell.setStringValue(fetchedData.get("Estado del Registro"));
-            if(cell.getColumn().getName().equals("Resolución Inscríbase")) cell.setStringValue(fetchedData.get("Resolución Inscríbase"));
-            if(cell.getColumn().getName().equals("Fecha Inscríbase")) cell.setStringValue(fetchedData.get("Fecha Inscríbase"));
-            if(cell.getColumn().getName().equals("Ultima Renovación")) cell.setStringValue(fetchedData.get("Ultima Renovación"));
-            if(cell.getColumn().getName().equals("Fecha Próxima renovación")) cell.setStringValue(fetchedData.get("Fecha Próxima renovación"));
-            if(cell.getColumn().getName().equals("Régimen")) cell.setStringValue(fetchedData.get("Régimen"));
-            if(cell.getColumn().getName().equals("Vía Administración")) cell.setStringValue(fetchedData.get("Vía Administración"));
-            if(cell.getColumn().getName().equals("Condición de Venta")) cell.setStringValue(fetchedData.get("Condición de Venta"));
-            if(cell.getColumn().getName().equals("Expende tipo establecimiento")) cell.setStringValue(fetchedData.get("Expende tipo establecimiento"));
-            if(cell.getColumn().getName().equals("Indicación")) cell.setStringValue(fetchedData.get("Indicación"));
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
+        for (HelperTableData cell: row.getCells()) {
+            if(cell.getColumn().getName().equals("REGISTRO")) cell.setStringValue(fetchedData.get("Registro"));
+
+
+            if(cell.getColumn().getName().equals("EQ_TERAPEUTICA")) cell.setStringValue(fetchedData.get("Equivalencia Terapéutica"));
+            if(cell.getColumn().getName().equals("TITULAR ")) cell.setStringValue(fetchedData.get("Titular"));
+            if(cell.getColumn().getName().equals("ESTADO_REGISTRO")) cell.setBooleanValue( "Vigente".equals(fetchedData.get("Estado del Registro")));
+
+            try{
+                if (cell.getColumn().getName().equals("RESOLUCION")) cell.setIntValue(Integer.parseInt(fetchedData.get("Resolución Inscríbase")));
+            }catch (NumberFormatException e){}
+
+            try {
+                if (cell.getColumn().getName().equals("FEC_INS_BASE")) cell.setDateValue(df.parse(fetchedData.get("Fecha Inscríbase")));
+            } catch (ParseException e){}
+
+            try {
+                if(cell.getColumn().getName().equals("FEC_ULT_RENOV")) cell.setDateValue(df.parse(fetchedData.get("Ultima Renovación")));
+            } catch (ParseException e){}
+
+
+            if(cell.getColumn().getName().equals("REGIMEN")) cell.setStringValue(fetchedData.get("Régimen"));
+            if(cell.getColumn().getName().equals("VIA_ADMINISTRACION")) cell.setStringValue(fetchedData.get("Vía Administración"));
+            if(cell.getColumn().getName().equals("CONDICION_VENTA")) cell.setStringValue(fetchedData.get("Condición de Venta"));
+            if(cell.getColumn().getName().equals("EXP_TIPO_ESTAB")) cell.setStringValue(fetchedData.get("Expende tipo establecimiento"));
+            if(cell.getColumn().getName().equals("INDICACION")) cell.setStringValue(fetchedData.get("Indicación"));
+
+
+            // columnas que estan en la pagina pero no se usan en semantikos
+            //if(cell.getColumn().getName().equals("Referencia de Tramite")) cell.setStringValue(fetchedData.get("Referencia de Tramite"));
+            //if(cell.getColumn().getName().equals("FEC_PROX_REN")) cell.setStringValue(fetchedData.get("Fecha Próxima renovación"));
 
             row.setValid(true);
-            row.setDescription(fetchedData.get("Registro"));
+            row.setDescription(fetchedData.get("Nombre"));
 
         }
 

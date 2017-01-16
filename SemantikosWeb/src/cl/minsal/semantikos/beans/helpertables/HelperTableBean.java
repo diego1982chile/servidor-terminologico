@@ -117,6 +117,7 @@ public class HelperTableBean implements Serializable{
         if(this.selected == null)
             return;
         HelperTableRow newRow = manager.createRow(this.selected,authenticationBean.getUsername());
+        selectedTableRows = null;
     }
 
     public List<HelperTableRow> getSelectedTableRows() {

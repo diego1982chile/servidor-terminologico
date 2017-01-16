@@ -5,14 +5,15 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template/template.xhtml">
 
+
+    <ui:define name="header">
+        <h2>Tablas Auxiliares</h2>
+    </ui:define>
+
     <ui:define name="content">
         <div class="Container100">
             <div class="ContainerIndent">
                 <div class="Card ShadowEffect TexAlCenter">
-                    <br/>
-                    <h2>Tablas Auxiliares</h2>
-                    <br/>
-
                     <h:form id="form" prependId="false">
 
                         <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
@@ -68,10 +69,10 @@
 
                         </p:dataTable>
 
-                        <p:dialog id="edit-columns-dialog" header="Editar Columnas" widgetVar="edit-culumns-dialog-var">
+                        <p:dialog id="edit-columns-dialog" header="Editar Columnas" widgetVar="edit-culumns-dialog-var"  height="400" width="900" positionType="absolute">
 
                             <p:fragment id="edit-columns-dialog-panel">
-                                <p:dataTable id="table-columns-edit" var="column" value="#{helperTableBean.selected.columns}" editable="true" rendered="#{not empty helperTableBean.selected}">
+                                <p:dataTable id="table-columns-edit" var="column" value="#{helperTableBean.selected.columns}" editable="true" rendered="#{ (not empty helperTableBean.selected) or (helperTableBean.selected != null) }">
                                     <f:facet name="header">
                                         Columnas de la tabla #{helperTableBean.selected.name}
                                     </f:facet>
@@ -146,14 +147,14 @@
                                                  id="add-column-button"
                                                  alt="Agregar Columna"
                                                  action="#{helperTableBean.addColumn()}"
-                                                 update="edit-columns-dialog-panel"
+                                                 update="table-columns-edit"
                                                  process="@this"/>
 
                             </p:fragment>
 
                         </p:dialog>
 
-                        <p:dialog id="edit-data-dialog" header="Editar Datos" widgetVar="edit-data-dialog-var" modal="true" height="400" width="900" positionType="absolute">
+                        <p:dialog id="edit-data-dialog" header="Editar Datos" widgetVar="edit-data-dialog-var" height="400" width="900" positionType="absolute">
                             <p:fragment id="edit-data-dialog-panel">
                                 <p:dataTable resizableColumns="true" id="table-data-edit" var="row" rowKey="#{row.id}" value="#{helperTableBean.selectedTableRows}" editable="true" rendered="#{not empty helperTableBean.selected}">
                                     <f:facet name="header">
@@ -243,7 +244,7 @@
                                                  id="add-row-button"
                                                  alt="Agregar Fila"
                                                  action="#{helperTableBean.addRow()}"
-                                                 update="edit-data-dialog-panel"
+                                                 update="table-data-edit"
                                                  process="@this"/>
                             </p:fragment>
 

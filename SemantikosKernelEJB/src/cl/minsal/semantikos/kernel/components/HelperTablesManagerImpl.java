@@ -29,7 +29,7 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
 
     @Override
     public HelperTable getById(long id) {
-        return null;
+        return dao.getHelperTableByID(id);
     }
 
     @Override
