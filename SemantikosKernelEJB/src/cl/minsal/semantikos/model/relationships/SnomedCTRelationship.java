@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
@@ -19,6 +20,7 @@ public class SnomedCTRelationship extends Relationship {
 
     public static final String ES_UN_MAPEO_DE = "es un mapeo";
     public static final String ES_UN = "es un[a]";
+    private static final long TIPO_RELACION_HELPER_TABLE_ID = 18;
 
     public SnomedCTRelationship(ConceptSMTK sourceConcept, ConceptSCT conceptSCT, RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes, Timestamp validityUntil) {
         super(sourceConcept, conceptSCT, relationshipDefinition, relationshipAttributes, validityUntil);
@@ -103,11 +105,13 @@ public class SnomedCTRelationship extends Relationship {
 
             /* El atributo debe ser de tipo Helper Table (en particular a la tabla de tipos de relaciones */
             if (relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isHelperTable()) {
-                HelperTableRow row = (HelperTableRow) relationshipAttribute.getTarget();
+                HelperTable table = (HelperTable) relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition();
 
-                /* Sin preguntar si es la tabla correcta, se ve si su campo descripción tienen los valores requeridos */
-                // TODO: Validar que el target es a la tabla correcta.
-                return row.getDescription();
+                //se valida el tipo de la tabla
+                if(table.getId()==TIPO_RELACION_HELPER_TABLE_ID) {
+                    HelperTableRow row = (HelperTableRow) relationshipAttribute.getTarget();
+                    return row.getDescription();
+                }
             }
         }
 
