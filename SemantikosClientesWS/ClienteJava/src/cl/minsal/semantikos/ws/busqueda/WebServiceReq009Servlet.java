@@ -75,7 +75,7 @@ public class WebServiceReq009Servlet extends HttpServlet {
                 logger.debug("WebServiceReq009Servlet.doPost(): Response: " + Stringer.toString(response));
 
                 /* Se agregan los refsets */
-                finalResponse.addAllRefsets(response);
+                new RequestResponseUtil().addAllRefsets(finalResponse, response);
             } catch (IllegalInputFault_Exception | SOAPFaultException e) {
                 req.setAttribute("exception", e);
                 req.getRequestDispatcher(targetPage).forward(req, resp);

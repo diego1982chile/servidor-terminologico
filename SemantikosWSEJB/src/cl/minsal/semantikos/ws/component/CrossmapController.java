@@ -5,9 +5,9 @@ import cl.minsal.semantikos.kernel.components.CrossmapsManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
-import cl.minsal.semantikos.model.crossmaps.Crossmap;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
+import cl.minsal.semantikos.ws.request.DescriptionIDorConceptIDRequest;
 import cl.minsal.semantikos.ws.response.CrossmapSetMembersResponse;
 import cl.minsal.semantikos.ws.response.CrossmapSetsResponse;
 import cl.minsal.semantikos.ws.response.IndirectCrossMapSearchResponse;
@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import java.util.List;
 
@@ -39,15 +38,15 @@ public class CrossmapController {
      * Este método es responsable de recuperar los crossmaps indirectos asociados al concepto cuya descripción posee el
      * identificador de negocio dado como parámetro.
      *
-     * @param descriptionId El identificador de negocio <em>DESCRIPTION_ID</em> de la descripción.
+     * @param descriptionIDorConceptIDRequest El identificador de negocio <em>DESCRIPTION_ID</em> de la descripción.
      * @return La respuesta XML con la lista de los crossmaps indirectos asociados al concepto de la descripción
      * indicada.
      */
-    public IndirectCrossMapSearchResponse getIndirectCrossmapsByDescriptionID(String descriptionId) {
+    public IndirectCrossMapSearchResponse getIndirectCrossmapsByDescriptionID(DescriptionIDorConceptIDRequest descriptionIDorConceptIDRequest) {
 
         /* Se recupera la descripción a partir de su identificador de negocio, y luego el concepto en la que se
         encuentra */
-        Description theDescription = descriptionManager.getDescriptionByDescriptionID(descriptionId);
+        Description theDescription = descriptionManager.getDescriptionByDescriptionID(descriptionIDorConceptIDRequest.getDescriptionId());
         ConceptSMTK conceptSMTK = theDescription.getConceptSMTK();
 
         /* Luego se recuperan los crossmaps indirectos del concepto */

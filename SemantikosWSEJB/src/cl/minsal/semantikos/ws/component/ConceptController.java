@@ -8,6 +8,7 @@ import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
 import cl.minsal.semantikos.ws.mapping.ISPRegisterMapper;
+import cl.minsal.semantikos.ws.request.DescriptionIDorConceptIDRequest;
 import cl.minsal.semantikos.ws.request.NewTermRequest;
 import cl.minsal.semantikos.ws.response.*;
 import org.slf4j.Logger;
@@ -447,8 +448,12 @@ public class ConceptController {
 
     public ConceptResponse loadIndirectCrossmaps(@NotNull ConceptResponse res, @NotNull ConceptSMTK conceptSMTK) {
         if (res.getIndirectCrossMaps() == null || res.getIndirectCrossMaps().isEmpty()) {
+
+            DescriptionIDorConceptIDRequest request = new DescriptionIDorConceptIDRequest();
+            request.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
             IndirectCrossMapSearchResponse indirectCrossMapSearchResponse = this.crossmapController
-                    .getIndirectCrossmapsByDescriptionID(conceptSMTK.getDescriptionFavorite().getDescriptionId());
+                    .getIndirectCrossmapsByDescriptionID(request);
+
             res.setIndirectCrossMaps(indirectCrossMapSearchResponse.getIndirectCrossMapResponses());
         }
 

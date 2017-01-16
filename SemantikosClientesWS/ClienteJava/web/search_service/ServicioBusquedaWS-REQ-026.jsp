@@ -1,12 +1,13 @@
-<%@ page import="cl.minsal.semantikos.ws.shared.RespuestaRefSets" %>
+<%@ page import="cl.minsal.semantikos.ws.shared.CrossmapSetMembersResponse" %>
 <%@ page import="cl.minsal.semantikos.ws.shared.Stringer" %>
+<%@ page import="cl.minsal.semantikos.ws.shared.IndirectCrossmapsSearch" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <header>
-    <title>Semantikos - WS-REQ-009: Obtener REFSET por lote de ID Descripción</title>
+    <title>Semantikos - WS-REQ-026: Obtener los CrossMap indirectos por ID Descripción</title>
 
     <!-- Bootstrap -->
     <link href="<%=request.getContextPath()%>/css/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet"
@@ -18,30 +19,28 @@
 
 
 <div class="container">
-    <h4>Semantikos - WS-REQ-009: Obtener REFSET por lote de ID Descripción</h4>
+    <h4>Semantikos - WS-REQ-026: Obtener los CrossMap indirectos por ID Descripción</h4>
 
-    <form method="post" action="<%=request.getContextPath()%>/ws-req-009">
+    <form method="post" action="<%=request.getContextPath()%>/ws-req-026">
 
         <!-- El DESCRIPTION ID de la descripción a buscar -->
         <div class="form-group">
-            <label for="description_ID">DESCRIPTION ID</label>
+            <label for="description_ID">Description ID</label>
             <input type="text" id="description_ID" name="description_ID" class="form-control"
                    placeholder="Ingrese los DESCRIPTION ID separados por ','" required="required">
         </div>
 
-        <!-- Refsets -->
+        <!-- El CONCEPT ID de la descripción a buscar -->
         <div class="form-group">
-            <label for="includeStablishments">Incluye establecimiento</label>
-            <select id="includeStablishments" name="includeStablishments" class="form-control" required="required">
-                <option selected="selected" value="true">Si</option>
-                <option value="false">No</option>
-            </select>
+            <label for="concept_ID">Concept ID</label>
+            <input type="text" id="concept_ID" name="concept_ID" class="form-control"
+                   placeholder="Ingrese los DESCRIPTION ID separados por ','" required="required">
         </div>
 
         <!-- El Identificador del Establecimiento-->
         <div class="form-group">
-            <label for="idStablishment">Identificador Establecimiento</label>
-            <input id="idStablishment" name="idStablishment" type="text" class="form-control"
+            <label for="stablishment_id">Identificador Establecimiento</label>
+            <input id="stablishment_id" name="stablishment_id" type="text" class="form-control"
                    placeholder="Ingrese el identificador de su establecimiento"
                    required="required">
         </div>
@@ -52,7 +51,7 @@
             <div id="Response">
                 <jsp:useBean id="stringer" class="cl.minsal.semantikos.ws.shared.Stringer"
                              type="cl.minsal.semantikos.ws.shared.Stringer">
-                    Refsets encontrados: <%= Stringer.toString(((RespuestaRefSets) request.getAttribute("serviceResponse")).getRefsets()) %>
+                    CrossmapSet members: <%= Stringer.toString(((IndirectCrossmapsSearch) request.getAttribute("serviceResponse"))) %>
                     <br/>
                 </jsp:useBean>
             </div>

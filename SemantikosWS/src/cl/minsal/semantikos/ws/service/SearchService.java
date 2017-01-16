@@ -62,8 +62,10 @@ public class SearchService {
             throw new IllegalInputFault("Debe ingresar un Termino a buscar");
         }
 
-        logger.debug("ws-req-001: " + request.getTerm() + ", " + request.getCategoryNames() + " " + request.getRefSetNames());
-        return this.conceptController.searchTermGeneric(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
+        logger.debug("ws-req-001: " + request.getTerm() + ", " + request.getCategoryNames() + " " + request
+                .getRefSetNames());
+        return this.conceptController.searchTermGeneric(request.getTerm(), request.getCategoryNames(), request
+                .getRefSetNames());
     }
 
     // REQ-WS-002
@@ -77,10 +79,16 @@ public class SearchService {
         return this.conceptController.findConceptsByCategory(request.getCategoryName(), request.getIdStablishment());
     }
 
-    @WebResult(name = "categoria")
+    @WebResult(name = "respuestaCategorias")
     @WebMethod(operationName = "listaCategorias")
-    public List<CategoryResponse> listaCategorias() throws NotFoundFault {
-        return this.categoryController.categoryList();
+    public CategoriesResponse listaCategorias() throws NotFoundFault {
+        logger.debug("Se invocado el servicio listaCategorias().");
+
+        CategoriesResponse categoriesResponse = this.categoryController.categoryList();
+        logger.debug("El servicio listaCategorias() a retornado " + categoriesResponse.getCategoryResponses().size()
+                + " categorias Responses.");
+
+        return categoriesResponse;
     }
 
     // REQ-WS-004
@@ -99,7 +107,8 @@ public class SearchService {
         if (request.getTerm() == null || "".equals(request.getTerm())) {
             throw new IllegalInputFault("Debe ingresar un Termino a buscar");
         }
-        return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames(), request.getRefSetNames());
+        return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames(), request
+                .getRefSetNames());
     }
 
     /**
@@ -121,14 +130,16 @@ public class SearchService {
         /* Se hace una validación de los parámetros */
         obtenerTerminosPediblesParamValidation(request);
 
-        return conceptController.searchRequestableDescriptions(request.getCategoryNames(), request.getRefSetNames(), request.getRequestable());
+        return conceptController.searchRequestableDescriptions(request.getCategoryNames(), request.getRefSetNames(),
+                request.getRequestable());
     }
 
     /**
      * Este método es responsable de realizar la validación de los parámetros de entrada del servicio REQ-WS-005.
      *
      * @param request La petición con los parámetros de entrada.
-     * @throws cl.minsal.semantikos.ws.fault.IllegalInputFault Arrojado si se solicitan cateogorías distintas a las objetivo de la búsqueda o que
+     * @throws cl.minsal.semantikos.ws.fault.IllegalInputFault Arrojado si se solicitan cateogorías distintas a las
+     * objetivo de la búsqueda o que
      *                                                         simplemente no existen. También se arroja si existen
      */
     private void obtenerTerminosPediblesParamValidation(RequestableConceptsRequest request) throws IllegalInputFault {
@@ -136,17 +147,20 @@ public class SearchService {
         /* Se valida que haya al menos 1 categoría o 1 refset */
         validateAtLeastOneCategoryOrOneRefSet(request);
 
-        /* Luego es necesario validar que si hay categorías especificadas, se limiten a "interconsulta", "indicaciones generales" e "indicaciones de laboratorio" */
+        /* Luego es necesario validar que si hay categorías especificadas, se limiten a "interconsulta",
+        "indicaciones generales" e "indicaciones de laboratorio" */
         if (request.getCategoryNames().size() > 0) {
 
             Category interconsultas = categoryManager.getCategoryByName("Interconsultas");
             Category indicacionesGenerales = categoryManager.getCategoryByName("Indicaciones Generales");
             Category indicacionesLaboratio = categoryManager.getCategoryByName("Indicaciones de Laboratorio");
-            List<String> categories = Arrays.asList(interconsultas.getName().toLowerCase(), indicacionesGenerales.getName().toLowerCase(), indicacionesLaboratio.getName().toLowerCase());
+            List<String> categories = Arrays.asList(interconsultas.getName().toLowerCase(), indicacionesGenerales
+                    .getName().toLowerCase(), indicacionesLaboratio.getName().toLowerCase());
 
             for (String category : request.getCategoryNames()) {
                 if (!categories.contains(category.toLowerCase())) {
-                    throw new IllegalInputFault("La categoría " + category + " no es una categoría aceptable de búsqueda");
+                    throw new IllegalInputFault("La categoría " + category + " no es una categoría aceptable de " +
+                            "búsqueda");
                 }
             }
         }
@@ -181,7 +195,8 @@ public class SearchService {
         if (descriptionId == null || descriptionId.isEmpty()) {
             throw new IllegalInputFault("Debe ingresar por lo menos un idDescripcion");
         }
-        List<RefSet> refSets = this.refSetController.findRefSetsByDescriptions(descriptionId, includeInstitutions, idStablishment);
+        List<RefSet> refSets = this.refSetController.findRefSetsByDescriptions(descriptionId, includeInstitutions,
+                idStablishment);
 
         return new RefSetsResponse(refSets);
     }
@@ -258,24 +273,26 @@ public class SearchService {
 
     /**
      * REQ-WS-026: El sistema Semantikos debe disponer un servicio que permita obtener los CrossMap indirecto a partir
-     * de un ID Descripción.
+     * de un Descripción ID o de un CONCEPT ID.
      *
-     * @param descriptionId El valor de negocio <em>DESCRIPTION_ID</em> de la descripción cuyo concepto posee los
-     *                      crossmaps indirectos que se desea recuperar.
+     * @param descripcionIDorConceptIDRequest El valor de negocio <em>DESCRIPTION_ID</em> de la descripción cuyo
+     *                                        concepto posee los
+     *                                        crossmaps indirectos que se desea recuperar.
      * @return Una lista de crossmaps <em>indirectos</em> del concepto asociado a la descripción encapsulada en un
      * objeto mapeado
      * a un elemento XML.
-     * @throws cl.minsal.semantikos.ws.fault.NotFoundFault Arrojada si no existe una descripción con <em>DESCRIPTION_ID</em> igual al indicado por el
+     * @throws cl.minsal.semantikos.ws.fault.NotFoundFault Arrojada si no existe una descripción con
+     * <em>DESCRIPTION_ID</em> igual al indicado por el
      *                                                     parámetro <code>descriptionId</code>.
      */
     @WebResult(name = "indirectCrossmaps")
-    @WebMethod(operationName = "crossMapsIndirectosPorIDDescripcion")
-    public IndirectCrossMapSearchResponse crossMapsIndirectosPorIDDescripcion(
+    @WebMethod(operationName = "crossMapsIndirectosPorDescripcionIDorConceptID")
+    public IndirectCrossMapSearchResponse crossMapsIndirectosPorDescriptionIDoConceptID(
             @XmlElement(required = true)
-            @WebParam(name = "DescripcionID")
-                    String descriptionId
+            @WebParam(name = "descripcionIDorConceptIDRequest")
+                    DescriptionIDorConceptIDRequest descripcionIDorConceptIDRequest
     ) throws NotFoundFault {
-        return this.crossmapsController.getIndirectCrossmapsByDescriptionID(descriptionId);
+        return this.crossmapsController.getIndirectCrossmapsByDescriptionID(descripcionIDorConceptIDRequest);
     }
 
     /**
@@ -287,7 +304,8 @@ public class SearchService {
      * @return Una lista de crossmaps <em>directos</em> del concepto asociado a la descripción encapsulada en un objeto
      * mapeado
      * a un elemento XML.
-     * @throws cl.minsal.semantikos.ws.fault.NotFoundFault Arrojada si no existe una descripción con <em>DESCRIPTION_ID</em> igual al indicado por el
+     * @throws cl.minsal.semantikos.ws.fault.NotFoundFault Arrojada si no existe una descripción con
+     * <em>DESCRIPTION_ID</em> igual al indicado por el
      *                                                     parámetro <code>descriptionId</code>.
      */
     @WebResult(name = "crossmapSetMember")

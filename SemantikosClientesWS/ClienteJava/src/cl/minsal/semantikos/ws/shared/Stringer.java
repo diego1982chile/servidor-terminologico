@@ -132,7 +132,7 @@ public class Stringer {
 
     public static String toString(RespuestaRefSets.Refsets serviceResponse) {
 
-        if(serviceResponse == null){
+        if (serviceResponse == null) {
             return "";
         }
 
@@ -142,7 +142,7 @@ public class Stringer {
         }
 
         StringBuilder result = new StringBuilder("[");
-        for (RefSet refSet: refsets) {
+        for (RefSet refSet : refsets) {
             result.append(toString(refSet));
         }
 
@@ -154,7 +154,8 @@ public class Stringer {
     }
 
     public static String toString(PeticionConceptosPorRefSet peticion) {
-        return "[RefSet=" + peticion.getNombreRefSet() + ", ID Establecimiento=" + peticion.getIdEstablecimiento() + "]";
+        return "[RefSet=" + peticion.getNombreRefSet() + ", ID Establecimiento=" + peticion.getIdEstablecimiento() +
+                "]";
     }
 
     public static String toString(RespuestaConceptosPorRefSet response) {
@@ -164,7 +165,7 @@ public class Stringer {
         }
 
         StringBuilder result = new StringBuilder("[");
-        for (ConceptoLight conceptoLight: conceptos.getConcepto()) {
+        for (ConceptoLight conceptoLight : conceptos.getConcepto()) {
             result.append(toString(conceptoLight));
         }
 
@@ -190,7 +191,7 @@ public class Stringer {
     public static String toString(CrossmapSetMembersResponse response) {
 
         CrossmapSetMembersResponse.CrossmapSetMembers crossmapSetMembers = response.getCrossmapSetMembers();
-        if (crossmapSetMembers == null){
+        if (crossmapSetMembers == null) {
             return "[Null]";
         }
 
@@ -199,5 +200,31 @@ public class Stringer {
             result.append(crossmapSetMember.getCode() + "/" + crossmapSetMember.getGloss() + ", ");
         }
         return result.append("]").toString();
+    }
+
+    public static String toString(IndirectCrossmapsSearch response) {
+        return "[" + response.getIndirectCrossmaps() + "]";
+    }
+
+    public static String toString(DescriptionIDorConceptIDRequest request) {
+        return "[DESCRIPTION_ID=" + request.getDescriptionId() + ", CONCEPT_ID=" + request.getConceptId() + ", " +
+                "Stablishment ID=" + request.getStablishmentId() + "]";
+    }
+
+    public static String toString(RespuestaCategorias response) {
+        StringBuilder result = new StringBuilder();
+
+        if (response == null || response.getCategorias() == null){
+            return "RespuestaCategorias es nulo";
+        }
+
+        List<Categoria> categorias = response.getCategorias().getCategoria();
+        int i = 0;
+        for (Categoria categoria : categorias) {
+            result.append(++i).append(")").append(categoria.getNombre()).append(" / ").append(categoria
+                    .getNombreAbreviado());
+        }
+
+        return result.toString();
     }
 }

@@ -69,19 +69,6 @@ public class RespuestaRefSets {
         this.refsets = value;
     }
 
-    public void addAllRefsets(RespuestaRefSets response) {
-        Refsets refsets = response.getRefsets();
-        if (refsets != null) {
-            if (this.refsets == null){
-                this.refsets = new Refsets();
-                if (this.refsets.getRefset() == null){
-                    this.refsets.refset = new ArrayList<>();
-                }
-            }
-            this.refsets.getRefset().addAll(refsets.getRefset());
-        }
-    }
-
 
     /**
      * <p>Java class for anonymous complex type.

@@ -19,9 +19,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="termino" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="nombreCategoria" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="nombreRefSet" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="termino" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,40 +32,16 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PeticionBuscarTerminoSimple", propOrder = {
-    "termino",
     "nombreCategoria",
-    "nombreRefSet"
+    "nombreRefSet",
+    "termino"
 })
 public class PeticionBuscarTerminoSimple {
 
-    @XmlElement(required = true)
-    protected String termino;
     protected List<String> nombreCategoria;
     protected List<String> nombreRefSet;
-
-    /**
-     * Gets the value of the termino property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getTermino() {
-        return termino;
-    }
-
-    /**
-     * Sets the value of the termino property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setTermino(String value) {
-        this.termino = value;
-    }
+    @XmlElement(required = true)
+    protected String termino;
 
     /**
      * Gets the value of the nombreCategoria property.
@@ -123,6 +99,30 @@ public class PeticionBuscarTerminoSimple {
             nombreRefSet = new ArrayList<String>();
         }
         return this.nombreRefSet;
+    }
+
+    /**
+     * Gets the value of the termino property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTermino() {
+        return termino;
+    }
+
+    /**
+     * Sets the value of the termino property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTermino(String value) {
+        this.termino = value;
     }
 
     public void setNombreCategoria(List<String> nombreCategoria) {

@@ -9,16 +9,15 @@ import java.io.Serializable;
  * Created by Development on 2016-10-11.
  *
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "categoria", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "Categoria", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class CategoryResponse implements Serializable {
 
-    @XmlElement(name="nombre")
     private String name;
-    @XmlElement(name="nombreAbreviado")
+
     private String nameAbbreviated;
-    @XmlElement(name="restringida")
+
     private Boolean restriction;
 
     public CategoryResponse() {
@@ -32,26 +31,26 @@ public class CategoryResponse implements Serializable {
         this.restriction = category.isRestriction();
     }
 
+    @XmlElement(name="nombre")
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
+    @XmlElement(name="nombreAbreviado")
     public String getNameAbbreviated() {
         return nameAbbreviated;
     }
-
     public void setNameAbbreviated(String nameAbbreviated) {
         this.nameAbbreviated = nameAbbreviated;
     }
 
+    @XmlElement(name="restringida")
     public Boolean getRestriction() {
         return restriction;
     }
-
     public void setRestriction(Boolean restriction) {
         this.restriction = restriction;
     }

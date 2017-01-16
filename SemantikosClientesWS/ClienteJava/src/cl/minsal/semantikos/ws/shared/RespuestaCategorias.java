@@ -10,21 +10,21 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for CrossmapSetMembersResponse complex type.
+ * <p>Java class for RespuestaCategorias complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="CrossmapSetMembersResponse">
+ * &lt;complexType name="RespuestaCategorias">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="crossmapSetMembers" minOccurs="0">
+ *         &lt;element name="categorias" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;sequence>
- *                   &lt;element ref="{http://service.ws.semantikos.minsal.cl/}crossmapSetMember" maxOccurs="unbounded" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.ws.semantikos.minsal.cl/}categoria" maxOccurs="unbounded" minOccurs="0"/>
  *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -39,35 +39,35 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CrossmapSetMembersResponse", propOrder = {
-    "crossmapSetMembers"
+@XmlType(name = "RespuestaCategorias", propOrder = {
+    "categorias"
 })
-public class CrossmapSetMembersResponse {
+public class RespuestaCategorias {
 
-    protected CrossmapSetMembersResponse.CrossmapSetMembers crossmapSetMembers;
+    protected RespuestaCategorias.Categorias categorias;
 
     /**
-     * Gets the value of the crossmapSetMembers property.
+     * Gets the value of the categorias property.
      * 
      * @return
      *     possible object is
-     *     {@link CrossmapSetMembersResponse.CrossmapSetMembers }
+     *     {@link RespuestaCategorias.Categorias }
      *     
      */
-    public CrossmapSetMembersResponse.CrossmapSetMembers getCrossmapSetMembers() {
-        return crossmapSetMembers;
+    public RespuestaCategorias.Categorias getCategorias() {
+        return categorias;
     }
 
     /**
-     * Sets the value of the crossmapSetMembers property.
+     * Sets the value of the categorias property.
      * 
      * @param value
      *     allowed object is
-     *     {@link CrossmapSetMembersResponse.CrossmapSetMembers }
+     *     {@link RespuestaCategorias.Categorias }
      *     
      */
-    public void setCrossmapSetMembers(CrossmapSetMembersResponse.CrossmapSetMembers value) {
-        this.crossmapSetMembers = value;
+    public void setCategorias(RespuestaCategorias.Categorias value) {
+        this.categorias = value;
     }
 
 
@@ -81,7 +81,7 @@ public class CrossmapSetMembersResponse {
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;sequence>
-     *         &lt;element ref="{http://service.ws.semantikos.minsal.cl/}crossmapSetMember" maxOccurs="unbounded" minOccurs="0"/>
+     *         &lt;element ref="{http://service.ws.semantikos.minsal.cl/}categoria" maxOccurs="unbounded" minOccurs="0"/>
      *       &lt;/sequence>
      *     &lt;/restriction>
      *   &lt;/complexContent>
@@ -92,40 +92,40 @@ public class CrossmapSetMembersResponse {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "crossmapSetMember"
+        "categoria"
     })
-    public static class CrossmapSetMembers {
+    public static class Categorias {
 
-        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
-        protected List<CrossmapSetMember> crossmapSetMember;
+        @XmlElement(namespace = "")
+        protected List<Categoria> categoria;
 
         /**
-         * Gets the value of the crossmapSetMember property.
+         * Gets the value of the categoria property.
          * 
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the crossmapSetMember property.
+         * This is why there is not a <CODE>set</CODE> method for the categoria property.
          * 
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
-         *    getCrossmapSetMember().add(newItem);
+         *    getCategoria().add(newItem);
          * </pre>
          * 
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link CrossmapSetMember }
+         * {@link Categoria }
          * 
          * 
          */
-        public List<CrossmapSetMember> getCrossmapSetMember() {
-            if (crossmapSetMember == null) {
-                crossmapSetMember = new ArrayList<CrossmapSetMember>();
+        public List<Categoria> getCategoria() {
+            if (categoria == null) {
+                categoria = new ArrayList<Categoria>();
             }
-            return this.crossmapSetMember;
+            return this.categoria;
         }
 
     }

@@ -25,7 +25,6 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _RespuestaBuscarTerminoGenerica_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaBuscarTerminoGenerica");
-    private final static QName _CrossMapsIndirectosPorIDDescripcion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossMapsIndirectosPorIDDescripcion");
     private final static QName _BuscarTermino_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "buscarTermino");
     private final static QName _DescripcionPerfectMatch_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionPerfectMatch");
     private final static QName _IndirectCrossmapsSearch_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "indirectCrossmapsSearch");
@@ -38,6 +37,7 @@ public class ObjectFactory {
     private final static QName _RespuestaConceptosPorRefSet_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaConceptosPorRefSet");
     private final static QName _PeticionPorCategoria_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "peticionPorCategoria");
     private final static QName _Paginacion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "paginacion");
+    private final static QName _CrossMapsIndirectosPorDescripcionIDorConceptID_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossMapsIndirectosPorDescripcionIDorConceptID");
     private final static QName _DescripcionesPreferidasPorRefSet_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionesPreferidasPorRefSet");
     private final static QName _DescripcionNoValida_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionNoValida");
     private final static QName _DescripcionSimplificada_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionSimplificada");
@@ -52,7 +52,6 @@ public class ObjectFactory {
     private final static QName _CrossmapSet_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossmapSet");
     private final static QName _RespuestaConceptosPorCategoria_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaConceptosPorCategoria");
     private final static QName _PeticionBuscarTerminoSimple_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "peticionBuscarTerminoSimple");
-    private final static QName _CrossMapsIndirectosPorIDDescripcionResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossMapsIndirectosPorIDDescripcionResponse");
     private final static QName _ConceptosPorRefSet_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "conceptosPorRefSet");
     private final static QName _PeticionBuscarTermino_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "peticionBuscarTermino");
     private final static QName _Usuario_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "usuario");
@@ -62,18 +61,20 @@ public class ObjectFactory {
     private final static QName _ObtenerTerminosPediblesResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "obtenerTerminosPediblesResponse");
     private final static QName _ListaCategorias_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "listaCategorias");
     private final static QName _BuscarTruncatePerfect_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "buscarTruncatePerfect");
-    private final static QName _ConceptoPorIdDescripcion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "conceptoPorIdDescripcion");
     private final static QName _ObtenerTerminosPedibles_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "obtenerTerminosPedibles");
+    private final static QName _ConceptoPorIdDescripcion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "conceptoPorIdDescripcion");
     private final static QName _BuscarTruncatePerfectResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "buscarTruncatePerfectResponse");
     private final static QName _IndirectCrossmap_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "indirectCrossmap");
     private final static QName _CrossmapSetMembersDeCrossmapSet_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossmapSetMembersDeCrossmapSet");
     private final static QName _ListaCategoriasResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "listaCategoriasResponse");
     private final static QName _BuscarTerminoResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "buscarTerminoResponse");
     private final static QName _Categoria_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "categoria");
+    private final static QName _DescriptionIDorConceptIDRequest_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descriptionIDorConceptIDRequest");
     private final static QName _DefinicionRelacion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "definicionRelacion");
     private final static QName _IllegalInputFault_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "IllegalInputFault");
     private final static QName _NotFoundFault_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "NotFoundFault");
     private final static QName _DefinicionObjetivo_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "definicionObjetivo");
+    private final static QName _CrossMapsIndirectosPorDescripcionIDorConceptIDResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossMapsIndirectosPorDescripcionIDorConceptIDResponse");
     private final static QName _RespuestaRefSets_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaRefSets");
     private final static QName _DescripcionPendiente_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionPendiente");
     private final static QName _CrossmapSetMembersResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossmapSetMembersResponse");
@@ -87,6 +88,7 @@ public class ObjectFactory {
     private final static QName _CrossmapSetMembersDeCrossmapSetResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossmapSetMembersDeCrossmapSetResponse");
     private final static QName _Descripcion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcion");
     private final static QName _RefSetsPorIdDescripcionResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "refSetsPorIdDescripcionResponse");
+    private final static QName _RespuestaCategorias_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaCategorias");
     private final static QName _RefSet_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "refSet");
     private final static QName _Relacion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "relacion");
     private final static QName _GetCrossmapSetsResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "getCrossmapSetsResponse");
@@ -99,6 +101,14 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link RespuestaCategorias }
+     * 
+     */
+    public RespuestaCategorias createRespuestaCategorias() {
+        return new RespuestaCategorias();
     }
 
     /**
@@ -238,14 +248,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link CrossMapsIndirectosPorIDDescripcion }
-     * 
-     */
-    public CrossMapsIndirectosPorIDDescripcion createCrossMapsIndirectosPorIDDescripcion() {
-        return new CrossMapsIndirectosPorIDDescripcion();
-    }
-
-    /**
      * Create an instance of {@link DescripcionPerfectMatch }
      * 
      */
@@ -299,6 +301,14 @@ public class ObjectFactory {
      */
     public Paginacion createPaginacion() {
         return new Paginacion();
+    }
+
+    /**
+     * Create an instance of {@link CrossMapsIndirectosPorDescripcionIDorConceptID }
+     * 
+     */
+    public CrossMapsIndirectosPorDescripcionIDorConceptID createCrossMapsIndirectosPorDescripcionIDorConceptID() {
+        return new CrossMapsIndirectosPorDescripcionIDorConceptID();
     }
 
     /**
@@ -406,14 +416,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link CrossMapsIndirectosPorIDDescripcionResponse }
-     * 
-     */
-    public CrossMapsIndirectosPorIDDescripcionResponse createCrossMapsIndirectosPorIDDescripcionResponse() {
-        return new CrossMapsIndirectosPorIDDescripcionResponse();
-    }
-
-    /**
      * Create an instance of {@link ConceptosPorRefSet }
      * 
      */
@@ -470,19 +472,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ConceptoPorIdDescripcion }
-     * 
-     */
-    public ConceptoPorIdDescripcion createConceptoPorIdDescripcion() {
-        return new ConceptoPorIdDescripcion();
-    }
-
-    /**
      * Create an instance of {@link ObtenerTerminosPedibles }
      * 
      */
     public ObtenerTerminosPedibles createObtenerTerminosPedibles() {
         return new ObtenerTerminosPedibles();
+    }
+
+    /**
+     * Create an instance of {@link ConceptoPorIdDescripcion }
+     * 
+     */
+    public ConceptoPorIdDescripcion createConceptoPorIdDescripcion() {
+        return new ConceptoPorIdDescripcion();
     }
 
     /**
@@ -550,11 +552,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link CrossMapsIndirectosPorDescripcionIDorConceptIDResponse }
+     * 
+     */
+    public CrossMapsIndirectosPorDescripcionIDorConceptIDResponse createCrossMapsIndirectosPorDescripcionIDorConceptIDResponse() {
+        return new CrossMapsIndirectosPorDescripcionIDorConceptIDResponse();
+    }
+
+    /**
      * Create an instance of {@link DefinicionObjetivo }
      * 
      */
     public DefinicionObjetivo createDefinicionObjetivo() {
         return new DefinicionObjetivo();
+    }
+
+    /**
+     * Create an instance of {@link DescriptionIDorConceptIDRequest }
+     * 
+     */
+    public DescriptionIDorConceptIDRequest createDescriptionIDorConceptIDRequest() {
+        return new DescriptionIDorConceptIDRequest();
     }
 
     /**
@@ -659,6 +677,14 @@ public class ObjectFactory {
      */
     public GetCrossmapSetsResponse createGetCrossmapSetsResponse() {
         return new GetCrossmapSetsResponse();
+    }
+
+    /**
+     * Create an instance of {@link RespuestaCategorias.Categorias }
+     * 
+     */
+    public RespuestaCategorias.Categorias createRespuestaCategoriasCategorias() {
+        return new RespuestaCategorias.Categorias();
     }
 
     /**
@@ -863,15 +889,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CrossMapsIndirectosPorIDDescripcion }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "crossMapsIndirectosPorIDDescripcion")
-    public JAXBElement<CrossMapsIndirectosPorIDDescripcion> createCrossMapsIndirectosPorIDDescripcion(CrossMapsIndirectosPorIDDescripcion value) {
-        return new JAXBElement<CrossMapsIndirectosPorIDDescripcion>(_CrossMapsIndirectosPorIDDescripcion_QNAME, CrossMapsIndirectosPorIDDescripcion.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link BuscarTermino }{@code >}}
      * 
      */
@@ -977,6 +994,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "paginacion")
     public JAXBElement<Paginacion> createPaginacion(Paginacion value) {
         return new JAXBElement<Paginacion>(_Paginacion_QNAME, Paginacion.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CrossMapsIndirectosPorDescripcionIDorConceptID }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "crossMapsIndirectosPorDescripcionIDorConceptID")
+    public JAXBElement<CrossMapsIndirectosPorDescripcionIDorConceptID> createCrossMapsIndirectosPorDescripcionIDorConceptID(CrossMapsIndirectosPorDescripcionIDorConceptID value) {
+        return new JAXBElement<CrossMapsIndirectosPorDescripcionIDorConceptID>(_CrossMapsIndirectosPorDescripcionIDorConceptID_QNAME, CrossMapsIndirectosPorDescripcionIDorConceptID.class, null, value);
     }
 
     /**
@@ -1106,15 +1132,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CrossMapsIndirectosPorIDDescripcionResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "crossMapsIndirectosPorIDDescripcionResponse")
-    public JAXBElement<CrossMapsIndirectosPorIDDescripcionResponse> createCrossMapsIndirectosPorIDDescripcionResponse(CrossMapsIndirectosPorIDDescripcionResponse value) {
-        return new JAXBElement<CrossMapsIndirectosPorIDDescripcionResponse>(_CrossMapsIndirectosPorIDDescripcionResponse_QNAME, CrossMapsIndirectosPorIDDescripcionResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ConceptosPorRefSet }{@code >}}
      * 
      */
@@ -1196,21 +1213,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ConceptoPorIdDescripcion }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "conceptoPorIdDescripcion")
-    public JAXBElement<ConceptoPorIdDescripcion> createConceptoPorIdDescripcion(ConceptoPorIdDescripcion value) {
-        return new JAXBElement<ConceptoPorIdDescripcion>(_ConceptoPorIdDescripcion_QNAME, ConceptoPorIdDescripcion.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerTerminosPedibles }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "obtenerTerminosPedibles")
     public JAXBElement<ObtenerTerminosPedibles> createObtenerTerminosPedibles(ObtenerTerminosPedibles value) {
         return new JAXBElement<ObtenerTerminosPedibles>(_ObtenerTerminosPedibles_QNAME, ObtenerTerminosPedibles.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConceptoPorIdDescripcion }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "conceptoPorIdDescripcion")
+    public JAXBElement<ConceptoPorIdDescripcion> createConceptoPorIdDescripcion(ConceptoPorIdDescripcion value) {
+        return new JAXBElement<ConceptoPorIdDescripcion>(_ConceptoPorIdDescripcion_QNAME, ConceptoPorIdDescripcion.class, null, value);
     }
 
     /**
@@ -1268,6 +1285,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DescriptionIDorConceptIDRequest }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "descriptionIDorConceptIDRequest")
+    public JAXBElement<DescriptionIDorConceptIDRequest> createDescriptionIDorConceptIDRequest(DescriptionIDorConceptIDRequest value) {
+        return new JAXBElement<DescriptionIDorConceptIDRequest>(_DescriptionIDorConceptIDRequest_QNAME, DescriptionIDorConceptIDRequest.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DefinicionRelacion }{@code >}}
      * 
      */
@@ -1301,6 +1327,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "definicionObjetivo")
     public JAXBElement<DefinicionObjetivo> createDefinicionObjetivo(DefinicionObjetivo value) {
         return new JAXBElement<DefinicionObjetivo>(_DefinicionObjetivo_QNAME, DefinicionObjetivo.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CrossMapsIndirectosPorDescripcionIDorConceptIDResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "crossMapsIndirectosPorDescripcionIDorConceptIDResponse")
+    public JAXBElement<CrossMapsIndirectosPorDescripcionIDorConceptIDResponse> createCrossMapsIndirectosPorDescripcionIDorConceptIDResponse(CrossMapsIndirectosPorDescripcionIDorConceptIDResponse value) {
+        return new JAXBElement<CrossMapsIndirectosPorDescripcionIDorConceptIDResponse>(_CrossMapsIndirectosPorDescripcionIDorConceptIDResponse_QNAME, CrossMapsIndirectosPorDescripcionIDorConceptIDResponse.class, null, value);
     }
 
     /**
@@ -1418,6 +1453,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "refSetsPorIdDescripcionResponse")
     public JAXBElement<RefSetsPorIdDescripcionResponse> createRefSetsPorIdDescripcionResponse(RefSetsPorIdDescripcionResponse value) {
         return new JAXBElement<RefSetsPorIdDescripcionResponse>(_RefSetsPorIdDescripcionResponse_QNAME, RefSetsPorIdDescripcionResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RespuestaCategorias }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "respuestaCategorias")
+    public JAXBElement<RespuestaCategorias> createRespuestaCategorias(RespuestaCategorias value) {
+        return new JAXBElement<RespuestaCategorias>(_RespuestaCategorias_QNAME, RespuestaCategorias.class, null, value);
     }
 
     /**

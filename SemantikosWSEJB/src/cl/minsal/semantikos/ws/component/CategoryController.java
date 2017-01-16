@@ -3,7 +3,10 @@ package cl.minsal.semantikos.ws.component;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
+import cl.minsal.semantikos.ws.response.CategoriesResponse;
 import cl.minsal.semantikos.ws.response.CategoryResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -15,6 +18,8 @@ import java.util.List;
  */
 @Stateless
 public class CategoryController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
     @EJB
     private CategoryManager categoryManager;
@@ -43,15 +48,18 @@ public class CategoryController {
         }
     }
 
-    public List<CategoryResponse> categoryList() throws NotFoundFault {
-        List<CategoryResponse> res = new ArrayList<>();
+    /**
+     * Este método es responsable de recuperar las categorías y encapsularlas en un objeto XML.
+     *
+     * @return Un objeto XML que encapsula la lista de categorías.
+     */
+    public CategoriesResponse categoryList() {
+
+        /* Se recuperan las categorías */
         List<Category> categories = this.categoryManager.getCategories();
-        if (categories != null) {
-            for (Category category : categories) {
-                res.add(this.getResponse(category));
-            }
-        }
-        return res;
+        logger.debug("CategoryController.categoryList() : " +categories.size());
+
+        return new CategoriesResponse(categories);
     }
 
     public CategoryResponse getResponse(Category category) throws NotFoundFault {

@@ -1,7 +1,6 @@
 
 package cl.minsal.semantikos.ws.shared;
 
-import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -127,14 +126,14 @@ public interface SearchService {
     /**
      * 
      * @return
-     *     returns java.util.List<cl.minsal.semantikos.ws.shared.Categoria>
+     *     returns cl.minsal.semantikos.ws.shared.RespuestaCategorias
      * @throws NotFoundFault_Exception
      */
     @WebMethod
-    @WebResult(name = "categoria", targetNamespace = "http://service.ws.semantikos.minsal.cl/")
+    @WebResult(name = "respuestaCategorias", targetNamespace = "http://service.ws.semantikos.minsal.cl/")
     @RequestWrapper(localName = "listaCategorias", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.ListaCategorias")
     @ResponseWrapper(localName = "listaCategoriasResponse", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.ListaCategoriasResponse")
-    public List<Categoria> listaCategorias()
+    public RespuestaCategorias listaCategorias()
         throws NotFoundFault_Exception
     ;
 
@@ -192,6 +191,23 @@ public interface SearchService {
 
     /**
      * 
+     * @param descripcionIDorConceptIDRequest
+     * @return
+     *     returns cl.minsal.semantikos.ws.shared.IndirectCrossmapsSearch
+     * @throws NotFoundFault_Exception
+     */
+    @WebMethod
+    @WebResult(name = "indirectCrossmaps", targetNamespace = "")
+    @RequestWrapper(localName = "crossMapsIndirectosPorDescripcionIDorConceptID", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.CrossMapsIndirectosPorDescripcionIDorConceptID")
+    @ResponseWrapper(localName = "crossMapsIndirectosPorDescripcionIDorConceptIDResponse", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.CrossMapsIndirectosPorDescripcionIDorConceptIDResponse")
+    public IndirectCrossmapsSearch crossMapsIndirectosPorDescripcionIDorConceptID(
+        @WebParam(name = "descripcionIDorConceptIDRequest", targetNamespace = "")
+        DescriptionIDorConceptIDRequest descripcionIDorConceptIDRequest)
+        throws NotFoundFault_Exception
+    ;
+
+    /**
+     * 
      * @param peticionConceptosPorRefSet
      * @return
      *     returns cl.minsal.semantikos.ws.shared.RespuestaConceptosPorRefSet
@@ -240,23 +256,6 @@ public interface SearchService {
         @WebParam(name = "peticionBuscarTermino", targetNamespace = "")
         PeticionBuscarTerminoSimple peticionBuscarTermino)
         throws IllegalInputFault_Exception, NotFoundFault_Exception
-    ;
-
-    /**
-     * 
-     * @param descripcionID
-     * @return
-     *     returns cl.minsal.semantikos.ws.shared.IndirectCrossmapsSearch
-     * @throws NotFoundFault_Exception
-     */
-    @WebMethod
-    @WebResult(name = "indirectCrossmaps", targetNamespace = "")
-    @RequestWrapper(localName = "crossMapsIndirectosPorIDDescripcion", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.CrossMapsIndirectosPorIDDescripcion")
-    @ResponseWrapper(localName = "crossMapsIndirectosPorIDDescripcionResponse", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.CrossMapsIndirectosPorIDDescripcionResponse")
-    public IndirectCrossmapsSearch crossMapsIndirectosPorIDDescripcion(
-        @WebParam(name = "DescripcionID", targetNamespace = "")
-        String descripcionID)
-        throws NotFoundFault_Exception
     ;
 
 }

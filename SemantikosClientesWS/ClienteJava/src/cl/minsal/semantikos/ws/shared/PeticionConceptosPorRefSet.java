@@ -36,7 +36,6 @@ public class PeticionConceptosPorRefSet {
 
     @XmlElement(required = true)
     protected String nombreRefSet;
-
     @XmlElement(required = true)
     protected String idEstablecimiento;
 
@@ -87,4 +86,5 @@ public class PeticionConceptosPorRefSet {
     public void setIdEstablecimiento(String value) {
         this.idEstablecimiento = value;
     }
+
 }
