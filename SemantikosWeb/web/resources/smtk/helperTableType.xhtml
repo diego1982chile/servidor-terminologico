@@ -298,6 +298,8 @@
 
                         <p:outputPanel styleClass="search">
 
+                            <p:growl showDetail="true" showSummary="true"/>
+
                             <p:autoComplete id="findHTRecords5" scrollHeight="200"
                                             completeMethod="#{helperTableBean.getRecordSearchInput}"
                                             minQueryLength="1"
@@ -383,24 +385,26 @@
                 </div>
             </p:column>
 
-            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
-                <p:commandButton
-                        icon="fa fa-trash"
-                        title="Eliminar"
-                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                        style="float: right"
-                        process="@this"
-                        immediate="true"
-                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                        styleClass="relationships"
-                />
+            <p:column headerText="Acción" rendered="#{cc.attrs.concept.editable}">
+                <div style="text-align: center">
+                    <p:commandButton
+                            icon="fa fa-trash"
+                            title="Eliminar"
+                            update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.search)"
+                            process="@this"
+                            immediate="true"
+                            actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                            styleClass="relationships"
+                    />
+                </div>
             </p:column>
         </p:dataTable>
 
     </p:panel>
 
     <!-- ISP -->
-    <p:panel id="helperTableTypeCollectionISP" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500" collapsed="#{ispbean.existe?false:true}"
+    <p:panel id="helperTableTypeCollectionISP" header="#{cc.attrs.relationshipDefinition.name}" toggleable="true" toggleSpeed="500"
+             collapsed="#{ispbean.existe?false:true}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions and cc.attrs.relationshipDefinition.ISP}">
 
         <p:spacer />
@@ -427,6 +431,7 @@
 
         </h:panelGrid>
         <p:spacer />
+
         <p:outputPanel style="display:block" id="ispfetcherinputs" rendered="#{cc.attrs.concept.editable}">
 
             <h:panelGrid columns="5" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-4" width="100%" rendered="#{ispbean.existe}">
@@ -439,13 +444,15 @@
 
                     <p:inputText id="ispregano" value="#{ispbean.ano}" />
 
-                    <p:commandButton id="buttonispcargadatos" action="#{ispbean.fetchData}" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" value="Cargar Data" process="@this, ispregnum, ispregano" />
+                    <p:commandButton id="buttonispcargadatos" action="#{ispbean.fetchData}" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" value="Cargar Data" process="@this, ispregnum, ispregano" >
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                    </p:commandButton>
 
             </h:panelGrid>
 
         </p:outputPanel>
 
-        <p:dialog id="ispfetcheddialog" widgetVar="ispfetcheddialog" header="Confirmar datos recuperados del Registro ISP" modal="true" width="750px" height="500px">
+        <p:dialog id="ispfetcheddialog" widgetVar="ispfetcheddialog" header="Confirmar datos recuperados del Registro ISP"  width="750px" height="300px">
             <p:outputLabel rendered="#{ not empty ispbean.ispRecord.fields}">Se han recuperado los siguientes datos desde el ISP:</p:outputLabel>
             <p:panel id="ispfetcheddialogcontent" >
 
@@ -509,17 +516,19 @@
                 </div>
             </p:column>
 
-            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
-                <p:commandButton
-                        icon="fa fa-trash"
-                        title="Eliminar"
-                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
-                        style="float: right"
-                        process="@this"
-                        immediate="true"
-                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                        styleClass="relationships"
-                />
+            <p:column style="" rendered="#{cc.attrs.concept.editable}">
+                <div style="text-align: center">
+                    <p:commandButton
+                            icon="fa fa-trash"
+                            title="Eliminar"
+                            update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
+                            style="float: right"
+                            process="@this"
+                            immediate="true"
+                            actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                            styleClass="relationships"
+                    />
+                </div>
             </p:column>
         </p:dataTable>
 
@@ -548,7 +557,7 @@
 
             <div class="ui-fluid">
 
-                <div class="Container ContainerIndent">
+                <div class="Container">
 
                     <div class="Container20 White Responsive">
 
@@ -611,7 +620,7 @@
                         />
                     </p:repeat>
                     <div class="Container20 White Responsive">
-                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
+                        <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}" style="text-align: center">
                             <p:commandButton
                                     process="@(.attributes_#{cc.attrs.relationshipDefinition.id})"
                                     action="#{conceptBean.addRelationshipWithAttributes(cc.attrs.relationshipDefinition)}"
@@ -663,17 +672,19 @@
                 <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
             </p:columns>
 
-            <p:column style="width: 4%" rendered="#{cc.attrs.concept.editable}">
-                <p:commandButton
-                        icon="fa fa-trash"
-                        title="Eliminar"
-                        update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                        style="float: right"
-                        process="@this"
-                        immediate="true"
-                        actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
-                        styleClass="relationships"
-                />
+            <p:column style="" rendered="#{cc.attrs.concept.editable}">
+                <div style="text-align: center">
+                    <p:commandButton
+                            icon="fa fa-trash"
+                            title="Eliminar"
+                            update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
+                            style="float: right"
+                            process="@this"
+                            immediate="true"
+                            actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
+                            styleClass="relationships"
+                    />
+                </div>
             </p:column>
         </p:dataTable>
     </p:panel>

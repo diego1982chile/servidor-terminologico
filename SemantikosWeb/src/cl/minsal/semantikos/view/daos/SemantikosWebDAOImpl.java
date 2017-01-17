@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.Category;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.ConceptSMTKWeb;
 import cl.minsal.semantikos.model.DescriptionWeb;
+import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
 import org.slf4j.Logger;
@@ -64,6 +65,36 @@ public class SemantikosWebDAOImpl implements SemantikosWebDAO {
         }
 
         return new ExtendedRelationshipDefinitionInfo(idComposite, order, defaultValue);
+    }
+
+    @Override
+    public ExtendedRelationshipAttributeDefinitionInfo getCompositeOf(Category category, RelationshipAttributeDefinition relationshipAttributeDefinition) {
+        ConnectionBD connect = new ConnectionBD();
+        String sql = "{call semantikos.get_view_info_by_relationship_attribute_definition(?,?)}";
+        long idComposite;
+        int order;
+
+        try (Connection connection = connect.getConnection();
+
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setLong(1, category.getId());
+            call.setLong(2, relationshipAttributeDefinition.getId());
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                order = rs.getInt("order_view");
+                idComposite = rs.getLong("composite");
+            } else {
+                return ExtendedRelationshipAttributeDefinitionInfo.DEFAULT_CONFIGURATION;
+            }
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar viewInfo de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        return new ExtendedRelationshipAttributeDefinitionInfo(idComposite, order);
     }
 
     @Override

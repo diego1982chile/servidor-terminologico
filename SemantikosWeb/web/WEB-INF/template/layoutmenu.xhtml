@@ -1,4 +1,4 @@
-<ui:composition 
+<ui:composition
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
@@ -7,6 +7,7 @@
     xmlns:pr="http://primefaces.org/rio">
 
     <div class="Animated05" id="layout-menu-cover">
+
         <ul class="layout-menu">
             <li>
                 <a class="menulink ripplelink">
@@ -14,22 +15,37 @@
                     <span class="Fs18"><h:outputText value="#{authenticationBean.loggedUser.fullName}" /><i class="icon-downwards Fright Fs20" /><br /><span class="Fs12 FontRobotoLight"><h:outputText value="#{authenticationBean.loggedUser.rut}" /></span></span>
                 </a>
                 <ul>
-
                     <li><p:commandLink style="color: #455a64" action="#{authenticationBean.logout}" styleClass="menulink ripplelink"><i class="icon-thermostat1 Fs16" /> Logout</p:commandLink></li>
                 </ul>
             </li>
         </ul>
+
         <div class="Separator"></div>
 
+        <pr:menu id="menu1">
+            <p:menuitem id="rm_home" value="Inicio" icon="fa fa-home Fs30" outcome="/views/home.xhtml" />
+        </pr:menu>
 
-        <pr:menu>
-            <p:menuitem id="rm_users_web" value="Administracion Usuarios" icon="icon-two385" outcome="/views/users"/>
+        <pr:menu id="rm_categories" model="#{mainMenuBean.categoryMenuModel}" />
 
-            <p:menuitem id="rm_menu_principal" value="Menú Principal" icon="fa fa-home" outcome="/views/browser/mainMenu.xhtml"/>
+        <pr:menu id="rm_otros">
+            <p:submenu id="rm_otros_sm" label="Otros" icon="fa fa-plus-square">
+                <p:menuitem id="rm_descriptions" value="Descripciones" icon="fa fa-edit Fs15" url="/views/browser/descriptionBrowser.xhtml" />
+                <p:menuitem id="rm_drugs" value="Fármacos" icon="fa fa-medkit Fs15" url="/views/browser/drugsBrowser.xhtml" />
+                <p:menuitem id="rm_pendings" value="Pendientes" icon="fa fa-exclamation-triangle  Fs15" url="/views/browser/pendingBrowser.xhtml" />
+                <p:menuitem id="rm_no_valids" value="No Válidos" icon="fa fa-ban Fs15" url="/views/browser/noValidBrowser.xhtml" />
+            </p:submenu>
+        </pr:menu>
 
-            <p:menuitem id="rm_concept_draft" value="Conceptos en Borrador" icon="fa fa-pencil-square-o" outcome="/views/concept/conceptDraft.xhtml"/>
+        <pr:menu id="menu2">
 
-            <p:menuitem id="rm_create_category" value="Crear categoria" icon="fa fa-list-alt" outcome="/views/category/createCategory.xhtml"/>
+            <p:menuitem id="rm_users_web" value="Administracion Usuarios" icon="icon-two385" outcome="/views/users" />
+
+            <p:menuitem id="rm_menu_principal" value="Menú Principal" icon="fa fa-home" outcome="/views/browser/mainMenu.xhtml" rendered="false"/>
+
+            <p:menuitem id="rm_concept_draft" value="Conceptos en Borrador" icon="fa fa-pencil-square-o" outcome="/views/concept/conceptDraft.xhtml" rendered="false"/>
+
+            <p:menuitem id="rm_create_category" value="Crear categoria" icon="fa fa-list-alt" outcome="/views/category/createCategory.xhtml" rendered="false"/>
 
             <p:menuitem id="rm_admin_refsets" value="Administrador de RefSets" icon="fa fa-dropbox" outcome="/views/refsets/admin_refsets.xhtml"/>
 
@@ -38,8 +54,7 @@
             <p:separator />
 
             <p:submenu id="rm_administracion" label="Administración" icon="icon-planet29">
-
-                <p:menuitem id="rm_configuraciones" value="Configuaciones" icon="icon-planet29" outcome="/views/configuraciones.xhtml"/>
+                <p:menuitem id="rm_configuraciones" value="Configuaciones" icon="icon-planet29" outcome="/views/configuraciones.xhtml" update=""  />
             </p:submenu>
 
             <p:submenu id="rm_theme" label="Ejemplos Rio Theme" icon="icon-mountains14" rendered="false">
@@ -67,7 +82,7 @@
                 <p:menuitem id="rm_access" value="Access Denied Page" icon="icon-turn17" outcome="/views/errors/access-denied" />
             </p:submenu>
 
-            <p:submenu id="rm_docs" label="Documentation" icon="icon-receipt9" rendered="false">
+            <p:submenu id="rm_docs" label="Documentation" icon="icon-receipt9">
                 <p:submenu id="rm_docs_core" label="Core CSS Docs" icon="fa fa-code">
                     <p:menuitem id="rm_docs_1" value="Installation" icon="fa fa-book" outcome="/views/examples/docs/core/installation" />
                     <p:menuitem id="rm_docs_2" value="Menus" icon="fa fa-book" outcome="/views/examples/docs/core/menus" />
@@ -102,7 +117,6 @@
             </p:submenu>
             <p:separator />
         </pr:menu>
-
 
 
 

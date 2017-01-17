@@ -10,14 +10,17 @@
 
 <composite:interface>
     <composite:attribute name="refset" type="cl.minsal.semantikos.model.RefSet"/>
+    <composite:attribute name="scroll" type="java.lang.Boolean"/>
 </composite:interface>
 
 <composite:implementation>
 
+
+
     <p:panel id="otherDescriptionsPanel" styleClass="otherDescriptionsPanel" widgetVar="panel">
 
         <p:dataTable id="conceptLinkToRefset" emptyMessage="No se han agregado conceptos al RefSets"
-                     value="#{cc.attrs.refset.concepts}" var="conceptSMTK" styleClass="conceptBindRefset">
+                     value="#{cc.attrs.refset.concepts}" var="conceptSMTK" styleClass="conceptBindRefset"  scrollable="#{cc.attrs.scroll}" scrollHeight="300" >
 
             <p:column headerText="ID">
                 <h:outputText value="#{conceptSMTK.id}"/>

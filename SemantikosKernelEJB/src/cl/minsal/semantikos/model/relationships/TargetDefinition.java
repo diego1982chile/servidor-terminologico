@@ -7,6 +7,13 @@ import cl.minsal.semantikos.model.IPersistentEntity;
  */
 public interface TargetDefinition extends IPersistentEntity {
 
+
+    public static final String COMERCIALIZADO = "Comercializado";
+
+    public static final String ISP = "ISP";
+
+    public static final String BIOEQUIVALENTE = "Bioequivalente";
+
     /**
      * Este metodo es responsable de determinar si el target type es de tipo básico es o no.
      *
@@ -42,4 +49,5 @@ public interface TargetDefinition extends IPersistentEntity {
      * @return <code>true</code> si es de tipo CrossMap y <code>false</code> si no.
      */
     public boolean isCrossMapType();
+
 }

@@ -31,9 +31,17 @@
                     <div class="Container20 White Responsive">
                         <div class="ContainerIndent">
 
-                            <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}"
-                                           value="#{cc.attrs.relationshipDefinition.name}"/>
-                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                            <p:outputLabel for="basicTypeValue11" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}">
+                                <span class="FontBold">
+                                    #{cc.attrs.relationshipDefinition.name}
+                                </span>
+                            </p:outputLabel>
+                            <p:outputLabel rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}">
+                                <span>
+                                    #{cc.attrs.relationshipDefinition.name} *
+                                </span>
+                            </p:outputLabel>
+
                         </div>
                     </div>
 
@@ -42,7 +50,7 @@
                             <p:selectBooleanButton value="#{conceptBean.basicTypeValue.value}" offLabel="No" onLabel="Si" onIcon="fa fa-check fa-lg" offIcon="fa fa-close fa-lg">
                                 <p:ajax event="change"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.basicTypeValue)}"
-                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
+                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptMarketed)" />
                             </p:selectBooleanButton>
                         </div>
                     </div>
@@ -73,8 +81,16 @@
                     <div class="Container20 White Responsive">
                         <div class="ContainerIndent">
 
-                            <p:outputLabel for="basicTypeValue" value="#{cc.attrs.relationshipDefinition.name}" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}" />
-                            <p:outputLabel value="#{cc.attrs.relationshipDefinition.name} *" rendered="#{not cc.attrs.relationshipDefinition.multiplicity.optional}" />
+                            <p:outputLabel for="basicTypeValue" rendered="#{cc.attrs.relationshipDefinition.multiplicity.optional}">
+                                <span class="">
+                                    #{cc.attrs.relationshipDefinition.name}
+                                </span>
+                            </p:outputLabel>
+                            <p:outputLabel rendered="#{ not cc.attrs.relationshipDefinition.multiplicity.optional}">
+                                <span class="">
+                                    #{cc.attrs.relationshipDefinition.name} *
+                                </span>
+                            </p:outputLabel>
 
                         </div>
                     </div>
@@ -86,10 +102,10 @@
                                                    onLabel="Si"
                                                    onIcon="fa fa-check"
                                                    offIcon="fa fa-close"
-                                                   disabled="#{conceptBean.isMCSpecial(cc.attrs.relationshipDefinition) and conceptBean.concept.isModeled()}">
+                                                   disabled="#{(conceptBean.isMCSpecial(cc.attrs.relationshipDefinition) and conceptBean.concept.isModeled()) or conceptBean.concept.persistent}">
                                 <p:ajax event="change"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,relationship.target)}"
-                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id})" />
+                                        process="@this" update="@(.panel_#{cc.attrs.relationshipDefinition.id}),,@(.conceptMarketed)" />
                             </p:selectBooleanButton>
                         </div>
                     </div>

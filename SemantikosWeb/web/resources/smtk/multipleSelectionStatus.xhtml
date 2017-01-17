@@ -14,8 +14,8 @@
     <composite:attribute name="selectedItems" type="java.util.List"/>
 </composite:interface>
 <composite:implementation>
-    <h:panelGrid  columns="2"
-                  layout="grid" styleClass="ui-panelgrid-blank filterStatus"
+    <h:panelGrid  columns="1"
+                  layout="grid" styleClass="ui-panelgrid-blank filterStatus BoldGray"
                   rendered="#{not empty cc.attrs.selectedItems}">
         <p:outputPanel>
             <i class="fa  fa-info-circle fa-lg" style="padding-right: 10px"/>

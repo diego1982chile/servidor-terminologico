@@ -12,7 +12,11 @@ form.consult div.ui-selectonemenu.ui-state-disabled .ui-selectonemenu-label {
     background-color: #FFF !important;
 }
 
-.ContainerIndentRight{
+.ContainerIndentBottom {
+    margin-bottom: 5px !important;
+}
+
+.ContainerIndentRight {
     margin-right: 10px !important;
 }
 
@@ -99,6 +103,7 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 .browserFilters .ui-autocomplete-token {
     margin: 0px !important;
     margin-right: 2px !important;
+    margin-bottom: 5px !important;
 }
 
 .browserFilters .ui-autocomplete-multiple-container {
@@ -141,22 +146,49 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     padding: 6px 0px;
 }
 
-
-/*
-.ui-widget, .ui-widget .ui-widget
-{
-    font-size: 95% !important;
+.browserLayout .ui-widget-content {
+    border: 1px solid #d5d5d5;
+    background: #fff;
+    color: #222;
 }
 
-
-.ui-selectonemenu-label, .ui-selectonemenu .ui-selectonemenu-label
-{
-    font-size: 95% !important;
+.ui-widget-content.ui-layout-pane {
+    border: 1px solid #d5d5d5;
+    background: #fff;
+    color: #222;
 }
-*/
 
-/*
-.ui-selectonemenu {
-    min-width: 223px !important;
+.browserLayout {
+    width:  100%;
+    height: auto;
+    overflow: hidden;
 }
-*/
+
+.northPane, .southPane, .westPane, .centerPane {
+    padding: 0;
+}
+
+.layout-menu {
+    margin-top: 0px;
+}
+
+#logo {
+    width: 240px;
+}
+
+.pe-layout-pane-header {
+    background: #f5f5f5;
+}
+
+.pe-layout-pane-header {
+    padding: 4px 0.5em 0px 0.5em;
+    border-width: 0 0 1px;
+}
+
+.pe-layout-pane-header .ui-menuitem-icon {
+    padding-right: 0.5em;
+}
+
+.browserTableDetail .ui-column-title {
+    display: none;
+}

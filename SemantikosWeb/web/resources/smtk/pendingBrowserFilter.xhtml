@@ -19,28 +19,30 @@
     <p:outputPanel id="browserFilters" styleClass="browserFilters">
 
         <div class="ui-fluid">
-
             <div class="Container">
-
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
-
+                <div class="Container100">
+                    <div class="ContainerIndent BoldGray FontBold">
+                        <span>
+                            Patrón
+                        </span>
                         <p:outputPanel styleClass="search">
                             <p:inputText value="#{cc.attrs.pendingQuery.query}" placeholder="Buscar...">
                                 <p:ajax event="keyup" update="@(.browserTable),@(.pendingQueryFilter)" process="@this" />
                             </p:inputText>
                             <i class="fa fa-search fa-lg" />
                         </p:outputPanel>
-
                     </div>
                 </div>
 
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+                <div class="Container100">
+                    <div class="ContainerIndent BoldGray FontBold">
+                        <span>
+                            Categorías
+                        </span>
                         <p:selectCheckboxMenu id="categories"
                                               value="#{cc.attrs.pendingQuery.categories}"
                                               converter="omnifaces.SelectItemsConverter"
-                                              label="Categorías..."
+                                              label="Seleccione..."
                                               filter="true"
                                               filterMatchMode="startsWith">
 
@@ -56,6 +58,7 @@
                 </div>
             </div>
         </div>
+
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.pendingQuery.categories}" itemName="Categoría" />
     </p:outputPanel>
 

@@ -1,10 +1,13 @@
 package cl.minsal.semantikos.designer_modeler.designer;
 
+import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 
 import javax.ejb.EJB;
@@ -15,6 +18,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +31,9 @@ public class ValidatorBean {
     @EJB
     private ConceptDefinitionalGradeBRInterface conceptDefinitionalGradeBR;
 
+    @EJB
+    private RelationshipManager relationshipManager;
+
     /**
      * Este metodo revisa que las relaciones cumplan el lower_boundary del
      * relationship definition, en caso de no cumplir la condicion se retorna falso.
@@ -35,7 +42,7 @@ public class ValidatorBean {
      */
     public void validateRequiredInput(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 
-        String msg = "Debe ingresar un valor";
+        String msg = "Debe especificar una descripción FSN y Preferida";
 
         //component.getParent().getAttributes().
         if(value == null)
@@ -159,6 +166,57 @@ public class ValidatorBean {
         }
 
         return count;
+    }
+
+    /**
+     * Este metodo es responsable de validar el bioequivalente:
+     * 1.- Que un término no esté vacía
+     * 2.- Que un término no esté siendo utilizado por otra descripción del concepto que la posee
+     * @return
+     */
+    public void validateHelperTableRecord(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+
+        String msg;
+
+        RelationshipDefinition concept = (RelationshipDefinition) component.getAttributes().get("concept");
+
+        RelationshipDefinition relationshipDefinition = (RelationshipDefinition) component.getAttributes().get("relationshipDefinition");
+
+        HelperTableRecord helperTableRecord = (HelperTableRecord) component.getAttributes().get("helperTableRecord");
+
+
+        if(relationshipDefinition.isBioequivalente()) {
+
+            if(helperTableRecord != null) {
+                /**
+                 * Verificar que no existan ISP apuntando a este bioequivalente
+                 */
+
+                /**
+                 * Primero verificar en el contexto no persistido
+                 */
+
+
+                /**
+                 * Luego verificar en el contexto persistido
+                 */
+                for (Relationship relationship : relationshipManager.getRelationshipsLike(relationshipDefinition, helperTableRecord)) {
+                    if (relationship.getRelationshipDefinition().isISP()) {
+                        msg = "Este bioequivalente está actualmente siendo utilizado como ISP por el concepto " + relationship.getSourceConcept().getDescriptionFavorite();
+                        throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
+                    }
+                }
+            }
+
+        }
+
+        /*
+        if(countAbbreviatedDescription(aDescription)>1){
+            msg = "Un concepto no puede tener más de una descripción abreviada";
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
+        }
+        */
+
     }
 
 

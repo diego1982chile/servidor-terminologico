@@ -74,6 +74,13 @@ public interface RefSetManager {
      */
     public List<RefSet> getAllRefSets();
 
+    /**
+     * Este método es responsable de retornar la lista completa de RefSets válidos.
+     *
+     * @return Una lista de RefSets.
+     */
+    public List<RefSet> getValidRefSets();
+
 
     public List<RefSet> getRefsetsBy(ConceptSMTK conceptSMTK);
 

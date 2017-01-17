@@ -16,15 +16,15 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container20 White Responsive">
-
-        <div class="ContainerIndent">
+    <div class="Container100">
+        <div class="ContainerIndent BoldGray FontBold">
+            <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
 
             <p:selectOneMenu value="#{generalBrowserBean.basicTypeValue.value}"
                              itemLabel="#{cc.attrs.relationshipDefinition.name}"
                              converter="omnifaces.SelectItemsConverter"
                              rendered="#{ empty cc.attrs.targets }" >
-                <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}"
+                <f:selectItem itemLabel="Seleccione..."
                               itemValue="#{null}"
                 />
                 <f:selectItem itemLabel="Si"
@@ -60,9 +60,9 @@
 
 
             </p:repeat>
-
         </div>
     </div>
+
 
     <h:outputStylesheet id="customCSS">
         .ui-selectonemenu .ui-selectonemenu-label {

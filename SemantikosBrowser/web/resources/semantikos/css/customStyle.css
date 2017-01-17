@@ -5,11 +5,58 @@
     color: #222;
 }
 
+.ui-widget-content {
+    border: 1px solid #d5d5d5;
+    background: #fff;
+    color: #222;
+}
+
 .browserLayout {
     width:  100%;
     height: auto;
     overflow: hidden;
 }
+
+.northPane {
+    padding: 0;
+}
+
+.southPane {
+    padding: 0;
+}
+
+.tags .ui-autocomplete-multiple-container {
+    width: 100% !important;
+}
+
+.tags .ui-autocomplete-input-token input {
+    margin: 0px !important;
+}
+
+.tags .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token {
+    padding: 2px !important;
+}
+
+.tags .ui-autocomplete-token {
+    margin: 0px !important;
+    margin-right: 2px !important;
+}
+
+.tags .ui-autocomplete-multiple-container {
+    opacity:100;
+    background-color: transparent;
+    border-bottom: 0;
+}
+
+.ui-autocomplete-multiple-container.ui-widget.ui-inputfield {
+    padding: 0 !important;
+}
+
+.pe-layout-pane-header {
+    padding: 4px 0em;
+    border-width: 0 0 1px;
+}
+
 
 /*
 .ui-widget, .ui-widget .ui-widget

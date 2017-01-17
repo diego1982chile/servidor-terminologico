@@ -9,6 +9,7 @@ import cl.minsal.semantikos.model.browser.GeneralQuery;
 import cl.minsal.semantikos.model.browser.QueryFilter;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.relationships.*;
+import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.slf4j.Logger;
@@ -339,21 +340,16 @@ public class GeneralBrowserBean implements Serializable {
         // Si el concepto está persistido, invalidarlo
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
         String query = "";
-        if(concepts.getRowCount()==0)
+        if(generalQuery.isFiltered() && concepts.getRowCount()==0)
             query=generalQuery.getQuery();
         eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + idCategory +"&idConcept=0&favoriteDescription=" + query);
     }
 
-    public String stringifyTags(List<Tag> tags){
-        if(tags.isEmpty())
-            return "Etiquetas...";
+    public void onRowToggle(ToggleEvent event) {
 
-        String stringTags= "";
 
-        for (Tag tag : tags) {
-            stringTags= stringTags.concat(tag.getName()).concat(", ");
-        }
-        return  stringTags;
+        System.out.println(event.getVisibility());
+
     }
 
 }

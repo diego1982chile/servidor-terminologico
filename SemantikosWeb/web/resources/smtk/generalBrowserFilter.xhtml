@@ -19,11 +19,12 @@
     <p:outputPanel id="browserFilters" styleClass="browserFilters">
 
         <div class="ui-fluid">
-
             <div class="Container">
-
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+                <div class="Container100">
+                    <div class="ContainerIndent BoldGray FontBold">
+                        <span>
+                            Patrón
+                        </span>
                         <p:outputPanel styleClass="search">
                             <p:inputText value="#{cc.attrs.generalQuery.query}" placeholder="Buscar...">
                                 <p:ajax event="keyup" update="@(.browserTable)" process="@this" />
@@ -32,43 +33,58 @@
                         </p:outputPanel>
                     </div>
                 </div>
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+
+                <div class="Container100">
+                    <div class="ContainerIndent BoldGray FontBold">
+                        <span>
+                            Revisar
+                        </span>
                         <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeReviewed}" autoWidth="false">
-                            <f:selectItem itemLabel="¿Revisar?" itemValue="#{null}"/>
+                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
                             <f:selectItem itemLabel="Sin Revisar" itemValue="#{false}"/>
                             <f:selectItem itemLabel="Revisar" itemValue="#{true}"/>
                             <p:ajax event="itemSelect" update="@(.browserTable),@(.browserFilters)" process="@this" />
                         </p:selectOneMenu>
                     </div>
                 </div>
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+
+                <div class="Container100">
+                    <div class="ContainerIndent BoldGray FontBold">
+                        <span>
+                            Consultar
+                        </span>
                         <p:selectOneMenu value="#{cc.attrs.generalQuery.toBeConsulted}" autoWidth="false">
-                            <f:selectItem itemLabel="¿Consultar?" itemValue="#{null}"/>
+                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
                             <f:selectItem itemLabel="Sin Consultar" itemValue="#{false}"/>
                             <f:selectItem itemLabel="Consultar" itemValue="#{true}"/>
                             <p:ajax event="itemSelect" update="@(.browserTable),@(.browserFilters)" process="@this" />
                         </p:selectOneMenu>
                     </div>
                 </div>
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+
+                <div class="Container100">
+                    <div class="ContainerIndent BoldGray FontBold">
+                        <span>
+                            Estado
+                        </span>
                         <p:selectOneMenu value="#{cc.attrs.generalQuery.modeled}" autoWidth="false">
-                            <f:selectItem itemLabel="Estado" itemValue="#{null}"/>
+                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
                             <f:selectItem itemLabel="Borrador" itemValue="#{false}"/>
                             <f:selectItem itemLabel="Modelado" itemValue="#{true}"/>
                             <p:ajax event="itemSelect" update="@(.browserTable),@(.browserFilters)" process="@this" />
                         </p:selectOneMenu>
-
                     </div>
                 </div>
-                <div class="Container20 White Responsive">
-                    <div class="ContainerIndent">
+
+                <div class="Container100">
+                    <div class="ContainerIndent BoldGray FontBold">
+                        <span>
+                            Etiquetas
+                        </span>
                         <p:selectCheckboxMenu id="tags"
                                               value="#{cc.attrs.generalQuery.tags}"
                                               converter="omnifaces.SelectItemsConverter"
-                                              label="Etiquetas..."
+                                              label="Seleccione..."
                                               autoWidth="false"
                                               filter="true"
                                               filterMatchMode="startsWith">
@@ -81,12 +97,6 @@
                         </p:selectCheckboxMenu>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="ui-fluid">
-
-            <div class="Container">
 
                 <p:repeat
                         offset="0"
@@ -126,7 +136,6 @@
                                      rendered="#{cc.attrs.generalQuery.customFilterable}" />
 
             </div>
-
         </div>
 
     </p:outputPanel>

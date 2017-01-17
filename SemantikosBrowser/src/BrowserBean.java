@@ -116,10 +116,10 @@ public class BrowserBean implements Serializable {
 
         // options for east pane  
         LayoutOptions east = new LayoutOptions();
-        panes.addOption("resizable", false);
-        panes.addOption("closable", false);
+        //panes.addOption("resizable", false);
+        //panes.addOption("closable", false);
         east.addOption("size", "50%");
-        layoutOptionsTwo.setEastOptions(east);
+        layoutOptionsTwo.setEastOptions(west);
 
         // options for nested east layout  
         LayoutOptions childEastOptions = new LayoutOptions();
@@ -164,8 +164,7 @@ public class BrowserBean implements Serializable {
                     browserQuery.setAsc(sortOrder.name().substring(0,4).toLowerCase());
 
                 List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(browserQuery);
-                //this.setRowCount(queryManager.countQueryResults(browserQuery));
-                this.setRowCount(15);
+                this.setRowCount(queryManager.countQueryResults(browserQuery));
 
                 return conceptSMTKs;
             }
@@ -287,4 +286,5 @@ public class BrowserBean implements Serializable {
 
         return otherDescriptions;
     }
+
 }  

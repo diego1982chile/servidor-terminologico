@@ -13,7 +13,7 @@
 <composite:interface>
     <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
     <composite:attribute name="relationshipAttributeDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition" />
-    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.ConceptSMTK" />
+    <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.Category" />
     <composite:attribute name="relationship" type="cl.minsal.semantikos.model.relationships.Relationship" />
     <composite:attribute name="concept" type="cl.minsal.semantikos.model.ConceptSMTKWeb" />
 </composite:interface>
@@ -27,26 +27,26 @@
             <p:outputPanel id="smtkTypeAttributeNew"  styleClass="search">
 
                 <p:autoComplete id="smtkTypeAttributeSimple" scrollHeight="200"
+
                                 completeMethod="#{findConceptBean.getConceptSearchInputCategoryContext}"
                                 forceSelection="true"
                                 disabled="#{not cc.attrs.concept.editable }"
                                 var="smtk"
                                 placeholder="#{cc.attrs.relationshipAttributeDefinition.name}..."
-                                converter="omnifaces.SelectItemsConverter"
+                                converter="conceptConverter"
                                 value="#{conceptBean.conceptSMTKAttributeSelected}"
                                 itemLabel="#{smtk.descriptionFavorite.term}"
                                 itemValue="#{smtk}">
                     <!-- Parámetros del validador -->
-                    <f:attribute name="category" value="#{cc.attrs.concept.category}" />
+                    <f:attribute name="category" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}" />
 
                     <!---->
                     <p:column>
                         <h:outputText value="#{smtk.descriptionFavorite.term}"/>
                     </p:column>
-
+                    <p:ajax />
                     <p:ajax event="itemSelect"
-                            update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                            listener="#{conceptBean.addOrChangeRelationshipAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.conceptSMTKAttributeSelected)}"
+                            listener="#{conceptBean.setTargetAttribute(cc.attrs.relationshipDefinition, cc.attrs.relationshipAttributeDefinition, conceptBean.conceptSMTKAttributeSelected)}"
                             process="@this" />
 
                 </p:autoComplete>

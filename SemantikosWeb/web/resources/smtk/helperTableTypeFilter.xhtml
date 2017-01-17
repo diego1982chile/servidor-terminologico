@@ -16,9 +16,11 @@
 </composite:interface>
 <composite:implementation>
 
-    <div class="Container20 White Responsive">
 
-        <div class="ContainerIndent">
+    <div class="Container100">
+        <div class="ContainerIndent BoldGray FontBold">
+
+            <h:outputText value="#{cc.attrs.relationshipDefinition.name}" />
 
             <p:outputPanel rendered="#{cc.attrs.targets.isEmpty() }" styleClass="search">
 
@@ -26,7 +28,7 @@
                                 completeMethod="#{helperTableBean.getRecordSearchInput}"
                                 forceSelection="true"
                                 var="record"
-                                placeholder="#{cc.attrs.relationshipDefinition.name}..."
+                                placeholder="Buscar..."
                                 converter="helperTableRecordConverter"
                                 value="#{generalBrowserBean.helperTableRecord}"
                                 itemLabel="#{record.fields['description']}"
@@ -50,9 +52,10 @@
 
                 </p:autoComplete>
                 <i class="fa fa-search fa-lg" />
+
             </p:outputPanel>
 
-            <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }" styleClass="search">
+                        <p:outputPanel rendered="#{ not cc.attrs.targets.isEmpty() }" styleClass="search">
 
                 <p:repeat  value="#{cc.attrs.targets}"
                            offset="0"
@@ -73,7 +76,6 @@
 
         </div>
     </div>
-
 
 </composite:implementation>
 </html>

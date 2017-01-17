@@ -25,6 +25,12 @@ public class ExtendedRelationshipDefinitionInfo {
         this.defaultValue = defaultValue;
     }
 
+    public ExtendedRelationshipDefinitionInfo(long idComposite, int order) {
+        this.idComposite = idComposite;
+        this.order = order;
+        this.defaultValue = null;
+    }
+
     public long getIdComposite() {
         return idComposite;
     }
