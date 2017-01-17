@@ -3,6 +3,7 @@ package cl.minsal.semantikos.model.helpertables;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,6 +49,17 @@ public class HelperTable implements TargetDefinition{
 
     public List<HelperTableColumn> getColumns() {
         return columns;
+    }
+
+    public List<HelperTableColumn> getShowableColumns() {
+
+        List<HelperTableColumn> showableColumns = new ArrayList<>();
+
+        for (HelperTableColumn column: getColumns()) {
+            if(column.isShowable())
+                showableColumns.add(column);
+        }
+        return showableColumns;
     }
 
     public void setColumns(List<HelperTableColumn> columns) {

@@ -61,7 +61,7 @@ public class CompositeAditional {
         ConceptSMTKWeb conceptSMTKWeb = new ConceptSMTKWeb(conceptSMTK);
 
         for (RelationshipWeb relationshipWeb : conceptSMTKWeb.getValidPersistedRelationshipsWeb()) {
-            if (relationshipWeb.getRelationshipDefinition().getId() == 69) {
+            if (relationshipWeb.getRelationshipDefinition().getId() == 69) {//TODO: reparar este numero magico
 
                 return relationshipWeb.getTarget().toString();
             }

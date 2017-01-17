@@ -25,8 +25,6 @@ public class SnomedBeans {
     private static final long ID_RELATIONSHIP_ATTRIBUTE_DEFINITION_TYPE_RELTIONSHIP_SNOMED_CT = 25;
 
 
-
-    //TODO: ver id en helperTAbles
     private static final long ID_TYPE_IS_MAPPING = 2;
 
     @ManagedProperty( value="#{messageBean}")

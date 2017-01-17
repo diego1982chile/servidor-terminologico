@@ -168,7 +168,7 @@
                                     <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
                                     <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
                                     <!-- Parámetros del validador -->
-                                    <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
+                                    <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRNNecord}"  />
                                     <!---->
                                 </p:selectOneMenu>
 
@@ -240,13 +240,19 @@
 
             </p:ajax>
 
+            <p:column>
+                <f:facet name="header">
+                <h:outputText value="Descripcion" />
+                </f:facet>
+                <h:outputText value="#{relationship.target.description}" />
+            </p:column>
             <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
                        var="column"
                        columnIndexVar="colIndex">
                 <f:facet name="header">
-                    <h:outputText value="#{column.columnName}" />
+                    <h:outputText value="#{column.name}" />
                 </f:facet>
-                <h:outputText value="#{relationship.target.fields.get(column.columnName)}" />
+                <h:outputText value="#{relationship.target.getColumnValue(column)}" />
             </p:columns>
 
             <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
@@ -341,7 +347,7 @@
                        var="column"
                        columnIndexVar="colIndex" rendered="#{ not cc.attrs.relationshipDefinition.bioequivalente}">
                 <f:facet name="header">
-                    <h:outputText value="#{column.columnName}" />
+                    <h:outputText value="#{column.name}" />
                 </f:facet>
                 <h:outputText value="#{relationship.target.getColumnValue(column)}" />
             </p:columns>

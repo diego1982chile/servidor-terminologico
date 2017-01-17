@@ -603,9 +603,9 @@
                        columnIndexVar="colIndex"
                        >
                 <f:facet name="header">
-                    <h:outputText value="#{column.columnName}" />
+                    <h:outputText value="#{column.name}" />
                 </f:facet>
-                <h:outputText value="#{relationship.target.fields.get(column.columnName)}" />
+                <h:outputText value="#{relationship.target.getColumnValue(column)}" />
             </p:columns>
 
             <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
