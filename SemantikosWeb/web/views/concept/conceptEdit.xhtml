@@ -64,8 +64,6 @@
                                     <p:tab title="Etiquetas">
                                         <smtk:tags editable="#{conceptBean.concept.editable}" tagslist="#{conceptBean.concept.tags}"/>
                                     </p:tab>
-                                    <br/>
-
                                     <p:tab title="Otras descripciones">
                                         <!-- Otras descripciones -->
                                         <smtk:descriptions descriptions="#{conceptBean.concept.getValidDescriptionsButFSNandFavorite()}"
@@ -76,7 +74,7 @@
                                                            editable="#{conceptBean.concept.editable}">
                                         </smtk:descriptions>
                                     </p:tab>
-                                    <br/>
+
                                     <p:tab title="Atributos" rendered="#{not empty conceptBean.orderedSMTKRelationshipDefinitions}">
                                         <!--Relaciones -->
                                         <p:outputPanel id="atributos"
@@ -124,6 +122,8 @@
                                             </h:dataTable>
                                         </p:outputPanel>
                                     </p:tab>
+
+
                                     <p:tab title="SNOMED-CT">
                                         <!--Relaciones -->
                                         <p:outputPanel id="atributoSCT"

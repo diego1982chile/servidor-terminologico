@@ -154,7 +154,7 @@
                                                  converter="omnifaces.SelectItemsConverter">
 
                                     <f:selectItem itemLabel="#{cc.attrs.relationshipDefinition.name}..."  noSelectionOption="true" itemDisabled="true"/>
-                                    <f:selectItems value="#{helperTableBean.}"
+                                    <f:selectItems value="#{helperTableBean.getAllTableRecords(cc.attrs.targetDefinition)}"
                                                    var="record"
                                                    itemLabel="#{record.description}"
                                                    itemValue="#{record}"/>
