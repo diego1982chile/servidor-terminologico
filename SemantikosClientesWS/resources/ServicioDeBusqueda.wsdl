@@ -499,8 +499,8 @@
   <xs:complexType name="PeticionRefSetsPorIdDescripcion">
     <xs:sequence>
       <xs:element name="idDescripcion" type="xs:string"/>
-      <xs:element default="true" minOccurs="0" name="incluyeEstablecimientos" type="xs:boolean"/>
       <xs:element name="idStablishment" type="xs:string"/>
+      <xs:element default="true" minOccurs="0" name="incluyeEstablecimientos" type="xs:boolean"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="refSetsPorIdDescripcionResponse">
@@ -529,7 +529,14 @@
   </xs:complexType>
   <xs:complexType name="crossMapsDirectosPorIDDescripcion">
     <xs:sequence>
-      <xs:element name="DescripcionID" type="xs:string"/>
+      <xs:element name="DescripcionID" type="tns:descriptionIDorConceptIDRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="descriptionIDorConceptIDRequest">
+    <xs:sequence>
+      <xs:element name="description_id" type="xs:string"/>
+      <xs:element name="concept_id" type="xs:string"/>
+      <xs:element name="stablishment_id" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="crossMapsDirectosPorIDDescripcionResponse">
@@ -566,13 +573,6 @@
   <xs:complexType name="crossMapsIndirectosPorDescripcionIDorConceptID">
     <xs:sequence>
       <xs:element name="descripcionIDorConceptIDRequest" type="tns:descriptionIDorConceptIDRequest"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="descriptionIDorConceptIDRequest">
-    <xs:sequence>
-      <xs:element name="description_id" type="xs:string"/>
-      <xs:element name="concept_id" type="xs:string"/>
-      <xs:element name="stablishment_id" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="crossMapsIndirectosPorDescripcionIDorConceptIDResponse">

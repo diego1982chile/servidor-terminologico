@@ -168,7 +168,7 @@ public interface SearchService {
     @ResponseWrapper(localName = "crossMapsDirectosPorIDDescripcionResponse", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.CrossMapsDirectosPorIDDescripcionResponse")
     public CrossmapSetMembersResponse crossMapsDirectosPorIDDescripcion(
         @WebParam(name = "DescripcionID", targetNamespace = "")
-        String descripcionID)
+        DescriptionIDorConceptIDRequest descripcionID)
         throws NotFoundFault_Exception
     ;
 

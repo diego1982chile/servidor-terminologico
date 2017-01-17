@@ -5,7 +5,7 @@
 
 <html>
 <header>
-    <title>Semantikos - WS-REQ-042: Obtener las categorías</title>
+    <title>Semantikos - WS-REQ-043: Obtener todos los conceptos</title>
 
     <!-- Bootstrap -->
     <link href="<%=request.getContextPath()%>/css/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet"
@@ -17,9 +17,9 @@
 
 
 <div class="container">
-    <h4>Semantikos - WS-REQ-042: Obtener las categorías</h4>
+    <h4>Semantikos - WS-REQ-043: Obtener todos los conceptos</h4>
 
-    <form method="post" action="<%=request.getContextPath()%>/ws-req-042">
+    <form method="post" action="<%=request.getContextPath()%>/ws-req-043">
 
         <!-- El Identificador del Establecimiento-->
         <div class="form-group">
@@ -35,7 +35,7 @@
             <div id="Response">
                 <jsp:useBean id="stringer" class="cl.minsal.semantikos.ws.shared.Stringer"
                              type="cl.minsal.semantikos.ws.shared.Stringer">
-                    CrossmapSet members: <%= HTMLer.toHTML(((RespuestaCategorias) request.getAttribute("serviceResponse"))) %>
+                    Conceptos: <%= HTMLer.toHTML(((RespuestaConceptosPorCategoria) request.getAttribute("serviceResponse"))) %>
                     <br/>
                 </jsp:useBean>
             </div>

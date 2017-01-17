@@ -463,9 +463,10 @@ public class ConceptController {
     private ConceptResponse loadDirectCrossmaps(@NotNull ConceptResponse conceptResponse, @NotNull ConceptSMTK
             conceptSMTK) {
         if (conceptResponse.getCrossmapSetMember() == null || conceptResponse.getCrossmapSetMember().isEmpty()) {
+            DescriptionIDorConceptIDRequest request = new DescriptionIDorConceptIDRequest();
+            request.setDescriptionId(conceptSMTK.getDescriptionFavorite().getDescriptionId());
             CrossmapSetMembersResponse crossmapSetMembersResponse = this.crossmapController
-                    .getDirectCrossmapsSetMembersByDescriptionID(conceptSMTK.getDescriptionFavorite()
-                            .getDescriptionId());
+                    .getDirectCrossmapsSetMembersByDescriptionID(request);
             conceptResponse.setCrossmapSetMember(crossmapSetMembersResponse.getCrossmapSetMemberResponses());
         }
 

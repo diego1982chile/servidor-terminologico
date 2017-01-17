@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.soap.SOAPFaultException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Andrés Farías
@@ -53,12 +55,6 @@ public class WebServiceReq043Servlet extends HttpServlet {
         /* Se realizan las validaciones */
         this.parameterValidator.required(stablishment_id);
 
-        /* Se prepara la petición del WS */
-        DescriptionIDorConceptIDRequest request = new DescriptionIDorConceptIDRequest();
-        request.setStablishmentId(stablishment_id);
-
-        logger.debug(this.getClass().getName() + ".doPost(): Params: " + Stringer.toString(request));
-
         /* Se invoca el servicio */
         RespuestaCategorias response;
         try {
@@ -70,8 +66,46 @@ public class WebServiceReq043Servlet extends HttpServlet {
             return;
         }
 
+
+        /* Ahora por cada categoría se recuperan los conceptos existentes */
+        RespuestaConceptosPorCategoria respuestaConceptos = new RespuestaConceptosPorCategoria();
+        RespuestaConceptosPorCategoria.Conceptos value = new RespuestaConceptosPorCategoria.Conceptos();
+        //value.setConcepto(new ArrayList<Concepto>());
+        respuestaConceptos.setConceptos(value);
+        for (Categoria categoria : response.getCategorias().getCategoria()) {
+            PeticionPorCategoria categoryRequest = new PeticionPorCategoria();
+            categoryRequest.setNombreCategoria(categoria.getNombre());
+            categoryRequest.setIdEstablecimiento(stablishment_id);
+
+            try {
+                RespuestaConceptosPorCategoria conceptosPorCategoria = this.servicioDeBusqueda
+                        .getSearchServicePort().conceptosPorCategoria(categoryRequest);
+
+                RespuestaConceptosPorCategoria.Conceptos conceptosXML = conceptosPorCategoria.getConceptos();
+                if (conceptosXML == null){
+                    logger.debug("El interior de conceptosPorCategoria era nulo.");
+                    continue;
+                }
+
+                List<Concepto> conceptoXML = conceptosXML.getConcepto();
+                if (conceptoXML == null){
+                    logger.debug("La lista de conceptos para la categoría " + categoria.getNombre() + "esta vacia.");
+                    continue;
+                }
+
+                respuestaConceptos.getConceptos().getConcepto().addAll(conceptoXML);
+
+                logger.debug("Se recuperaron " + respuestaConceptos.getConceptos().getConcepto().size() + " conceptos" +
+                        " de la categoría " + categoria.getNombre() + ".");
+            } catch (NotFoundFault_Exception e) {
+                req.setAttribute("exception", e);
+                req.getRequestDispatcher(targetPage).forward(req, resp);
+                return;
+            }
+        }
+
         /* Se almacena el resultado */
-        req.setAttribute("serviceResponse", response);
+        req.setAttribute("serviceResponse", respuestaConceptos);
         req.getRequestDispatcher(targetPage).forward(req, resp);
     }
 

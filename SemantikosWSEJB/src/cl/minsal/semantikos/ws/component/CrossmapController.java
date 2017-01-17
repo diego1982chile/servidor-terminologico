@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.auth.UserManager;
+import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.CrossmapsManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
@@ -24,15 +25,19 @@ import java.util.List;
 @Stateless
 public class CrossmapController {
 
-    @EJB
-    private CrossmapsManager crossmapManager;
-
     private static final Logger logger = LoggerFactory.getLogger(CrossmapController.class);
 
     @EJB
+    private CrossmapsManager crossmapManager;
+
+    @EJB
     private DescriptionManager descriptionManager;
+
     @EJB
     private UserManager userManager;
+
+    @EJB
+    private ConceptManager conceptManager;
 
     /**
      * Este método es responsable de recuperar los crossmaps indirectos asociados al concepto cuya descripción posee el
@@ -42,11 +47,13 @@ public class CrossmapController {
      * @return La respuesta XML con la lista de los crossmaps indirectos asociados al concepto de la descripción
      * indicada.
      */
-    public IndirectCrossMapSearchResponse getIndirectCrossmapsByDescriptionID(DescriptionIDorConceptIDRequest descriptionIDorConceptIDRequest) {
+    public IndirectCrossMapSearchResponse getIndirectCrossmapsByDescriptionID(DescriptionIDorConceptIDRequest
+                                                                                      descriptionIDorConceptIDRequest) {
 
         /* Se recupera la descripción a partir de su identificador de negocio, y luego el concepto en la que se
         encuentra */
-        Description theDescription = descriptionManager.getDescriptionByDescriptionID(descriptionIDorConceptIDRequest.getDescriptionId());
+        Description theDescription = descriptionManager.getDescriptionByDescriptionID(descriptionIDorConceptIDRequest
+                .getDescriptionId());
         ConceptSMTK conceptSMTK = theDescription.getConceptSMTK();
 
         /* Luego se recuperan los crossmaps indirectos del concepto */
@@ -59,16 +66,27 @@ public class CrossmapController {
      * Este método es responsable de recuperar los crossmapSetMembers de los crossmpas directos asociados al concepto
      * cuya descripción posee el identificador de negocio dado como parámetro.
      *
-     * @param descriptionId El identificador de negocio <em>DESCRIPTION_ID</em> de la descripción.
+     * @param desOrConReq El identificador de negocio <em>DESCRIPTION_ID</em> de la descripción.
      * @return La respuesta XML con la lista de los crossmapSetMembers directos asociados al concepto de la descripción
      * indicada.
      */
-    public CrossmapSetMembersResponse getDirectCrossmapsSetMembersByDescriptionID(String descriptionId) {
+    public CrossmapSetMembersResponse getDirectCrossmapsSetMembersByDescriptionID(DescriptionIDorConceptIDRequest
+                                                                                          desOrConReq) {
 
-        /* Se recupera la descripción a partir de su identificador de negocio, y luego el concepto en la que se
-        encuentra */
-        Description theDescription = descriptionManager.getDescriptionByDescriptionID(descriptionId);
-        ConceptSMTK conceptSMTK = theDescription.getConceptSMTK();
+        ConceptSMTK conceptSMTK;
+
+        /* Primero se recupera el concepto, ya sea por su CONCEPT_ID o por su DESCRIPTION_ID */
+        String conceptId = desOrConReq.getConceptId();
+        if (conceptId != null) {
+            conceptSMTK = conceptManager.getConceptByCONCEPT_ID(conceptId);
+        }
+
+        /* Sino, se recupera el concepto a partir del DESCRIPTION_ID */
+        else {
+            Description theDescription = descriptionManager.getDescriptionByDescriptionID(desOrConReq.getDescriptionId());
+            conceptSMTK = theDescription.getConceptSMTK();
+
+        }
 
         /* Luego se recuperan los crossmapSetMembers directos del concepto */
         List<CrossmapSetMember> directCrossmapsSetMembersOf = crossmapManager.getDirectCrossmapsSetMembersOf

@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="DescripcionID" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="DescripcionID" type="{http://service.ws.semantikos.minsal.cl/}descriptionIDorConceptIDRequest"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,17 +33,17 @@ import javax.xml.bind.annotation.XmlType;
 public class CrossMapsDirectosPorIDDescripcion {
 
     @XmlElement(name = "DescripcionID", required = true)
-    protected String descripcionID;
+    protected DescriptionIDorConceptIDRequest descripcionID;
 
     /**
      * Gets the value of the descripcionID property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link DescriptionIDorConceptIDRequest }
      *     
      */
-    public String getDescripcionID() {
+    public DescriptionIDorConceptIDRequest getDescripcionID() {
         return descripcionID;
     }
 
@@ -52,10 +52,10 @@ public class CrossMapsDirectosPorIDDescripcion {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link DescriptionIDorConceptIDRequest }
      *     
      */
-    public void setDescripcionID(String value) {
+    public void setDescripcionID(DescriptionIDorConceptIDRequest value) {
         this.descripcionID = value;
     }
 

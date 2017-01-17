@@ -299,8 +299,8 @@ public class SearchService {
      * REQ-WS-027: El sistema Semantikos debe disponer un servicio que permita obtener los CrossMap directo a partir de
      * un ID Descripción.
      *
-     * @param descriptionId El valor de negocio <em>DESCRIPTION_ID</em> de la descripción cuyo concepto posee los
-     *                      crossmaps indirectos que se desea recuperar.
+     * @param request El valor de negocio <em>DESCRIPTION_ID</em> de la descripción cuyo concepto posee los
+     *                      crossmaps indirectos que se desea recuperar o del <em>CONCEPT ID</em>.
      * @return Una lista de crossmaps <em>directos</em> del concepto asociado a la descripción encapsulada en un objeto
      * mapeado
      * a un elemento XML.
@@ -313,9 +313,9 @@ public class SearchService {
     public CrossmapSetMembersResponse crossmapSetMembersDirectosPorIDDescripcion(
             @XmlElement(required = true)
             @WebParam(name = "DescripcionID")
-                    String descriptionId
+                    DescriptionIDorConceptIDRequest request
     ) throws NotFoundFault {
-        return this.crossmapsController.getDirectCrossmapsSetMembersByDescriptionID(descriptionId);
+        return this.crossmapsController.getDirectCrossmapsSetMembersByDescriptionID(request);
     }
 
     // REQ-WS-028

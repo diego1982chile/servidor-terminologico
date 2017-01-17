@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * 
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "PeticionBuscarTermino", propOrder = {
     "termino",
     "nombreCategoria",
@@ -40,12 +40,13 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class PeticionBuscarTermino {
 
-    @XmlElement(required = true)
-    protected String termino;
-    protected List<String> nombreCategoria;
-    protected List<String> nombreRefSet;
-    @XmlElement(required = true)
-    protected String idEstablecimiento;
+    private String termino;
+
+    private List<String> nombreCategoria;
+
+    private List<String> nombreRefSet;
+
+    private String idEstablecimiento;
 
     /**
      * Gets the value of the termino property.
@@ -55,6 +56,7 @@ public class PeticionBuscarTermino {
      *     {@link String }
      *     
      */
+    @XmlElement(required = true)
     public String getTermino() {
         return termino;
     }
@@ -93,11 +95,16 @@ public class PeticionBuscarTermino {
      * 
      * 
      */
+    @XmlElement(required = false, name = "nombreCategorias")
     public List<String> getNombreCategoria() {
         if (nombreCategoria == null) {
             nombreCategoria = new ArrayList<String>();
         }
         return this.nombreCategoria;
+    }
+
+    public void setNombreCategoria(List<String> nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
     }
 
     /**
@@ -122,11 +129,15 @@ public class PeticionBuscarTermino {
      * 
      * 
      */
+    @XmlElement(required = false, name = "nombreCategorias")
     public List<String> getNombreRefSet() {
         if (nombreRefSet == null) {
             nombreRefSet = new ArrayList<String>();
         }
         return this.nombreRefSet;
+    }
+    public void setNombreRefSet(List<String> nombreRefSet) {
+        this.nombreRefSet = nombreRefSet;
     }
 
     /**
@@ -137,6 +148,7 @@ public class PeticionBuscarTermino {
      *     {@link String }
      *     
      */
+    @XmlElement(required = true)
     public String getIdEstablecimiento() {
         return idEstablecimiento;
     }
@@ -153,11 +165,5 @@ public class PeticionBuscarTermino {
         this.idEstablecimiento = value;
     }
 
-    public void setNombreCategoria(List<String> nombreCategoria) {
-        this.nombreCategoria = nombreCategoria;
-    }
 
-    public void setNombreRefSet(List<String> nombreRefSet) {
-        this.nombreRefSet = nombreRefSet;
-    }
 }

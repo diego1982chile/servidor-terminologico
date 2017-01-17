@@ -26,14 +26,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * 
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "buscarTruncatePerfect", propOrder = {
     "peticionBuscarTermino"
 })
 public class BuscarTruncatePerfect {
 
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/", required = true)
-    protected PeticionBuscarTermino peticionBuscarTermino;
+    private PeticionBuscarTermino peticionBuscarTermino;
 
     /**
      * Gets the value of the peticionBuscarTermino property.
@@ -43,6 +42,7 @@ public class BuscarTruncatePerfect {
      *     {@link PeticionBuscarTermino }
      *     
      */
+    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/", required = true)
     public PeticionBuscarTermino getPeticionBuscarTermino() {
         return peticionBuscarTermino;
     }

@@ -71,6 +71,7 @@ public class PeticionCodificacionDeNuevoTermino {
     protected String especialidad;
     @XmlElement(name = "sub-especialidad", required = true)
     protected String subEspecialidad;
+
     @XmlElement(required = true)
     protected String categoria;
 

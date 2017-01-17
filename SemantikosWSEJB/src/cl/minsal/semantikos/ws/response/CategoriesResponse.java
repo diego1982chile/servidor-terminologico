@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * @author Andrés Farías on 16-01-17.
  */
+//TODO: Eliminar el namespace y ver qué pasa!
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "respuestaCategorias", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "RespuestaCategorias", namespace = "http://service.ws.semantikos.minsal.cl/")

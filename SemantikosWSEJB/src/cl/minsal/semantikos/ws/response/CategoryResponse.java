@@ -9,6 +9,7 @@ import java.io.Serializable;
  * Created by Development on 2016-10-11.
  *
  */
+//TODO: Quitar el namespace y ver qué pasa!
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "categoria", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "Categoria", namespace = "http://service.ws.semantikos.minsal.cl/")
