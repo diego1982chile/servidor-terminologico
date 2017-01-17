@@ -11,6 +11,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -41,12 +43,31 @@ public class FindConcept implements Serializable{
 
     private Category categorySelected;
 
+    private String pattern;
+
     @PostConstruct
     public void init() {
         findConcepts = new ArrayList<ConceptSMTK>();
         categoryList = categoryManager.getCategories();
     }
 
+    /**
+     * Método encargado de obtener los conceptos por categoría
+     */
+    public void getConceptByCategory(){
+       if(pattern==null || pattern.trim().length()==0){
+           categoryArrayID= new Long[] {categorySelected.getId()};
+           findConcepts =conceptManager.findConceptBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
+       }else{
+           getConceptSearchInputAndCategories(pattern);
+       }
+    }
+
+    /**
+     * Este método es el encargado de realizar la búsqueda de conceptos por patrón de texto
+     * @param pattern
+     * @return
+     */
     public List<ConceptSMTK> getConceptSearchInput(String pattern) {
 
         if (pattern != null) {
@@ -57,6 +78,12 @@ public class FindConcept implements Serializable{
         }
         return findConcepts;
     }
+
+    /**
+     * Este método es el encargado de relaizar la búsqueda por patrón de texto y categorías seleccionadas
+     * @param pattern
+     * @return
+     */
     public List<ConceptSMTK> getConceptSearchInputAndCategories(String pattern) {
         RequestContext.getCurrentInstance().update("::conceptTranslate");
 
@@ -73,6 +100,37 @@ public class FindConcept implements Serializable{
         return null;
     }
 
+    /**
+     * Este método es el encargado de relaizar la búsqueda por patrón de texto y categorías seleccionadas
+     * @param pattern
+     * @return
+     */
+    public List<ConceptSMTK> getConceptSearchInputCategoryContext(String pattern) {
+
+        if (pattern != null) {
+            if (pattern.trim().length() >= 2) {
+                if(standardizationPattern(pattern).length()<=1)return null;
+
+                if(categorySelected==null){
+
+                    FacesContext context = FacesContext.getCurrentInstance();
+                    Category category = (Category) UIComponent.getCurrentComponent(context).getAttributes().get("category");
+                    categoryArrayID= new Long[] {category.getId()};
+                }
+
+                findConcepts=conceptManager.findConceptBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
+                return findConcepts;
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * Este método realiza la búsqueda de concepto por todas las categorías
+     * @param pattern
+     * @return
+     */
     public List<ConceptSMTK> findConceptAllCategories(String pattern) {
         if (pattern != null) {
             if (pattern.trim().length() >= 2) {
@@ -84,6 +142,13 @@ public class FindConcept implements Serializable{
         return null;
     }
 
+
+    /**
+     * Meotodo encargado de setear el texto de acuerdo al estandar de búsqueda
+     * @param pattern
+     * @return
+     */
+
     private String standardizationPattern(String pattern) {
 
         if (pattern != null) {
@@ -94,6 +159,14 @@ public class FindConcept implements Serializable{
         }
         return pattern;
     }
+
+
+
+
+    /**
+     * Getter and Setter
+     *
+     */
 
     public List<ConceptSMTK> getFindConcepts() {
         return findConcepts;
@@ -141,5 +214,13 @@ public class FindConcept implements Serializable{
 
     public void setCategorySelected(Category categorySelected) {
         this.categorySelected = categorySelected;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
     }
 }

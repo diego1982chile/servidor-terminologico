@@ -69,7 +69,7 @@ public class DescriptionBeans {
 
                 description.setCaseSensitive(conceptBean.getOtherSensibilidad());
                 if (conceptBean.getOtherDescriptionType().getName().equalsIgnoreCase("abreviada") || conceptBean.getOtherDescriptionType().getName().equalsIgnoreCase("sinónimo")) {
-                    description.setCaseSensitive(conceptBean.getConcept().getValidDescriptionFavorite().isCaseSensitive());
+                    description.setCaseSensitive(conceptBean.getConcept().getDescriptionFavorite().isCaseSensitive());
                 }
 
                 description.setModeled(conceptBean.getConcept().isModeled());
@@ -126,6 +126,9 @@ public class DescriptionBeans {
      */
     public void descriptionEditRow(RowEditEvent event) {
         DescriptionWeb descriptionWeb = (DescriptionWeb) event.getObject();
+        if(descriptionWeb.getDescriptionType().getName().equalsIgnoreCase("abreviada")){
+            descriptionWeb.setCaseSensitive(conceptBean.getConcept().getDescriptionFavorite().isCaseSensitive());
+        }
         for (DescriptionWeb descriptionRowEdit : conceptBean.getConcept().getDescriptionsWeb()) {
             if (descriptionRowEdit.equals(descriptionWeb)) {
                 if (descriptionRowEdit.getDescriptionType().equals(descriptionTypeFactory.getFavoriteDescriptionType())) {

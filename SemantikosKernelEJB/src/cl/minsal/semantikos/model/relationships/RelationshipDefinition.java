@@ -1,8 +1,8 @@
 package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.model.Multiplicity;
+import cl.minsal.semantikos.model.businessrules.HelperTableSearchBR;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableFactory;
 
 import java.util.List;
 
@@ -190,7 +190,7 @@ public class RelationshipDefinition {
     }
 
     public boolean isISP() {
-        return this.getName().equalsIgnoreCase(HelperTableFactory.ISP);
+        return this.getName().equalsIgnoreCase(TargetDefinition.ISP);
     }
 
     public boolean isATC(){
@@ -199,11 +199,15 @@ public class RelationshipDefinition {
         }
 
         HelperTable helperTable = (HelperTable) this.targetDefinition;
-        return helperTable.getName().equals(HelperTableFactory.HT_ATC_NAME);
+        return helperTable.getId() == HelperTableSearchBR.HT_ATC_ID;
     }
 
     public boolean isBioequivalente() {
-        return this.getName().equalsIgnoreCase(HelperTableFactory.BIOEQUIVALENTE);
+        return this.getName().equalsIgnoreCase(TargetDefinition.BIOEQUIVALENTE);
+    }
+
+    public boolean isComercializado() {
+        return this.getName().equalsIgnoreCase(TargetDefinition.COMERCIALIZADO);
     }
 
     private final String SNOMEDCT="SNOMED CT";

@@ -230,6 +230,59 @@ public class QueryDAOImpl implements QueryDAO {
         return pendingTerms;
     }
 
+    @Override
+    public List<ConceptSMTK> executeQuery(BrowserQuery query) {
+        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
+
+        ConnectionBD connect = new ConnectionBD();
+
+        //TODO: hacer funcion en pg
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.get_concept_by_browser_query(?,?,?,?,?,?,?)}" )){
+
+            /*
+                1. p_id_category integer, --static
+                2. p_pattern text, --static
+                3. p_modeled boolean, --static
+                4. p_review boolean, --static
+                5. p_consult boolean, --static
+                6. p_tag_id integer, --static
+                7. p_basic_type_values text[], --dynamic
+                8. p_helper_table_records integer[], --dynamic
+                9. p_creation_date_from date, --dynamic
+                10. p_creation_date_to date, --dynamic
+                11. p_orden text, --static
+                12. p_page integer, --static
+                13. p_page_size integer --static
+            */
+
+            //bindParameter();
+
+            int paramNumber = 1;
+
+            for (QueryParameter queryParameter : query.getQueryParameters()) {
+                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
+                paramNumber++;
+            }
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+
+                ConceptSMTK recoveredConcept = conceptManager.getConceptByID( rs.getLong(1));
+                concepts.add(recoveredConcept);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return concepts;
+    }
+
 
     @Override
     public long countByQuery(GeneralQuery query) {
@@ -345,6 +398,40 @@ public class QueryDAOImpl implements QueryDAO {
         //TODO: hacer funcion en pg
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall("{call semantikos.count_pending_term_by_no_pending_query(?,?,?,?,?,?)}" )){
+
+            int paramNumber = 1;
+
+            for (QueryParameter queryParameter : query.getQueryParameters()) {
+                bindParameter(paramNumber, call, connect.getConnection(), queryParameter);
+                paramNumber++;
+            }
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+
+            while (rs.next()) {
+
+                pendingTermNumber = rs.getLong(1);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pendingTermNumber;
+    }
+
+    @Override
+    public long countByQuery(BrowserQuery query) {
+        long pendingTermNumber = 0;
+
+        ConnectionBD connect = new ConnectionBD();
+
+        //TODO: hacer funcion en pg
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.count_concept_by_browser_query(?,?,?,?,?,?,?)}" )){
 
             int paramNumber = 1;
 

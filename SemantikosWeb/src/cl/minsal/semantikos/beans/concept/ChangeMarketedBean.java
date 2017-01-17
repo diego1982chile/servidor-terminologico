@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.beans.concept;
 
+import cl.minsal.semantikos.beans.messages.MessageBean;
 import cl.minsal.semantikos.designer_modeler.auth.AuthenticationBean;
 import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
@@ -8,15 +9,20 @@ import cl.minsal.semantikos.model.Profile;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
+import org.omnifaces.util.Ajax;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +45,6 @@ public class ChangeMarketedBean {
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
-
 
     private static long ID_MARKETED=8;
 
@@ -74,14 +79,20 @@ public class ChangeMarketedBean {
             concept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(concept));
             for (Relationship relationship: concept.getRelationships()) {
                 if(relationship.getRelationshipDefinition().getId()==ID_MARKETED){
-                    lateastRelationship = new Relationship(concept,relationship.getTarget(),relationship.getRelationshipDefinition(), relationship.getRelationshipAttributes(), null);
-                    BasicTypeValue basicTypeValue = (BasicTypeValue) lateastRelationship.getTarget();
-                    basicTypeValue.setValue(((BasicTypeValue)targetSelected).getValue());
+                    BasicTypeValue basicTypeValue = (BasicTypeValue)targetSelected;
+                    lateastRelationship = new Relationship(concept,new BasicTypeValue(basicTypeValue.getValue()),relationship.getRelationshipDefinition(), new ArrayList<RelationshipAttribute>(), null);
+                    lateastRelationship.setCreationDate(relationship.getCreationDate());
+                    lateastRelationship.setId(relationship.getId());
                     relationshipManager.updateRelationship(concept,relationship,lateastRelationship,user);
                     break;
                 }
             }
         }
+    }
+
+    public void showMessage() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Advertencia", "Los cambios serán efectivos al guardar el concepto"));
     }
 
 

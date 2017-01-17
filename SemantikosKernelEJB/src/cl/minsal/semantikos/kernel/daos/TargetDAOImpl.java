@@ -147,7 +147,7 @@ public class TargetDAOImpl implements TargetDAO {
 
             /* Almacenar registro Tabla auxiliar */
             else if (targetDefinition.isHelperTable()) {
-                call.setLong(6, helperTableDAO.persistAuxilary(target.getId(), targetDefinition.getId()));
+                call.setLong(6, target.getId());// Id de HelperTableRow
                 call.setLong(10, HelperTable.getIdTargetType());
             }
 
@@ -246,6 +246,9 @@ public class TargetDAOImpl implements TargetDAO {
 
 
                 //TODO: FIX
+                if (value.isBoolean()) {
+                    call.setBoolean(4, (Boolean) value.getValue());
+                }
 
                 if (value.isDate()) {
                     call.setTimestamp(2, (Timestamp) value.getValue());
@@ -271,7 +274,7 @@ public class TargetDAOImpl implements TargetDAO {
 
             /* Almacenar registro Tabla auxiliar */
             else if (relationship.getRelationshipDefinition().getTargetDefinition().isHelperTable()) {
-                call.setLong(6, helperTableDAO.updateAuxiliary(relationship));
+                call.setLong(6, relationship.getTarget().getId()); //Id de HelperTableRow
                 call.setLong(10, HelperTable.getIdTargetType());
             }
 
@@ -315,6 +318,10 @@ public class TargetDAOImpl implements TargetDAO {
                 BasicTypeDefinition basicTypeDefinition = (BasicTypeDefinition) relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition();
                 BasicTypeValue value = (BasicTypeValue) relationshipAttribute.getTarget();
 
+                if (value.isBoolean()) {
+                    call.setBoolean(4, (Boolean) value.getValue());
+                }
+
                 if (value.isDate()) {
                     call.setTimestamp(2, (Timestamp) value.getValue());
                 }
@@ -340,7 +347,7 @@ public class TargetDAOImpl implements TargetDAO {
             /* Almacenar registro Tabla auxiliar */
             else if (relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isHelperTable()) {
                 //helperTableDAO.updateAuxiliary(relationship.getId(), relationship.getTarget().getId());
-                call.setLong(6, helperTableDAO.updateAuxiliary(relationshipAttribute));
+                call.setLong(6, relationshipAttribute.getTarget().getId()); //Id de HelperTableRow
                 call.setLong(10, HelperTable.getIdTargetType());
             }
 
@@ -376,7 +383,7 @@ public class TargetDAOImpl implements TargetDAO {
             java.util.Date d = (java.util.Date) target.getValue();
             call.setTimestamp(2, new Timestamp(d.getTime()) );
         } else if (targetDefinition.getType().getTypeName().equals("float")) {
-            call.setFloat(1, (Float) target.getValue());
+            call.setFloat(1, Float.parseFloat (target.getValue().toString()) );
         } else if (targetDefinition.getType().getTypeName().equals("int")) {
             call.setInt(5, (Integer.parseInt(target.getValue().toString())));
         } else if (targetDefinition.getType().getTypeName().equals("string")) {

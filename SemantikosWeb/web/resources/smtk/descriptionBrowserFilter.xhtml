@@ -16,82 +16,100 @@
 </composite:interface>
 <composite:implementation>
 
-    <p:outputPanel id="descriptionFilters" styleClass="descriptionFilters">
+    <p:outputPanel id="browserFilters" styleClass="browserFilters">
+
 
         <div class="ui-fluid">
+            <div class="Container">
+                <div class="Container100">
+                    <div class="ContainerIndent BoldGray FontBold">
+                        <span>
+                            Patrón
+                        </span>
+                        <p:outputPanel styleClass="search">
+                            <p:inputText value="#{cc.attrs.descriptionQuery.query}" placeholder="Buscar...">
+                                <p:ajax event="keyup" update="@(.browserTable)" process="@this" listener="#{descriptionsBrowserBean.setFilterChanged(true)}" />
+                            </p:inputText>
+                            <i class="fa fa-search fa-lg" />
+                        </p:outputPanel>
+                    </div>
+                </div>
 
-            <p:panelGrid  columns="6"  style="width: 100%"
-                          columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
-                          layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                <div class="Container100">
+                    <div class="ContainerIndent BoldGray FontBold">
+                        <span>
+                            Categorías
+                        </span>
+                        <p:selectCheckboxMenu id="categories"
+                                              value="#{cc.attrs.descriptionQuery.categories}"
+                                              converter="omnifaces.SelectItemsConverter"
+                                              label="Categorías..."
+                                              filter="true"
+                                              filterMatchMode="startsWith">
 
-                <p:outputPanel styleClass="search">
-                    <p:inputText value="#{cc.attrs.descriptionQuery.query}" placeholder="Buscar...">
-                        <p:ajax event="keyup" update="@(.descriptionBrowserTable),@(.descriptionFilters)" process="@this" />
-                    </p:inputText>
-                    <i class="fa fa-search fa-lg" />
-                </p:outputPanel>
+                            <p:ajax event="change" listener="#{descriptionsBrowserBean.setFilterChanged(true)}"
+                                    update="@(.browserTable),@(.browserFilters)"
+                                    process="@this" />
 
-                <p:selectCheckboxMenu id="categories"
-                                      value="#{cc.attrs.descriptionQuery.categories}"
-                                      converter="omnifaces.SelectItemsConverter"
-                                      label="Categorías..."
-                                      filter="true"
-                                      filterMatchMode="startsWith">
+                            <f:selectItems value="#{descriptionsBrowserBean.categories}" var="category"
+                                           itemLabel="#{category.name}" itemValue="#{category}"/>
 
-                    <p:ajax event="change"
-                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
-                            process="@this" />
+                        </p:selectCheckboxMenu>
+                    </div>
+                </div>
 
-                    <f:selectItems value="#{descriptionsBrowserBean.categories}" var="category"
-                                   itemLabel="#{category.name}" itemValue="#{category}"/>
+                <div class="Container100">
+                    <div class="ContainerIndent BoldGray FontBold">
+                                <span>
+                                    Tipo Descripción
+                                </span>
+                        <p:selectCheckboxMenu id="descriptionTypes"
+                                              value="#{cc.attrs.descriptionQuery.descriptionTypes}"
+                                              scrollHeight="200"
+                                              converter="omnifaces.SelectItemsConverter"
+                                              label="Tipos...">
 
-                </p:selectCheckboxMenu>
+                            <p:ajax event="change" listener="#{descriptionsBrowserBean.setFilterChanged(true)}"
+                                    update="@(.browserTable),@(.browserFilters)"
+                                    process="@this" />
 
-                <p:selectCheckboxMenu id="descriptionTypes"
-                                      value="#{cc.attrs.descriptionQuery.descriptionTypes}"
-                                      converter="omnifaces.SelectItemsConverter"
-                                      label="Tipos...">
+                            <f:selectItems value="#{descriptionsBrowserBean.descriptionTypes}" var="descriptionType"
+                                           itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
 
-                    <p:ajax event="change"
-                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
-                            process="@this" />
+                        </p:selectCheckboxMenu>
+                    </div>
+                </div>
 
-                    <f:selectItems value="#{descriptionsBrowserBean.descriptionTypes}" var="descriptionType"
-                                   itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
+                <div class="Container100">
+                    <div class="ContainerIndent BoldGray FontBold">
+                                <span>
+                                    RefSets
+                                </span>
+                        <p:selectCheckboxMenu id="refsets"
+                                              value="#{cc.attrs.descriptionQuery.refSets}"
+                                              converter="omnifaces.SelectItemsConverter"
+                                              scrollHeight="200"
+                                              label="Seleccione...">
 
-                </p:selectCheckboxMenu>
+                            <p:ajax event="change" listener="#{descriptionsBrowserBean.setFilterChanged(true)}"
+                                    update="@(.browserTable),@(.browserFilters)"
+                                    process="@this" />
 
-                <p:selectCheckboxMenu id="refsets"
-                                      value="#{cc.attrs.descriptionQuery.refSets}"
-                                      converter="omnifaces.SelectItemsConverter"
-                                      label="RefSets...">
+                            <f:selectItems value="#{descriptionsBrowserBean.refSets}" var="refSet"
+                                           itemLabel="#{refSet.name}" itemValue="#{refSet}"/>
 
-                    <p:ajax event="change"
-                            update="@(.descriptionBrowserTable),@(.descriptionFilters)"
-                            process="@this" />
+                        </p:selectCheckboxMenu>
+                    </div>
+                </div>
 
-                    <f:selectItems value="#{descriptionsBrowserBean.refSets}" var="refSet"
-                                   itemLabel="#{refSet.name}" itemValue="#{refSet}"/>
-
-                </p:selectCheckboxMenu>
-
-            </p:panelGrid>
+            </div>
         </div>
-        <p:spacer />
+
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.categories}" itemName="Categorías" />
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.descriptionTypes}" itemName="Tipo descriptor" />
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.descriptionQuery.refSets}" itemName="RefSets" />
-        <p:spacer />
+
     </p:outputPanel>
-
-    <script type="text/javascript">
-
-        $(document).on("itemSelect", "input[id$=findCategories_input]", function (event) {
-            alert("me llamaron");
-        });
-
-
-    </script>
 
 </composite:implementation>
 </html>

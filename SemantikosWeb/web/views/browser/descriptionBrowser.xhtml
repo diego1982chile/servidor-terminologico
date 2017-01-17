@@ -7,6 +7,13 @@
                 xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
                 template="/WEB-INF/template/template.xhtml">
 
+    <ui:define name="header">
+        <p:breadCrumb>
+            <p:menuitem value="Inicio" url="/views/home.xhtml" />
+            <p:menuitem value="Descripciones" url="#"  />
+        </p:breadCrumb>
+    </ui:define>
+
     <ui:define name="content">
 
         <f:metadata>
@@ -14,28 +21,21 @@
         </f:metadata>
 
         <div class="Container100">
+
             <div class="ContainerIndent">
                 <div class="Card ShadowEffect  ">
                     <div class="Container100">
                         <div class="ContainerIndent">
-                            <div class="ui-grid-responsive">
-                                <div class="ui-grid-col-12">
-                                    <h:form id="browserForm">
-                                        <p:messages autoUpdate="true" />
-                                        <p:breadCrumb>
-                                            <p:menuitem value="Inicio" url="/views/home.xhtml" />
-                                            <p:menuitem value="Otros" url="/views/browser/mainMenu.xhtml" />
-                                            <p:menuitem value="Descripciones" url="#" />
-                                        </p:breadCrumb>
-                                        <p:spacer />
-                                        <smtk:descriptionBrowserFilter descriptionQuery="#{descriptionsBrowserBean.descriptionQuery}" />
+
+                            <h:form id="browserForm">
+
                                         <p:dataTable id="descriptionTable"
-                                                     styleClass="descriptionBrowserTable"
+                                                     styleClass="browserTable"
                                                      value="#{descriptionsBrowserBean.descriptions}"
                                                      var="description"
                                                      rows="30"
                                                      sortBy="#{1}"
-                                                     paginator="true" lazy="true" dynamic="true"
+                                                     paginator="true" lazy="true" dynamic="true" reflow="true"
                                                      paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                                      emptyMessage="No se han encontrado descripciones con los criterios utilizados">
 
@@ -70,6 +70,21 @@
                                                 <h:outputText value="#{description.conceptSMTK.descriptionFSN.term}"/>
                                             </p:column>
 
+                                            <p:column headerText="RefSet" priority="6">
+                                                <p:repeat
+                                                        offset="0"
+                                                        size="#{descriptionsBrowserBean.refSetManager.getRefsetsBy(description.conceptSMTK).size()}"
+                                                        step="1"
+                                                        varStatus="var"
+                                                        value="#{descriptionsBrowserBean.refSetManager.getRefsetsBy(description.conceptSMTK)}"
+                                                        var="refset">
+
+                                                    <h:outputText rendered="#{var.index>0}" value=", " />
+                                                    <h:outputText value="#{refset}" />
+
+                                                </p:repeat>
+                                            </p:column>
+
                                             <p:column headerText="Acciones" exportable="false" style="width: 10%; text-align: center">
 
                                                 <div style="text-align: center;">
@@ -93,15 +108,20 @@
                                         </p:dataTable>
 
 
-                                    </h:form>
-                                </div>
-                            </div>
+                                </h:form>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+    </ui:define>
+
+    <ui:define name="nav">
+        <h:form>
+            <smtk:descriptionBrowserFilter descriptionQuery="#{descriptionsBrowserBean.descriptionQuery}" />
+        </h:form>
     </ui:define>
 
 </ui:composition>

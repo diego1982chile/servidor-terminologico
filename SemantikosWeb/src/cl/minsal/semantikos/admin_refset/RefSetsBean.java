@@ -70,6 +70,10 @@ public class RefSetsBean implements Serializable {
 
     private List<RefSet> refsetFilter;
 
+    private List<ConceptSMTK> conceptSMTKListSelected;
+
+    private List<ConceptSMTK> conceptSMTKListSelectedEdit;
+
     @EJB
     AuditManager auditManager;
 
@@ -229,6 +233,23 @@ public class RefSetsBean implements Serializable {
         if (conceptRefSetList != null) {
             conceptRefSetList = refSetManager.getRefsetsBy(conceptBean.getConcept());
             conceptBean.setRefsetEditConcept(true);
+        }
+    }
+    /**
+     * Método encargado de agregar conceptos a un RefSet
+     *
+     * @param refSet      refset que almacenara el concepto
+     */
+    public void addConcept(RefSet refSet) {
+        if(!conceptSMTKListSelectedEdit.isEmpty()){
+            for (ConceptSMTK smtk : conceptSMTKListSelectedEdit) {
+                addConcept(refSet,smtk);
+            }
+        }
+        if(!conceptSMTKListSelected.isEmpty()){
+            for (ConceptSMTK smtk : conceptSMTKListSelected) {
+                addConcept(refSet,smtk);
+            }
         }
     }
 
@@ -445,5 +466,21 @@ public class RefSetsBean implements Serializable {
 
     public void setRefsetFilter(List<RefSet> refsetFilter) {
         this.refsetFilter = refsetFilter;
+    }
+
+    public List<ConceptSMTK> getConceptSMTKListSelected() {
+        return conceptSMTKListSelected;
+    }
+
+    public void setConceptSMTKListSelected(List<ConceptSMTK> conceptSMTKListSelected) {
+        this.conceptSMTKListSelected = conceptSMTKListSelected;
+    }
+
+    public List<ConceptSMTK> getConceptSMTKListSelectedEdit() {
+        return conceptSMTKListSelectedEdit;
+    }
+
+    public void setConceptSMTKListSelectedEdit(List<ConceptSMTK> conceptSMTKListSelectedEdit) {
+        this.conceptSMTKListSelectedEdit = conceptSMTKListSelectedEdit;
     }
 }

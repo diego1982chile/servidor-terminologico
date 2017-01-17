@@ -54,6 +54,12 @@ public interface RefSetDAO {
     public List<RefSet> getReftsets();
 
     /**
+     * Este metodo es el responsable de obtener todos los refsets válidos
+     * @return Lista de refsets
+     */
+    public List<RefSet> getValidRefsets();
+
+    /**
      * Este método es el encargado de obtener los refset donde se encuentra un concepto
      * @param conceptSMTK
      * @return lista de refset relacionados con el concepto

@@ -71,6 +71,12 @@ public class PendingBrowserBean implements Serializable {
     private User user;
 
     /**
+     * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
+
+     */
+    private boolean isFilterChanged;
+
+    /**
      * Lista de términos pendientes para el despliegue del resultado de la consulta
      */
     private LazyDataModel<PendingTerm> pendingTerms;
@@ -115,7 +121,13 @@ public class PendingBrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
 
-                pendingQuery.setPageNumber(first);
+                if(isFilterChanged)
+                    pendingQuery.setPageNumber(0);
+                else
+                    pendingQuery.setPageNumber(first);
+
+                isFilterChanged = false;
+
                 pendingQuery.setPageSize(pageSize);
                 pendingQuery.setOrder(new Integer(sortField));
 
@@ -211,6 +223,7 @@ public class PendingBrowserBean implements Serializable {
 
     public void setTermSelected(PendingTerm termSelected) {
         this.termSelected = termSelected;
+        this.termsSelected.clear();
     }
 
     public Category getCategorySelected() {
@@ -218,7 +231,8 @@ public class PendingBrowserBean implements Serializable {
     }
 
     public void setCategorySelected(Category categorySelected) {
-        this.categorySelected = categorySelected;
+        if(categorySelected != null)
+            this.categorySelected = categorySelected;
     }
 
     public ConceptSMTK getConceptPending() {
@@ -268,21 +282,15 @@ public class PendingBrowserBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
 
         if(termSelected != null){
-            ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            if(categorySelected!=null){
-                eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&descriptionPending="+termSelected.getRelatedDescription().getId() );
-            }else{
-                eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + termSelected.getCategory().getId() +"&idConcept=0&favoriteDescription=&descriptionPending="+termSelected.getRelatedDescription().getId() );
-            }
+            termsSelected.add(termSelected);
         }
-        else{
-            if(!termsSelected.isEmpty()){
-                ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-                eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&pendingTerms=true");
 
-            }else{
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se han seleccionado términos"));
-            }
+        if(!termsSelected.isEmpty()){
+            ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+            eContext.redirect(eContext.getRequestContextPath() + "/views/concept/conceptEdit.xhtml?editMode=true&idCategory=" + categorySelected.getId() +"&idConcept=0&favoriteDescription=&pendingTerms=true");
+
+        }else{
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se han seleccionado términos"));
         }
 
     }
@@ -293,7 +301,20 @@ public class PendingBrowserBean implements Serializable {
 
     public void setTermsSelected(List<PendingTerm> termsSelected) {
         this.termsSelected = termsSelected;
+        if(!termsSelected.isEmpty()) {
+            setCategorySelected(termsSelected.get(termsSelected.size() - 1).getCategory());
+            this.termSelected = null;
+        }
     }
+
+    public boolean isFilterChanged() {
+        return isFilterChanged;
+    }
+
+    public void setFilterChanged(boolean filterChanged) {
+        isFilterChanged = filterChanged;
+    }
+
 
 
 }

@@ -59,4 +59,6 @@ public interface TagManager {
     public void unlink(Tag tag, Tag tagUnlink);
 
     public boolean containTag(String nameTag);
+
+    public long conceptContain(Tag tag);
 }

@@ -420,6 +420,13 @@ public class GeneralQuery {
             return getUser().getIdUser();
     }
 
+
+    public boolean isFiltered(){
+        return ( (getQuery() != null && !getQuery().isEmpty()) || getTagValues() != null || getConceptValues() != null || getHelperTableRecordValues() != null ||
+                 getBasicTypeValues() != null || getToBeReviewed() != null || getToBeConsulted() != null || getModeled() != null ||
+                 getUserValue() != null || getCreationDateSince() != null || getCreationDateTo() != null );
+    }
+
     /**
      * Este método es responsable de recuperar los parámetros de los filtros del objeto de consulta del navegador de
      * categorías

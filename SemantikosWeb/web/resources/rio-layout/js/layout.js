@@ -19,6 +19,7 @@ $.fn.clickOff = function (callback, selfDestroy) {
     });
 };
 
+
 /** 
  * PrimeFaces Rio Layout
  */
@@ -132,12 +133,16 @@ var Rio = {
     },
     saveMenuState: function () {
         $.cookie('rio_expandeditems', this.expandedMenuitems.join(','), {path: '/'});
+        $.cookie("rio_menu_scroll", $("#" + this.expandedMenuitems[this.expandedMenuitems.length-1]).parent().parent().parent().parent().scrollTop() );
     },
     clearMenuState: function () {
         $.removeCookie('rio_expandeditems', {path: '/'});
+        $.removeCookie('rio_menu_scroll', {path: '/'});
     },
     restoreMenuState: function () {
         var menucookie = $.cookie('rio_expandeditems');
+        var scrollcookie = $.cookie("rio_menu_scroll");
+
         if (menucookie) {
             this.expandedMenuitems = menucookie.split(',');
             for (var i = 0; i < this.expandedMenuitems.length; i++) {
@@ -146,6 +151,11 @@ var Rio = {
                     var menuitem = $("#" + this.expandedMenuitems[i].replace(/:/g, "\\:"));
                     menuitem.addClass('active-menu-parent');
                     menuitem.children('a,ul').addClass('active-menu active-menu-restore');
+                    //menuitem.css('background','#e0e0e0');
+                    // If cookie is set, scroll to the position saved in the cookie.
+                    if(i==this.expandedMenuitems.length-1) {
+                        //$(menuitem).parent().parent().parent().parent().animate({ scrollTop: scrollcookie+"px" });
+                    }
                 }
             }
         }

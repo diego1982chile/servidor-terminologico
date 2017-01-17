@@ -1,6 +1,8 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.snomedct.ConceptSCTFactory;
@@ -228,6 +230,50 @@ public class RelationshipDAOImpl implements RelationshipDAO {
                 resultJSON = rs.getString(1);
             } else {
                 String errorMsg = "La relación no fue creada. Esta es una situación imposible. Contactar a Desarrollo";
+                logger.error(errorMsg);
+                throw new IllegalArgumentException(errorMsg);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new EJBException(e);
+        }
+
+        return relationshipFactory.createRelationshipsFromJSON(resultJSON);
+    }
+
+    @Override
+    public List<Relationship> findRelationshipsLike(RelationshipDefinition relationshipDefinition, Target target) {
+
+        ConnectionBD connect = new ConnectionBD();
+        String sql = "{call semantikos.find_relationships_like(?, ?)}";
+        String resultJSON;
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            if(relationshipDefinition.getTargetDefinition().isSMTKType()){
+                call.setLong(1, relationshipDefinition.getTargetDefinition().getId());
+                call.setString(2, String.valueOf(target.getId()));
+            }
+
+            if(relationshipDefinition.getTargetDefinition().isHelperTable()){
+                call.setLong(1, relationshipDefinition.getTargetDefinition().getId());
+                HelperTableRow helperTableRow = (HelperTableRow) target;
+                call.setString(2, String.valueOf(helperTableRow.getId()));
+            }
+
+            if(relationshipDefinition.getTargetDefinition().isBasicType()){
+                call.setLong(1, relationshipDefinition.getId());
+                BasicTypeValue basicTypeValue = (BasicTypeValue) target;
+                call.setString(2, basicTypeValue.getValue().toString());
+            }
+
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            if (rs.next()) {
+                resultJSON = rs.getString(1);
+            } else {
+                String errorMsg = "Ocurrió un error en la recuperación de los datos. Contactar a Desarrollo";
                 logger.error(errorMsg);
                 throw new IllegalArgumentException(errorMsg);
             }

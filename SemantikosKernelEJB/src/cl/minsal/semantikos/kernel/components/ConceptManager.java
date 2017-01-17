@@ -116,8 +116,12 @@ public interface ConceptManager {
      */
     public List<ConceptSMTK> findConceptBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize);
 
-    /*Método temporal para trabajar con el navegador de conceptos*/
-    @Deprecated
+
+    /**
+     *  Método encargado de búscar los conceptos según la categoría
+     * @param category
+     * @return
+     */
     public List<ConceptSMTK> findConceptBy(Category category);
 
     /**

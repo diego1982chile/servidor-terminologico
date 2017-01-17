@@ -3,159 +3,139 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
                 template="/WEB-INF/template/template.xhtml">
 
     <ui:define name="content">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{browserBean.executeQuery}" />
+        </f:metadata>
+
         <div class="Container100">
+
             <div class="ContainerIndent">
-                <h:form id="form2" onkeypress="return event.keyCode != 13">
-                    <div style="margin-top: 65px" class="Card ShadowEffect TexAlCenter">
-                        <div class="ui-grid-responsive">
-                            <div class="ui-grid-col-5">
-                                <p:inputText value="#{navBrowser.pattern}" style="width: 90%; margin: 10px;"
-                                             placeholder="Buscar...">
-                                    <p:ajax event="keyup" update="conceptTable" />
-                                </p:inputText>
-                            </div>
+                <div class="Card ShadowEffect">
 
-                            <div class="ui-grid-col-4">
-                                <p:selectCheckboxMenu style="width: 100%; margin: 10px;" id="menu"
-                                                      value="#{navBrowser.selectedCategories}" label="Categorías"
-                                                      filter="true" filterMatchMode="startsWith">
-                                    <f:selectItems value="#{navBrowser.categories}" var="category"
-                                                   itemLabel="#{category.name}" itemValue="#{category.id}"/>
+                    <div class="Container100">
+                        <div class="ContainerIndent">
 
-                                    <p:ajax event="toggleSelect" update="conceptTable" />
-                                    <p:ajax update="conceptTable" />
-                                </p:selectCheckboxMenu>
-                            </div>
-                        </div>
-                        <div class="ui-grid-responsive">
-                            <div class="ui-grid-col-12">
+                            <h:form id="browserForm">
 
-                                <p:dataTable id="conceptTable" value="#{navBrowser.concepts}" var="conceptSMTK"
-                                             rows="15"
-                                             paginator="true" lazy="true" dynamic="true"
-                                             paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                             emptyMessage="No se han encontrado conceptos con los criterios utilizados">
-                                    <f:facet name="{Exporters}">
-                                        <p:commandButton ajax="false" value="Exportar a Excel"
-                                                         icon="fa fa-file-excel-o">
-                                            <p:dataExporter type="xls" target=":form2:conceptTable"
-                                                            fileName="conceptos"/>
-                                        </p:commandButton>
-                                    </f:facet>
-
-
-                                    <p:column headerText="Concept ID">
-
-                                        <h:outputText value="#{conceptSMTK.id}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Termino">
-                                        <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Categoría">
-                                        <h:outputText value="#{conceptSMTK.category.name}"/>
-                                    </p:column>
-
-                                    <p:column exportable="false" style="width:32px;text-align: center">
-                                        <p:commandButton update=":form:conceptDetail"
-                                                         oncomplete="PF('conceptDialog').show()"
-                                                         icon="fa fa-bars" title="View">
-                                            <f:setPropertyActionListener value="#{conceptSMTK}"
-                                                                         target="#{navBrowser.conceptSelected}"/>
-                                        </p:commandButton>
-                                    </p:column>
-
-                                </p:dataTable>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </h:form>
-
-                <h:form id="form">
-                    <p:dialog widgetVar="conceptDialog" modal="true" showEffect="fade"
-                              hideEffect="fade" resizable="true" style="margin:40px;">
-                        <p:outputPanel id="conceptDetail" style="text-align:center;">
-
-
-                            <p:dataTable id="detailConcept" var="description"
-                                         value="#{navBrowser.conceptSelected.descriptions}"
-                                         >
-                                <f:facet name="header">
-                                    Detalle del concepto
-                                </f:facet>
-
-                                <p:columnGroup type="header">
-
-                                    <p:row>
-                                        <p:column exportable="true" colspan="2" headerText="Concepto"/>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column headerText="ID"/>
-                                        <p:column headerText="#{navBrowser.conceptSelected.id}"/>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column headerText="Categoria"/>
-                                        <p:column headerText="#{navBrowser.conceptSelected.category.name}"/>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column colspan="2" headerText="Descripciones"/>
-                                    </p:row>
-
-                                </p:columnGroup>
-                                <p:column visible="hidden">
-                                    <f:facet name="header">
-                                        <h:outputText value="ID"/>
-                                    </f:facet>
-                                    <h:outputText value="#{navBrowser.conceptSelected.id}"></h:outputText>
-                                </p:column>
-                                <p:column visible="hidden">
-                                    <f:facet name="header">
-                                        <h:outputText value="Concept ID"/>
-                                    </f:facet>
-                                    <h:outputText value="#{navBrowser.conceptSelected.conceptID}"></h:outputText>
-                                </p:column>
-                                <p:column visible="hidden">
-                                    <f:facet name="header">
-                                        <h:outputText value="Category"/>
-                                    </f:facet>
-                                    <h:outputText value="#{navBrowser.conceptSelected.category.name}"></h:outputText>
-                                </p:column>
-
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Term"/>
-                                    </f:facet>
-                                    <h:outputText value="#{description.term}"></h:outputText>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Description Type"/>
-                                    </f:facet>
-                                    <h:outputText value="#{description.descriptionType.description}"></h:outputText>
-                                </p:column>
-                            </p:dataTable>
-
-                            <br/>
-
-                            <p:commandButton ajax="false" value="Exportar a Excel" icon="fa fa-file-excel-o">
-                                <p:dataExporter type="xls" target="detailConcept" fileName="detalle_concepto"/>
+                    <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
+                                 rows="15"
+                                 sortBy="#{1}"
+                                 paginator="true" lazy="true" dynamic="true"
+                                 reflow="true"
+                                 paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                 emptyMessage="No se han encontrado conceptos con los criterios utilizados">
+                        <f:facet name="{Exporters}">
+                            <p:commandButton ajax="false" value="Exportar a Excel" process="@this" update="@this"
+                                             icon="fa fa-file-excel-o">
+                                <p:dataExporter type="xls" target="conceptTable"
+                                                fileName="conceptos"/>
                             </p:commandButton>
+                        </f:facet>
 
-                        </p:outputPanel>
-                    </p:dialog>
 
-                </h:form>
+                        <p:column headerText="Concept ID" sortBy="#{1}">
 
+                            <h:outputText value="#{conceptSMTK.id}"/>
+                        </p:column>
+
+                        <p:column headerText="Termino" sortBy="#{2}">
+                            <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
+                        </p:column>
+
+                        <p:column headerText="Categoría">
+                            <h:outputText value="#{conceptSMTK.category.name}"/>
+                        </p:column>
+
+                        <p:column headerText="Etiquetas" styleClass="tags" exportable="false">
+
+                            <p:repeat
+                                    offset="0"
+                                    size="#{conceptSMTK.tags.size()}"
+                                    step="1"
+                                    varStatus="var"
+                                    value="#{conceptSMTK.tags}"
+                                    var="tag">
+
+                                <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+
+                            </p:repeat>
+
+                        </p:column>
+
+                        <p:column exportable="false" style="width:32px;text-align: center">
+                            <p:commandLink update="conceptTable,@(.conceptDetail)" oncomplete="PF('carOP').show('#{component.clientId}')"
+                                           title="Ver Detalle">
+                                <i class="fa fa-search fa-lg" />
+                                <f:setPropertyActionListener value="#{conceptSMTK}" target="#{browserBean.conceptSelected}"/>
+                            </p:commandLink>
+
+
+                        </p:column>
+
+                    </p:dataTable>
+
+                    </h:form>
+
+                </div>
             </div>
         </div>
+        </div>
+        </div>
+
+        <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
+            <p:outputPanel styleClass="conceptDetail" style="width: 500px;">
+                <p:panelGrid style="width:100%">
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column colspan="2">
+                                #{browserBean.conceptSelected.descriptionFavorite}
+                            </p:column>
+                        </p:row>
+                    </f:facet>
+                    <p:row>
+                        <p:column styleClass="BoldGray FontBold">ID</p:column>
+                        <p:column>#{browserBean.conceptSelected.id}</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column styleClass="BoldGray FontBold">Categoría</p:column>
+                        <p:column>#{browserBean.conceptSelected.category}</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column styleClass="BoldGray FontBold">FSN</p:column>
+                        <p:column>#{browserBean.conceptSelected.descriptionFSN}</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column styleClass="BoldGray FontBold">Preferida</p:column>
+                        <p:column>#{browserBean.conceptSelected.descriptionFavorite}</p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:dataTable id="otherDescriptions"
+                             var="description"
+                             value="#{browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
+                             rendered="#{not empty browserBean.getOtherDescriptions(browserBean.conceptSelected)}"
+                             editable="true"
+                             reflow="true">
+                    <p:columnGroup type="header">
+
+                        <p:row>
+                            <p:column colspan="2" headerText="Otras Descripciones"/>
+                        </p:row>
+
+                    </p:columnGroup>
+                    <p:column style="width: 25%" styleClass="BoldGray FontBold">
+                        #{description.descriptionType.name}
+                    </p:column>
+                    <p:column>
+                        #{description.term}
+                    </p:column>
+                </p:dataTable>
+            </p:outputPanel>
+        </p:overlayPanel>
+
 
     </ui:define>
 

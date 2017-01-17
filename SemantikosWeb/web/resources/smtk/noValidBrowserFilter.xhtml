@@ -16,53 +16,71 @@
 </composite:interface>
 <composite:implementation>
 
-    <p:outputPanel id="noValidFilters" styleClass="noValidFilters">
+    <p:outputPanel id="browserFilters" styleClass="browserFilters">
 
-        <div class="ui-fluid">
 
-            <p:panelGrid  columns="6"  style="width: 100%"
-                          columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
-                          layout="grid" styleClass="ui-panelgrid-blank fullyDefined">
+                <div class="ui-fluid">
+                    <div class="Container">
+                        <div class="Container100">
+                            <div class="ContainerIndent BoldGray FontBold">
+                                <span>
+                                    Patrón
+                                </span>
+                                <p:outputPanel styleClass="search">
+                                    <p:inputText value="#{cc.attrs.noValidQuery.query}" placeholder="Buscar...">
+                                        <p:ajax event="keyup" update="@(.browserTable),@(.browserFilters)" listener="#{noValidBrowserBean.setFilterChanged(true)}" process="@this" />
+                                    </p:inputText>
+                                    <i class="fa fa-search fa-lg" />
+                                </p:outputPanel>
+                            </div>
+                        </div>
 
-                <p:outputPanel styleClass="search">
-                    <p:inputText value="#{cc.attrs.noValidQuery.query}" placeholder="Buscar...">
-                        <p:ajax event="keyup" update="@(.noValidBrowserTable),@(.noValidFilters)" process="@this" />
-                    </p:inputText>
-                    <i class="fa fa-search fa-lg" />
-                </p:outputPanel>
+                        <div class="Container100">
+                            <div class="ContainerIndent BoldGray FontBold">
+                            <span>
+                                Tipo Descripción
+                            </span>
+                                <p:selectCheckboxMenu id="descriptionTypes"
+                                                      value="#{cc.attrs.noValidQuery.descriptionTypes}"
+                                                      converter="omnifaces.SelectItemsConverter"
+                                                      label="Seleccione...">
 
-                <p:selectCheckboxMenu id="descriptionTypes"
-                                      value="#{cc.attrs.noValidQuery.descriptionTypes}"
-                                      converter="omnifaces.SelectItemsConverter"
-                                      label="Tipos...">
+                                    <p:ajax event="change" listener="#{noValidBrowserBean.setFilterChanged(true)}"
+                                            update="@(.browserTable),@(.browserFilters)"
+                                            process="@this" />
 
-                    <p:ajax event="change"
-                            update="@(.noValidBrowserTable),@(.noValidFilters)"
-                            process="@this" />
+                                    <f:selectItems value="#{noValidBrowserBean.descriptionTypes}" var="descriptionType"
+                                                   itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
 
-                    <f:selectItems value="#{noValidBrowserBean.descriptionTypes}" var="descriptionType"
-                                   itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
+                                </p:selectCheckboxMenu>
+                            </div>
 
-                </p:selectCheckboxMenu>
+                            <div class="Container100">
+                                <div class="ContainerIndent BoldGray FontBold">
+                            <span>
+                                Tipo Observación
+                            </span>
+                                    <p:selectCheckboxMenu id="observationTypes"
+                                                          value="#{cc.attrs.noValidQuery.observationNoValids}"
+                                                          scrollHeight="200"
+                                                          converter="omnifaces.SelectItemsConverter"
+                                                          label="Seleccione...">
 
-                <p:selectCheckboxMenu id="observationTypes"
-                                      value="#{cc.attrs.noValidQuery.observationNoValids}"
-                                      converter="omnifaces.SelectItemsConverter"
-                                      label="Observación...">
+                                        <p:ajax event="change" listener="#{noValidBrowserBean.setFilterChanged(true)}"
+                                                update="@(.browserTable),@(.browserFilters)"
+                                                process="@this" />
 
-                    <p:ajax event="change"
-                            update="@(.noValidBrowserTable),@(.noValidFilters)"
-                            process="@this" />
+                                        <f:selectItems value="#{noValidBrowserBean.observationTypes}" var="observationType"
+                                                       itemLabel="#{observationType.description}" itemValue="#{observationType}"/>
 
-                    <f:selectItems value="#{noValidBrowserBean.observationTypes}" var="observationType"
-                                   itemLabel="#{observationType.description}" itemValue="#{observationType}"/>
+                                    </p:selectCheckboxMenu>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                </p:selectCheckboxMenu>
 
-            </p:panelGrid>
-
-        </div>
-        <p:spacer />
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.descriptionTypes}" itemName="Tipo descriptor" />
         <smtk:multipleSelectionStatus selectedItems="#{cc.attrs.noValidQuery.observationNoValids}" itemName="Observación" />
     </p:outputPanel>

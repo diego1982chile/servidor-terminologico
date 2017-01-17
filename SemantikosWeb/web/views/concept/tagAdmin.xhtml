@@ -354,7 +354,7 @@
 
                 </p:panel>
 
-                <p:dialog widgetVar="link" modal="true" showEffect="fade"
+                <p:dialog widgetVar="link"  showEffect="fade"
                           hideEffect="fade" resizable="true" style="margin:40px;">
                     <p:outputPanel id="linkPanel" style="text-align:center;">
 
@@ -429,7 +429,7 @@
                     </p:outputPanel>
                 </p:dialog>
 
-                <p:dialog widgetVar="unlink" modal="true" showEffect="fade"
+                <p:dialog widgetVar="unlink"  showEffect="fade"
                           hideEffect="fade" resizable="true" style="margin:40px;" header="Desvincular">
                     <p:outputPanel id="unlinkPanel" style="text-align:center;">
 
@@ -484,7 +484,7 @@
                     </p:outputPanel>
                 </p:dialog>
 
-                <p:dialog widgetVar="removeDialog" modal="true" showEffect="fade"
+                <p:dialog widgetVar="removeDialog"  showEffect="fade"
                           hideEffect="fade" resizable="true" style="margin:40px;">
                     <p:outputPanel id="removeDialogPanel" style="text-align:center;">
                         <h3>Si la etiqueta eliminada tiene etiquetas anidadas, éstas se eliminarán igualmente. ¿Esta seguro de eliminar la etiqueta #{tagBean.tagEdit.name}?</h3>
@@ -507,7 +507,7 @@
 
                 <!--Cuadro de dialogo para el Color Picker-->
 
-                <p:dialog modal="true" widgetVar="dlgBack" showEffect="fade" hideEffect="fade"
+                <p:dialog  widgetVar="dlgBack" showEffect="fade" hideEffect="fade"
                           header="Seleccione un color de fondo" resizable="false">
                     <h:panelGrid id="grid" columns="2" cellpadding="5">
                         <h:outputText value="Popup color: "/>
@@ -516,7 +516,7 @@
                     </h:panelGrid>
                 </p:dialog>
 
-                <p:dialog modal="true" widgetVar="dlgTxt" showEffect="fade" hideEffect="fade"
+                <p:dialog  widgetVar="dlgTxt" showEffect="fade" hideEffect="fade"
                           header="Seleccione un color de letra" resizable="false">
                     <h:panelGrid id="grid2" columns="2" cellpadding="5">
                         <h:outputText value="Popup color: "/>

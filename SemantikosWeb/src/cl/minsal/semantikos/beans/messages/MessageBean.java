@@ -33,4 +33,15 @@ public class MessageBean {
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,title, msg));
     }
 
+    /**
+     * Método encargado de agregar mensajes de advertencia o informativos en la vista.
+     *
+     * @param title Título del mensaje.
+     * @param msg Mensaje que se muestra.
+     */
+    public void messageWarning(String title,String msg) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,title, msg));
+    }
+
 }

@@ -8,7 +8,6 @@ import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
-import sun.security.krb5.internal.crypto.Des;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -109,6 +108,11 @@ public class QueryManagerImpl implements QueryManager {
         PendingQuery pendingQuery = new PendingQuery();
 
         return pendingQuery;
+    }
+
+    @Override
+    public BrowserQuery getDefaultBrowserQuery() {
+        return new BrowserQuery();
     }
 
     @Override
@@ -213,6 +217,11 @@ public class QueryManagerImpl implements QueryManager {
     }
 
     @Override
+    public List<ConceptSMTK> executeQuery(BrowserQuery query) {
+        return queryDAO.executeQuery(query);
+    }
+
+    @Override
     public int countQueryResults(GeneralQuery query) {
         return (int)queryDAO.countByQuery(query);
     }
@@ -229,6 +238,11 @@ public class QueryManagerImpl implements QueryManager {
 
     @Override
     public int countQueryResults(PendingQuery query) {
+        return (int)queryDAO.countByQuery(query);
+    }
+
+    @Override
+    public int countQueryResults(BrowserQuery query) {
         return (int)queryDAO.countByQuery(query);
     }
 

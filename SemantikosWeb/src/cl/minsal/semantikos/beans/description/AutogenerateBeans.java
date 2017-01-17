@@ -1,8 +1,9 @@
 package cl.minsal.semantikos.beans.description;
 
+import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import org.primefaces.event.ReorderEvent;
 
@@ -10,7 +11,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by des01c7 on 02-12-16.
@@ -99,10 +102,15 @@ public class AutogenerateBeans {
                     concept.getDescriptionFavorite().setCaseSensitive(false);
                 }
             }
+            if (relationshipDefinition.getId() == 58) {
+                autogenerateMC.voidRemoveFFA(relationship);
+                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
         }
     }
 
-    public void autogenerateRemoveRelationship(RelationshipDefinition relationshipDefinition, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE){
+    public void autogenerateRemoveRelationship(RelationshipDefinition relationshipDefinition, Relationship relationship, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE){
         if (!concept.isModeled()) {
             if (relationshipDefinition.getId() == 52) {
                 autogeneratePCCE.setAutogeneratePCCE("");
@@ -115,8 +123,29 @@ public class AutogenerateBeans {
                 concept.getDescriptionFavorite().setTerm(autogeneratePCCE.toString());
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
+            if (relationshipDefinition.getId() == 58) {
+                autogenerateMC.voidRemoveFFA(relationship);
+                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+            if (relationshipDefinition.getId() == 69) {
+                autogenerateMC.setVolumenEmpty();
+                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
         }
     }
+
+    public void autogenerateRemoveAttribute(RelationshipAttributeDefinition relationshipAttributeDefinition, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC) {
+        if (!concept.isModeled()) {
+            if (relationshipAttributeDefinition.getId() == 12) {
+                autogenerateMC.setUnidadVolumenEmpty();
+                concept.getDescriptionFavorite().setTerm(autogenerateMC.toString());
+                concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
+            }
+        }
+    }
+
 
     public void autogenerateRelationship(RelationshipDefinition relationshipDefinition, Relationship relationship, Target target, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE) {
         if (!concept.isModeled()) {
@@ -185,12 +214,12 @@ public class AutogenerateBeans {
     public void autogenerateAttributeDefinition(RelationshipAttributeDefinition relationshipAttributeDefinition, Target target, RelationshipAttribute attribute, ConceptSMTKWeb concept, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE) {
         if (!concept.isModeled()) {
             if (relationshipAttributeDefinition.getId() == 16) {
-                autogenerateMCCE.setPackUnidad(((HelperTableRecord) target).getValueColumn("description"));
+                autogenerateMCCE.setPackUnidad(((HelperTableRow) target).getDescription());
                 concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
             if (relationshipAttributeDefinition.getId() == 17) {
-                autogenerateMCCE.setVolumenUnidad(((HelperTableRecord) target).getValueColumn("description"));
+                autogenerateMCCE.setVolumenUnidad(((HelperTableRow) target).getDescription());
                 concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
@@ -200,7 +229,7 @@ public class AutogenerateBeans {
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
             if (relationshipAttributeDefinition.getId() == 15) {
-                autogenerateMCCE.setUnidadMedidaCantidad(((HelperTableRecord) target).getValueColumn("description"));
+                autogenerateMCCE.setUnidadMedidaCantidad(((HelperTableRow) target).getDescription());
                 concept.getDescriptionFavorite().setTerm(autogenerateMCCE.toString());
                 concept.getDescriptionFSN().setTerm(concept.getDescriptionFavorite().getTerm());
             }
@@ -228,16 +257,43 @@ public class AutogenerateBeans {
     }
 
     public void loadAutogenerate(ConceptSMTKWeb conceptSMTKWeb, AutogenerateMC autogenerateMC, AutogenerateMCCE autogenerateMCCE, AutogeneratePCCE autogeneratePCCE, List<String> autogenerateList){
+        ordenSustancias= new HashMap<>();
         for (Relationship relationship :  conceptSMTKWeb.getRelationshipsWeb()) {
+
             if(!relationship.getRelationshipAttributes().isEmpty()){
                 autogenerateRelationshipWithAttributes(relationship.getRelationshipDefinition(),relationship,conceptSMTKWeb,autogenerateList,autogenerateMC);
                 autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
                 for (RelationshipAttributeDefinition relationshipAttributeDefinition : relationship.getRelationshipDefinition().getRelationshipAttributeDefinitions()) {
-                    autogenerateAttributeDefinition(relationshipAttributeDefinition,relationship.getAttribute(relationshipAttributeDefinition).getTarget(), relationship.getAttribute(relationshipAttributeDefinition),conceptSMTKWeb,autogenerateMC,autogenerateMCCE);
+                    if(relationship.getAttribute(relationshipAttributeDefinition)!=null) {
+                        autogenerateAttributeDefinition(relationshipAttributeDefinition, relationship.getAttribute(relationshipAttributeDefinition).getTarget(), relationship.getAttribute(relationshipAttributeDefinition), conceptSMTKWeb, autogenerateMC, autogenerateMCCE);
+                    }
                 }
             }else{
                 autogenerateRelationship(relationship.getRelationshipDefinition(),relationship,relationship.getTarget(),conceptSMTKWeb,autogenerateMC,autogenerateMCCE,autogeneratePCCE);
             }
+            addSustancia(relationship);
+        }
+        reorderSustancias(autogenerateList);
+        if(conceptSMTKWeb.getCategory().getId()==33)autogenerateMB(conceptSMTKWeb,autogenerateList);
+    }
+
+    public void addSustancia(Relationship relationship){
+        if(relationship.getRelationshipDefinition().getId()==45 ){
+            ordenSustancias.put(relationship.getOrder(),((ConceptSMTK)relationship.getTarget()).getDescriptionFavorite().getTerm());
         }
     }
+    public void reorderSustancias( List<String> autogenerateList){
+        autogenerateList.clear();
+        for (int i =1; i <= ordenSustancias.size(); i++) {
+            autogenerateList.add(ordenSustancias.get(i));
+        }
+    }
+    public void autogenerateMB(ConceptSMTK concept,List<String> autogenerateList){
+        String term= autogenerate(autogenerateList);
+        concept.getDescriptionFavorite().setTerm(term);
+        concept.getDescriptionFSN().setTerm(term);
+    }
+
+    private Map<Integer,String> ordenSustancias;
+
 }

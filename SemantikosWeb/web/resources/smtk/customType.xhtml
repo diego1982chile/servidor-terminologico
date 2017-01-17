@@ -18,10 +18,16 @@
 
 
     <smtk:helperTableTypeListBox
-            rendered="#{cc.attrs.relationshipDefinition.compositeID eq 1}"
+            rendered="#{cc.attrs.relationshipDefinition.compositeID eq 5}"
             targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
             relationshipDefinition="#{cc.attrs.relationshipDefinition}"
             concept="#{cc.attrs.concept}"/>
+
+    <smtk:smtkTypeCustomCompoundSpecialty rendered="#{cc.attrs.relationshipDefinition.compositeID eq 7}"
+                                          targetDefinition="#{cc.attrs.relationshipDefinition.targetDefinition}"
+                                          relationshipDefinition="#{cc.attrs.relationshipDefinition}"
+                                          concept="#{cc.attrs.concept}"/>
+
 
 </composite:implementation>
 </html>

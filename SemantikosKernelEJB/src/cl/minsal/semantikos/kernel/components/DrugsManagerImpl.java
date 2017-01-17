@@ -96,11 +96,14 @@ public class DrugsManagerImpl implements DrugsManager {
 
             List<ConceptSMTK> thisNodeParentNodes = new ArrayList<>();
 
-            if(conceptManager.getRelatedConcepts(node).isEmpty() && !allNodesParentNodes.contains(node)) {
+            if(parentNodes.isEmpty() && !allNodesParentNodes.contains(node)) {
                 allNodesParentNodes.add(node);
             }
 
             for (ConceptSMTK parentNode : parentNodes) {
+
+                if(!parentNode.isModeled())
+                    continue;
 
                 RelationshipDefinition rd = new RelationshipDefinition(node.getCategory().getName(), node.getCategory().getName(),MultiplicityFactory.ONE_TO_ONE, node.getCategory());
                 Relationship r = new Relationship(parentNode, node, rd, new ArrayList<RelationshipAttribute>(), null);
@@ -121,18 +124,23 @@ public class DrugsManagerImpl implements DrugsManager {
                     }
                 }
 
-                if(parentNode.isModeled())
-                    thisNodeParentNodes.add(parentNode);
+
+                thisNodeParentNodes.add(parentNode);
             }
 
             allNodesParentNodes.addAll(thisNodeParentNodes);
 
         }
 
-        if(parents==0)
-            return  allNodesParentNodes;
-        else
-            return traverseUp(allNodesParentNodes);
+        if(parents==0) {
+            return allNodesParentNodes;
+        }
+        else {
+            if(allNodesParentNodes.isEmpty())
+                return nodes;
+            else
+                return traverseUp(allNodesParentNodes);
+        }
     }
 
 }

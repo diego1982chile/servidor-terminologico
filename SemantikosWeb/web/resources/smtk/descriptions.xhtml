@@ -24,42 +24,58 @@
         <p:growl id="growl" showDetail="true" showSummary="true"/>
         <p:growl id="editMsgs" showDetail="true"/>
 
-        <p:fieldset legend="Agregar descripción" toggleable="true" collapsed="true" rendered="#{cc.attrs.editable}">
 
-            <div class="ui-fluid">
-                <h:panelGrid  columns="5"  style="width: 100%"
-                              columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-3,ui-grid-col-2,ui-grid-col-1"
-                              layout="grid" styleClass="ui-panelgrid-blank">
+        <div class="ui-fluid">
 
-                    <p:outputLabel for="otherTermino" value="Término"/>
+                <div class="Container ContainerIndentBottom">
 
-                    <p:inputText id="otherTermino" value="#{cc.attrs.otherTermino}" autocomplete="off" style="width:90%" />
+                    <div class="Container20 White Responsive">
+                        <div class="ContainerIndent">
+                            <p:outputLabel for="otherTermino" value="Término *"/>
+                        </div>
+                    </div>
 
-                    <p:selectOneRadio id="radio4" value="#{cc.attrs.otherSensibilidad}" style="width: 95%">
-                        <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
-                        <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
-                    </p:selectOneRadio>
+                    <div class="Container30 White Responsive">
+                        <div class="ContainerIndentRight">
+                            <p:inputText id="otherTermino" value="#{cc.attrs.otherTermino}" autocomplete="off" />
+                        </div>
+                    </div>
 
-                    <p:selectOneMenu id="console" value="#{cc.attrs.otherDescriptionType}" converter="omnifaces.SelectItemsConverter" style="width: 90%">
-                        <f:selectItem itemLabel="Seleccione tipo" itemValue=""/>
-                        <f:selectItems value="#{cc.attrs.descriptionTypes}" var="descriptionType"
-                                       itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
-                    </p:selectOneMenu>
+                    <div class="Container20 White Responsive">
+                        <div class="ContainerIndentRight">
+                            <p:selectOneMenu id="console" value="#{cc.attrs.otherDescriptionType}" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItem itemLabel="Seleccione tipo" itemValue=""/>
+                                <f:selectItems value="#{cc.attrs.descriptionTypes}" var="descriptionType"
+                                               itemLabel="#{descriptionType.name}" itemValue="#{descriptionType}"/>
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
 
-                    <p:commandButton value="Agregar" id="btn" action="#{descriptionBeans.addDescription()}"
-                                     process="@(.otherDescriptionsPanel)"
-                                     update="@(.otherDescriptionsPanel)"
-                                     style="float: right" />
+                    <div class="Container20 White Responsive">
+                        <div class="ContainerIndentRight">
+                            <p:selectOneRadio id="radio4" value="#{cc.attrs.otherSensibilidad}" style="padding-top: 0.5em; text-align: center" >
+                                <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
+                                <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
+                            </p:selectOneRadio>
+                        </div>
+                    </div>
 
-                </h:panelGrid>
+                    <div class="Container10 White Responsive">
+                        <div class="ContainerIndentRight">
+
+                            <p:commandButton value="Agregar" id="btn" action="#{descriptionBeans.addDescription()}"
+                                             process="@(.otherDescriptionsPanel)"
+                                             update="@(.otherDescriptionsPanel)"
+                                             style="float: right" />
+                        </div>
+                    </div>
             </div>
-
-        </p:fieldset>
+        </div>
 
         <p:spacer rendered="#{cc.attrs.editable}" />
 
         <p:dataTable id="otherDescriptions"
-                     styleClass="otherDescriptions"
+                     styleClass="otherDescriptions TextAlCenter"
                      emptyMessage="El concepto no tiene otras descripciones"
                      var="description"
                      value="#{cc.attrs.descriptions}"
@@ -71,7 +87,7 @@
 
             <!--Columnas por defecto -->
 
-            <p:column headerText="DescId" style="width:5%">
+            <p:column headerText="DescId">
                 <div style="text-align: center;">
                     <h:outputText value="#{description.descriptionId}"/>
                 </div>
@@ -149,39 +165,46 @@
                 </div>
             </p:column>
 
-            <p:column headerText="Acción" style="width: 6%" rendered="#{cc.attrs.editable}">
-                <p:commandLink actionListener="#{descriptionBeans.removeDescription(description)}"
-                               ajax="true"
-                               process="@this"
-                               update="@(.otherDescriptions)"
-                               style="float: right"
-                               disabled="#{conceptBean.concept.modeled}">
-                    <i class="fa fa-trash fa-lg"/>
-                    <p:confirm header="Confirmation" message="¿Desea eliminar esta descripción?"
-                               icon="ui-icon-alert"/>
-                </p:commandLink>
-                <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent}"
-                               process="@this"
-                               update=":#{cc.clientId}:conceptTranslate"
-                               oncomplete="PF('dialogTDC').show()">
-                    <i class="fa fa-exchange fa-lg"/>
-                    <f:setPropertyActionListener value="#{description}"
-                                                 target="#{conceptBean.descriptionToTranslate}"/>
-                    <f:setPropertyActionListener value="" target="#{conceptBean.conceptSMTKTranslateDes}"/>
-                    <f:setPropertyActionListener value="" target="#{findConceptBean.categoryArrayID}"/>
-                </p:commandLink>
-                <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent}"
-                               disabled="#{conceptBean.concept.id==conceptBean.conceptSMTKNotValid.id}"
-                               process="@this"
-                               update=":#{cc.clientId}:conceptTranslateNotValid"
-                               oncomplete="PF('dialogTDNV').show()">
-                    <i class="fa fa-times-circle-o fa-lg"/>
-                    <f:setPropertyActionListener value="#{description}"
-                                                 target="#{conceptBean.descriptionToTranslate}"/>
-                    <f:setPropertyActionListener value="" target="#{conceptBean.observationNoValid}"/>
+            <p:column headerText="Acción" rendered="#{cc.attrs.editable}">
 
-                </p:commandLink>
-                <p:rowEditor id="rowEditor" style="display: inline"/>
+                    <p:commandLink actionListener="#{descriptionBeans.removeDescription(description)}"
+                                   ajax="true"
+                                   process="@this"
+                                   update="@(.otherDescriptions)"
+                                   style="padding: 5px"
+                                   disabled="#{conceptBean.concept.modeled}">
+                        <i class="fa fa-trash fa-lg"/>
+                        <p:confirm header="Confirmation" message="¿Desea eliminar esta descripción?"
+                                   icon="ui-icon-alert"/>
+                    </p:commandLink>
+
+                    <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent}"
+                                   process="@this"
+                                   style="padding: 5px"
+                                   update=":#{cc.clientId}:conceptTranslate"
+                                   oncomplete="PF('dialogTDC').show()">
+                        <i class="fa fa-exchange fa-lg"/>
+                        <f:setPropertyActionListener value="#{description}"
+                                                     target="#{conceptBean.descriptionToTranslate}"/>
+                        <f:setPropertyActionListener value="" target="#{conceptBean.conceptSMTKTranslateDes}"/>
+                        <f:setPropertyActionListener value="" target="#{findConceptBean.categoryArrayID}"/>
+                    </p:commandLink>
+
+                    <p:commandLink rendered="#{conceptBean.concept.persistent and description.persistent}"
+                                   disabled="#{conceptBean.concept.id==conceptBean.conceptSMTKNotValid.id}"
+                                   process="@this"
+                                   style="padding: 5px"
+                                   update=":#{cc.clientId}:conceptTranslateNotValid"
+                                   oncomplete="PF('dialogTDNV').show()">
+                        <i class="fa fa-ban fa-lg"/>
+                        <f:setPropertyActionListener value="#{description}"
+                                                     target="#{conceptBean.descriptionToTranslate}"/>
+                        <f:setPropertyActionListener value="" target="#{conceptBean.observationNoValid}"/>
+
+                    </p:commandLink>
+
+                    <p:rowEditor id="rowEditor" style="display: inline;"/>
+
             </p:column>
 
         </p:dataTable>
@@ -240,7 +263,7 @@
                                         placeholder="Buscar concepto por término"
                                         disabled="#{conceptBean.conceptSMTKTranslateDes!=null}"
                         >
-                            <p:ajax event="itemSelect" update=":#{cc.clientId}:conceptTranslate"></p:ajax>
+                            <p:ajax event="itemSelect" update=":#{cc.clientId}:conceptTranslate" />
 
                         </p:autoComplete>
                     </div>
@@ -254,9 +277,9 @@
                                            itemLabel="#{category.name}" itemValue="#{category.id}"/>
                             <p:ajax event="toggleSelect"
                                     listener="#{findConceptBean.getConceptSearchInputAndCategories}"
-                                    update="inputFindConcept"></p:ajax>
+                                    update="inputFindConcept" />
                             <p:ajax listener="#{findConceptBean.getConceptSearchInputAndCategories}"
-                                    update="inputFindConcept"></p:ajax>
+                                    update="inputFindConcept" />
                         </p:selectCheckboxMenu>
 
                     </div>
@@ -308,8 +331,8 @@
     </p:dialog>
 
 
-    <p:dialog id="dialogTDNV" header="Trasladar descripcion a no valido" widgetVar="dialogTDNV" global="true"
-              showEffect="fade" hideEffect="fade" style="width: auto;">
+    <p:dialog id="dialogTDNV" header="Trasladar Descripción a No Válido" widgetVar="dialogTDNV" global="true"
+              showEffect="fade" hideEffect="fade" width="780px" height="500px">
 
 
         <p:panel id="conceptTranslateNotValid" style="width: 100%; border: hidden;">
@@ -382,34 +405,39 @@
                 </div>
             </div>
 
-            <div class="ui-g">
-            <div class="ui-g-12 ui-md-6 ui-lg-12">
             <p:panel style="width: 100%;" styleClass="observationNoValid">
-                <div class="ui-g">
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
-                        <h:outputText value="Observacion: "/>
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-6">
-                        <p:selectOneMenu value="#{conceptBean.observationNoValid}"
-                                         converter="omnifaces.SelectItemsConverter"
-                                         style="margin-right:10px; width: 60%" disabled="#{conceptBean.observationNoValid!=null}" >
-                            <f:selectItem itemLabel="Seleccione una observación" itemDisabled="true"/>
-                            <f:selectItems value="#{conceptBean.observationNoValids}" var="observation"
-                                           itemLabel="#{observation.description}" itemValue="#{observation}"  />
+                <div class="ui-fluid">
 
-                            <p:ajax event="itemSelect" update="@(.observationNoValid)" />
-                        </p:selectOneMenu>
+                    <div class="Container">
+                        <div class="Container20 Responsive">
+                            <div class="ContainerIndent">
+                                <h:outputText value="Razón de No Válido: "/>
+                            </div>
+                        </div>
 
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-3">
-                        <p:commandButton rendered="#{conceptBean.observationNoValid!=null}" value="Quitar observacion"  update="@(.observationNoValid)">
-                            <f:setPropertyActionListener value="" target="#{conceptBean.observationNoValid}"/>
-                                </p:commandButton>
+                        <div class="Container60 Responsive">
+                            <p:selectOneMenu value="#{conceptBean.observationNoValid}"
+                                             autoWidth="false"
+                                             converter="omnifaces.SelectItemsConverter"
+                                             disabled="#{conceptBean.observationNoValid!=null}" >
+                                <f:selectItem itemLabel="Seleccione una observación" itemDisabled="true"/>
+                                <f:selectItems value="#{conceptBean.observationNoValids}" var="observation"
+                                               itemLabel="#{observation.description}" itemValue="#{observation}"  />
+
+                                <p:ajax event="itemSelect" update="@(.observationNoValid)" />
+                            </p:selectOneMenu>
+                        </div>
+
+                        <div class="Container20 Responsive">
+                            <p:commandButton rendered="#{conceptBean.observationNoValid!=null}" title="Quitar observacion" icon="fa fa-remove" value="Quitar" update="@(.observationNoValid)">
+                                <f:setPropertyActionListener value="" target="#{conceptBean.observationNoValid}"/>
+                            </p:commandButton>
+                        </div>
+
                     </div>
                 </div>
             </p:panel>
-            </div>
-            </div>
+
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-6 ui-lg-12">
                     <p:panel style="width: 100%;">
@@ -424,9 +452,7 @@
                                 itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
                                 emptyMessage="No se encontraron conceptos relacionados"
                                 placeholder="Buscar concepto por término"
-                                               forceSelection="true"
-
-                                >
+                                forceSelection="true">
                                    <p:ajax event="itemSelect" listener="#{conceptBean.addSuggest}" update="@(.tableConceptSuggest)"></p:ajax>
                                        </p:autoComplete>
                             </div>

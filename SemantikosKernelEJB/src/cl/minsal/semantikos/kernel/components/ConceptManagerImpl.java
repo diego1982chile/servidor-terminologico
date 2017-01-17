@@ -241,9 +241,9 @@ public class ConceptManagerImpl implements ConceptManager {
         }
 
         /* Se deja registro en la auditoría sólo para conceptos modelados */
-        if (conceptSMTK.isModeled()) {
+
             auditManager.recordNewConcept(conceptSMTK, user);
-        }
+
         logger.debug("El concepto " + conceptSMTK + " fue persistido.");
     }
 
