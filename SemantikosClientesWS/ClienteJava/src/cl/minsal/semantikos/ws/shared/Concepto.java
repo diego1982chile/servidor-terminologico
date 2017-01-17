@@ -593,7 +593,7 @@ public class Concepto {
     })
     public static class Atributos {
 
-        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+        @XmlElement(namespace = "")
         protected List<Atributo> atributo;
 
         /**
@@ -771,7 +771,7 @@ public class Concepto {
     })
     public static class Descripciones {
 
-        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+        @XmlElement(namespace = "")
         protected List<Descripcion> descripcion;
 
         /**

@@ -115,7 +115,7 @@ public class RespuestaConceptosPorCategoria {
     })
     public static class Conceptos {
 
-        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+        @XmlElement(namespace = "")
         protected List<Concepto> concepto;
 
         /**

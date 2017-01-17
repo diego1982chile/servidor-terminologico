@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ws.semantikos.minsal.cl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ServicioDeBusqueda" targetNamespace="http://service.ws.semantikos.minsal.cl/">
   <wsdl:types>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.ws.semantikos.minsal.cl/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.ws.semantikos.minsal.cl/">
+  <xs:import namespace="http://service.ws.semantikos.minsal.cl/"/>
   <xs:element name="atributo" type="tns:Atributo"/>
   <xs:element name="atributoRelacion" type="tns:AtributoRelacion"/>
   <xs:element name="buscarTermino" type="tns:buscarTermino"/>
@@ -64,7 +65,7 @@
   <xs:element name="relacionSnomedCT" type="tns:RelacionSnomedCT"/>
   <xs:element name="respuestaBuscarTermino" type="tns:RespuestaBuscarTermino"/>
   <xs:element name="respuestaBuscarTerminoGenerica" type="tns:RespuestaBuscarTerminoGenerica"/>
-  <xs:element name="respuestaCategorias" type="tns:RespuestaCategorias"/>
+  <xs:element name="respuestaCategorias" type="RespuestaCategorias"/>
   <xs:element name="respuestaConceptosPorCategoria" type="tns:RespuestaConceptosPorCategoria"/>
   <xs:element name="respuestaConceptosPorRefSet" type="tns:RespuestaConceptosPorRefSet"/>
   <xs:element name="respuestaRefSets" type="tns:RespuestaRefSets"/>
@@ -468,10 +469,10 @@
   </xs:complexType>
   <xs:complexType name="PeticionBuscarTermino">
     <xs:sequence>
-      <xs:element name="termino" type="xs:string"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreCategoria" type="xs:string"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
       <xs:element name="idEstablecimiento" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
+      <xs:element name="termino" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="buscarTruncatePerfectResponse">
@@ -514,17 +515,6 @@
   <xs:complexType name="listaCategoriasResponse">
     <xs:sequence>
       <xs:element minOccurs="0" ref="tns:respuestaCategorias"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="RespuestaCategorias">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="categorias">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:categoria"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="crossMapsDirectosPorIDDescripcion">
@@ -721,6 +711,23 @@
       <xs:element minOccurs="0" name="message" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://service.ws.semantikos.minsal.cl/" targetNamespace="http://service.ws.semantikos.minsal.cl/" version="1.0">
+
+  <xs:import namespace="http://service.ws.semantikos.minsal.cl/"/>
+
+  <xs:complexType name="RespuestaCategorias">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="categorias">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns1:categoria"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
 </xs:schema>
   </wsdl:types>
   <wsdl:message name="buscarTermino">

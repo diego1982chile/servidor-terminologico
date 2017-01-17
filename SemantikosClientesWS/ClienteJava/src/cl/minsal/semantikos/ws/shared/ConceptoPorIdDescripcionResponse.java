@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ConceptoPorIdDescripcionResponse {
 
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+    @XmlElement(namespace = "")
     protected Concepto concepto;
 
     /**
