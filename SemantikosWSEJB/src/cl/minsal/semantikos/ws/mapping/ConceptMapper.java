@@ -85,7 +85,7 @@ public class ConceptMapper {
             if ( relationships != null ) {
                 List<RelationshipResponse> relationshipResponses = new ArrayList<>(relationships.size());
                 for ( Relationship relationship : relationships ) {
-                    relationshipResponses.add(RelationshipMapper.map(relationship));
+                    relationshipResponses.add(RelationshipMapper.map(relationship, relationship.getRelationshipDefinition().getTargetDefinition()));
                 }
                 return relationshipResponses;
             }

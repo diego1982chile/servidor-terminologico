@@ -22,9 +22,9 @@ public class RelationshipAttributeMapper {
                     res.setName(relationshipAttribute.getRelationAttributeDefinition().getName());
                 }
             } else {
-                res.setTarget(TargetMapper.map(relationshipAttribute.getTarget()));
+                res.setTarget(TargetMapper.map(relationshipAttribute.getTarget(), relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition()));
                 res.setRelationshipAttributeDefinition(RelationshipAttributeDefinitionMapper.map(relationshipAttribute.getRelationAttributeDefinition()));
-                res.setRelationship(RelationshipMapper.map(relationshipAttribute.getRelationship()));
+                res.setRelationship(RelationshipMapper.map(relationshipAttribute.getRelationship(), relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition()));
             }
 
             return res;

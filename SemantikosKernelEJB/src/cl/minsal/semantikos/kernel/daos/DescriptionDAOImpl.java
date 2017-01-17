@@ -19,6 +19,7 @@ import java.util.List;
 
 import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
+import static java.lang.System.currentTimeMillis;
 import static java.sql.Types.TIMESTAMP;
 
 /**
@@ -290,7 +291,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     public void invalidate(Description description) {
-        description.setValidityUntil(new Timestamp(System.currentTimeMillis()));
+        description.setValidityUntil(new Timestamp(currentTimeMillis()));
         this.update(description);
     }
 
@@ -485,6 +486,9 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
+        /* Se registra el tiempo de inicio */
+        long init = currentTimeMillis();
+
         ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 
@@ -499,7 +503,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             call.setArray(3, connection.createArrayOf("bigint", convertListPersistentToListID(refsetEntities)));
             call.execute();
 
-            logger.debug("Búsqueda exacta descripciones con término =" + term);
             ResultSet rs = call.getResultSet();
             while (rs.next()) {
                 Description description = createDescriptionFromResultSet(rs, null);
@@ -512,6 +515,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             throw new EJBException(e);
         }
 
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
         return descriptions;
     }
 

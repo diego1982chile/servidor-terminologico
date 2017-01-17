@@ -14,8 +14,6 @@ public class HelperTableColumnResponse implements Serializable {
 
     @XmlElement(name="nombreColumna")
     private String columnName;
-    @XmlElement(name="esLlavePrimaria")
-    private Boolean isPK;
     @XmlElement(name="esBuscable")
     private Boolean isSearchable;
     @XmlElement(name="esMostrable")
@@ -27,14 +25,6 @@ public class HelperTableColumnResponse implements Serializable {
 
     public void setColumnName(String columnName) {
         this.columnName = columnName;
-    }
-
-    public Boolean getPK() {
-        return isPK;
-    }
-
-    public void setPK(Boolean PK) {
-        isPK = PK;
     }
 
     public Boolean getSearchable() {

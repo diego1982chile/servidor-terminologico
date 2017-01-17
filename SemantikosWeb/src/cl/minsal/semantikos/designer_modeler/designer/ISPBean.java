@@ -247,7 +247,7 @@ public class ISPBean {
 
 
             if(cell.getColumn().getName().equals("EQ_TERAPEUTICA")) cell.setStringValue(fetchedData.get("Equivalencia Terapéutica"));
-            if(cell.getColumn().getName().equals("TITULAR ")) cell.setStringValue(fetchedData.get("Titular"));
+            if(cell.getColumn().getName().equals("TITULAR")) cell.setStringValue(fetchedData.get("Titular"));
             if(cell.getColumn().getName().equals("ESTADO_REGISTRO")) cell.setBooleanValue( "Vigente".equals(fetchedData.get("Estado del Registro")));
 
             try{

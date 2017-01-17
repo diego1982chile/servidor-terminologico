@@ -29,7 +29,8 @@ public interface DescriptionManager {
      * @param user    El usuario que agrega el término
      * @return La descripción creada a partir del término dado.
      */
-    public Description bindDescriptionToConcept(ConceptSMTK concept, String term, boolean caseSensitive, DescriptionType type, User user);
+    public Description bindDescriptionToConcept(ConceptSMTK concept, String term, boolean caseSensitive,
+                                                DescriptionType type, User user);
 
     /**
      * Este método es responsable de asociar (agregar) una descripción a un concepto.
@@ -39,7 +40,8 @@ public interface DescriptionManager {
      * @param user        El usuario que agrega el término
      * @return La descripción creada a partir del término dado.
      */
-    public Description bindDescriptionToConcept(ConceptSMTK concept, Description description, boolean editionMode, User user);
+    public Description bindDescriptionToConcept(ConceptSMTK concept, Description description, boolean editionMode,
+                                                User user);
 
     /**
      * Este método es responsable de des-asociar (eliminar) una descripción de un concepto.
@@ -59,7 +61,8 @@ public interface DescriptionManager {
      * @param finalDescription La descripción actualizada.
      * @param user             El usuario que realiza la actualización.
      */
-    public void updateDescription(ConceptSMTK conceptSMTK, Description original, Description finalDescription, User user);
+    public void updateDescription(ConceptSMTK conceptSMTK, Description original, Description finalDescription, User
+            user);
 
     /**
      * Este método es responsable de eliminar lógicamente una descripción.
@@ -123,7 +126,7 @@ public interface DescriptionManager {
      * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
      * parámetro en cada una de las categorías y refsets indicadas.
      *
-     * @return
+     * @return Una lista con descripciones que hacen perfect match.
      */
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets);
 

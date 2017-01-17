@@ -3,9 +3,12 @@ package cl.minsal.semantikos.ws.mapping;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.TargetDefinition;
 import cl.minsal.semantikos.ws.response.RelationshipAttributeResponse;
 import cl.minsal.semantikos.ws.response.RelationshipResponse;
 
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +18,11 @@ import java.util.List;
  */
 public class RelationshipMapper {
 
-    public static RelationshipResponse map(Relationship relationship) {
+    public static RelationshipResponse map(Relationship relationship, TargetDefinition targetDefinition) {
         if ( relationship != null ) {
             RelationshipResponse res = new RelationshipResponse();
 
-            res.setTarget(TargetMapper.map(relationship.getTarget()));
+            res.setTarget(TargetMapper.map(relationship.getTarget(), targetDefinition));
 
             if ( !(relationship.getTarget() instanceof ConceptSMTK) ) {
                 res.setRelationshipDefinition(RelationshipDefinitionMapper.map(relationship.getRelationshipDefinition()));

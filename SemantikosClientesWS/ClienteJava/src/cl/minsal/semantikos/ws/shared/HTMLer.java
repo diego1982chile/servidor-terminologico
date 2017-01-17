@@ -77,4 +77,22 @@ public class HTMLer {
 
         return result.append("\n</ol>").toString();
     }
+
+    public static String toHTML(RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch serviceResponse) {
+        if (serviceResponse == null) {
+            return "";
+        }
+
+        List<DescripcionPerfectMatch> descripcionPerfectMatch = serviceResponse.getDescripcionPerfectMatch();
+        if (descripcionPerfectMatch == null || descripcionPerfectMatch.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder result = new StringBuilder("<em>Perfect Match</em>: <br/><ol>");
+        for (DescripcionPerfectMatch description : descripcionPerfectMatch) {
+            result.append("<li>").append(description.getTermino()).append(", ID=" + description.getIdDescripcion())
+                    .append("</li>");
+        }
+        return result.append("</ol>").toString();
+    }
 }

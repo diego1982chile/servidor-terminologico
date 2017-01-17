@@ -1,17 +1,15 @@
 package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
-import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 
 import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Esta clase representa una relación hacia un concepto Snomed-CT.

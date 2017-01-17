@@ -281,7 +281,11 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
     @Override
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
-        return descriptionDAO.searchDescriptionsByTerm(term, categories, refSets);
+        long init = currentTimeMillis();
+        List<Description> descriptions = descriptionDAO.searchDescriptionsByTerm(term, categories, refSets);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        return descriptions;
     }
 
     @Override

@@ -1,12 +1,13 @@
 <%@ page import="cl.minsal.semantikos.ws.shared.RespuestaBuscarTerminoGenerica" %>
 <%@ page import="cl.minsal.semantikos.ws.shared.Stringer" %>
+<%@ page import="cl.minsal.semantikos.ws.shared.HTMLer" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <header>
-    <title>Semantikos - WS-REQ-031: Proponer un término para codificación</title>
+    <title>Semantikos - WS-REQ-01: Proponer un término para codificación</title>
 
     <!-- Bootstrap -->
     <link href="<%=request.getContextPath()%>/css/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet"
@@ -56,7 +57,7 @@
             <div id="Response">
                 <jsp:useBean id="stringer" class="cl.minsal.semantikos.ws.shared.Stringer"
                              type="cl.minsal.semantikos.ws.shared.Stringer">
-                    Perfect: <%= Stringer.toString(((RespuestaBuscarTerminoGenerica) request.getAttribute("serviceResponse")).getDescripcionesPerfectMatch()) %>
+                    Perfect: <%= HTMLer.toHTML(((RespuestaBuscarTerminoGenerica) request.getAttribute("serviceResponse")).getDescripcionesPerfectMatch()) %>
                     <br/>
                     No validas: ${requestScope.serviceResponse.descripcionesNoValidas} <br/>
                     Pendientes: ${requestScope.serviceResponse.descripcionesPendientes} <br/>

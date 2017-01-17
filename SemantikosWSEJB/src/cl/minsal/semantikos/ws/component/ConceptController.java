@@ -193,7 +193,7 @@ public class ConceptController {
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
         List<Description> descriptions = this.descriptionManager.searchDescriptionsByTerm(term, categories, refSets);
-        logger.info("ws-req-001. descripciones encontradas: " + descriptions);
+        logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
 
         for (Description description : descriptions) {
 
