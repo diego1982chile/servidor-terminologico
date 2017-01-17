@@ -45,7 +45,7 @@
                                             converter="helperTableRecordConverter"
                                             value="#{conceptBean.selectedHelperTableRecord}"
                                             disabled="#{not cc.attrs.concept.editable}"
-                                            itemLabel="#{record.fields['description']}"
+                                            itemLabel="#{record.description}"
                                             itemValue="#{record}">
                                 <!-- Parámetros del buscador -->
                                 <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
@@ -54,20 +54,20 @@
                                 <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
                                 <!---->
                                 <p:column rendered="#{not cc.attrs.relationshipDefinition.ATC}">
-                                    <h:outputText value="#{record.fields['description']}"/>
+                                    <h:outputText value="#{record.description}"/>
                                 </p:column>
 
                                 <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}">
-                                    <h:outputText value="#{record.fields['codigo_atc']}"/>
+                                    <h:outputText value="#{record.cells[0].stringValue}"/><!--codigo-->
                                 </p:column>
 
                                 <p:column rendered="#{cc.attrs.relationshipDefinition.ATC}" style="width: 500px">
-                                    <h:outputText value="#{record.fields['dsc_completa_atc']}"/>
+                                    <h:outputText value="#{record.cells[1].stringValue}"/><!--descripcion completa-->
                                 </p:column>
 
                                 <p:ajax event="itemSelect"
                                         listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
-                                        update="@(.panel_#{cc.  attrs.relationshipDefinition.id})"
+                                        update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                         process="@this"/>
 
                             </p:autoComplete>
@@ -106,8 +106,8 @@
                     <div class="Container30 White Responsive">
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.fields['description']}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
-                                <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.fields['dsc_completa_atc']}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
+                                <p:inputText disabled="true" id="findHTRecords2" value="#{relationship.target.description}" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
+                                <p:inputTextarea disabled="true" id="findHTRecords2_" value="#{relationship.target.description}" rendered="#{cc.attrs.relationshipDefinition.ATC}"  />
                                 <p:commandLink process="@this"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
@@ -157,7 +157,7 @@
                                             converter="helperTableRecordConverter"
                                             disabled="#{not cc.attrs.concept.editable}"
                                             value="#{conceptBean.selectedHelperTableRecord}"
-                                            itemLabel="#{record.fields['description']}"
+                                            itemLabel="#{record.description}"
                                             itemValue="#{record}">
                                 <!-- Parámetros del buscador -->
                                 <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
@@ -166,7 +166,7 @@
                                 <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
                                 <!---->
                                 <p:column>
-                                    <h:outputText value="#{record.fields['description']}"/>
+                                    <h:outputText value="#{record.description}"/>
                                 </p:column>
 
                                 <p:ajax event="itemSelect"
@@ -235,7 +235,7 @@
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                             <p:outputPanel styleClass="search">
-                                <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target.fields['description']}" />
+                                <p:inputText disabled="true" id="findHTRecords4" value="#{relationship.target.description}" />
                                 <p:commandLink process="@this"
                                                update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                                action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
@@ -310,7 +310,7 @@
                                             rendered="#{cc.attrs.concept.editable}"
                                             disabled="#{cc.attrs.relationshipDefinition.multiplicity.isUpperBoundaryReached(cc.attrs.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size())}"
                                             value="#{conceptBean.selectedHelperTableRecord}"
-                                            itemLabel="#{helperTableRecord.fields['description']}"
+                                            itemLabel="#{helperTableRecord.description}"
                                             itemValue="#{helperTableRecord}">
 
                                 <!-- Parámetros del buscador -->
@@ -320,11 +320,11 @@
                                 <f:attribute name="helperTableRecord" value="#{conceptBean.selectedHelperTableRecord}"  />
                                 <!---->
                                 <p:column>
-                                    <h:outputText value="#{helperTableRecord.fields['description']}"/>
+                                    <h:outputText value="#{helperTableRecord.description}"/>
                                 </p:column>
 
                                 <p:column rendered="#{cc.attrs.relationshipDefinition.bioequivalente}" width="500px" style="width: 500px">
-                                    <h:outputText value="#{helperTableRecord.fields['nombre']}"/>
+                                    <h:outputText value="#{helperTableRecord.description}"/>
                                 </p:column>
 
                                 <p:ajax event="itemSelect"
@@ -345,45 +345,15 @@
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      reflow="true">
-            <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
+            <p:columns value="#{cc.attrs.targetDefinition.columns}"
                        var="column"
                        columnIndexVar="colIndex" rendered="#{ not cc.attrs.relationshipDefinition.bioequivalente}">
                 <f:facet name="header">
-                    <h:outputText value="#{column.columnName}" />
+                    <h:outputText value="#{column.name}" />
                 </f:facet>
-                <h:outputText value="#{relationship.target.fields.get(column.columnName)}" />
+                <h:outputText value="#{relationship.target.getColumnValue(column)}" />
             </p:columns>
 
-            <p:column headerText="Registro" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
-                <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['registro']}"/>
-                </div>
-            </p:column>
-            <p:column headerText="Nombre" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
-                <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['nombre']}"/>
-                </div>
-            </p:column>
-            <p:column headerText="Titular" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
-                <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['titular']}"/>
-                </div>
-            </p:column>
-            <p:column headerText="Usuario" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
-                <div style="text-align: center;">
-                    <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>
-                </div>
-            </p:column>
-            <p:column headerText="Fecha ingreso" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
-                <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['creation_date']}"/>
-                </div>
-            </p:column>
-            <p:column headerText="Fecha modificación" rendered="#{cc.attrs.relationshipDefinition.bioequivalente}">
-                <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['fecha_proxima_renovacion']}"/>
-                </div>
-            </p:column>
 
             <p:column headerText="Acción" rendered="#{cc.attrs.concept.editable}">
                 <div style="text-align: center">
@@ -485,36 +455,12 @@
                      reflow="true"
                      rendered="#{ not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition) }" >
 
-            <p:column headerText="Registro">
+            <p:column headerText="Descripcion">
                 <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['registro']}"/>
+                    <h:outputText value="#{relationship.target.description}"/>
                 </div>
             </p:column>
-            <p:column headerText="Nombre">
-                <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['nombre']}"/>
-                </div>
-            </p:column>
-            <p:column headerText="Titular">
-                <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['titular']}"/>
-                </div>
-            </p:column>
-            <p:column headerText="Usuario">
-                <div style="text-align: center;">
-                    <h:outputText value="#{ispbean.userManager.getUser(relationship.target.fields['id_user'])}"/>
-                </div>
-            </p:column>
-            <p:column headerText="Fecha ingreso">
-                <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['creation_date']}"/>
-                </div>
-            </p:column>
-            <p:column headerText="Fecha modificación">
-                <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.fields['fecha_proxima_renovacion']}"/>
-                </div>
-            </p:column>
+
 
             <p:column style="" rendered="#{cc.attrs.concept.editable}">
                 <div style="text-align: center">
@@ -574,7 +520,7 @@
                                                 placeholder="#{cc.attrs.relationshipDefinition.name}..."
                                                 converter="helperTableRecordConverter"
                                                 value="#{conceptBean.selectedHelperTableRecord}"
-                                                itemLabel="#{record.fields['description']}"
+                                                itemLabel="#{record.description}"
                                                 itemValue="#{record}">
                                     <!-- Parámetros del buscador -->
                                     <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
@@ -584,7 +530,7 @@
                                     <!---->
 
                                     <p:column>
-                                        <h:outputText value="#{record.fields['description']}"/>
+                                        <h:outputText value="#{record.description}"/>
                                     </p:column>
 
                                     <p:ajax event="itemSelect"
@@ -657,9 +603,9 @@
                        columnIndexVar="colIndex"
                        >
                 <f:facet name="header">
-                    <h:outputText value="#{column.columnName}" />
+                    <h:outputText value="#{column.name}" />
                 </f:facet>
-                <h:outputText value="#{relationship.target.fields.get(column.columnName)}" />
+                <h:outputText value="#{relationship.target.getColumnValue(column)}" />
             </p:columns>
 
             <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"

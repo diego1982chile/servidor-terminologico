@@ -9,6 +9,7 @@ import cl.minsal.semantikos.model.Profile;
 import cl.minsal.semantikos.model.User;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.Target;
 import org.omnifaces.util.Ajax;
@@ -78,10 +79,10 @@ public class ChangeMarketedBean {
             concept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(concept));
             for (Relationship relationship: concept.getRelationships()) {
                 if(relationship.getRelationshipDefinition().getId()==ID_MARKETED){
-                    lateastRelationship = new Relationship(concept,relationship.getTarget(),relationship.getRelationshipDefinition(), relationship.getRelationshipAttributes(), null);
+                    BasicTypeValue basicTypeValue = (BasicTypeValue)targetSelected;
+                    lateastRelationship = new Relationship(concept,new BasicTypeValue(basicTypeValue.getValue()),relationship.getRelationshipDefinition(), new ArrayList<RelationshipAttribute>(), null);
                     lateastRelationship.setCreationDate(relationship.getCreationDate());
-                    BasicTypeValue basicTypeValue = (BasicTypeValue) lateastRelationship.getTarget();
-                    basicTypeValue.setValue(((BasicTypeValue)targetSelected).getValue());
+                    lateastRelationship.setId(relationship.getId());
                     relationshipManager.updateRelationship(concept,relationship,lateastRelationship,user);
                     break;
                 }

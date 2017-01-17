@@ -3,9 +3,8 @@ package cl.minsal.semantikos.designer_modeler.designer;
 import cl.minsal.semantikos.kernel.components.RelationshipManager;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.ConceptDefinitionalGradeBRInterface;
-import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -81,8 +80,8 @@ public class ValidatorBean {
         String msg = "Debe ingresar un valor";
 
         HelperTable helperTable = (HelperTable) UIComponent.getCurrentComponent(context).getAttributes().get("helperTable");
-        HelperTableRecord record = (HelperTableRecord) UIComponent.getCurrentComponent(context).getAttributes().get("helperTableRecord");;;
-        HelperTableRecord record2 = (HelperTableRecord) value;;
+        HelperTableRow record = (HelperTableRow) UIComponent.getCurrentComponent(context).getAttributes().get("helperTableRecord");
+        HelperTableRow record2 = (HelperTableRow) value;
 
         //component.getParent().getAttributes().
         if( record == null && record2 == null )
@@ -182,7 +181,7 @@ public class ValidatorBean {
 
         RelationshipDefinition relationshipDefinition = (RelationshipDefinition) component.getAttributes().get("relationshipDefinition");
 
-        HelperTableRecord helperTableRecord = (HelperTableRecord) component.getAttributes().get("helperTableRecord");
+        HelperTableRow helperTableRecord = (HelperTableRow) component.getAttributes().get("helperTableRecord");
 
 
         if(relationshipDefinition.isBioequivalente()) {

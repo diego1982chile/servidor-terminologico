@@ -1,6 +1,8 @@
 package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.helpertables.HelperTable;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
@@ -11,8 +13,6 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
-import static cl.minsal.semantikos.model.helpertables.HelperTable.SYSTEM_COLUMN_DESCRIPTION;
-
 /**
  * Esta clase representa una relación hacia un concepto Snomed-CT.
  *
@@ -22,6 +22,7 @@ public class SnomedCTRelationship extends Relationship {
 
     public static final String ES_UN_MAPEO_DE = "es un mapeo";
     public static final String ES_UN = "es un[a]";
+    private static final long TIPO_RELACION_HELPER_TABLE_ID = 18;
 
     public SnomedCTRelationship(ConceptSMTK sourceConcept, ConceptSCT conceptSCT, RelationshipDefinition relationshipDefinition, List<RelationshipAttribute> relationshipAttributes, Timestamp validityUntil) {
         super(sourceConcept, conceptSCT, relationshipDefinition, relationshipAttributes, validityUntil);
@@ -106,13 +107,12 @@ public class SnomedCTRelationship extends Relationship {
 
             /* El atributo debe ser de tipo Helper Table (en particular a la tabla de tipos de relaciones */
             if (relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition().isHelperTable()) {
-                HelperTableRecord snomedType = (HelperTableRecord) relationshipAttribute.getTarget();
+                HelperTable table = (HelperTable) relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition();
 
-                /* Sin preguntar si es la tabla correcta, se ve si su campo descripción tienen los valores requeridos */
-                // TODO: Validar que el target es a la tabla correcta.
-                Map<String, String> fields = snomedType.getFields();
-                if (fields.containsKey(SYSTEM_COLUMN_DESCRIPTION.getColumnName())) {
-                    return fields.get(SYSTEM_COLUMN_DESCRIPTION.getColumnName());
+                //se valida el tipo de la tabla
+                if(table.getId()==TIPO_RELACION_HELPER_TABLE_ID) {
+                    HelperTableRow row = (HelperTableRow) relationshipAttribute.getTarget();
+                    return row.getDescription();
                 }
             }
         }

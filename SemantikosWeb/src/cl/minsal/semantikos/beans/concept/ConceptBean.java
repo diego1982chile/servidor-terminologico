@@ -16,10 +16,9 @@ import cl.minsal.semantikos.model.businessrules.RelationshipBindingBRInterface;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetMember;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
-import cl.minsal.semantikos.pendingterms.ManagerPendingTermsBean;
 import cl.minsal.semantikos.util.Pair;
 import cl.minsal.semantikos.view.components.ViewAugmenter;
 import org.primefaces.event.ReorderEvent;
@@ -66,7 +65,7 @@ public class ConceptBean implements Serializable {
     CategoryManager categoryManager;
 
     @EJB
-    HelperTableManager helperTableManager;
+    HelperTablesManager helperTablesManager;
 
     @EJB
     TagSMTKManager tagSMTKManager;
@@ -200,7 +199,7 @@ public class ConceptBean implements Serializable {
     // Placeholders para los target de las relaciones
     private BasicTypeValue basicTypeValue = new BasicTypeValue(null);
 
-    private HelperTableRecord selectedHelperTableRecord = null;
+    private HelperTableRow selectedHelperTableRecord = null;
 
     private ConceptSMTK conceptSMTK;
 
@@ -380,9 +379,8 @@ public class ConceptBean implements Serializable {
                         if (attDef.isRelationshipTypeAttribute()) {
                             Relationship r = relationshipPlaceholders.get(relationshipDefinition.getId());
                             HelperTable helperTable = (HelperTable) attDef.getTargetDefinition();
-                            String[] columnNames = {HelperTable.SYSTEM_COLUMN_DESCRIPTION.getColumnName()};
 
-                            List<HelperTableRecord> relationshipTypes = helperTableManager.searchRecords(helperTable, Arrays.asList(columnNames), ES_UN_MAPEO_DE, true);
+                            List<HelperTableRow> relationshipTypes = helperTablesManager.searchRows(helperTable, ES_UN_MAPEO_DE);
                             RelationshipAttribute ra;
                             if (relationshipTypes.size() == 0) {
                                 logger.error("No hay datos en la tabla de TIPOS DE RELACIONES.");
@@ -1144,12 +1142,12 @@ public class ConceptBean implements Serializable {
             createConcept();
     }
 
-    public HelperTableManager getHelperTableManager() {
-        return helperTableManager;
+    public HelperTablesManager getHelperTablesManager() {
+        return helperTablesManager;
     }
 
-    public void setHelperTableManager(HelperTableManager helperTableManager) {
-        this.helperTableManager = helperTableManager;
+    public void setHelperTablesManager(HelperTablesManager helperTableManager) {
+        this.helperTablesManager = helperTableManager;
     }
 
     public BasicTypeValue getBasicTypeValue() {
@@ -1160,11 +1158,11 @@ public class ConceptBean implements Serializable {
         this.basicTypeValue = basicTypeValue;
     }
 
-    public HelperTableRecord getSelectedHelperTableRecord() {
+    public HelperTableRow getSelectedHelperTableRecord() {
         return selectedHelperTableRecord;
     }
 
-    public void setSelectedHelperTableRecord(HelperTableRecord selectedHelperTableRecord) {
+    public void setSelectedHelperTableRecord(HelperTableRow selectedHelperTableRecord) {
         this.selectedHelperTableRecord = selectedHelperTableRecord;
     }
 

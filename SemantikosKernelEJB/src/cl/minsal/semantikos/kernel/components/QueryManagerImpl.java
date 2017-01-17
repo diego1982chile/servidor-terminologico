@@ -8,7 +8,6 @@ import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
-import sun.security.krb5.internal.crypto.Des;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

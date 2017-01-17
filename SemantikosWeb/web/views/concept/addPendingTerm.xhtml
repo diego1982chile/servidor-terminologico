@@ -25,7 +25,7 @@
                         <f:selectItem itemLabel="No" itemValue="false"/>
                     </p:selectOneRadio>
 
-                    <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categiría propuesta"/>
+                    <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
                     <p:selectOneMenu id="categoryMenu" value="#{pendingTerms.categoryId}" required="true">
                         <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
                                        itemLabel="#{category.name}"/>

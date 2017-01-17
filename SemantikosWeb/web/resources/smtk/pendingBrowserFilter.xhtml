@@ -27,7 +27,7 @@
                         </span>
                         <p:outputPanel styleClass="search">
                             <p:inputText value="#{cc.attrs.pendingQuery.query}" placeholder="Buscar...">
-                                <p:ajax event="keyup" update="@(.browserTable),@(.pendingQueryFilter)" process="@this" />
+                                <p:ajax event="keyup" update="@(.browserTable),@(.pendingQueryFilter)" listener="#{pendingBrowserBean.setFilterChanged(true)}" process="@this" />
                             </p:inputText>
                             <i class="fa fa-search fa-lg" />
                         </p:outputPanel>
@@ -46,7 +46,7 @@
                                               filter="true"
                                               filterMatchMode="startsWith">
 
-                            <p:ajax event="change"
+                            <p:ajax event="change" listener="#{pendingBrowserBean.setFilterChanged(true)}"
                                     update="@(.browserTable),@(.browserFilters)"
                                     process="@this" />
 

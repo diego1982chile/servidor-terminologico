@@ -174,6 +174,8 @@
                                             <p:commandLink oncomplete="PF('dialogTC2-browser').show()" update="@(.conceptTranslate)" title="Trasladar" style="padding: 5px">
                                                 <i class="fa fa-exchange fa-lg"/>
                                                 <f:setPropertyActionListener value="#{concept}" target="#{transferConceptBean.conceptSMTKSelected}" />
+                                                <p:confirm header="Confirmation" message="¿Desea realmente trasladar este concepto?"
+                                                           icon="ui-icon-alert"/>
                                             </p:commandLink>
 
                                             <p:commandLink action="#{generalBrowserBean.deleteConcept(concept)}"
@@ -198,7 +200,7 @@
                                     <p:panel id="conceptTranslate" styleClass="conceptTranslate" style="width: 100%; border: hidden;">
                                         <h3>Trasladar Concepto a...</h3>
                                         <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
-                                            <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categiría propuesta"/>
+                                            <p:outputLabel id="categoryLabel" for="categoryMenu" value="Categoría propuesta"/>
                                             <p:selectOneMenu id="categoryMenu" value="#{transferConceptBean.categoryId}" required="true">
                                                 <f:selectItems value="#{beanCategory.categories}" var="category" itemValue="#{category.id}"
                                                                itemLabel="#{category.name}"/>

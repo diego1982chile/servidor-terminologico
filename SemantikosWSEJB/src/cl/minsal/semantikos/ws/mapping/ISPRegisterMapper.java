@@ -1,11 +1,13 @@
 package cl.minsal.semantikos.ws.mapping;
 
-import cl.minsal.semantikos.model.helpertables.HelperTable;
+import cl.minsal.semantikos.model.helpertables.HelperTableData;
 import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.ws.response.ISPRegisterResponse;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,8 +23,8 @@ public class ISPRegisterMapper {
 
         ISPRegisterResponse res = new ISPRegisterResponse();
 
-        HelperTableRecord helperTableRecord = (HelperTableRecord)relationship.getTarget();
-        Map<String, String> values = helperTableRecord.getFields();
+        HelperTableRow helperTableRecord = (HelperTableRow) relationship.getTarget();
+        List<HelperTableData> values = helperTableRecord.getCells();
 
         res.setRegistro(values.get("registro"));
         res.setName(values.get("nombre"));

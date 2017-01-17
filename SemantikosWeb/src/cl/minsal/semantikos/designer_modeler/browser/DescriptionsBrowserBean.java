@@ -39,7 +39,7 @@ public class DescriptionsBrowserBean implements Serializable {
     RefSetManager refSetManager;
 
     @EJB
-    HelperTableManager helperTableManager;
+    HelperTablesManager helperTablesManager;
 
     @EJB
     UserManager userManager;
@@ -68,6 +68,13 @@ public class DescriptionsBrowserBean implements Serializable {
      * Lista de conceptos para el despliegue del resultado de la consulta
      */
     private LazyDataModel<Description> descriptions;
+
+
+    /**
+     * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
+
+     */
+    private boolean isFilterChanged;
 
 
     @ManagedProperty(value = "#{authenticationBean}")
@@ -105,11 +112,13 @@ public class DescriptionsBrowserBean implements Serializable {
             @Override
             public List<Description> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
-                //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptsBy(category, first, pageSize);
-                if(descriptionQuery.isFiltered() && first > 0)
+                if(isFilterChanged)
                     descriptionQuery.setPageNumber(0);
                 else
                     descriptionQuery.setPageNumber(first);
+
+                isFilterChanged = false;
+
                 descriptionQuery.setPageSize(pageSize);
                 descriptionQuery.setOrder(new Integer(sortField));
 
@@ -198,5 +207,12 @@ public class DescriptionsBrowserBean implements Serializable {
         return refSets;
     }
 
+    public boolean isFilterChanged() {
+        return isFilterChanged;
+    }
+
+    public void setFilterChanged(boolean filterChanged) {
+        isFilterChanged = filterChanged;
+    }
 }
 

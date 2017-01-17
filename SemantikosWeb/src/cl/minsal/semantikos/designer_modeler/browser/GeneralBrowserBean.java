@@ -7,7 +7,7 @@ import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.browser.GeneralQuery;
 import cl.minsal.semantikos.model.browser.QueryFilter;
-import cl.minsal.semantikos.model.helpertables.HelperTableRecord;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.relationships.*;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.LazyDataModel;
@@ -47,7 +47,7 @@ public class GeneralBrowserBean implements Serializable {
     TagManager tagManager;
 
     @EJB
-    HelperTableManager helperTableManager;
+    HelperTablesManager helperTablesManager;
 
     @EJB
     UserManager userManager;
@@ -83,11 +83,17 @@ public class GeneralBrowserBean implements Serializable {
      */
     private int idCategory;
 
+    /**
+     * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
+
+     */
+    private boolean isFilterChanged;
+
 
     // Placeholders para los targets de los filtros, dados como elementos seleccionables
     private BasicTypeValue basicTypeValue = new BasicTypeValue(null);
 
-    private HelperTableRecord helperTableRecord = null;
+    private HelperTableRow helperTableRecord = null;
 
     private ConceptSMTK conceptSMTK = null;
 
@@ -134,10 +140,13 @@ public class GeneralBrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptsBy(category, first, pageSize);
 
-                if(generalQuery.isFiltered() && first > 0)
+                if(isFilterChanged)
                     generalQuery.setPageNumber(0);
                 else
                     generalQuery.setPageNumber(first);
+
+                isFilterChanged = false;
+
                 generalQuery.setPageSize(pageSize);
                 generalQuery.setOrder(new Integer(sortField));
 
@@ -229,12 +238,12 @@ public class GeneralBrowserBean implements Serializable {
         this.users = users;
     }
 
-    public HelperTableManager getHelperTableManager() {
-        return helperTableManager;
+    public HelperTablesManager getHelperTablesManager() {
+        return helperTablesManager;
     }
 
-    public void setHelperTableManager(HelperTableManager helperTableManager) {
-        this.helperTableManager = helperTableManager;
+    public void setHelperTablesManager(HelperTablesManager helperTablesManager) {
+        this.helperTablesManager = helperTablesManager;
     }
 
     public BasicTypeValue getBasicTypeValue() {
@@ -245,11 +254,11 @@ public class GeneralBrowserBean implements Serializable {
         this.basicTypeValue = basicTypeValue;
     }
 
-    public HelperTableRecord getHelperTableRecord() {
+    public HelperTableRow getHelperTableRecord() {
         return helperTableRecord;
     }
 
-    public void setHelperTableRecord(HelperTableRecord helperTableRecord) {
+    public void setHelperTableRecord(HelperTableRow helperTableRecord) {
         this.helperTableRecord = helperTableRecord;
     }
 
@@ -289,6 +298,8 @@ public class GeneralBrowserBean implements Serializable {
         if(target == null)
             return;
 
+        setFilterChanged(true);
+
         // Se busca el filtro
         for (QueryFilter queryFilter : generalQuery.getFilters()) {
             if (queryFilter.getDefinition().equals(relationshipDefinition)) {
@@ -307,8 +318,11 @@ public class GeneralBrowserBean implements Serializable {
     }
 
     public void removeTarget(RelationshipDefinition relationshipDefinition, Target target){
+
         if(target == null)
             return;
+
+        setFilterChanged(true);
 
         // Se busca el filtro
         for (QueryFilter queryFilter : generalQuery.getFilters()) {
@@ -350,6 +364,14 @@ public class GeneralBrowserBean implements Serializable {
 
         System.out.println(event.getVisibility());
 
+    }
+
+    public boolean isFilterChanged() {
+        return isFilterChanged;
+    }
+
+    public void setFilterChanged(boolean filterChanged) {
+        isFilterChanged = filterChanged;
     }
 
 }

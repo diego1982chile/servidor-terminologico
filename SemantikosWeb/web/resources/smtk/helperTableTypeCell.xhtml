@@ -24,7 +24,7 @@
             var="relationship">
 
         <h:outputText rendered="#{var.index>0}" value=", " />
-        <h:outputText value="#{relationship.target.fields['description']}" />
+        <h:outputText value="#{relationship.target.description}" />
 
     </p:repeat>
 
