@@ -9,7 +9,6 @@ import org.primefaces.context.RequestContext;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -57,7 +56,7 @@ public class FindConcept implements Serializable{
     public void getConceptByCategory(){
        if(pattern==null || pattern.trim().length()==0){
            categoryArrayID= new Long[] {categorySelected.getId()};
-           findConcepts =conceptManager.findConceptBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
+           findConcepts =conceptManager.findConceptsBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
        }else{
            getConceptSearchInputAndCategories(pattern);
        }
@@ -72,7 +71,7 @@ public class FindConcept implements Serializable{
 
         if (pattern != null) {
             if (pattern.length() >= 2) {
-                findConcepts=conceptManager.findConceptBy(pattern);
+                findConcepts=conceptManager.findConceptsBy(pattern);
                 return findConcepts;
             }
         }
@@ -93,7 +92,7 @@ public class FindConcept implements Serializable{
         if (pattern != null) {
             if (pattern.trim().length() >= 2) {
                 if(standardizationPattern(pattern).length()<=1)return null;
-                findConcepts=conceptManager.findConceptBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
+                findConcepts=conceptManager.findConceptsBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
                 return findConcepts;
             }
         }
@@ -118,7 +117,7 @@ public class FindConcept implements Serializable{
                     categoryArrayID= new Long[] {category.getId()};
                 }
 
-                findConcepts=conceptManager.findConceptBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
+                findConcepts=conceptManager.findConceptsBy(pattern,categoryArrayID,0,conceptManager.countConceptBy(pattern,categoryArrayID));
                 return findConcepts;
             }
         }
@@ -135,7 +134,7 @@ public class FindConcept implements Serializable{
         if (pattern != null) {
             if (pattern.trim().length() >= 2) {
                 if(standardizationPattern(pattern).length()<=1)return null;
-                findConcepts=conceptManager.findConceptBy(pattern,new Long[0],0,conceptManager.countConceptBy(pattern,new Long[0]));
+                findConcepts=conceptManager.findConceptsBy(pattern,new Long[0],0,conceptManager.countConceptBy(pattern,new Long[0]));
                 return findConcepts;
             }
         }

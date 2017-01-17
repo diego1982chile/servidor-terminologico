@@ -179,7 +179,7 @@ public class RefSetsBean implements Serializable {
                     idCategory[0] = categorySelected.getId();
                 }
 
-                conceptSMTKs = conceptManager.findConceptBy(null, idCategory, first, pageSize);
+                conceptSMTKs = conceptManager.findConceptsBy(null, idCategory, first, pageSize);
                 this.setRowCount(conceptManager.countConceptBy(null, idCategory));
 
                 return conceptSMTKs;
@@ -197,7 +197,7 @@ public class RefSetsBean implements Serializable {
                     @Override
                     public List<ConceptSMTK> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
                         List<ConceptSMTK> conceptSMTKs;
-                        conceptSMTKs = conceptManager.findConceptBy(pattern, new Long[0], first, pageSize);
+                        conceptSMTKs = conceptManager.findConceptsBy(pattern, new Long[0], first, pageSize);
                         this.setRowCount(conceptManager.countConceptBy(pattern, new Long[0]));
 
                         return conceptSMTKs;

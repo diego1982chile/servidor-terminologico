@@ -144,7 +144,7 @@ public class BrowserBean implements Serializable {
             @Override
             public List<ConceptSMTK> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 
-                //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptBy(category, first, pageSize);
+                //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptsBy(category, first, pageSize);
 
                 if(browserQuery.isFiltered() && first > 0)
                     browserQuery.setPageNumber(0);

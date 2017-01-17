@@ -69,7 +69,7 @@ public class SMTKTypeBean implements Serializable {
                     List<ConceptSMTK> conceptSMTKs;
                     Long[] categoryArr = new Long[1];
                     categoryArr[0] = targetDefinition.getId();
-                    conceptSMTKs = conceptManager.findConceptBy(pattern, categoryArr, first, pageSize);
+                    conceptSMTKs = conceptManager.findConceptsBy(pattern, categoryArr, first, pageSize);
                     this.setRowCount(conceptManager.countConceptBy(pattern, categoryArr));
                     return conceptSMTKs;
                 }
@@ -91,7 +91,7 @@ public class SMTKTypeBean implements Serializable {
         if (patron != null) {
             if (patron.length() >= 2) {
                 categoryArr[0] = cD.getId();
-                conceptSearchList = conceptManager.findConceptBy(patron, categoryArr, 0, 30);
+                conceptSearchList = conceptManager.findConceptsBy(patron, categoryArr, 0, 30);
                 return conceptSearchList;
             }
         }

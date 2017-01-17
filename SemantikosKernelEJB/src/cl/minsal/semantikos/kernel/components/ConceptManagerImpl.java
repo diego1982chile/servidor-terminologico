@@ -2,13 +2,12 @@ package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.kernel.daos.DescriptionDAO;
-import cl.minsal.semantikos.kernel.daos.RelationshipAttributeDAO;
 import cl.minsal.semantikos.kernel.daos.RelationshipDAO;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
+import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,12 +17,10 @@ import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.UUID;
+import java.util.*;
 
 import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
+import static cl.minsal.semantikos.model.PersistentEntity.getIdArray;
 
 /**
  * @author Andrés Farías
@@ -31,7 +28,9 @@ import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
 @Stateless
 public class ConceptManagerImpl implements ConceptManager {
 
-    /** El logger de la clase */
+    /**
+     * El logger de la clase
+     */
     private static final Logger logger = LoggerFactory.getLogger(ConceptManagerImpl.class);
 
     @EJB
@@ -42,6 +41,9 @@ public class ConceptManagerImpl implements ConceptManager {
 
     @EJB
     private DescriptionDAO descriptionDAO;
+
+    @EJB
+    private RefSetManager refSetManager;
 
     @EJB
     private RelationshipDAO relationshipDAO;
@@ -61,8 +63,8 @@ public class ConceptManagerImpl implements ConceptManager {
     @EJB
     private ConceptTransferBR conceptTransferBR;
 
-     @EJB
-     private RelationshipBindingBRInterface relationshipBindingBR;
+    @EJB
+    private RelationshipBindingBRInterface relationshipBindingBR;
 
     @Override
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptId) {
@@ -90,14 +92,76 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public List<ConceptSMTK> findConceptBy(Category category) {
+    public List<ConceptSMTK> findConceptsBy(Category category) {
 
-        //Búsqueda por categoría
-        return conceptDAO.getConceptBy(category);
+        /* Se validan los parámetros */
+        if (category == null) {
+            logger.error("Se solicitan los conceptos de categoría nula.");
+            return Collections.emptyList();
+        }
+
+        /* Se delega al DAO directamente */
+        return conceptDAO.findConceptsBy(category);
     }
 
     @Override
-    public List<ConceptSMTK> findConceptBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize) {
+    public List<ConceptSMTK> findConcepts(Category aCategory, List<String> refSetNames, RelationshipDefinition basicTypeAttribute, String value) {
+
+        /* Primero se debe validar que el RelationshipDefinition es tipo Tipo Básico */
+        boolean basicType = basicTypeAttribute.getTargetDefinition().isBasicType();
+        if (!basicType) {
+            throw new IllegalArgumentException("Se consideró un tipo básico de un target que no lo es: " + basicTypeAttribute);
+        }
+
+        /* Luego se recuperan los refsets */
+        ArrayList<RefSet> refsets = new ArrayList<>();
+        for (String refSetName : refSetNames) {
+            RefSet refsetByName = refSetManager.getRefsetByName(refSetName);
+            refsets.add(refsetByName);
+        }
+
+        /* Por razones de eficiencia, es mejor realizar la búsqueda directamente en la base de datos */
+        if (refsets.isEmpty()) {
+            return conceptDAO.findConceptsWithStringBasicType(aCategory, basicTypeAttribute, value);
+        } else {
+            return conceptDAO.findConceptsWithStringBasicType(aCategory, refsets, basicTypeAttribute, value);
+        }
+    }
+
+    @Override
+    public List<ConceptSMTK> findModeledConceptBy(Category category, int pageSize, int pageNumber) {
+        return this.conceptDAO.getModeledConceptBy(category.getId(), pageSize, pageNumber);
+    }
+
+    @Override
+    public int countModeledConceptBy(Category category) {
+        return this.conceptDAO.countModeledConceptBy(category.getId());
+    }
+
+    @Override
+    public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize) {
+        return this.conceptDAO.findModeledConceptsBy(refSet, page, pageSize);
+    }
+
+    @Override
+    public Integer countModeledConceptsBy(RefSet refSet) {
+        return this.conceptDAO.countModeledConceptsBy(refSet);
+    }
+
+    @Override
+    public Integer countConceptBy(String pattern, Long[] categories, Long[] refsets) {
+        boolean isModeled = true;
+        categories = (categories == null) ? new Long[0] : categories;
+        refsets = (refsets == null) ? new Long[0] : refsets;
+
+        pattern = standardizationPattern(pattern);
+        String[] arrayPattern = patternToArray(pattern);
+
+        return this.conceptDAO.countConceptBy(arrayPattern, categories, refsets, isModeled);
+    }
+
+    @Override
+    public List<ConceptSMTK> findConceptsBy(String patternOrConceptID, Long[] categories, int pageNumber, int pageSize) {
 
 
         boolean isModeled = true;
@@ -113,9 +177,9 @@ public class ConceptManagerImpl implements ConceptManager {
         if ((categories.length != 0 && patternOrConceptID != null)) {
             if (patternOrConceptID.length() >= 2) {
                 if (arrayPattern.length >= 2) {
-                    return conceptDAO.getConceptBy(arrayPattern, categories, isModeled, pageSize, pageNumber);
+                    return conceptDAO.findConceptsBy(arrayPattern, categories, isModeled, pageSize, pageNumber);
                 } else {
-                    return conceptDAO.getConceptBy(arrayPattern[0], categories, pageNumber, pageSize, isModeled);
+                    return conceptDAO.findConceptsBy(arrayPattern[0], categories, pageNumber, pageSize, isModeled);
                 }
             }
         }
@@ -124,9 +188,9 @@ public class ConceptManagerImpl implements ConceptManager {
         if ((categories.length == 0 && patternOrConceptID != null)) {
             if (patternOrConceptID.length() >= 2) {
                 if (arrayPattern.length >= 2) {
-                    return conceptDAO.getConceptBy(arrayPattern, isModeled, pageSize, pageNumber);
+                    return conceptDAO.findConceptsBy(arrayPattern, isModeled, pageSize, pageNumber);
                 } else {
-                    return conceptDAO.getConceptBy(arrayPattern[0], categories, pageNumber, pageSize, isModeled);
+                    return conceptDAO.findConceptsBy(arrayPattern[0], categories, pageNumber, pageSize, isModeled);
                 }
             }
 
@@ -134,7 +198,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         //Búsqueda por categoría
         if (categories.length > 0) {
-            return conceptDAO.getConceptBy(categories, isModeled, pageSize, pageNumber);
+            return conceptDAO.findConceptsBy(categories, isModeled, pageSize, pageNumber);
         }
 
         //Búsqueda por largo (PageSize y PageNumber)
@@ -142,10 +206,51 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public List<ConceptSMTK> findConceptBy(String pattern) {
+    public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize) {
+        boolean isModeled = true;
+        //TODO: Actualizar esto de los estados que ya no va.
+
+        categories = (categories == null) ? new Long[0] : categories;
+        refsets = (refsets == null) ? new Long[0] : refsets;
+
+        pattern = standardizationPattern(pattern);
+        String[] arrayPattern = patternToArray(pattern);
+
+        return conceptDAO.findConceptsBy(arrayPattern, categories, refsets, isModeled, pageSize, pageNumber);
+    }
+
+    @Override
+    public List<ConceptSMTK> findConceptTruncatePerfect(String termPattern, List<Category> categories, List<RefSet> refSets) {
+
+        /* En esta implementación se utiliza el método
+         * findConceptTruncatePerfect(
+         *      String pattern,
+         *      Long[] categories,
+         *      Long[] refsets,
+         *      int pageNumber,
+         *      int pageSize)
+         *
+         * Se recuperan de a 1000 conceptos
+         */
+        List<ConceptSMTK> concepts = new ArrayList<>();
+        int page = 1;
+        boolean thereAreMore;
+        do {
+            List<ConceptSMTK> conceptTruncatePerfect = findConceptTruncatePerfect(termPattern, getIdArray(categories), getIdArray(refSets), page++, 1000);
+            concepts.addAll(conceptTruncatePerfect);
+
+            /* Si la busqueda retorno 1000, quizás hay más */
+            thereAreMore = conceptTruncatePerfect.size() == 1000;
+        } while (thereAreMore);
+
+        return concepts;
+    }
+
+    @Override
+    public List<ConceptSMTK> findConceptsBy(String pattern) {
 
         /* Se realiza la búsqueda estándard */
-        List<ConceptSMTK> conceptSMTKList = findConceptBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
+        List<ConceptSMTK> conceptSMTKList = findConceptsBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
         if (conceptSMTKList.size() != 0) {
             return conceptSMTKList;
         }
@@ -153,7 +258,7 @@ public class ConceptManagerImpl implements ConceptManager {
         /* Si la búsqueda estándard no dio resultados, se intenta con una búsqueda truncada */
         else {
             pattern = truncatePattern(pattern);
-            return findConceptBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
+            return findConceptsBy(pattern, new Long[0], 0, countConceptBy(pattern, new Long[0]));
         }
 
     }
@@ -200,7 +305,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
     @Override
     public List<ConceptSMTK> getConceptBy(RefSet refSet) {
-        return conceptDAO.getConceptBy(refSet);
+        return conceptDAO.findConceptsBy(refSet);
 
     }
 
@@ -236,13 +341,13 @@ public class ConceptManagerImpl implements ConceptManager {
         for (Tag tag : conceptSMTK.getTags()) {
             if (tag.isPersistent()) {
                 tagManager.persist(tag);
-                tagManager.assignTag(conceptSMTK,tag);
+                tagManager.assignTag(conceptSMTK, tag);
             }
         }
 
         /* Se deja registro en la auditoría sólo para conceptos modelados */
 
-            auditManager.recordNewConcept(conceptSMTK, user);
+        auditManager.recordNewConcept(conceptSMTK, user);
 
         logger.debug("El concepto " + conceptSMTK + " fue persistido.");
     }
@@ -253,7 +358,7 @@ public class ConceptManagerImpl implements ConceptManager {
         /* Se actualiza con el DAO */
         conceptDAO.update(updatedConcept);
 
-        if (updatedConcept.isModeled()){
+        if (updatedConcept.isModeled()) {
             auditManager.recordUpdateConcept(updatedConcept, user);
         }
     }
@@ -279,7 +384,7 @@ public class ConceptManagerImpl implements ConceptManager {
         invalidate(conceptSMTK, user);
 
         /* Se elimina físicamente si es borrador */
-        if (!conceptSMTK.isModeled()){
+        if (!conceptSMTK.isModeled()) {
             conceptDAO.delete(conceptSMTK);
         }
     }
@@ -337,7 +442,6 @@ public class ConceptManagerImpl implements ConceptManager {
      * Este método es responsable de validar que el concepto no se encuentre persistido.
      *
      * @param conceptSMTK El concepto sobre el cual se realiza la validación de persistencia.
-     *
      * @throws javax.ejb.EJBException Se arroja si el concepto tiene un ID de persistencia.
      */
     private void validatesIsNotPersistent(ConceptSMTK conceptSMTK) throws EJBException {
@@ -355,6 +459,12 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public List<Description> getDescriptionsBy(ConceptSMTK concept) {
         return descriptionDAO.getDescriptionsByConcept(concept);
+    }
+
+    @Override
+    public ConceptSMTK getConceptByDescriptionID(String descriptionId) {
+        /* Se hace delegación sobre el DescriptionManager */
+        return descriptionManager.getDescriptionByDescriptionID(descriptionId).getConceptSMTK();
     }
 
     @Override
@@ -392,13 +502,13 @@ public class ConceptManagerImpl implements ConceptManager {
         /* Validacion de pre-condiciones */
         conceptTransferBR.validatePreConditions(conceptSMTK);
 
-        Category originalCategory= conceptSMTK.getCategory();
+        Category originalCategory = conceptSMTK.getCategory();
 
         /* Acciones de negocio */
         conceptSMTK.setCategory(category);
         conceptDAO.update(conceptSMTK);
 
-        auditManager.recordConceptCategoryChange(conceptSMTK,originalCategory,user);
+        auditManager.recordConceptCategoryChange(conceptSMTK, originalCategory, user);
 
         logger.info("Se ha trasladado un concepto de categoría.");
         return conceptSMTK;
@@ -414,11 +524,36 @@ public class ConceptManagerImpl implements ConceptManager {
         return conceptDAO.getRelatedConcepts(conceptSMTK);
     }
 
+    @Override
+    public List<ConceptSMTK> getRelatedConcepts(ConceptSMTK conceptSMTK, Category... categories) {
+
+        /* Se recuperan los conceptos relacionados */
+        List<ConceptSMTK> relatedConcepts = getRelatedConcepts(conceptSMTK);
+
+        /* Si no hay categorías por las que filtrar, se retorna la lista original */
+        if (categories == null || categories.length == 0) {
+            return relatedConcepts;
+        }
+
+        /* Se filtra para retornar sólo aquellos que pertenecen a alguna de las categorías dadas */
+        ArrayList<ConceptSMTK> filteredRelatedConcepts = new ArrayList<>();
+        for (ConceptSMTK relatedConcept : relatedConcepts) {
+            Category conceptCategory = relatedConcept.getCategory();
+            List<Category> categoryFilters = Arrays.asList(categories);
+
+            /* Se agrega el concepto si su categoría está dentro de las categorías para filtrar */
+            if (categoryFilters.contains(conceptCategory)) {
+                filteredRelatedConcepts.add(relatedConcept);
+            }
+        }
+
+        return filteredRelatedConcepts;
+    }
+
     /**
      * Método encargado de convertir un string en una lista de string.
      *
      * @param pattern patrón de texto
-     *
      * @return retorna una lista de String
      */
 
@@ -450,7 +585,6 @@ public class ConceptManagerImpl implements ConceptManager {
      * le quita los signos de puntuación y ortográficos
      *
      * @param pattern patrón de texto a normalizar
-     *
      * @return patrón normalizado
      */
     //TODO: Falta quitar los StopWords (no se encuentran definidos)
@@ -469,7 +603,6 @@ public class ConceptManagerImpl implements ConceptManager {
      * Método encargado de truncar a un largo de 3 las palabras del String ingresado
      *
      * @param pattern arreglo de palabras
-     *
      * @return arreglo de String con las palabras truncadas
      */
     private String truncatePattern(String pattern) {

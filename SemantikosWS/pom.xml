@@ -4,9 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cl.minsal.semantikos</groupId>
     <artifactId>SemantikosWS</artifactId>
-    <version>2.2.8</version>
+    <version>1.1</version>
     <packaging>war</packaging>
 
     <properties>
@@ -20,10 +19,12 @@
     </parent>
 
     <dependencies>
+        <!-- dependencia del runtime de jboss que incluye jee, ejb, jsf y mucho mas -->
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-7.0</artifactId>
+            <version>1.0.1.Final</version>
+            <type>pom</type>
             <scope>provided</scope>
         </dependency>
 
@@ -37,10 +38,9 @@
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosWSEJB</artifactId>
-            <version>2.2.8</version>
+            <version>1.1</version>
             <scope>provided</scope>
         </dependency>
-
 
         <dependency>
             <groupId>net.bull.javamelody</groupId>
@@ -55,36 +55,27 @@
             <version>1.7.21</version>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>1.19.1</version>
-        </dependency>
-
-
     </dependencies>
-
 
     <!-- para poner automaticamente estampa de version en footer -->
     <build>
         <sourceDirectory>src</sourceDirectory>
         <resources>
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
 
-        <finalName>SemantikosWS</finalName>
+        <finalName>Semantikos WebServices</finalName>
 
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
                 <version>2.3.2</version>
             </plugin>
@@ -97,15 +88,10 @@
                     <webXml>web\WEB-INF\web.xml</webXml>
                     <warName>SemantikosWS</warName>
                     <warSourceDirectory>web</warSourceDirectory>
-
                 </configuration>
             </plugin>
 
         </plugins>
 
     </build>
-
-
-
-
 </project>

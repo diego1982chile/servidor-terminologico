@@ -58,7 +58,7 @@ public class NavBrowser {
             public List<ConceptSMTK> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
                 List<ConceptSMTK> conceptSMTKs=null;
                     selectedCategories= (selectedCategories==null)? new Long[0]:selectedCategories;
-                    conceptSMTKs = conceptManager.findConceptBy(pattern, selectedCategories, first, pageSize);
+                    conceptSMTKs = conceptManager.findConceptsBy(pattern, selectedCategories, first, pageSize);
                     this.setRowCount(conceptManager.countConceptBy(pattern, selectedCategories));
 
 

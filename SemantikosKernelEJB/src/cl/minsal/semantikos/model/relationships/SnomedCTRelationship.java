@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.model.relationships;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
@@ -9,7 +10,6 @@ import javax.ejb.EJBException;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Esta clase representa una relación hacia un concepto Snomed-CT.
@@ -116,6 +116,27 @@ public class SnomedCTRelationship extends Relationship {
         }
 
         throw new EJBException("Esta relación no posee un tipo de relación Snomed-CT");
+    }
+
+    /**
+     * Entrega el valor del grupo SnomedCT de esta relacion SnomedCT
+     * @return
+     */
+    public String getGroup() {
+        List<RelationshipAttribute> attributes = getRelationshipAttributes();
+
+        if ( attributes != null ) {
+            for ( RelationshipAttribute attribute : attributes ) {
+                if ( attribute.getTarget() != null
+                        && attribute.getTarget() instanceof BasicTypeValue
+                        && attribute.getRelationAttributeDefinition() != null
+                        && "Grupo".equals(attribute.getRelationAttributeDefinition().getName())) {
+                    return String.valueOf(((BasicTypeValue) attribute.getTarget()).getValue());
+                }
+            }
+        }
+
+        return null;
     }
 
     @Override
