@@ -831,7 +831,7 @@ public class Concepto {
     })
     public static class RefSets {
 
-        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+        @XmlElement(namespace = "")
         protected List<RefSet> refSet;
 
         /**
@@ -951,7 +951,7 @@ public class Concepto {
     })
     public static class RelacionesSnomedCT {
 
-        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+        @XmlElement(namespace = "")
         protected List<RelacionSnomedCT> relacionSnomedCT;
 
         /**

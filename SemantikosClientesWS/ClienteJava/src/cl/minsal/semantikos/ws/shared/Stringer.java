@@ -83,7 +83,7 @@ public class Stringer {
         return result.append("]").toString();
     }
 
-    protected static String toString(Concepto concepto) {
+    public static String toString(Concepto concepto) {
         return "Concepto[" + concepto.getId() + "]";
     }
 

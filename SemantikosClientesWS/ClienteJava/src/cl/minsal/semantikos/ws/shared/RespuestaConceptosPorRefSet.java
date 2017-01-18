@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class RespuestaConceptosPorRefSet {
 
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+    @XmlElement(namespace = "")
     protected RefSet refSet;
     @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
     protected Paginacion paginacion;

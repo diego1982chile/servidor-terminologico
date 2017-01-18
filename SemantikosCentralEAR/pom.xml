@@ -10,7 +10,7 @@
 
     <groupId>cl.minsal.semantikos</groupId>
     <artifactId>SemantikosCentralEAR</artifactId>
-    <version>2.2.8</version>
+    <version>3.0</version>
     <packaging>ear</packaging>
 
     <name>SemantikosCentralEAR</name>
