@@ -96,7 +96,7 @@ public class RespuestaCategorias {
     })
     public static class Categorias {
 
-        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+        @XmlElement(namespace = "")
         protected List<Categoria> categoria;
 
         /**

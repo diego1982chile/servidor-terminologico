@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.soap.SOAPFaultException;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -61,9 +62,9 @@ public class WebServiceReq002Servlet extends HttpServlet {
         try {
             response = this.servicioDeBusqueda.getSearchServicePort().conceptosPorCategoria(peticion);
             logger.debug("WebServiceReq002Servlet.doPost(): Response: " + Stringer.toString(response));
-        } catch (NotFoundFault_Exception e) {
+        } catch (NotFoundFault_Exception | SOAPFaultException e) {
             logger.error("WebServiceReq002Servlet invocation error", e);
-            req.setAttribute("exception", e);
+            req.setAttribute("exception", e.getMessage());
             req.getRequestDispatcher("/search_service/ServicioBusquedaWS-REQ-002.jsp").forward(req, resp);
             return;
         }

@@ -53,7 +53,7 @@ public class Relacion {
     @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
     protected Objetivo objetivo;
     protected DefinicionRelacion definicion;
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+    @XmlElement(namespace = "")
     protected Concepto concepto;
     protected Relacion.Atributos atributos;
 
