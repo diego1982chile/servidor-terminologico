@@ -23,10 +23,12 @@ import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import static java.lang.System.currentTimeMillis;
+import static java.util.Collections.singletonList;
 
 /**
  * @author Alfonso Cornejo on 2016-11-17.
@@ -204,18 +206,20 @@ public class ConceptController {
         logger.info("ws-req-001. descripciones encontradas: " + descriptions);
 
         for (Description description : descriptions) {
+            conceptManager.loadDecriptions(singletonList(description.getConceptSMTK()));
 
             logger.debug("ws-req-001. descripcion encontrada: " + description.fullToString());
 
             /* Caso 1: es una descripcion del concepto especial No valido */
             ConceptSMTK noValidConcept = conceptManager.getNoValidConcept();
+            ConceptSMTK pendingConcept = conceptManager.getPendingConcept();
             if (description.getConceptSMTK().equals(noValidConcept)) {
                 NoValidDescription noValidDescription = this.descManager.getNoValidDescriptionByID(description.getId());
                 noValidDescriptions.add(new NoValidDescriptionResponse(noValidDescription));
             }
 
             /* Caso 2: Pendientes */
-            else if ("Pendientes".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm())) {
+            else if (description.getConceptSMTK().equals(pendingConcept)) {
                 pendingDescriptions.add(new PendingDescriptionResponse(description));
             } else {
                 perfectMatchDescriptions.add(new DescriptionSC(description));

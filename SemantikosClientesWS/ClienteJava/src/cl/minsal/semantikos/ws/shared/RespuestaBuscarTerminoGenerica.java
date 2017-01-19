@@ -230,7 +230,7 @@ public class RespuestaBuscarTerminoGenerica {
     })
     public static class DescripcionesPendientes {
 
-        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+        @XmlElement(namespace = "")
         protected List<DescripcionPendiente> descripcionPendiente;
 
         /**

@@ -57,10 +57,9 @@
             <div id="Response">
                 <jsp:useBean id="stringer" class="cl.minsal.semantikos.ws.shared.Stringer" type="cl.minsal.semantikos.ws.shared.Stringer">
                     <% RespuestaBuscarTerminoGenerica serviceResponse = (RespuestaBuscarTerminoGenerica) request.getAttribute("serviceResponse"); %>
-                    Perfect Match:
                     <%= HTMLer.toHTML(serviceResponse.getDescripcionPerfectMatch()) %><br/>
-                    No validas: ${requestScope.serviceResponse.descripcionesNoValidas} <br/>
-                    Pendientes: ${requestScope.serviceResponse.descripcionesPendientes} <br/>
+                    <%= HTMLer.toHTML(serviceResponse.getDescripcionesNoValidas()) %><br/>
+                    <%= HTMLer.toHTML(serviceResponse.getDescripcionesPendientes()) %><br/>
                 </jsp:useBean>
             </div>
         </c:if>

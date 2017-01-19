@@ -182,6 +182,43 @@ public class HTMLer {
         return result.toString();
     }
 
+    public static String toHTML(RespuestaBuscarTerminoGenerica.DescripcionesNoValidas descripcionesNoValidas) {
+
+        /* Se verifica si hay algo que imprimir */
+        if (descripcionesNoValidas == null
+                || descripcionesNoValidas.getDescripcionNoValida() == null
+                || descripcionesNoValidas.getDescripcionNoValida().isEmpty()) {
+            return "<em>No se encontraron descripciones <b>No Válidas</b></em>";
+        }
+
+        StringBuilder result = new StringBuilder("<em>No Válidas</em>: <br/>");
+        result.append("<ol>\n");
+        for (DescripcionNoValida description : descripcionesNoValidas.getDescripcionNoValida()) {
+            result.append("<li>").append(toHTML(description)).append("</li>");
+        }
+        result.append("</ol>");
+
+        return result.toString();
+    }
+
+    public static String toHTML(RespuestaBuscarTerminoGenerica.DescripcionesPendientes descripcionesPendientes) {
+ /* Se verifica si hay algo que imprimir */
+        if (descripcionesPendientes == null
+                || descripcionesPendientes.getDescripcionPendiente() == null
+                || descripcionesPendientes.getDescripcionPendiente().isEmpty()) {
+            return "<em>No se encontraron descripciones <b>Pendientes</b></em>";
+        }
+
+        StringBuilder result = new StringBuilder("<em>Pendientes</em>: <br/>");
+        result.append("<ol>\n");
+        for (DescripcionPendiente description : descripcionesPendientes.getDescripcionPendiente()) {
+            result.append("<li>").append(toHTML(description)).append("</li>");
+        }
+        result.append("</ol>");
+
+        return result.toString();
+    }
+
     /**
      * Este método es responsable de imprimir una expresion de descripcion autocontenida.
      *
@@ -197,6 +234,29 @@ public class HTMLer {
         result.append(", en Concept ID='").append(description.getConceptID()).append("' de la categoría '").append
                 (description.getNombreCategoria()).append("', con Preferida = '").append(description
                 .getTerminoPreferida()).append("' (").append(description.getDescriptionIDPreferida()).append(").");
+
+        return result.toString();
+    }
+
+    private static String toHTML(DescripcionNoValida description) {
+        StringBuilder result = new StringBuilder("<b>Razón</b>:<em>").append(description.getRazonNoValido()).append
+                ("</em>. ").append("Valido: ").append(description.isValidez() ? "Si" : "No");
+
+        /* Ahora se listan los sugeridos */
+        DescripcionNoValida.DescripcionesSugeridas descripcionesSugeridas = description.getDescripcionesSugeridas();
+        if (descripcionesSugeridas == null){
+            result.append("No hay descripciones sugeridas.");
+        }
+        result.append("<ul>");
+        for (DescripcionAC descripcionAC : descripcionesSugeridas.getDescripcionSugerida()) {
+            result.append("<li>Concept ID=").append(descripcionAC.getConceptID()).append(". Preferida DESC ID=").append(descripcionAC.getDescriptionIDPreferida());
+        }
+        result.append("</ul>");
+        return result.toString();
+    }
+
+    private static String toHTML(DescripcionPendiente description) {
+        StringBuilder result = new StringBuilder("<b>Pendiente para categoría '").append(description.getNombreCategoria()).append("'.");
 
         return result.toString();
     }
