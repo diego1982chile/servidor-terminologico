@@ -34,7 +34,7 @@
                         <p:dataTable rows="50" paginator="true" id="helperTablesTable" var="helperTable"
                                      paginatorTemplate="{CurrentPageReport}  {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
                                      rowsPerPageTemplate="10,20,50,100" paginatorPosition="bottom"
-                                     value="#{helperTableBean.allHelperTables}" style="margin-top: 20px" >
+                                     value="#{helperTableBean.administrableTables}" style="margin-top: 20px" >
 
                             <p:column headerText="ID" width="30">
                                 <h:outputText value="#{helperTable.id}" />
@@ -156,18 +156,18 @@
 
                         <p:dialog id="edit-data-dialog" header="Editar Datos" widgetVar="edit-data-dialog-var" height="400" width="900" positionType="absolute">
                             <p:fragment id="edit-data-dialog-panel">
-                                <p:dataTable resizableColumns="true" id="table-data-edit" var="row" rowKey="#{row.id}" value="#{helperTableBean.selectedTableRows}" editable="true" rendered="#{not empty helperTableBean.selected}">
+                                <p:dataTable resizableColumns="true" widgetVar="table-data-edit-wvar" id="table-data-edit" var="row" rowKey="#{row.id}" value="#{helperTableBean.selectedTableRows}" editable="true" rendered="#{not empty helperTableBean.selected}">
                                     <f:facet name="header">
                                         Editor de datos Tabla: #{helperTableBean.selected.name}
                                     </f:facet>
 
                                     <p:ajax event="rowEdit" listener="#{helperTableBean.onRowEdit}" />
 
-                                    <p:column headerText="Id" sortable="true" width="30px">
+                                    <p:column headerText="Id" sortable="true" width="30px" filterBy="#{row.id}">
                                         <h:outputText value="#{row.id}"/>
                                     </p:column>
 
-                                    <p:column headerText="Descripcion" sortable="true">
+                                    <p:column headerText="Descripcion" sortable="true" filterBy="#{row.description}" filterMatchMode="contains">
                                         <p:cellEditor>
                                             <f:facet name="output">
                                                 <h:outputText value="#{row.description}"/>
@@ -202,7 +202,14 @@
                                         </p:cellEditor>
                                     </p:columns>
 
-                                    <p:column headerText="Valido" sortable="true"  width="30px" >
+                                    <p:column headerText="Valido" sortable="true"  width="30px" filterBy="#{row.valid}">
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('table-data-edit-wvar').filter()" >
+                                                <f:selectItem itemLabel="Elegir..." itemValue="#{null}" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Si" itemValue="#{true}" />
+                                                <f:selectItem itemLabel="No" itemValue="#{false}" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
                                         <p:cellEditor>
                                             <f:facet name="output">
                                                 <h:outputText value="#{row.valid?'Si':'No'}"/>

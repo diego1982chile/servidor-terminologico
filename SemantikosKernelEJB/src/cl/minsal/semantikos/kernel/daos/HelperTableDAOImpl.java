@@ -380,7 +380,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.setBoolean(9, row.isValid());
 
 
-            ResultSet rs = call.getResultSet();
+            ResultSet rs = call.executeQuery();
 
         } catch (SQLException e) {
             logger.error("Error al crear la row:" + row, e);

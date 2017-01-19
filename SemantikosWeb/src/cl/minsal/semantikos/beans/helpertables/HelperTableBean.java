@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +58,21 @@ public class HelperTableBean implements Serializable{
 
     public List<HelperTable> getAllHelperTables(){
         return manager.findAll();
+    }
+
+    public List<HelperTable> getAdministrableTables(){
+
+
+
+        List<HelperTable> administrableTables = new ArrayList<>();
+
+        for (HelperTable table : manager.findAll()) {
+            if(table.getId()<=17)
+                administrableTables.add(table);
+        }
+
+
+        return administrableTables;
     }
 
     public HelperTable getSelected() {
