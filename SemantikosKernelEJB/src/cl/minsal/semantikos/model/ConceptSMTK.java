@@ -22,22 +22,34 @@ import java.util.List;
  */
 public class ConceptSMTK extends PersistentEntity implements Target, AuditableEntity {
 
-    /** El valor que posee un CONCEPT_ID que no ha sido definido */
+    /**
+     * El valor que posee un CONCEPT_ID que no ha sido definido
+     */
     public static final String CONCEPT_ID_UNDEFINED = "-1";
 
-    /** El valor de negocio del concept_id */
+    /**
+     * El valor de negocio del concept_id
+     */
     private String conceptID = CONCEPT_ID_UNDEFINED;
 
-    /** La categoría del concepto */
+    /**
+     * La categoría del concepto
+     */
     private Category category;
 
-    /** Si debe ser revisado */
+    /**
+     * Si debe ser revisado
+     */
     private boolean isToBeReviewed;
 
-    /** Si debe ser consultado? */
+    /**
+     * Si debe ser consultado?
+     */
     private boolean isToBeConsulted;
 
-    /** Si el concepto se encuentra modelado o no */
+    /**
+     * Si el concepto se encuentra modelado o no
+     */
     private boolean modeled;
 
     /**
@@ -46,16 +58,24 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      */
     private Boolean isFullyDefined;
 
-    /** Determina si el concepto está publicado o no */
+    /**
+     * Determina si el concepto está publicado o no
+     */
     private boolean isPublished;
 
-    /** Fecha hasta la cual el concepto se encuentra vigente */
+    /**
+     * Fecha hasta la cual el concepto se encuentra vigente
+     */
     private Timestamp validUntil;
 
-    /** Otros descriptores */
+    /**
+     * Otros descriptores
+     */
     private List<Description> descriptions = new ArrayList<>();
 
-    /** Observación del Concepto */
+    /**
+     * Observación del Concepto
+     */
     private String observation;
 
     /**
@@ -67,10 +87,14 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     /* Relaciones cargadas */
     private boolean relationshipsLoaded = false;
 
-    /** The concept's labels */
+    /**
+     * The concept's labels
+     */
     private List<Label> labels = new ArrayList<>();
 
-    /** Lista de etiquetas */
+    /**
+     * Lista de etiquetas
+     */
     private List<Tag> tags = new ArrayList<>();
 
     /**
@@ -78,13 +102,19 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      */
     private boolean justPublished = false;
 
-    /** El Tag Semántikos que tiene asociado el concepto */
+    /**
+     * El Tag Semántikos que tiene asociado el concepto
+     */
     private TagSMTK tagSMTK;
 
-    /** Variable que indica si el grado de definición se obtiene heredado * */
+    /**
+     * Variable que indica si el grado de definición se obtiene heredado *
+     */
     private boolean inherited;
 
-    /** RefSets a los que pertenece el concepto */
+    /**
+     * RefSets a los que pertenece el concepto
+     */
     private List<RefSet> refsets;
 
     public ConceptSMTK() {
@@ -148,7 +178,9 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * @param tagSMTK         El Tag Semántikos asociado al concepto.
      * @param descriptions    Sus descripciones.
      */
-    public ConceptSMTK(long id, String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, Boolean isFullyDefined, boolean inherited, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
+    public ConceptSMTK(long id, String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted,
+                       boolean modeled, Boolean isFullyDefined, boolean inherited, boolean isPublished, String
+                               observation, TagSMTK tagSMTK, Description... descriptions) {
         this(category, modeled, descriptions);
 
         this.setId(id);
@@ -181,8 +213,11 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * @param isPublished     ¿Publicado?
      * @param descriptions    Las descripciones para este concepto
      */
-    public ConceptSMTK(String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean modeled, boolean isFullyDefined, boolean inherited, boolean isPublished, String observation, TagSMTK tagSMTK, Description... descriptions) {
-        this(NON_PERSISTED_ID, conceptID, category, isToBeReviewed, isToBeConsulted, modeled, isFullyDefined, inherited, isPublished, observation, tagSMTK, descriptions);
+    public ConceptSMTK(String conceptID, Category category, boolean isToBeReviewed, boolean isToBeConsulted, boolean
+            modeled, boolean isFullyDefined, boolean inherited, boolean isPublished, String observation, TagSMTK
+            tagSMTK, Description... descriptions) {
+        this(NON_PERSISTED_ID, conceptID, category, isToBeReviewed, isToBeConsulted, modeled, isFullyDefined,
+                inherited, isPublished, observation, tagSMTK, descriptions);
 
         /* Se indica que no se han cargado sus relaciones */
         this.relationshipsLoaded = true;
@@ -202,7 +237,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * la categoría indicada.
      *
      * @param category La categoría a la cual pertenecen los conceptos SMTK buscados.
-     *
      * @return Una lista fresca de los conceptos solicitados.
      */
     public List<ConceptSMTK> getRelatedSMTKConceptsBy(Category category) {
@@ -243,7 +277,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public List<Relationship> getRelationshipsBasicType() {
         List<Relationship> snomedRelationships = new ArrayList<>();
         for (Relationship relationship : relationships) {
-            if ( relationship.isValid()
+            if (relationship.isValid()
                     && relationship.getRelationshipDefinition() != null
                     && relationship.getRelationshipDefinition().getTargetDefinition() != null
                     && relationship.getRelationshipDefinition().getTargetDefinition().isBasicType()) {
@@ -273,7 +307,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * relación.
      *
      * @param relationshipDefinition El tipo de relación al que pertenecen las relaciones a retornar.
-     *
      * @return Una <code>java.util.List</code> de relaciones de tipo <code>relationshipDefinition</code>.
      */
     public List<Relationship> getRelationshipsByRelationDefinition(RelationshipDefinition relationshipDefinition) {
@@ -377,7 +410,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * relación.
      *
      * @param relationshipDefinition El tipo de relación al que pertenecen las relaciones a retornar.
-     *
      * @return Una <code>java.util.List</code> de relaciones de tipo <code>relationshipDefinition</code>.
      */
     public List<Relationship> getValidRelationshipsByRelationDefinition(RelationshipDefinition relationshipDefinition) {
@@ -410,7 +442,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * Este método determina si existen instancias de relaciones asociadas a una definición de relación
      *
      * @param relationshipDefinition El tipo de relación al que pertenecen las relaciones a retornar.
-     *
      * @return Un <code>java.lang.boolean</code>
      */
     public boolean hasRelationships(RelationshipDefinition relationshipDefinition) {
@@ -515,7 +546,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * Este método es responsable de agregar una etiqueta al concepto.
      *
      * @param label La etiqueta a ser agregada.
-     *
      * @return <code>true</code> si se agrega y <code>false</code> si no.
      */
     public boolean addLabel(@NotNull Label label) {
@@ -541,7 +571,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * Este método es responsable de agregar una etiqueta al concepto.
      *
      * @param label La etiqueta a eliminar.
-     *
      * @return <code>true</code> si se elimina y <code>false</code> si no.
      */
     public boolean removeLabel(@NotNull Label label) {
@@ -599,7 +628,8 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
         }
 
         /* En este punto, no se encontró una descripción preferida, y se arroja una excepción */
-        throw new BusinessRuleException("BR-UNK", "Concepto sin descripción preferida");
+        throw new BusinessRuleException("BR-UNK", "Concepto (id=" + this.getId() + ", concept_ID=" + this
+                .getConceptID() + ") sin descripción preferida");
     }
 
     /**
@@ -661,7 +691,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * Este método es responsable de determinar si el concepto pertenece a una cierta categoría.
      *
      * @param category La categoría a la cual se desea determinar si pertenece o no.
-     *
      * @return <code>true</code> si está asociado a dicha categoría y <code>false</code> sino.
      */
     public boolean belongsTo(Category category) {
@@ -675,7 +704,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * de objeto: conceptos SMTK, conceptos Snomed CT, Tablas Auxiliares, Terminologías externas, etc.
      *
      * @param targetType El tipo de destino al cual apuntan las relaciones.
-     *
      * @return Una lista con todas las relaciones de este concepto que tienen como destino un objeto del tipo de destino
      * <code>targetType</code>.
      */
@@ -699,7 +727,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * RelationshipDefinition y con el mismo destino (<code>Target</code>).
      *
      * @param relationships Las relaciones que se desea evaluar si están contenidas en el concepto fuente.
-     *
      * @return <code>true</code> si el concepto contiene estas relaciones y <code>false</code> sino.
      */
     public boolean contains(Relationship[] relationships) {
@@ -719,7 +746,6 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
      * <code>RelationshipDefinition</code>) y cuyo destino es el mismo igualmente.
      *
      * @param relationship La relación que se desea determinar si el concepto posee una equivalente.
-     *
      * @return <code>true</code> si contiene una relación asi y <code>false</code> sino.
      */
     public boolean contains(Relationship relationship) {
@@ -745,7 +771,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     }
 
     public List<RefSet> getRefsets() {
-        return refsets;
+        return new ArrayList<>(refsets);
     }
 
     public void setRefsets(List<RefSet> refsets) {
@@ -859,6 +885,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     /**
      * Sobreescritura de este método para poder usar objetos de esta clase en un HashSet. Andrés por favor no lo borres.
+     *
      * @author Alfonso Cornejo
      */
     @Override

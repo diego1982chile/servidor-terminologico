@@ -165,6 +165,8 @@ public interface ConceptManager {
 
     public List<ConceptSMTK> findModeledConceptBy(Category category, int pageSize, int pageNumber);
 
+    public List<ConceptSMTK> loadDecriptions(List<ConceptSMTK> concepts);
+
     public int countModeledConceptBy(Category category);
 
     public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize);

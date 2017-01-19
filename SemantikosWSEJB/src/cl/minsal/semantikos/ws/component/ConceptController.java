@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.*;
+import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
  * @author Alfonso Cornejo on 2016-11-17.
  */
@@ -39,7 +42,7 @@ public class ConceptController {
     @EJB
     private ConceptManager conceptManager;
     @EJB
-    private DescriptionManager descriptionManager;
+    private DescriptionManager descManager;
     @EJB
     private RefSetManager refSetManager;
     @EJB
@@ -174,17 +177,20 @@ public class ConceptController {
      * Este método es responsable de buscar un concepto segun una de sus descripciones que coincidan por perfect match
      * con el <em>TERM</em> dado en los REFSETS y Categorias indicadas.
      *
-     * @param term            El termino a buscar por perfect Match.
+     * @param pattern         El termino a buscar por perfect Match.
      * @param categoriesNames Nombres de las Categorias donde se deben hacer las búsquedas.
      * @param refSetsNames    Nombres de los REFSETS donde se deben hacer las búsquedas.
      * @return Conceptos buscados segun especificaciones de REQ-WS-001.
      * @throws NotFoundFault Si uno de los nombres de Categorias o REFSETS no existe.
      */
     public GenericTermSearchResponse searchTermGeneric(
-            String term,
+            String pattern,
             List<String> categoriesNames,
             List<String> refSetsNames
     ) throws NotFoundFault {
+
+        long init = System.currentTimeMillis();
+
         GenericTermSearchResponse res = new GenericTermSearchResponse();
         List<Category> categories = this.categoryController.findCategories(categoriesNames);
         List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
@@ -193,23 +199,23 @@ public class ConceptController {
         List<NoValidDescriptionResponse> noValidDescriptions = new ArrayList<>();
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
-        List<Description> descriptions = this.descriptionManager.searchDescriptionsByTerm(term, categories, refSets);
-        logger.debug("ws-req-001. descripciones encontradas: " + descriptions);
+
+        List<Description> descriptions = this.descManager.searchDescriptionsByTerm(pattern, categories, refSets);
+        logger.info("ws-req-001. descripciones encontradas: " + descriptions);
 
         for (Description description : descriptions) {
 
-            logger.info("ws-req-001. descripciones encontrada: " + description.fullToString());
+            logger.debug("ws-req-001. descripcion encontrada: " + description.fullToString());
 
             /* Caso 1: es una descripcion del concepto especial No valido */
-            if ("Concepto no válido".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm())) {
-                NoValidDescription noValidDescription = this.descriptionManager.getNoValidDescriptionByID(description
-                        .getId());
-                if (noValidDescription != null) {
-                    noValidDescriptions.add(new NoValidDescriptionResponse(noValidDescription));
-                } else {
-                    perfectMatchDescriptions.add(new DescriptionSC(description));
-                }
-            } else if ("Pendientes".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm())) {
+            ConceptSMTK noValidConcept = conceptManager.getNoValidConcept();
+            if (description.getConceptSMTK().equals(noValidConcept)) {
+                NoValidDescription noValidDescription = this.descManager.getNoValidDescriptionByID(description.getId());
+                noValidDescriptions.add(new NoValidDescriptionResponse(noValidDescription));
+            }
+
+            /* Caso 2: Pendientes */
+            else if ("Pendientes".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm())) {
                 pendingDescriptions.add(new PendingDescriptionResponse(description));
             } else {
                 perfectMatchDescriptions.add(new DescriptionSC(description));
@@ -219,6 +225,11 @@ public class ConceptController {
         res.setPerfectMatchDescriptions(perfectMatchDescriptions);
         res.setNoValidDescriptions(noValidDescriptions);
         res.setPendingDescriptions(pendingDescriptions);
+
+        logger.info("searchTermGeneric(" + pattern + ", " + categories + ", " + refSets + "): " +
+                perfectMatchDescriptions);
+        logger.debug("searchTermGeneric(" + pattern + ", " + categories + ", " + refSets + "): {}ms",
+                (currentTimeMillis() - init));
 
         return res;
     }
@@ -328,7 +339,8 @@ public class ConceptController {
         List<ConceptSMTK> allConcepts = new ArrayList<>();
         do {
             List<ConceptSMTK> concepts = this.conceptManager.findModeledConceptsBy(refSet, page++, 1000);
-            logger.debug("ConceptController.conceptsByRefset(" + refSetName +") --> " + concepts.size() + " conceptos.");
+            logger.debug("ConceptController.conceptsByRefset(" + refSetName + ") --> " + concepts.size() + " " +
+                    "conceptos.");
             allConcepts.addAll(concepts);
             conceptsLeft = concepts.size() == 1000;
         } while (conceptsLeft);

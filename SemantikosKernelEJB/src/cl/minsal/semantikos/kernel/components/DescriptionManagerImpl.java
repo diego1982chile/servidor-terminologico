@@ -11,10 +11,13 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 import static java.lang.System.currentTimeMillis;
+import static java.util.Collections.singletonList;
 
 /**
  * @author Andrés Farías
@@ -47,7 +50,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
         DescriptionCreationBR descriptionCreationBR1 = new DescriptionCreationBR();
         descriptionCreationBR1.validatePreConditions(conceptSMTK, description, categoryManager, editionMode);
 
-        descriptionCreationBR1.applyRules(conceptSMTK, description.getTerm(), description.getDescriptionType(), user, categoryManager);
+        descriptionCreationBR1.applyRules(conceptSMTK, description.getTerm(), description.getDescriptionType(), user,
+                categoryManager);
         if (!description.isPersistent()) {
             descriptionDAO.persist(description, user);
         }
@@ -59,7 +63,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
-    public Description bindDescriptionToConcept(ConceptSMTK concept, String term, boolean caseSensitive, DescriptionType descriptionType, User user) {
+    public Description bindDescriptionToConcept(ConceptSMTK concept, String term, boolean caseSensitive,
+                                                DescriptionType descriptionType, User user) {
 
         /* Se aplican las reglas de negocio para crear la Descripción*/
         descriptionCreationBR.applyRules(concept, term, descriptionType, user, categoryManager);
@@ -82,7 +87,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
-    public Description bindDescriptionToConcept(ConceptSMTK concept, Description description, boolean editionMode, User user) {
+    public Description bindDescriptionToConcept(ConceptSMTK concept, Description description, boolean editionMode,
+                                                User user) {
 
         /*
          * Se aplican las pre-condiciones para asociar la descripción al concepto. En particular hay que validar que
@@ -135,7 +141,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
-    public void updateDescription(@NotNull ConceptSMTK conceptSMTK, @NotNull Description initDescription, @NotNull Description finalDescription, @NotNull User user) {
+    public void updateDescription(@NotNull ConceptSMTK conceptSMTK, @NotNull Description initDescription, @NotNull
+            Description finalDescription, @NotNull User user) {
 
         logger.info("Se actualizan descripciones. \nOriginal: " + initDescription + "\nFinal: " + finalDescription);
 
@@ -280,7 +287,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         List<Description> descriptions = descriptionDAO.searchDescriptionsByTerm(pattern, categories);
         logger.info("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + "): " + descriptions);
-        logger.info("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        logger.info("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + "): {}ms", (currentTimeMillis
+                () - init));
 
         return descriptions;
     }
@@ -291,13 +299,37 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         /* Se recuperan / buscan todas las descripciones cuyo término coincide de manera exacta con el patrón */
         List<Description> descriptions = this.searchDescriptionsByExactTermMatch(pattern);
+        List<Description> filterdByCategories = new ArrayList<>(descriptions);
 
-        // TODO: Filtrar por categorías
-        // TODO: Filtrar por refsets
+        /* Se filtra el resultado por categorías */
+        if (categories != null && !categories.isEmpty()) {
+            for (Description description : descriptions) {
+                Category conceptCategory = description.getConceptSMTK().getCategory();
+                if (!categories.contains(conceptCategory)) {
+                    filterdByCategories.remove(description);
+                    logger.debug("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + refSets + "): " +
+                            "eliminada descripcion por categoria: " + description);
+                }
+            }
+        }
 
-        logger.info("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + refSets + "): " + descriptions);
-        logger.info("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
-        return descriptions;
+        /* Se filtra el resultado por refsets */
+        if (refSets != null && !refSets.isEmpty()) {
+            for (Description description : new ArrayList<>(filterdByCategories)) {
+                List<RefSet> conceptRefsets = description.getConceptSMTK().getRefsets();
+                if (!conceptRefsets.removeAll(refSets)) {
+                    filterdByCategories.remove(description);
+                    logger.debug("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + refSets + "): " +
+                            "eliminada descripcion por refset: " + description);
+                }
+            }
+        }
+
+        logger.info("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + refSets + "): " +
+                filterdByCategories);
+        logger.debug("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + refSets + "): {}ms",
+                (currentTimeMillis() - init));
+        return filterdByCategories;
     }
 
     @Override
@@ -307,7 +339,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         List<Description> descriptions = descriptionDAO.searchDescriptionsByExactTerm(pattern);
 
         logger.info("searchDescriptionsByTerm(" + pattern + "): " + descriptions);
-        logger.info("searchDescriptionsByTerm(" + pattern + "): {}s", (currentTimeMillis() - init));
+        logger.info("searchDescriptionsByTerm(" + pattern + "): {}ms", (currentTimeMillis() - init));
 
         /* Se recuperan / buscan todas las descripciones cuyo término coincide de manera exacta con el patrón */
         return descriptions;
@@ -354,7 +386,10 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
     @Override
     public NoValidDescription getNoValidDescriptionByID(long id) {
-        return descriptionDAO.getNoValidDescriptionByID(id);
+        NoValidDescription noValidDescriptionByID = descriptionDAO.getNoValidDescriptionByID(id);
+        conceptManager.loadDecriptions(singletonList(noValidDescriptionByID.getNoValidDescription().getConceptSMTK()));
+        conceptManager.loadDecriptions(noValidDescriptionByID.getSuggestedConcepts());
+        return noValidDescriptionByID;
     }
 
     @Override
@@ -367,7 +402,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
         /* Se incrementa y se actualiza en la BDD */
         descriptionByDescriptionID.setUses(descriptionByDescriptionID.getUses() + 1);
         descriptionDAO.update(descriptionByDescriptionID);
-        logger.info("DESCRIPTION ID=" + descriptionId + " tiene ahora " + descriptionByDescriptionID.getUses() + " usos.");
+        logger.info("DESCRIPTION ID=" + descriptionId + " tiene ahora " + descriptionByDescriptionID.getUses() + " " +
+                "usos.");
 
         /* Finalmente se retorna */
         return descriptionByDescriptionID;

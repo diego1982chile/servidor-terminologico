@@ -148,8 +148,7 @@ public class Concepto {
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar validoHasta;
     protected String observacion;
-
-    @XmlElement(namespace = "")
+    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
     protected Categoria categoria;
     protected Concepto.RefSets refSets;
     protected Concepto.Descripciones descripciones;
@@ -593,7 +592,7 @@ public class Concepto {
     })
     public static class Atributos {
 
-        @XmlElement(namespace = "")
+        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
         protected List<Atributo> atributo;
 
         /**
@@ -771,7 +770,7 @@ public class Concepto {
     })
     public static class Descripciones {
 
-        @XmlElement(namespace = "")
+        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
         protected List<Descripcion> descripcion;
 
         /**
@@ -831,7 +830,7 @@ public class Concepto {
     })
     public static class RefSets {
 
-        @XmlElement(namespace = "")
+        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
         protected List<RefSet> refSet;
 
         /**
@@ -951,7 +950,7 @@ public class Concepto {
     })
     public static class RelacionesSnomedCT {
 
-        @XmlElement(namespace = "")
+        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
         protected List<RelacionSnomedCT> relacionSnomedCT;
 
         /**

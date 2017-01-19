@@ -36,7 +36,7 @@
                                  name="description"
                                  rows="1"
                                  validator="#{validatorBean.validateRequiredInput}"
-                                 value="#{cc.attrs.description.pattern}"
+                                 value="#{cc.attrs.description.term}"
                                  disabled="#{cc.attrs.description.conceptSMTK.modeled or not cc.attrs.editable}"
                                  autocomplete="off">
                         <p:ajax event="change" update="@this" process="@this" delay="100" />

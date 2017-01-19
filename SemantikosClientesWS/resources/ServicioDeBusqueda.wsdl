@@ -1,9 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ws.semantikos.minsal.cl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ServicioDeBusqueda" targetNamespace="http://service.ws.semantikos.minsal.cl/">
   <wsdl:types>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.ws.semantikos.minsal.cl/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.ws.semantikos.minsal.cl/">
-  <xs:import namespace="http://service.ws.semantikos.minsal.cl/"/>
   <xs:element name="atributo" type="tns:Atributo"/>
   <xs:element name="atributoRelacion" type="tns:AtributoRelacion"/>
+  <xs:element name="buscarDescripcionExacta" type="tns:buscarDescripcionExacta"/>
+  <xs:element name="buscarDescripcionExactaResponse" type="tns:buscarDescripcionExactaResponse"/>
   <xs:element name="buscarTermino" type="tns:buscarTermino"/>
   <xs:element name="buscarTerminoResponse" type="tns:buscarTerminoResponse"/>
   <xs:element name="buscarTruncatePerfect" type="tns:buscarTruncatePerfect"/>
@@ -33,9 +34,9 @@
   <xs:element name="definicionRelacion" type="tns:DefinicionRelacion"/>
   <xs:element name="definicionRelacionAtributo" type="tns:DefinicionRelacionAtributo"/>
   <xs:element name="descripcion" type="tns:Descripcion"/>
+  <xs:element name="descripcionAC" type="tns:DescripcionAC"/>
   <xs:element name="descripcionNoValida" type="tns:DescripcionNoValida"/>
   <xs:element name="descripcionPendiente" type="tns:DescripcionPendiente"/>
-  <xs:element name="descripcionPerfectMatch" type="tns:DescripcionPerfectMatch"/>
   <xs:element name="descripcionSimplificada" type="tns:DescripcionSimplificada"/>
   <xs:element name="descripcionesPreferidasPorRefSet" type="tns:descripcionesPreferidasPorRefSet"/>
   <xs:element name="descripcionesPreferidasPorRefSetResponse" type="tns:descripcionesPreferidasPorRefSetResponse"/>
@@ -53,6 +54,7 @@
   <xs:element name="obtenerTerminosPedibles" type="tns:obtenerTerminosPedibles"/>
   <xs:element name="obtenerTerminosPediblesResponse" type="tns:obtenerTerminosPediblesResponse"/>
   <xs:element name="paginacion" type="tns:Paginacion"/>
+  <xs:element name="patronDeBusqueda" type="tns:PatronDeBusqueda"/>
   <xs:element name="peticionBuscarTermino" type="tns:PeticionBuscarTermino"/>
   <xs:element name="peticionBuscarTerminoSimple" type="tns:PeticionBuscarTerminoSimple"/>
   <xs:element name="peticionConceptosPorRefSet" type="tns:PeticionConceptosPorRefSet"/>
@@ -65,9 +67,10 @@
   <xs:element name="relacionSnomedCT" type="tns:RelacionSnomedCT"/>
   <xs:element name="respuestaBuscarTermino" type="tns:RespuestaBuscarTermino"/>
   <xs:element name="respuestaBuscarTerminoGenerica" type="tns:RespuestaBuscarTerminoGenerica"/>
-  <xs:element name="respuestaCategorias" type="RespuestaCategorias"/>
+  <xs:element name="respuestaCategorias" type="tns:RespuestaCategorias"/>
   <xs:element name="respuestaConceptosPorCategoria" type="tns:RespuestaConceptosPorCategoria"/>
   <xs:element name="respuestaConceptosPorRefSet" type="tns:RespuestaConceptosPorRefSet"/>
+  <xs:element name="respuestaDescripciones" type="tns:RespuestaDescripciones"/>
   <xs:element name="respuestaRefSets" type="tns:RespuestaRefSets"/>
   <xs:element name="tablaAuxiliar" type="tns:TablaAuxiliar"/>
   <xs:element name="usuario" type="tns:Usuario"/>
@@ -320,7 +323,6 @@
   <xs:complexType name="ColumnaTablaAuxiliar">
     <xs:sequence>
       <xs:element minOccurs="0" name="nombreColumna" type="xs:string"/>
-      <xs:element minOccurs="0" name="esLlavePrimaria" type="xs:boolean"/>
       <xs:element minOccurs="0" name="esBuscable" type="xs:boolean"/>
       <xs:element minOccurs="0" name="esMostrable" type="xs:boolean"/>
     </xs:sequence>
@@ -517,6 +519,17 @@
       <xs:element minOccurs="0" ref="tns:respuestaCategorias"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="RespuestaCategorias">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="categorias">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:categoria"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="crossMapsDirectosPorIDDescripcion">
     <xs:sequence>
       <xs:element name="DescripcionID" type="tns:descriptionIDorConceptIDRequest"/>
@@ -548,6 +561,34 @@
   <xs:complexType name="conceptosPorCategoriaResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="respuestaConceptos" type="tns:RespuestaConceptosPorCategoria"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="buscarDescripcionExacta">
+    <xs:sequence>
+      <xs:element name="peticionPatron" type="tns:PatronDeBusqueda"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PatronDeBusqueda">
+    <xs:sequence>
+      <xs:element name="idEstablecimiento" type="xs:string"/>
+      <xs:element name="pattern" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="buscarDescripcionExactaResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="respuestaBuscarTermino" type="tns:RespuestaDescripciones"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RespuestaDescripciones">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="descripcion">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="descripciones" type="tns:Descripcion"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="cantidadRegistros" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="descripcionesPreferidasPorRefSet">
@@ -629,10 +670,10 @@
   </xs:complexType>
   <xs:complexType name="RespuestaBuscarTerminoGenerica">
     <xs:sequence>
-      <xs:element minOccurs="0" name="descripcionesPerfectMatch">
+      <xs:element minOccurs="0" name="descripcionPerfectMatch">
         <xs:complexType>
           <xs:sequence>
-            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:descripcionPerfectMatch"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="descripcionesPerfectMatch" type="tns:DescripcionAC"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -652,14 +693,15 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="DescripcionPerfectMatch">
+  <xs:complexType name="DescripcionAC">
     <xs:sequence>
-      <xs:element minOccurs="0" name="idConcepto" type="xs:string"/>
-      <xs:element minOccurs="0" name="idDescripcion" type="xs:string"/>
-      <xs:element minOccurs="0" name="termino" type="xs:string"/>
-      <xs:element minOccurs="0" name="tipoDescripcion" type="xs:string"/>
       <xs:element minOccurs="0" name="nombreCategoria" type="xs:string"/>
-      <xs:element minOccurs="0" name="terminoPreferido" type="xs:string"/>
+      <xs:element minOccurs="0" name="concept_ID" type="xs:string"/>
+      <xs:element minOccurs="0" name="description_ID" type="xs:string"/>
+      <xs:element minOccurs="0" name="tipoDescripcion" type="xs:string"/>
+      <xs:element minOccurs="0" name="description_ID_Preferida" type="xs:string"/>
+      <xs:element minOccurs="0" name="terminoPreferida" type="xs:string"/>
+      <xs:element minOccurs="0" name="termino" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="DescripcionNoValida">
@@ -669,7 +711,7 @@
       <xs:element minOccurs="0" name="descripcionesSugeridas">
         <xs:complexType>
           <xs:sequence>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="descripcionSugerida" type="tns:DescripcionPerfectMatch"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="descripcionSugerida" type="tns:DescripcionAC"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -711,23 +753,6 @@
       <xs:element minOccurs="0" name="message" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://service.ws.semantikos.minsal.cl/" targetNamespace="http://service.ws.semantikos.minsal.cl/" version="1.0">
-
-  <xs:import namespace="http://service.ws.semantikos.minsal.cl/"/>
-
-  <xs:complexType name="RespuestaCategorias">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="categorias">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns1:categoria"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-
 </xs:schema>
   </wsdl:types>
   <wsdl:message name="buscarTermino">
@@ -778,6 +803,10 @@
     <wsdl:part element="tns:conceptoPorIdDescripcionResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="buscarDescripcionExacta">
+    <wsdl:part element="tns:buscarDescripcionExacta" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="refSetsPorIdDescripcion">
     <wsdl:part element="tns:refSetsPorIdDescripcion" name="parameters">
     </wsdl:part>
@@ -808,6 +837,10 @@
   </wsdl:message>
   <wsdl:message name="crossMapsDirectosPorIDDescripcionResponse">
     <wsdl:part element="tns:crossMapsDirectosPorIDDescripcionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarDescripcionExactaResponse">
+    <wsdl:part element="tns:buscarDescripcionExactaResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getCrossmapSets">
@@ -929,6 +962,14 @@
       <wsdl:output message="tns:conceptosPorCategoriaResponse" name="conceptosPorCategoriaResponse">
     </wsdl:output>
       <wsdl:fault message="tns:NotFoundFault" name="NotFoundFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="buscarDescripcionExacta">
+      <wsdl:input message="tns:buscarDescripcionExacta" name="buscarDescripcionExacta">
+    </wsdl:input>
+      <wsdl:output message="tns:buscarDescripcionExactaResponse" name="buscarDescripcionExactaResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:IllegalInputFault" name="IllegalInputFault">
     </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="descripcionesPreferidasPorRefSet">
@@ -1086,6 +1127,18 @@
       </wsdl:output>
       <wsdl:fault name="NotFoundFault">
         <soap:fault name="NotFoundFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="buscarDescripcionExacta">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="buscarDescripcionExacta">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="buscarDescripcionExactaResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IllegalInputFault">
+        <soap:fault name="IllegalInputFault" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="crossMapsIndirectosPorDescripcionIDorConceptID">

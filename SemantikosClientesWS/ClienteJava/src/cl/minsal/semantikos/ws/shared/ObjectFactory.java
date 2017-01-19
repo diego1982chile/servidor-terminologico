@@ -24,14 +24,15 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _DescripcionAC_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionAC");
     private final static QName _RespuestaBuscarTerminoGenerica_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaBuscarTerminoGenerica");
     private final static QName _BuscarTermino_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "buscarTermino");
-    private final static QName _DescripcionPerfectMatch_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionPerfectMatch");
     private final static QName _IndirectCrossmapsSearch_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "indirectCrossmapsSearch");
     private final static QName _ConceptosPedibles_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "conceptosPedibles");
     private final static QName _CrossMapsDirectosPorIDDescripcion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossMapsDirectosPorIDDescripcion");
     private final static QName _ColumnaTablaAuxiliar_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "columnaTablaAuxiliar");
     private final static QName _RespuestaBuscarTermino_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaBuscarTermino");
+    private final static QName _BuscarDescripcionExacta_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "buscarDescripcionExacta");
     private final static QName _ConceptoPorIdDescripcionResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "conceptoPorIdDescripcionResponse");
     private final static QName _RefSetsPorIdDescripcion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "refSetsPorIdDescripcion");
     private final static QName _RespuestaConceptosPorRefSet_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaConceptosPorRefSet");
@@ -39,13 +40,14 @@ public class ObjectFactory {
     private final static QName _Paginacion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "paginacion");
     private final static QName _CrossMapsIndirectosPorDescripcionIDorConceptID_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossMapsIndirectosPorDescripcionIDorConceptID");
     private final static QName _DescripcionesPreferidasPorRefSet_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionesPreferidasPorRefSet");
+    private final static QName _PatronDeBusqueda_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "patronDeBusqueda");
     private final static QName _DescripcionNoValida_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionNoValida");
     private final static QName _DescripcionSimplificada_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionSimplificada");
     private final static QName _Atributo_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "atributo");
     private final static QName _GetCrossmapSets_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "getCrossmapSets");
     private final static QName _CrossmapSetMember_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossmapSetMember");
-    private final static QName _ListaRefSetResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "listaRefSetResponse");
     private final static QName _Multiplicidad_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "multiplicidad");
+    private final static QName _ListaRefSetResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "listaRefSetResponse");
     private final static QName _ConceptosPorCategoria_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "conceptosPorCategoria");
     private final static QName _AtributoRelacion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "atributoRelacion");
     private final static QName _ConceptosPorCategoriaResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "conceptosPorCategoriaResponse");
@@ -71,13 +73,14 @@ public class ObjectFactory {
     private final static QName _Categoria_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "categoria");
     private final static QName _DescriptionIDorConceptIDRequest_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descriptionIDorConceptIDRequest");
     private final static QName _DefinicionRelacion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "definicionRelacion");
-    private final static QName _IllegalInputFault_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "IllegalInputFault");
     private final static QName _NotFoundFault_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "NotFoundFault");
+    private final static QName _IllegalInputFault_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "IllegalInputFault");
     private final static QName _DefinicionObjetivo_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "definicionObjetivo");
     private final static QName _CrossMapsIndirectosPorDescripcionIDorConceptIDResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossMapsIndirectosPorDescripcionIDorConceptIDResponse");
     private final static QName _RespuestaRefSets_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaRefSets");
     private final static QName _DescripcionPendiente_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "descripcionPendiente");
     private final static QName _CrossmapSetMembersResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossmapSetMembersResponse");
+    private final static QName _BuscarDescripcionExactaResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "buscarDescripcionExactaResponse");
     private final static QName _ConceptosPorRefSetResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "conceptosPorRefSetResponse");
     private final static QName _CrossMapsDirectosPorIDDescripcionResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "crossMapsDirectosPorIDDescripcionResponse");
     private final static QName _RelacionSnomedCT_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "relacionSnomedCT");
@@ -91,6 +94,7 @@ public class ObjectFactory {
     private final static QName _RespuestaCategorias_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaCategorias");
     private final static QName _RefSet_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "refSet");
     private final static QName _Relacion_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "relacion");
+    private final static QName _RespuestaDescripciones_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "respuestaDescripciones");
     private final static QName _GetCrossmapSetsResponse_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "getCrossmapSetsResponse");
     private final static QName _ConceptoLight_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "conceptoLight");
     private final static QName _PeticionConceptosPorRefSet_QNAME = new QName("http://service.ws.semantikos.minsal.cl/", "peticionConceptosPorRefSet");
@@ -101,6 +105,14 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link RespuestaDescripciones }
+     * 
+     */
+    public RespuestaDescripciones createRespuestaDescripciones() {
+        return new RespuestaDescripciones();
     }
 
     /**
@@ -248,11 +260,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DescripcionPerfectMatch }
+     * Create an instance of {@link DescripcionAC }
      * 
      */
-    public DescripcionPerfectMatch createDescripcionPerfectMatch() {
-        return new DescripcionPerfectMatch();
+    public DescripcionAC createDescripcionAC() {
+        return new DescripcionAC();
     }
 
     /**
@@ -336,6 +348,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link BuscarDescripcionExacta }
+     * 
+     */
+    public BuscarDescripcionExacta createBuscarDescripcionExacta() {
+        return new BuscarDescripcionExacta();
+    }
+
+    /**
      * Create an instance of {@link Atributo }
      * 
      */
@@ -349,6 +369,14 @@ public class ObjectFactory {
      */
     public DescripcionSimplificada createDescripcionSimplificada() {
         return new DescripcionSimplificada();
+    }
+
+    /**
+     * Create an instance of {@link PatronDeBusqueda }
+     * 
+     */
+    public PatronDeBusqueda createPatronDeBusqueda() {
+        return new PatronDeBusqueda();
     }
 
     /**
@@ -392,19 +420,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ListaRefSetResponse }
-     * 
-     */
-    public ListaRefSetResponse createListaRefSetResponse() {
-        return new ListaRefSetResponse();
-    }
-
-    /**
      * Create an instance of {@link Multiplicidad }
      * 
      */
     public Multiplicidad createMultiplicidad() {
         return new Multiplicidad();
+    }
+
+    /**
+     * Create an instance of {@link ListaRefSetResponse }
+     * 
+     */
+    public ListaRefSetResponse createListaRefSetResponse() {
+        return new ListaRefSetResponse();
     }
 
     /**
@@ -608,11 +636,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Descripcion }
+     * Create an instance of {@link BuscarDescripcionExactaResponse }
      * 
      */
-    public Descripcion createDescripcion() {
-        return new Descripcion();
+    public BuscarDescripcionExactaResponse createBuscarDescripcionExactaResponse() {
+        return new BuscarDescripcionExactaResponse();
+    }
+
+    /**
+     * Create an instance of {@link cl.minsal.semantikos.ws.shared.Descripcion }
+     * 
+     */
+    public cl.minsal.semantikos.ws.shared.Descripcion createDescripcion() {
+        return new cl.minsal.semantikos.ws.shared.Descripcion();
     }
 
     /**
@@ -677,6 +713,14 @@ public class ObjectFactory {
      */
     public GetCrossmapSetsResponse createGetCrossmapSetsResponse() {
         return new GetCrossmapSetsResponse();
+    }
+
+    /**
+     * Create an instance of {@link RespuestaDescripciones.Descripcion }
+     * 
+     */
+    public RespuestaDescripciones.Descripcion createRespuestaDescripcionesDescripcion() {
+        return new RespuestaDescripciones.Descripcion();
     }
 
     /**
@@ -856,11 +900,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch }
+     * Create an instance of {@link RespuestaBuscarTerminoGenerica.DescripcionPerfectMatch }
      * 
      */
-    public RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch createRespuestaBuscarTerminoGenericaDescripcionesPerfectMatch() {
-        return new RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch();
+    public RespuestaBuscarTerminoGenerica.DescripcionPerfectMatch createRespuestaBuscarTerminoGenericaDescripcionPerfectMatch() {
+        return new RespuestaBuscarTerminoGenerica.DescripcionPerfectMatch();
     }
 
     /**
@@ -880,6 +924,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DescripcionAC }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "descripcionAC")
+    public JAXBElement<DescripcionAC> createDescripcionAC(DescripcionAC value) {
+        return new JAXBElement<DescripcionAC>(_DescripcionAC_QNAME, DescripcionAC.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link RespuestaBuscarTerminoGenerica }{@code >}}
      * 
      */
@@ -895,15 +948,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "buscarTermino")
     public JAXBElement<BuscarTermino> createBuscarTermino(BuscarTermino value) {
         return new JAXBElement<BuscarTermino>(_BuscarTermino_QNAME, BuscarTermino.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DescripcionPerfectMatch }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "descripcionPerfectMatch")
-    public JAXBElement<DescripcionPerfectMatch> createDescripcionPerfectMatch(DescripcionPerfectMatch value) {
-        return new JAXBElement<DescripcionPerfectMatch>(_DescripcionPerfectMatch_QNAME, DescripcionPerfectMatch.class, null, value);
     }
 
     /**
@@ -949,6 +993,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "respuestaBuscarTermino")
     public JAXBElement<RespuestaBuscarTermino> createRespuestaBuscarTermino(RespuestaBuscarTermino value) {
         return new JAXBElement<RespuestaBuscarTermino>(_RespuestaBuscarTermino_QNAME, RespuestaBuscarTermino.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link BuscarDescripcionExacta }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "buscarDescripcionExacta")
+    public JAXBElement<BuscarDescripcionExacta> createBuscarDescripcionExacta(BuscarDescripcionExacta value) {
+        return new JAXBElement<BuscarDescripcionExacta>(_BuscarDescripcionExacta_QNAME, BuscarDescripcionExacta.class, null, value);
     }
 
     /**
@@ -1015,6 +1068,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link PatronDeBusqueda }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "patronDeBusqueda")
+    public JAXBElement<PatronDeBusqueda> createPatronDeBusqueda(PatronDeBusqueda value) {
+        return new JAXBElement<PatronDeBusqueda>(_PatronDeBusqueda_QNAME, PatronDeBusqueda.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DescripcionNoValida }{@code >}}
      * 
      */
@@ -1060,21 +1122,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ListaRefSetResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "listaRefSetResponse")
-    public JAXBElement<ListaRefSetResponse> createListaRefSetResponse(ListaRefSetResponse value) {
-        return new JAXBElement<ListaRefSetResponse>(_ListaRefSetResponse_QNAME, ListaRefSetResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Multiplicidad }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "multiplicidad")
     public JAXBElement<Multiplicidad> createMultiplicidad(Multiplicidad value) {
         return new JAXBElement<Multiplicidad>(_Multiplicidad_QNAME, Multiplicidad.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListaRefSetResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "listaRefSetResponse")
+    public JAXBElement<ListaRefSetResponse> createListaRefSetResponse(ListaRefSetResponse value) {
+        return new JAXBElement<ListaRefSetResponse>(_ListaRefSetResponse_QNAME, ListaRefSetResponse.class, null, value);
     }
 
     /**
@@ -1303,21 +1365,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link IllegalInputFault }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "IllegalInputFault")
-    public JAXBElement<IllegalInputFault> createIllegalInputFault(IllegalInputFault value) {
-        return new JAXBElement<IllegalInputFault>(_IllegalInputFault_QNAME, IllegalInputFault.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link NotFoundFault }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "NotFoundFault")
     public JAXBElement<NotFoundFault> createNotFoundFault(NotFoundFault value) {
         return new JAXBElement<NotFoundFault>(_NotFoundFault_QNAME, NotFoundFault.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link IllegalInputFault }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "IllegalInputFault")
+    public JAXBElement<IllegalInputFault> createIllegalInputFault(IllegalInputFault value) {
+        return new JAXBElement<IllegalInputFault>(_IllegalInputFault_QNAME, IllegalInputFault.class, null, value);
     }
 
     /**
@@ -1363,6 +1425,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "crossmapSetMembersResponse")
     public JAXBElement<CrossmapSetMembersResponse> createCrossmapSetMembersResponse(CrossmapSetMembersResponse value) {
         return new JAXBElement<CrossmapSetMembersResponse>(_CrossmapSetMembersResponse_QNAME, CrossmapSetMembersResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link BuscarDescripcionExactaResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "buscarDescripcionExactaResponse")
+    public JAXBElement<BuscarDescripcionExactaResponse> createBuscarDescripcionExactaResponse(BuscarDescripcionExactaResponse value) {
+        return new JAXBElement<BuscarDescripcionExactaResponse>(_BuscarDescripcionExactaResponse_QNAME, BuscarDescripcionExactaResponse.class, null, value);
     }
 
     /**
@@ -1438,12 +1509,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Descripcion }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link cl.minsal.semantikos.ws.shared.Descripcion }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "descripcion")
-    public JAXBElement<Descripcion> createDescripcion(Descripcion value) {
-        return new JAXBElement<Descripcion>(_Descripcion_QNAME, Descripcion.class, null, value);
+    public JAXBElement<cl.minsal.semantikos.ws.shared.Descripcion> createDescripcion(cl.minsal.semantikos.ws.shared.Descripcion value) {
+        return new JAXBElement<cl.minsal.semantikos.ws.shared.Descripcion>(_Descripcion_QNAME, cl.minsal.semantikos.ws.shared.Descripcion.class, null, value);
     }
 
     /**
@@ -1480,6 +1551,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "relacion")
     public JAXBElement<Relacion> createRelacion(Relacion value) {
         return new JAXBElement<Relacion>(_Relacion_QNAME, Relacion.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RespuestaDescripciones }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.ws.semantikos.minsal.cl/", name = "respuestaDescripciones")
+    public JAXBElement<RespuestaDescripciones> createRespuestaDescripciones(RespuestaDescripciones value) {
+        return new JAXBElement<RespuestaDescripciones>(_RespuestaDescripciones_QNAME, RespuestaDescripciones.class, null, value);
     }
 
     /**

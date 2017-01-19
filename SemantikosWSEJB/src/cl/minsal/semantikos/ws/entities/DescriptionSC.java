@@ -2,6 +2,8 @@ package cl.minsal.semantikos.ws.entities;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
@@ -17,6 +19,8 @@ import java.io.Serializable;
 @XmlRootElement(name = "descripcionAC", namespace = "http://service.ws.semantikos.minsal.cl/")
 @XmlType(name = "DescripcionAC", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class DescriptionSC implements Serializable {
+
+    private final static Logger logger = LoggerFactory.getLogger(DescriptionSC.class);
 
     /** El valor DESCRIPTION_ID de la descripción */
     private String descriptionId;
@@ -48,13 +52,19 @@ public class DescriptionSC implements Serializable {
      * @param description La descripción a partir de la cual se crea la descripción.
      */
     public DescriptionSC(@NotNull Description description) {
+
         this.descriptionId = description.getDescriptionId();
         this.term = description.getTerm();
         this.descriptionType = description.getDescriptionType().getName();
+
         ConceptSMTK conceptSMTK = description.getConceptSMTK();
         this.conceptId = conceptSMTK.getConceptID();
+
         this.categoryName = conceptSMTK.getCategory().getName();
-        this.preferredDescriptionID = conceptSMTK.getDescriptionFavorite().getTerm();
+        Description descriptionFavorite = conceptSMTK.getDescriptionFavorite();
+        this.preferredDescriptionID = descriptionFavorite.getDescriptionId();
+        this.prefferedDescriptionTerm = descriptionFavorite.getTerm();
+        logger.debug("Descripcion preferida: {}, ID={}", this.prefferedDescriptionTerm, this.preferredDescriptionID);
     }
 
     @XmlElement(name = "description_ID")
@@ -85,7 +95,6 @@ public class DescriptionSC implements Serializable {
     public String getConceptId() {
         return conceptId;
     }
-
     public void setConceptId(String conceptId) {
         this.conceptId = conceptId;
     }
@@ -112,5 +121,18 @@ public class DescriptionSC implements Serializable {
     }
     public void setPrefferedDescriptionTerm(String prefferedDescriptionTerm) {
         this.prefferedDescriptionTerm = prefferedDescriptionTerm;
+    }
+
+    @Override
+    public String toString() {
+        return "DescriptionSC{" +
+                "descriptionId='" + descriptionId + '\'' +
+                ", term='" + term + '\'' +
+                ", descriptionType='" + descriptionType + '\'' +
+                ", conceptId='" + conceptId + '\'' +
+                ", categoryName='" + categoryName + '\'' +
+                ", preferredDescriptionID='" + preferredDescriptionID + '\'' +
+                ", prefferedDescriptionTerm='" + prefferedDescriptionTerm + '\'' +
+                '}';
     }
 }

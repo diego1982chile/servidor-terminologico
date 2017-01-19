@@ -19,12 +19,12 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="descripcionesPerfectMatch" minOccurs="0">
+ *         &lt;element name="descripcionPerfectMatch" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;sequence>
- *                   &lt;element ref="{http://service.ws.semantikos.minsal.cl/}descripcionPerfectMatch" maxOccurs="unbounded" minOccurs="0"/>
+ *                   &lt;element name="descripcionesPerfectMatch" type="{http://service.ws.semantikos.minsal.cl/}DescripcionAC" maxOccurs="unbounded" minOccurs="0"/>
  *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -62,38 +62,38 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RespuestaBuscarTerminoGenerica", propOrder = {
-    "descripcionesPerfectMatch",
+    "descripcionPerfectMatch",
     "descripcionesNoValidas",
     "descripcionesPendientes"
 })
 public class RespuestaBuscarTerminoGenerica {
 
-    protected RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch descripcionesPerfectMatch;
+    protected RespuestaBuscarTerminoGenerica.DescripcionPerfectMatch descripcionPerfectMatch;
     protected RespuestaBuscarTerminoGenerica.DescripcionesNoValidas descripcionesNoValidas;
     protected RespuestaBuscarTerminoGenerica.DescripcionesPendientes descripcionesPendientes;
 
     /**
-     * Gets the value of the descripcionesPerfectMatch property.
+     * Gets the value of the descripcionPerfectMatch property.
      * 
      * @return
      *     possible object is
-     *     {@link RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch }
+     *     {@link RespuestaBuscarTerminoGenerica.DescripcionPerfectMatch }
      *     
      */
-    public RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch getDescripcionesPerfectMatch() {
-        return descripcionesPerfectMatch;
+    public RespuestaBuscarTerminoGenerica.DescripcionPerfectMatch getDescripcionPerfectMatch() {
+        return descripcionPerfectMatch;
     }
 
     /**
-     * Sets the value of the descripcionesPerfectMatch property.
+     * Sets the value of the descripcionPerfectMatch property.
      * 
      * @param value
      *     allowed object is
-     *     {@link RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch }
+     *     {@link RespuestaBuscarTerminoGenerica.DescripcionPerfectMatch }
      *     
      */
-    public void setDescripcionesPerfectMatch(RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch value) {
-        this.descripcionesPerfectMatch = value;
+    public void setDescripcionPerfectMatch(RespuestaBuscarTerminoGenerica.DescripcionPerfectMatch value) {
+        this.descripcionPerfectMatch = value;
     }
 
     /**
@@ -170,7 +170,7 @@ public class RespuestaBuscarTerminoGenerica {
     })
     public static class DescripcionesNoValidas {
 
-        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+        @XmlElement(namespace = "")
         protected List<DescripcionNoValida> descripcionNoValida;
 
         /**
@@ -275,7 +275,7 @@ public class RespuestaBuscarTerminoGenerica {
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;sequence>
-     *         &lt;element ref="{http://service.ws.semantikos.minsal.cl/}descripcionPerfectMatch" maxOccurs="unbounded" minOccurs="0"/>
+     *         &lt;element name="descripcionesPerfectMatch" type="{http://service.ws.semantikos.minsal.cl/}DescripcionAC" maxOccurs="unbounded" minOccurs="0"/>
      *       &lt;/sequence>
      *     &lt;/restriction>
      *   &lt;/complexContent>
@@ -286,40 +286,39 @@ public class RespuestaBuscarTerminoGenerica {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "descripcionPerfectMatch"
+        "descripcionesPerfectMatch"
     })
-    public static class DescripcionesPerfectMatch {
+    public static class DescripcionPerfectMatch {
 
-        @XmlElement(namespace = "")
-        protected List<DescripcionPerfectMatch> descripcionPerfectMatch;
+        protected List<DescripcionAC> descripcionesPerfectMatch;
 
         /**
-         * Gets the value of the descripcionPerfectMatch property.
+         * Gets the value of the descripcionesPerfectMatch property.
          * 
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the descripcionPerfectMatch property.
+         * This is why there is not a <CODE>set</CODE> method for the descripcionesPerfectMatch property.
          * 
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
-         *    getDescripcionPerfectMatch().add(newItem);
+         *    getDescripcionesPerfectMatch().add(newItem);
          * </pre>
          * 
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link DescripcionPerfectMatch }
+         * {@link DescripcionAC }
          * 
          * 
          */
-        public List<DescripcionPerfectMatch> getDescripcionPerfectMatch() {
-            if (descripcionPerfectMatch == null) {
-                descripcionPerfectMatch = new ArrayList<DescripcionPerfectMatch>();
+        public List<DescripcionAC> getDescripcionesPerfectMatch() {
+            if (descripcionesPerfectMatch == null) {
+                descripcionesPerfectMatch = new ArrayList<DescripcionAC>();
             }
-            return this.descripcionPerfectMatch;
+            return this.descripcionesPerfectMatch;
         }
 
     }

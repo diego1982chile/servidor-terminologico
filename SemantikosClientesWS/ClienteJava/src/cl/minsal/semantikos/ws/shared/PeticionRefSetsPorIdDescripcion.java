@@ -116,6 +116,6 @@ public class PeticionRefSetsPorIdDescripcion {
     }
 
     public Boolean getIncluyeEstablecimientos() {
-        return incluyeEstablecimientos;
+        return this.incluyeEstablecimientos;
     }
 }

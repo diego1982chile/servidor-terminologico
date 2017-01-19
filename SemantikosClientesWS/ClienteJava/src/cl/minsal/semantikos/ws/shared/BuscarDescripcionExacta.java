@@ -8,16 +8,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for conceptoPorIdDescripcionResponse complex type.
+ * <p>Java class for buscarDescripcionExacta complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="conceptoPorIdDescripcionResponse">
+ * &lt;complexType name="buscarDescripcionExacta">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.ws.semantikos.minsal.cl/}concepto" minOccurs="0"/>
+ *         &lt;element name="peticionPatron" type="{http://service.ws.semantikos.minsal.cl/}PatronDeBusqueda"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,36 +27,36 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "conceptoPorIdDescripcionResponse", propOrder = {
-    "concepto"
+@XmlType(name = "buscarDescripcionExacta", propOrder = {
+    "peticionPatron"
 })
-public class ConceptoPorIdDescripcionResponse {
+public class BuscarDescripcionExacta {
 
-    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
-    protected Concepto concepto;
+    @XmlElement(required = true)
+    protected PatronDeBusqueda peticionPatron;
 
     /**
-     * Gets the value of the concepto property.
+     * Gets the value of the peticionPatron property.
      * 
      * @return
      *     possible object is
-     *     {@link Concepto }
+     *     {@link PatronDeBusqueda }
      *     
      */
-    public Concepto getConcepto() {
-        return concepto;
+    public PatronDeBusqueda getPeticionPatron() {
+        return peticionPatron;
     }
 
     /**
-     * Sets the value of the concepto property.
+     * Sets the value of the peticionPatron property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Concepto }
+     *     {@link PatronDeBusqueda }
      *     
      */
-    public void setConcepto(Concepto value) {
-        this.concepto = value;
+    public void setPeticionPatron(PatronDeBusqueda value) {
+        this.peticionPatron = value;
     }
 
 }

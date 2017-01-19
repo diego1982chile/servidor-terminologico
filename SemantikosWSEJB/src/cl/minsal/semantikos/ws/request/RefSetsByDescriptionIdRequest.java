@@ -19,7 +19,7 @@ public class RefSetsByDescriptionIdRequest implements Serializable {
 
     private String idStablishment;
 
-    @XmlElement(required = false, defaultValue = "true", name = "incluyeEstablecimientos")
+    @XmlElement(required = true, defaultValue = "true", name = "incluyeEstablecimientos")
     public Boolean getIncludeInstitutions() {
         return includeInstitutions;
     }

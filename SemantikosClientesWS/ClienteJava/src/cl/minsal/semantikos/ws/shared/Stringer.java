@@ -9,11 +9,11 @@ public class Stringer {
 
     public static String toString(RespuestaBuscarTerminoGenerica respuestaBuscarTerminoGenerica) {
 
-        RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch descripcionesPerfectMatch =
-                respuestaBuscarTerminoGenerica.getDescripcionesPerfectMatch();
+        RespuestaBuscarTerminoGenerica.DescripcionPerfectMatch descripcionesPerfectMatch =
+                respuestaBuscarTerminoGenerica.getDescripcionPerfectMatch();
 
-        return "Perfect match (" + descripcionesPerfectMatch.getDescripcionPerfectMatch().size() + "): " +
-                descripcionesPerfectMatch.getDescripcionPerfectMatch() + ", No validas: " + Stringer.toString
+        return "Perfect match (" + descripcionesPerfectMatch.getDescripcionesPerfectMatch().size() + "): " +
+                descripcionesPerfectMatch.getDescripcionesPerfectMatch() + ", No validas: " + Stringer.toString
                 (respuestaBuscarTerminoGenerica.getDescripcionesNoValidas());
     }
 
@@ -26,9 +26,9 @@ public class Stringer {
         return result.append("]").toString();
     }
 
-    public static String toString(RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch descripcionesPerfectMatch) {
+    public static String toString(RespuestaBuscarTerminoGenerica.DescripcionPerfectMatch descripcionesPerfectMatch) {
         StringBuilder result = new StringBuilder("[");
-        for (DescripcionPerfectMatch descripcionPerfectMatch : descripcionesPerfectMatch.getDescripcionPerfectMatch()) {
+        for (DescripcionAC descripcionPerfectMatch : descripcionesPerfectMatch.getDescripcionesPerfectMatch()) {
             result.append(descripcionPerfectMatch);
         }
 

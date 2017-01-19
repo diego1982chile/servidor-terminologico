@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ import javax.persistence.PersistenceContext;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.System.currentTimeMillis;
 
 /**
  * @author Gusatvo Punucura on 13-07-16.
@@ -182,6 +185,8 @@ public class ConceptDAOImpl implements ConceptDAO {
     public List<ConceptSMTK> findConceptsBy(Category category) {
 
         logger.debug("ConceptDAO.findConceptsBy(" + category.getName() + ")");
+        long init = currentTimeMillis();
+
         List<ConceptSMTK> concepts = new ArrayList<>();
 
         /* Esta funcion recupera los ID's de los conceptos de una categoría */
@@ -206,6 +211,7 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         logger.debug("ConceptDAO.findConceptsBy(" + category.getName() + "): " + concepts.size() + " conceptos " +
                 "recuperados.");
+        logger.debug("ConceptDAO.findConceptsBy(" + category.getName() + "): {}ms", currentTimeMillis()-init);
         return concepts;
     }
 
@@ -934,7 +940,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public ConceptSMTK getPendingConcept() {
 
-        /* Se valida si ya fue recuperado */
+        /* Se valida si ya fue recuperado y se recupera de lo guardado en memoria*/
         if (PENDING_CONCEPT_RETRIEVED) {
             return PENDING_CONCEPT;
         }
@@ -951,8 +957,24 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         /* Luego se recuperan los conceptos de la categoría y se busca por el que tenga el FSN adecuado */
         List<ConceptSMTK> specialConcepts = this.findConceptsBy(specialConceptCategory);
+
         for (ConceptSMTK specialConcept : specialConcepts) {
-            if (specialConcept.getDescriptionFavorite().getTerm().equalsIgnoreCase(PENDING_CONCEPT_FSN_DESCRIPTION)) {
+            /* Se agregan sus descripciones */
+            specialConcept.setDescriptions(descriptionDAO.getDescriptionsByConcept(specialConcept));
+
+            /* Se valida que el concepto tenga la descripcion preferida (para evitar una excepcion en caso de que la BDD este corrupta */
+            Description descriptionFavorite;
+            try{
+                descriptionFavorite = specialConcept.getDescriptionFavorite();
+            }
+
+            /* Si no tiene se continua con el siguiente concepto */
+            catch (BusinessRuleException bre){
+                logger.error("El concepto " + specialConcept + " no posee descripción Preferida.");
+                continue;
+            }
+
+            if (descriptionFavorite.getTerm().equalsIgnoreCase(PENDING_CONCEPT_FSN_DESCRIPTION)) {
                 PENDING_CONCEPT = specialConcept;
                 PENDING_CONCEPT_RETRIEVED = true;
                 return specialConcept;

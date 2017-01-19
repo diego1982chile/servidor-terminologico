@@ -163,20 +163,41 @@ public class HTMLer {
         return result.append("\n</ol>").toString();
     }
 
-    public static String toHTML(RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch serviceResponse) {
+    public static String toHTML(RespuestaBuscarTerminoGenerica.DescripcionPerfectMatch serviceResponse) {
 
         /* Se verifica si hay algo que imprimir */
         if (serviceResponse == null
-                || serviceResponse.getDescripcionPerfectMatch() == null
-                || serviceResponse.getDescripcionPerfectMatch().isEmpty()) {
+                || serviceResponse.getDescripcionesPerfectMatch() == null
+                || serviceResponse.getDescripcionesPerfectMatch().isEmpty()) {
             return "<em>No hay descripciónes con perfect match</em>";
         }
 
-        StringBuilder result = new StringBuilder("<em>Perfect Match</em>: <br/><ol>");
-        for (DescripcionPerfectMatch description : serviceResponse.getDescripcionPerfectMatch()) {
-            result.append("<li>").append(description.getTermino()).append(", ID=").append(description
-                    .getIdDescripcion()).append("</li>");
+        StringBuilder result = new StringBuilder("<em>Perfect Match</em>: <br/>");
+        result.append("<ol>\n");
+        for (DescripcionAC description : serviceResponse.getDescripcionesPerfectMatch()) {
+            result.append("<li>").append(toHTML(description)).append("</li>");
         }
-        return result.append("</ol>").toString();
+        result.append("</ol>");
+
+        return result.toString();
+    }
+
+    /**
+     * Este método es responsable de imprimir una expresion de descripcion autocontenida.
+     *
+     * @param description La descripción a imprimir.
+     * @return Un String con una expresión HTML que representa, en una línea, la descripción autocontenida.
+     */
+    private static String toHTML(DescripcionAC description) {
+
+        StringBuilder result = new StringBuilder("<b>").append(description.getTermino()).append("</b> (").append
+                (description.getTipoDescripcion()).append("). DESCRIPTION ID=").append(description.getDescriptionID());
+
+        /* Info contextual ahora */
+        result.append(", en Concept ID='").append(description.getConceptID()).append("' de la categoría '").append
+                (description.getNombreCategoria()).append("', con Preferida = '").append(description
+                .getTerminoPreferida()).append("' (").append(description.getDescriptionIDPreferida()).append(").");
+
+        return result.toString();
     }
 }

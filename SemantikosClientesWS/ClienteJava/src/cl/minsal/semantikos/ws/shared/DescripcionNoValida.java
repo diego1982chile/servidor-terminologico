@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;sequence>
- *                   &lt;element name="descripcionSugerida" type="{http://service.ws.semantikos.minsal.cl/}DescripcionPerfectMatch" maxOccurs="unbounded" minOccurs="0"/>
+ *                   &lt;element name="descripcionSugerida" type="{http://service.ws.semantikos.minsal.cl/}DescripcionAC" maxOccurs="unbounded" minOccurs="0"/>
  *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -161,7 +161,7 @@ public class DescripcionNoValida {
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;sequence>
-     *         &lt;element name="descripcionSugerida" type="{http://service.ws.semantikos.minsal.cl/}DescripcionPerfectMatch" maxOccurs="unbounded" minOccurs="0"/>
+     *         &lt;element name="descripcionSugerida" type="{http://service.ws.semantikos.minsal.cl/}DescripcionAC" maxOccurs="unbounded" minOccurs="0"/>
      *       &lt;/sequence>
      *     &lt;/restriction>
      *   &lt;/complexContent>
@@ -176,7 +176,7 @@ public class DescripcionNoValida {
     })
     public static class DescripcionesSugeridas {
 
-        protected List<DescripcionPerfectMatch> descripcionSugerida;
+        protected List<DescripcionAC> descripcionSugerida;
 
         /**
          * Gets the value of the descripcionSugerida property.
@@ -196,13 +196,13 @@ public class DescripcionNoValida {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link DescripcionPerfectMatch }
+         * {@link DescripcionAC }
          * 
          * 
          */
-        public List<DescripcionPerfectMatch> getDescripcionSugerida() {
+        public List<DescripcionAC> getDescripcionSugerida() {
             if (descripcionSugerida == null) {
-                descripcionSugerida = new ArrayList<DescripcionPerfectMatch>();
+                descripcionSugerida = new ArrayList<DescripcionAC>();
             }
             return this.descripcionSugerida;
         }

@@ -93,8 +93,8 @@ public interface SearchService {
      * @param peticionBuscarTermino
      * @return
      *     returns cl.minsal.semantikos.ws.shared.RespuestaConceptosPorCategoria
-     * @throws IllegalInputFault_Exception
      * @throws NotFoundFault_Exception
+     * @throws IllegalInputFault_Exception
      */
     @WebMethod
     @WebResult(name = "respuestaConceptos", targetNamespace = "")
@@ -142,8 +142,8 @@ public interface SearchService {
      * @param peticionRefSetsPorIdDescripcion
      * @return
      *     returns cl.minsal.semantikos.ws.shared.RespuestaRefSets
-     * @throws IllegalInputFault_Exception
      * @throws NotFoundFault_Exception
+     * @throws IllegalInputFault_Exception
      */
     @WebMethod
     @WebResult(name = "refsetResponse", targetNamespace = "")
@@ -187,6 +187,23 @@ public interface SearchService {
         @WebParam(name = "peticionConceptosPorCategoria", targetNamespace = "")
         PeticionPorCategoria peticionConceptosPorCategoria)
         throws NotFoundFault_Exception
+    ;
+
+    /**
+     * 
+     * @param peticionPatron
+     * @return
+     *     returns cl.minsal.semantikos.ws.shared.RespuestaDescripciones
+     * @throws IllegalInputFault_Exception
+     */
+    @WebMethod
+    @WebResult(name = "respuestaBuscarTermino", targetNamespace = "")
+    @RequestWrapper(localName = "buscarDescripcionExacta", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.BuscarDescripcionExacta")
+    @ResponseWrapper(localName = "buscarDescripcionExactaResponse", targetNamespace = "http://service.ws.semantikos.minsal.cl/", className = "cl.minsal.semantikos.ws.shared.BuscarDescripcionExactaResponse")
+    public RespuestaDescripciones buscarDescripcionExacta(
+        @WebParam(name = "peticionPatron", targetNamespace = "")
+        PatronDeBusqueda peticionPatron)
+        throws IllegalInputFault_Exception
     ;
 
     /**
@@ -245,8 +262,8 @@ public interface SearchService {
      * @param peticionBuscarTermino
      * @return
      *     returns cl.minsal.semantikos.ws.shared.RespuestaBuscarTerminoGenerica
-     * @throws IllegalInputFault_Exception
      * @throws NotFoundFault_Exception
+     * @throws IllegalInputFault_Exception
      */
     @WebMethod
     @WebResult(name = "respuestaBuscarTermino", targetNamespace = "")

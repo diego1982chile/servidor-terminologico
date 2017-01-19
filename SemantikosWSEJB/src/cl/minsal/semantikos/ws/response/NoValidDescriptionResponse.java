@@ -18,33 +18,32 @@ import java.util.List;
 @XmlType(name = "DescripcionNoValida", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class NoValidDescriptionResponse implements Serializable {
 
-    @XmlElement(name="razonNoValido")
+    @XmlElement(name = "razonNoValido")
     private String noValidityCause;
-    @XmlElement(name="validez")
+    @XmlElement(name = "validez")
     private Boolean valid;
-    @XmlElementWrapper(name="descripcionesSugeridas")
-    @XmlElement(name="descripcionSugerida")
+    @XmlElementWrapper(name = "descripcionesSugeridas")
+    @XmlElement(name = "descripcionSugerida")
     private List<DescriptionSC> suggestedDescriptions;
-    @XmlElement(name="cantidadRegistros")
+    @XmlElement(name = "cantidadRegistros")
     private Integer numberOfEntries;
 
-    public NoValidDescriptionResponse() {}
+    public NoValidDescriptionResponse() {
+    }
 
     public NoValidDescriptionResponse(@NotNull NoValidDescription noValidDescription) {
         this.valid = false;
-        if ( noValidDescription.getObservationNoValid() != null ) {
+        if (noValidDescription.getObservationNoValid() != null) {
             this.noValidityCause = noValidDescription.getObservationNoValid().getDescription();
         }
-        if ( noValidDescription.getSuggestedConcepts() != null ) {
-            Integer size = noValidDescription.getSuggestedConcepts().size();
-            this.suggestedDescriptions = new ArrayList<>(size);
-            for (ConceptSMTK suggestedConcept : noValidDescription.getSuggestedConcepts()) {
-                this.suggestedDescriptions.add(new DescriptionSC(suggestedConcept.getDescriptionFavorite()));
-            }
-            this.numberOfEntries = size;
-        } else {
-            this.numberOfEntries = 0;
+
+        List<ConceptSMTK> suggestedConcepts = noValidDescription.getSuggestedConcepts();
+        this.numberOfEntries = suggestedConcepts.size();
+        this.suggestedDescriptions = new ArrayList<>();
+        for (ConceptSMTK suggestedConcept : suggestedConcepts) {
+            this.suggestedDescriptions.add(new DescriptionSC(suggestedConcept.getDescriptionFavorite()));
         }
+
     }
 
     public String getNoValidityCause() {

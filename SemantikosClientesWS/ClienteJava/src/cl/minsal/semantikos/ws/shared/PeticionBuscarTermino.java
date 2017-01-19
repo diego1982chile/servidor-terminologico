@@ -19,10 +19,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="termino" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="nombreCategoria" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="nombreRefSet" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="idEstablecimiento" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="nombreRefSet" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="termino" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -31,47 +31,21 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * 
  */
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PeticionBuscarTermino", propOrder = {
-    "termino",
     "nombreCategoria",
+    "idEstablecimiento",
     "nombreRefSet",
-    "idEstablecimiento"
+    "termino"
 })
 public class PeticionBuscarTermino {
 
-    private String termino;
-
-    private List<String> nombreCategoria;
-
-    private List<String> nombreRefSet;
-
-    private String idEstablecimiento;
-
-    /**
-     * Gets the value of the termino property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
+    protected List<String> nombreCategoria;
     @XmlElement(required = true)
-    public String getTermino() {
-        return termino;
-    }
-
-    /**
-     * Sets the value of the termino property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setTermino(String value) {
-        this.termino = value;
-    }
+    protected String idEstablecimiento;
+    protected List<String> nombreRefSet;
+    @XmlElement(required = true)
+    protected String termino;
 
     /**
      * Gets the value of the nombreCategoria property.
@@ -95,7 +69,6 @@ public class PeticionBuscarTermino {
      * 
      * 
      */
-    @XmlElement(required = false, name = "nombreCategorias")
     public List<String> getNombreCategoria() {
         if (nombreCategoria == null) {
             nombreCategoria = new ArrayList<String>();
@@ -103,8 +76,28 @@ public class PeticionBuscarTermino {
         return this.nombreCategoria;
     }
 
-    public void setNombreCategoria(List<String> nombreCategoria) {
-        this.nombreCategoria = nombreCategoria;
+    /**
+     * Gets the value of the idEstablecimiento property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getIdEstablecimiento() {
+        return idEstablecimiento;
+    }
+
+    /**
+     * Sets the value of the idEstablecimiento property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setIdEstablecimiento(String value) {
+        this.idEstablecimiento = value;
     }
 
     /**
@@ -129,41 +122,42 @@ public class PeticionBuscarTermino {
      * 
      * 
      */
-    @XmlElement(required = false, name = "nombreCategorias")
     public List<String> getNombreRefSet() {
         if (nombreRefSet == null) {
             nombreRefSet = new ArrayList<String>();
         }
         return this.nombreRefSet;
     }
-    public void setNombreRefSet(List<String> nombreRefSet) {
-        this.nombreRefSet = nombreRefSet;
-    }
 
     /**
-     * Gets the value of the idEstablecimiento property.
+     * Gets the value of the termino property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    @XmlElement(required = true)
-    public String getIdEstablecimiento() {
-        return idEstablecimiento;
+    public String getTermino() {
+        return termino;
     }
 
     /**
-     * Sets the value of the idEstablecimiento property.
+     * Sets the value of the termino property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setIdEstablecimiento(String value) {
-        this.idEstablecimiento = value;
+    public void setTermino(String value) {
+        this.termino = value;
     }
 
+    public void setNombreCategoria(List<String> nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
 
+    public void setNombreRefSet(List<String> nombreRefSet) {
+        this.nombreRefSet = nombreRefSet;
+    }
 }
