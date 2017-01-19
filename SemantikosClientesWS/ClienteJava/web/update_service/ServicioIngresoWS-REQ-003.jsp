@@ -4,7 +4,7 @@
 
 <html>
 <header>
-    <title>Semantikos - WS-REQ-031: Proponer un término para codificación</title>
+    <title>Semantikos - WS-REQ-003: Proponer un término para codificación</title>
 
     <!-- Bootstrap -->
     <link href="<%=request.getContextPath()%>/css/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet"
