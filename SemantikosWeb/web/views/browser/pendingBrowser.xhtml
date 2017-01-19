@@ -55,7 +55,7 @@
                                     </p:column>
 
                                     <p:column headerText="Término" sortBy="#{2}">
-                                        <h:outputText value="#{pendingTerm.term}"/>
+                                        <h:outputText value="#{pendingTerm.pattern}"/>
                                     </p:column>
 
                                     <p:column headerText="DESCID" style="width: 10%" sortBy="#{3}">
@@ -135,7 +135,7 @@
 
                                                 <p:outputLabel id="transLabelTerm" for="descidTransTerm" value="Termino"/>
                                                 <h:outputText id="descidTransTerm"
-                                                              value="#{pendingBrowserBean.termSelected.relatedDescription.term}"/>
+                                                              value="#{pendingBrowserBean.termSelected.relatedDescription.pattern}"/>
 
                                             </h:panelGrid>
 
@@ -149,7 +149,7 @@
                                                     <h:outputText value="#{pendingTerm.relatedDescription.descriptionId}"/>
                                                 </p:column>
                                                 <p:column headerText="Termino">
-                                                    <h:outputText value="#{pendingTerm.relatedDescription.term}"/>
+                                                    <h:outputText value="#{pendingTerm.relatedDescription.pattern}"/>
                                                 </p:column>
                                             </p:dataTable>
 
@@ -168,7 +168,7 @@
                                                                 converter="conceptConverter" var="concept"
                                                                 value="#{pendingBrowserBean.conceptSelected}"
                                                                 completeMethod="#{findConceptBean.getConceptSearchInputAndCategories}"
-                                                                itemLabel="#{concept.descriptionFavorite.term}"
+                                                                itemLabel="#{concept.descriptionFavorite.pattern}"
                                                                 itemValue="#{concept}"
                                                                 emptyMessage="No se encontraron conceptos relacionados"
                                                                 placeholder="Buscar concepto por término"
@@ -203,7 +203,7 @@
 
                                             <p:outputLabel id="transLabelCDES" for="descidTransCDES" value="Descripción"/>
                                             <h:outputText id="descidTransCDES"
-                                                          value="#{pendingBrowserBean.conceptSelected.descriptionFavorite.term}"/>
+                                                          value="#{pendingBrowserBean.conceptSelected.descriptionFavorite.pattern}"/>
 
                                             <p:outputLabel id="transLabelCC" for="descidTransCC" value="Categoría"/>
                                             <h:outputText id="descidTransCC"
@@ -233,8 +233,8 @@
                                         <h:panelGrid columns="4" columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
                                                      layout="grid" styleClass="ui-panelgrid-blank" width="100%">
 
-                                            <p:outputLabel id="termLabel" for="term" value="Término"/>
-                                            <p:inputText id="term" value="#{pendingBrowserBean.termSelected.term}" disabled="true"/>
+                                            <p:outputLabel id="termLabel" for="pattern" value="Término"/>
+                                            <p:inputText id="pattern" value="#{pendingBrowserBean.termSelected.pattern}" disabled="true"/>
 
                                             <p:outputLabel id="dateLabel" for="date" value="Fecha"/>
                                             <p:calendar id="date" value="#{pendingBrowserBean.termSelected.date}" disabled="true"/>
@@ -311,7 +311,7 @@
 
                                                 <p:outputLabel for="descidTransTerm2" value="Termino"/>
                                                 <h:outputText id="descidTransTerm2"
-                                                              value="#{pendingBrowserBean.termSelected.relatedDescription.term}"/>
+                                                              value="#{pendingBrowserBean.termSelected.relatedDescription.pattern}"/>
 
                                             </h:panelGrid>
 
@@ -325,7 +325,7 @@
                                                     <h:outputText value="#{pendingTerm.relatedDescription.descriptionId}"/>
                                                 </p:column>
                                                 <p:column headerText="Termino">
-                                                    <h:outputText value="#{pendingTerm.relatedDescription.term}"/>
+                                                    <h:outputText value="#{pendingTerm.relatedDescription.pattern}"/>
                                                 </p:column>
                                             </p:dataTable>
 

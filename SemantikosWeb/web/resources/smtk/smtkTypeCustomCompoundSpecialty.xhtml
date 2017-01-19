@@ -55,7 +55,7 @@
                                                 var="concept"
                                                 disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
                                                 value="#{conceptBean.conceptSelected}"
-                                                itemLabel="#{concept.descriptionFavorite.term}"
+                                                itemLabel="#{concept.descriptionFavorite.pattern}"
                                                 itemValue="#{concept}">
                                     <!-- Parámetros del validador -->
                                     <f:attribute name="concept" value="#{cc.attrs.concept}"  />
@@ -67,7 +67,7 @@
                                     </p:column>
 
                                     <p:column>
-                                        <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                        <h:outputText value="#{concept.descriptionFavorite.pattern}"/>
                                     </p:column>
                                     <p:ajax event="itemSelect"
                                             listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition,conceptBean.conceptSelected)}"
@@ -146,11 +146,11 @@
             </p:column>
 
             <p:column headerText="Profesión">
-                <h:outputText value="#{cc.attrs.concept.descriptionFavorite.term}"/>
+                <h:outputText value="#{cc.attrs.concept.descriptionFavorite.pattern}"/>
             </p:column>
 
             <p:column headerText="Subespecialidad">
-                <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
+                <h:outputText value="#{rel.target.descriptionFavorite.pattern}"/>
             </p:column>
 
             <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"

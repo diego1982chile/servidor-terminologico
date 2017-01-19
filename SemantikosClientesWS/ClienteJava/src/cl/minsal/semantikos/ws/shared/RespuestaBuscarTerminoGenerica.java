@@ -290,7 +290,7 @@ public class RespuestaBuscarTerminoGenerica {
     })
     public static class DescripcionesPerfectMatch {
 
-        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
+        @XmlElement(namespace = "")
         protected List<DescripcionPerfectMatch> descripcionPerfectMatch;
 
         /**

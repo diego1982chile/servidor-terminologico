@@ -35,14 +35,14 @@
                                 placeholder="#{cc.attrs.relationshipAttributeDefinition.name}..."
                                 converter="conceptConverter"
                                 value="#{conceptBean.conceptSMTKAttributeSelected}"
-                                itemLabel="#{smtk.descriptionFavorite.term}"
+                                itemLabel="#{smtk.descriptionFavorite.pattern}"
                                 itemValue="#{smtk}">
                     <!-- Parámetros del validador -->
                     <f:attribute name="category" value="#{cc.attrs.relationshipAttributeDefinition.targetDefinition}" />
 
                     <!---->
                     <p:column>
-                        <h:outputText value="#{smtk.descriptionFavorite.term}"/>
+                        <h:outputText value="#{smtk.descriptionFavorite.pattern}"/>
                     </p:column>
                     <p:ajax />
                     <p:ajax event="itemSelect"

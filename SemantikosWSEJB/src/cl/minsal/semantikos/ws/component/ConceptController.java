@@ -4,6 +4,7 @@ import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
+import cl.minsal.semantikos.ws.entities.DescriptionSC;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.mapping.ConceptMapper;
@@ -188,7 +189,7 @@ public class ConceptController {
         List<Category> categories = this.categoryController.findCategories(categoriesNames);
         List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
 
-        List<PerfectMatchDescriptionResponse> perfectMatchDescriptions = new ArrayList<>();
+        List<DescriptionSC> perfectMatchDescriptions = new ArrayList<>();
         List<NoValidDescriptionResponse> noValidDescriptions = new ArrayList<>();
         List<PendingDescriptionResponse> pendingDescriptions = new ArrayList<>();
 
@@ -206,12 +207,12 @@ public class ConceptController {
                 if (noValidDescription != null) {
                     noValidDescriptions.add(new NoValidDescriptionResponse(noValidDescription));
                 } else {
-                    perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
+                    perfectMatchDescriptions.add(new DescriptionSC(description));
                 }
             } else if ("Pendientes".equals(description.getConceptSMTK().getDescriptionFavorite().getTerm())) {
                 pendingDescriptions.add(new PendingDescriptionResponse(description));
             } else {
-                perfectMatchDescriptions.add(new PerfectMatchDescriptionResponse(description));
+                perfectMatchDescriptions.add(new DescriptionSC(description));
             }
         }
 

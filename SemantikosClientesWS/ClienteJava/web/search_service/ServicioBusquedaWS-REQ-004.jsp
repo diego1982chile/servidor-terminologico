@@ -25,8 +25,8 @@
 
         <!-- El término a buscar -->
         <div class="form-group">
-            <label for="term">Término</label>
-            <input id="term" name="term" type="text" class="form-control" placeholder="Ingrese el término a buscar"
+            <label for="pattern">Término</label>
+            <input id="pattern" name="pattern" type="text" class="form-control" placeholder="Ingrese el término a buscar"
                    required="required">
         </div>
 

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.List;
 
 /**
  * @author Andres Farias on 2016-11-17.
@@ -38,5 +39,16 @@ public class DescriptionController {
         /* Y se retorna la respuesta */
         logger.debug("Descripcion con DESCRIPCION_ID=" + descriptionId + " tiene " + description.getUses() + " usos.");
         return new DescriptionResponse(description);
+    }
+
+    /**
+     * Este método es responsable de buscar descripciones cuyo término coincida exactamente con el patrón
+     * <code>pattern</code> dado como parámetro.
+     *
+     * @param pattern El patrón de búsqueda exacta.
+     * @return Una lista de todas las descripciones que satisfacen las condiciones de búsqueda.
+     */
+    public List<Description> searchDescriptionsByExactPattern(String pattern) {
+        return descriptionManager.searchDescriptionsByExactTermMatch(pattern);
     }
 }

@@ -41,7 +41,7 @@
                                     converter="conceptSCTConverter"
                                     var="concept"
                                     value="#{conceptBean.conceptSCTSelected}"
-                                    itemLabel="#{concept.descriptionFSN.term}" itemValue="#{concept}"
+                                    itemLabel="#{concept.descriptionFSN.pattern}" itemValue="#{concept}"
                                     disabled="#{not cc.attrs.concept.editable}"
                                     rendered="#{conceptBean.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size()==0}">
 
@@ -51,7 +51,7 @@
                         <!---->
 
                         <p:column>
-                            <h:outputText value="#{concept.descriptionFSN.term}"/>
+                            <h:outputText value="#{concept.descriptionFSN.pattern}"/>
                         </p:column>
 
                         <p:ajax update="@(.concept), @(.conceptHeader),:mainForm:editMsgs" event="itemSelect"
@@ -79,7 +79,7 @@
                         </div>
 
                         <div class="ui-g-12 ui-md-6 ui-lg-3">
-                            <p:inputText style="width: 70%;" disabled="true" id="itemSelected" value="#{relationship.target.descriptionFSN.term}" />
+                            <p:inputText style="width: 70%;" disabled="true" id="itemSelected" value="#{relationship.target.descriptionFSN.pattern}" />
                             <p:commandButton icon="fa fa-trash" title="Eliminar"
                                              action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}"
                                              styleClass="ui-datepicker-trigger ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"
@@ -139,7 +139,7 @@
                         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                             <p:selectOneMenu value="#{sctBean.searchOption}">
-                                <f:selectItem itemLabel="Buscar por Término" itemValue="term" />
+                                <f:selectItem itemLabel="Buscar por Término" itemValue="pattern" />
                                 <f:selectItem itemLabel="Buscar por ConceptId" itemValue="conceptId" />
                                 <p:ajax event="itemSelect" update="@(.attributes_#{cc.attrs.relationshipDefinition.id})" />
                             </p:selectOneMenu>
@@ -157,11 +157,11 @@
                                                 forceSelection="true"
                                                 id="findConceptSCT2" scrollHeight="200" size="5"
                                                 completeMethod="#{sctBean.getConceptSearchInput}"
-                                                placeholder="#{sctBean.searchOption eq 'term'? 'Ingrese término...': 'Ingrese conceptId...'}"
+                                                placeholder="#{sctBean.searchOption eq 'pattern'? 'Ingrese término...': 'Ingrese conceptId...'}"
                                                 converter="conceptSCTConverter"
                                                 var="concept"
                                                 value="#{conceptBean.conceptSCTSelected}"
-                                                itemLabel="#{concept.descriptionFSN.term}" itemValue="#{concept}"
+                                                itemLabel="#{concept.descriptionFSN.pattern}" itemValue="#{concept}"
                                                 disabled="#{not cc.attrs.concept.editable}">
 
                                     <!-- Parámetros del validador -->
@@ -170,7 +170,7 @@
                                     <!---->
 
                                     <p:column style="width: 500px">
-                                        <h:outputText value="#{concept.descriptionFSN.term}"/>
+                                        <h:outputText value="#{concept.descriptionFSN.pattern}"/>
                                     </p:column>
 
                                     <p:ajax event="itemSelect"
@@ -260,7 +260,7 @@
             </p:columns>
 
             <p:column headerText="Descripción">
-                <h:outputText value="#{rel.target.descriptionFSN.term}"/>
+                <h:outputText value="#{rel.target.descriptionFSN.pattern}"/>
             </p:column>
 
             <p:column headerText="Eliminar" style="width:60px;text-align: center;" rendered="#{cc.attrs.concept.editable}">

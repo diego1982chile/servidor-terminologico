@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Esta clase representa al Concepto Semantikos.
  *
- * @author Diego Soto.
+ * @author Andrés Farías.
  */
 public class ConceptSMTK extends PersistentEntity implements Target, AuditableEntity {
 

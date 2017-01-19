@@ -96,10 +96,10 @@
             <p:column headerText="Término">
                 <div style="text-align: center;">
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{description.term}"/></f:facet>
+                        <f:facet name="output"><h:outputText value="#{description.pattern}"/></f:facet>
                         <f:facet name="input"><p:inputText id="otrasTermino"
                                                            validator="#{validatorBean.validateTerm}"
-                                                           value="#{description.term}"
+                                                           value="#{description.pattern}"
                                                            style="width:100%"
                         disabled="#{conceptBean.concept.modeled}">
                             <f:attribute name="description" value="#{description}"/>
@@ -241,7 +241,7 @@
                         Término:
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-10">
-                        <h:outputText value="#{conceptBean.descriptionToTranslate.term}"/>
+                        <h:outputText value="#{conceptBean.descriptionToTranslate.pattern}"/>
                     </div>
                 </div>
 
@@ -258,7 +258,7 @@
                                         converter="conceptConverter" var="concept"
                                         value="#{conceptBean.conceptSMTKTranslateDes}"
                                         completeMethod="#{findConceptBean.getConceptSearchInputAndCategories}"
-                                        itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
+                                        itemLabel="#{concept.descriptionFavorite.pattern}" itemValue="#{concept}"
                                         emptyMessage="No se encontraron conceptos relacionados"
                                         placeholder="Buscar concepto por término"
                                         disabled="#{conceptBean.conceptSMTKTranslateDes!=null}"
@@ -300,7 +300,7 @@
                         Descripción:
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-4">
-                        <h:outputText value="#{conceptBean.conceptSMTKTranslateDes.descriptionFavorite.term}"/>
+                        <h:outputText value="#{conceptBean.conceptSMTKTranslateDes.descriptionFavorite.pattern}"/>
                     </div>
                 </div>
 
@@ -364,7 +364,7 @@
                                 Término:
                             </div>
                             <div class="ui-g-12 ui-md-6 ui-lg-10">
-                                <h:outputText value="#{conceptBean.descriptionToTranslate.term}"/>
+                                <h:outputText value="#{conceptBean.descriptionToTranslate.pattern}"/>
                             </div>
                         </div>
 
@@ -388,7 +388,7 @@
                                 <h:outputText value="Descripción:"/>
                             </div>
                             <div class="ui-g-12 ui-md-6 ui-lg-9">
-                                <h:outputText value="#{conceptBean.conceptSMTKNotValid.descriptionFavorite.term}"/>
+                                <h:outputText value="#{conceptBean.conceptSMTKNotValid.descriptionFavorite.pattern}"/>
                             </div>
                         </div>
 
@@ -449,7 +449,7 @@
                                 converter="conceptConverter" var="concept"
                                 value="#{conceptBean.conceptSuggested}"
                                 completeMethod="#{findConceptBean.findConceptAllCategories}"
-                                itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
+                                itemLabel="#{concept.descriptionFavorite.pattern}" itemValue="#{concept}"
                                 emptyMessage="No se encontraron conceptos relacionados"
                                 placeholder="Buscar concepto por término"
                                 forceSelection="true">
@@ -464,7 +464,7 @@
                                      <h:outputText value="#{conceptSuggest.conceptID}"></h:outputText>
                                  </p:column>
                                  <p:column headerText="Descripcion">
-                                     <h:outputText value="#{conceptSuggest.descriptionFavorite.term}"></h:outputText>
+                                     <h:outputText value="#{conceptSuggest.descriptionFavorite.pattern}"></h:outputText>
                                  </p:column>
                                  <p:column headerText="Categoria">
                                      <h:outputText value="#{conceptSuggest.category.name}"></h:outputText>

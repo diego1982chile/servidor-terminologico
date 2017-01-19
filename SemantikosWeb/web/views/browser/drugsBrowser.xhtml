@@ -28,7 +28,7 @@
                                 <p:treeTable id="treeDocs" value="#{drugsBrowserBean.root}" var="concept">
 
                                     <p:column headerText="Término" styleClass="#{concept.equals(drugsBrowserBean.conceptSelected) ? 'matchedConcept':''}">
-                                        <h:outputText value="#{concept.descriptionFavorite.term}" />
+                                        <h:outputText value="#{concept.descriptionFavorite.pattern}" />
                                         <p:commandLink actionListener="#{drugsBrowserBean.setConceptSelected(concept)}" update=":browserForm"
                                                        rendered="#{not concept.equals(drugsBrowserBean.conceptSelected)}">
                                             <i class="fa fa-search" />
@@ -86,7 +86,7 @@
                                                 converter="conceptConverter"
                                                 var="concept"
                                                 value="#{drugsBrowserBean.conceptSelected}"
-                                                itemLabel="#{concept.descriptionFavorite.term}"
+                                                itemLabel="#{concept.descriptionFavorite.pattern}"
                                                 itemValue="#{concept}">
 
                                     <p:column>
@@ -94,7 +94,7 @@
                                     </p:column>
 
                                     <p:column>
-                                        <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                        <h:outputText value="#{concept.descriptionFavorite.pattern}"/>
                                     </p:column>
 
                                     <p:column>

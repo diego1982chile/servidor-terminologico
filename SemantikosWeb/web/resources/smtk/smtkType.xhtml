@@ -61,7 +61,7 @@
                 </p:column>
 
                 <p:column headerText="Descripcion">
-                    <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                    <h:outputText value="#{concept.descriptionFavorite.pattern}"/>
                 </p:column>
                 <p:column headerText="Agregar" style="width:60px;text-align: center;">
                     <p:commandButton
@@ -92,7 +92,7 @@
                 </p:column>
 
                 <p:column headerText="Descripción">
-                    <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
+                    <h:outputText value="#{rel.target.descriptionFavorite.pattern}"/>
                 </p:column>
 
                 <p:column headerText="Orden">
@@ -150,7 +150,7 @@
                                             disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
                                             rendered="#{cc.attrs.concept.editable}"
                                             value="#{conceptBean.conceptSelected}"
-                                            itemLabel="#{concept.descriptionFavorite.term}"
+                                            itemLabel="#{concept.descriptionFavorite.pattern}"
                                             itemValue="#{concept}">
                                 <!-- Parámetros del validador -->
                                 <f:attribute name="concept" value="#{cc.attrs.concept}"  />
@@ -162,7 +162,7 @@
                                 </p:column>
 
                                 <p:column>
-                                    <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                    <h:outputText value="#{concept.descriptionFavorite.pattern}"/>
                                 </p:column>
                                 <p:ajax update="@(.panel_#{cc.attrs.relationshipDefinition.id})" event="itemSelect"
                                         listener="#{conceptBean.addRelationship(cc.attrs.relationshipDefinition,conceptBean.conceptSelected)}"
@@ -193,7 +193,7 @@
             </p:column>
 
             <p:column headerText="Descripción">
-                <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
+                <h:outputText value="#{rel.target.descriptionFavorite.pattern}"/>
             </p:column>
 
 
@@ -247,7 +247,7 @@
                                                 var="concept"
                                                 disabled="#{relationshipBean.limitRelationship(cc.attrs.relationshipDefinition)}"
                                                 value="#{conceptBean.conceptSelected}"
-                                                itemLabel="#{concept.descriptionFavorite.term}"
+                                                itemLabel="#{concept.descriptionFavorite.pattern}"
                                                 itemValue="#{concept}">
                                     <!-- Parámetros del validador -->
                                     <f:attribute name="concept" value="#{cc.attrs.concept}"  />
@@ -259,7 +259,7 @@
                                     </p:column>
 
                                     <p:column>
-                                        <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                        <h:outputText value="#{concept.descriptionFavorite.pattern}"/>
                                     </p:column>
                                     <p:ajax event="itemSelect"
                                             listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition,conceptBean.conceptSelected)}"
@@ -338,7 +338,7 @@
             </p:column>
 
             <p:column headerText="Descripción">
-                <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
+                <h:outputText value="#{rel.target.descriptionFavorite.pattern}"/>
             </p:column>
 
             <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
@@ -399,7 +399,7 @@
                                                     converter="conceptConverter"
                                                     var="concept"
                                                     value="#{conceptBean.conceptSelected}"
-                                                    itemLabel="#{concept.descriptionFavorite.term}" itemValue="#{concept}"
+                                                    itemLabel="#{concept.descriptionFavorite.pattern}" itemValue="#{concept}"
                                                     disabled="#{not cc.attrs.concept.editable}"
                                                     rendered="#{conceptBean.concept.getRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size()==0}">
 
@@ -412,7 +412,7 @@
                                         </p:column>
 
                                         <p:column>
-                                            <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                            <h:outputText value="#{concept.descriptionFavorite.pattern}"/>
                                         </p:column>
 
                                         <p:ajax update="@(.concept), @(.conceptHeader),:mainForm:editMsgs" event="itemSelect"
@@ -456,7 +456,7 @@
                                     <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 
                                         <p:outputPanel styleClass="search">
-                                            <p:inputText disabled="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.term}" />
+                                            <p:inputText disabled="true" id="itemSelected" value="#{relationship.target.descriptionFavorite.pattern}" />
 
                                             <p:commandLink process="@this"
                                                            update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"

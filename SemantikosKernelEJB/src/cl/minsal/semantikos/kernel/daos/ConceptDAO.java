@@ -42,7 +42,8 @@ public interface ConceptDAO {
      * @param pageNumber La página de resultados que se desea obtener.
      * @return Una lista de <code>ConceptSMTK</code> que cumplen los criterios de búsqueda.
      */
-    public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, boolean modeled, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, boolean modeled, int pageSize, int
+            pageNumber);
 
     /**
      * Este método es responsable de recuperar los conceptos que coincidan con un cierto patrón (<code>pattern</code>)
@@ -50,7 +51,8 @@ public interface ConceptDAO {
      *
      * @return
      */
-    public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, Long[] refsets, boolean modeled, int pageSize, int pageNumber);
+    public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, Long[] refsets, boolean modeled, int
+            pageSize, int pageNumber);
 
     /**
      * Este método es responsable de recuperar los conceptos que pertenecen a un conjunto de categorías.
@@ -79,7 +81,8 @@ public interface ConceptDAO {
 
     public List<ConceptSMTK> findConceptsBy(String[] pattern, boolean isModeled, int pageSize, int pageNumber);
 
-    public List<ConceptSMTK> findConceptsBy(String PatternOrConceptId, Long[] Category, int pageNumber, int pageSize, boolean isModeled);
+    public List<ConceptSMTK> findConceptsBy(String PatternOrConceptId, Long[] Category, int pageNumber, int pageSize,
+                                            boolean isModeled);
 
     public int countConceptBy(String[] Pattern, Long[] category, boolean isModeled);
 
@@ -105,6 +108,12 @@ public interface ConceptDAO {
      */
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptID);
 
+    /**
+     * Este método es responsable de cargar un concepto desde la base de datos a partir de su ID (PK).
+     *
+     * @param id La llave primaria del concepto que se busca.
+     * @return El concepto con su información básica, no incluye: descripciones, relaciones...
+     */
     public ConceptSMTK getConceptByID(long id);
 
     public ConceptSMTK findConceptsBy(Category category, long id);
@@ -137,7 +146,8 @@ public interface ConceptDAO {
      * @param aString                   El valor buleano.
      * @return Una lista de conceptos con el atributo en el valor deseado.
      */
-    public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, RelationshipDefinition booleanBasicTypeAttribute, String aString);
+    public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, RelationshipDefinition
+            booleanBasicTypeAttribute, String aString);
 
     /**
      * Este método es responsable de encontrar los conceptos de una cierta categoría que poseen un atributo buleano con
@@ -150,7 +160,9 @@ public interface ConceptDAO {
      * @param aString                  El valor buleano.
      * @return Una lista de conceptos con el atributo en el valor deseado.
      */
-    public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, ArrayList<RefSet> refsets, RelationshipDefinition stringBasicTypeAttribute, String aString);
+    public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, ArrayList<RefSet> refsets,
+                                                             RelationshipDefinition stringBasicTypeAttribute, String
+                                                                     aString);
 
     public Integer countModeledConceptsBy(RefSet refSet);
 

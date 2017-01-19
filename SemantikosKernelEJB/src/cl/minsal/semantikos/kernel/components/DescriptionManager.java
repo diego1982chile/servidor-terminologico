@@ -116,19 +116,37 @@ public interface DescriptionManager {
      * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
      * parámetro en cada una de las categorías indicadas.
      *
-     * @param term       El término buscado.
+     * @param pattern       El término buscado.
      * @param categories Las categorías en donde se realiza la búsqueda.
      * @return Todas las descripciones que poseen exactamente el término <code>term</code>.
      */
-    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories);
+    public List<Description> searchDescriptionsByTerm(String pattern, List<Category> categories);
 
     /**
-     * Este método es responsable de buscar y retornar todas las descripciones que contienen el término dado como
-     * parámetro en cada una de las categorías y refsets indicadas.
+     * Este método es responsable de buscar y retornar todas las descripciones cuyo término coincide exactamente con
+     * el patrón dado como parámetro en cada una de las categorías y refsets indicadas.
+     * <p>
+     * <ul>
+     * <li>Si la lista de categorías está vacía, el término puede pertenecer a cualquier categoría.</li>
+     * <li>Si la lista de refsets está vacía, el término puede encontrarse en cualquera.</li>
+     * </ul>
      *
+     * @param pattern    El patrón de búsqueda.
+     * @param categories Una lista, eventualmente vacía, de categorías que definen el ámbito de la búsqueda.
+     * @param refSets    Una lista, eventualmente vacía, de refsets que definen el ámbito de la búsqueda..
      * @return Una lista con descripciones que hacen perfect match.
      */
-    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets);
+    List<Description> searchDescriptionsByTerm(String pattern, List<Category> categories, List<RefSet> refSets);
+
+    /**
+     * Este método es responsable de buscar descripciones cuyo término coincida exactamente con el patrón
+     * <code>pattern</code> dado como parámetro.
+     *
+     * @param pattern El patrón de búsqueda exacta.
+     * @return Una lista de todas las descripciones que satisfacen las condiciones de búsqueda.
+     * @throws IllegalArgumentException Si el patrón de búsqueda es nulo, o de menos de 3 caracteres.
+     */
+    List<Description> searchDescriptionsByExactTermMatch(String pattern);
 
     /**
      * Este método es responsable de hacer que una descripción sea no válida en el sistema.

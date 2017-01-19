@@ -42,6 +42,11 @@ public class HTMLer {
     }
 
     private static String toHTML(Concepto.RefSets refSets) {
+
+        if (refSets == null) {
+            return "<em>Sin Refsets</em>.";
+        }
+
         StringBuilder result = new StringBuilder("Refsets:<br />\n<ol>");
         for (RefSet refSet : refSets.getRefSet()) {
             result.append("<li>").append(refSet.getNombre()).append(" (de ").append
@@ -51,7 +56,17 @@ public class HTMLer {
 
     }
 
+    /**
+     * Este método imprime una lista ordenada con los crossmaps directos del concepto.
+     *
+     * @param crossmapsDirectos Los crossmaps directos del concepto.
+     * @return Una expresion HTML con los crossmaps.
+     */
     private static String toHTML(Concepto.CrossmapsDirectos crossmapsDirectos) {
+
+        if (crossmapsDirectos == null) {
+            return "<em>Sin crossmaps directos</em>";
+        }
 
         StringBuilder result = new StringBuilder("Crossmaps Directos:<br />\n<ol>");
         for (CrossmapSetMember crossmapSetMember : crossmapsDirectos.getCrossmapDirecto()) {
@@ -149,19 +164,18 @@ public class HTMLer {
     }
 
     public static String toHTML(RespuestaBuscarTerminoGenerica.DescripcionesPerfectMatch serviceResponse) {
-        if (serviceResponse == null) {
-            return "";
-        }
 
-        List<DescripcionPerfectMatch> descripcionPerfectMatch = serviceResponse.getDescripcionPerfectMatch();
-        if (descripcionPerfectMatch == null || descripcionPerfectMatch.isEmpty()) {
-            return "";
+        /* Se verifica si hay algo que imprimir */
+        if (serviceResponse == null
+                || serviceResponse.getDescripcionPerfectMatch() == null
+                || serviceResponse.getDescripcionPerfectMatch().isEmpty()) {
+            return "<em>No hay descripciónes con perfect match</em>";
         }
 
         StringBuilder result = new StringBuilder("<em>Perfect Match</em>: <br/><ol>");
-        for (DescripcionPerfectMatch description : descripcionPerfectMatch) {
-            result.append("<li>").append(description.getTermino()).append(", ID=" + description.getIdDescripcion())
-                    .append("</li>");
+        for (DescripcionPerfectMatch description : serviceResponse.getDescripcionPerfectMatch()) {
+            result.append("<li>").append(description.getTermino()).append(", ID=").append(description
+                    .getIdDescripcion()).append("</li>");
         }
         return result.append("</ol>").toString();
     }

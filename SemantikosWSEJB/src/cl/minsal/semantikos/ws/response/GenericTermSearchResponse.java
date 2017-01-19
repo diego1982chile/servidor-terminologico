@@ -1,5 +1,7 @@
 package cl.minsal.semantikos.ws.response;
 
+import cl.minsal.semantikos.ws.entities.DescriptionSC;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.List;
@@ -12,9 +14,9 @@ import java.util.List;
 @XmlType(name = "RespuestaBuscarTerminoGenerica", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class GenericTermSearchResponse implements Serializable {
 
-    @XmlElementWrapper(name="descripcionesPerfectMatch")
-    @XmlElement(name="descripcionPerfectMatch")
-    private List<PerfectMatchDescriptionResponse> perfectMatchDescriptions;
+    @XmlElementWrapper(name="descripcionPerfectMatch")
+    @XmlElement(name="descripcionesPerfectMatch")
+    private List<DescriptionSC> perfectMatchDescriptions;
 
     @XmlElementWrapper(name="descripcionesNoValidas")
     @XmlElement(name="descripcionNoValida")
@@ -24,11 +26,11 @@ public class GenericTermSearchResponse implements Serializable {
     @XmlElement(name="descripcionPendiente")
     private List<PendingDescriptionResponse> pendingDescriptions;
 
-    public List<PerfectMatchDescriptionResponse> getPerfectMatchDescriptions() {
+    public List<DescriptionSC> getPerfectMatchDescriptions() {
         return perfectMatchDescriptions;
     }
 
-    public void setPerfectMatchDescriptions(List<PerfectMatchDescriptionResponse> perfectMatchDescriptions) {
+    public void setPerfectMatchDescriptions(List<DescriptionSC> perfectMatchDescriptions) {
         this.perfectMatchDescriptions = perfectMatchDescriptions;
     }
 

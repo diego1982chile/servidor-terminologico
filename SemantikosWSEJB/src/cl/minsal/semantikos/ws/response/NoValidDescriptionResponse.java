@@ -1,8 +1,8 @@
 package cl.minsal.semantikos.ws.response;
 
 import cl.minsal.semantikos.model.ConceptSMTK;
-import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.NoValidDescription;
+import cl.minsal.semantikos.ws.entities.DescriptionSC;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
@@ -24,7 +24,7 @@ public class NoValidDescriptionResponse implements Serializable {
     private Boolean valid;
     @XmlElementWrapper(name="descripcionesSugeridas")
     @XmlElement(name="descripcionSugerida")
-    private List<PerfectMatchDescriptionResponse> suggestedDescriptions;
+    private List<DescriptionSC> suggestedDescriptions;
     @XmlElement(name="cantidadRegistros")
     private Integer numberOfEntries;
 
@@ -39,7 +39,7 @@ public class NoValidDescriptionResponse implements Serializable {
             Integer size = noValidDescription.getSuggestedConcepts().size();
             this.suggestedDescriptions = new ArrayList<>(size);
             for (ConceptSMTK suggestedConcept : noValidDescription.getSuggestedConcepts()) {
-                this.suggestedDescriptions.add(new PerfectMatchDescriptionResponse(suggestedConcept.getDescriptionFavorite()));
+                this.suggestedDescriptions.add(new DescriptionSC(suggestedConcept.getDescriptionFavorite()));
             }
             this.numberOfEntries = size;
         } else {
@@ -63,11 +63,11 @@ public class NoValidDescriptionResponse implements Serializable {
         this.valid = valid;
     }
 
-    public List<PerfectMatchDescriptionResponse> getSuggestedDescriptions() {
+    public List<DescriptionSC> getSuggestedDescriptions() {
         return suggestedDescriptions;
     }
 
-    public void setSuggestedDescriptions(List<PerfectMatchDescriptionResponse> suggestedDescriptions) {
+    public void setSuggestedDescriptions(List<DescriptionSC> suggestedDescriptions) {
         this.suggestedDescriptions = suggestedDescriptions;
     }
 

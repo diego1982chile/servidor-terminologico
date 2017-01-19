@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,15 +30,20 @@ import static java.sql.Types.TIMESTAMP;
 @Startup
 public class DescriptionDAOImpl implements DescriptionDAO {
 
-    /** El logger para esta clase */
+    /**
+     * El logger para esta clase
+     */
     private static final Logger logger = LoggerFactory.getLogger(DescriptionDAOImpl.class);
 
     @EJB
     private ConceptDAO conceptDAO;
 
+    private DescriptionTypeFactory descTypeFactory = DescriptionTypeFactory.getInstance();
+
     @PostConstruct
     private void init() {
         this.refreshDescriptionTypes();
+        this.descTypeFactory = DescriptionTypeFactory.getInstance();
     }
 
     @EJB
@@ -115,7 +121,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             logger.debug("Descripciones recuperadas con ID=" + id);
             ResultSet rs = call.getResultSet();
             while (rs.next()) {
-                description = createDescriptionFromResultSet(rs, null);
+                description = createDescriptionFromResultSet(rs);
 
             }
 
@@ -131,7 +137,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @Override
     public Description getDescriptionByDescriptionID(String descriptionId) {
         ConnectionBD connect = new ConnectionBD();
-        Description description= null;
+        Description description = null;
 
         String sql = "{call semantikos.get_description_by_business_id(?)}";
         try (Connection connection = connect.getConnection();
@@ -143,7 +149,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             logger.debug("Descripciones recuperadas con Business ID=" + descriptionId);
             ResultSet rs = call.getResultSet();
             if (rs.next()) {
-                description = createDescriptionFromResultSet(rs, null);
+                description = createDescriptionFromResultSet(rs);
             } else {
                 throw new IllegalArgumentException("No existe una descripción con DESCRIPTION_ID = " + descriptionId);
             }
@@ -155,6 +161,38 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         }
 
         return description;
+    }
+
+    @Override
+    public List<Description> searchDescriptionsByExactTerm(String pattern) {
+
+        /* Se mide el tiempo de inicio */
+        long init = currentTimeMillis();
+
+        ConnectionBD connect = new ConnectionBD();
+        List<Description> descriptions = new ArrayList<>();
+        String sql = "{call semantikos.search_descriptions_by_exact_pattern_match(?)}";
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.setString(1, pattern);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                Description description = createDescriptionFromResultSet(rs);
+                descriptions.add(description);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al recuperar descripciones de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(e);
+        }
+
+        logger.info("DescriptionDAO.searchDescriptionsByExactTerm(" + pattern + ") => " + descriptions.size() + " descripciones");
+        logger.debug("DescriptionDAO.searchDescriptionsByExactTerm(" + pattern + ") :: " + (currentTimeMillis()-init) + "ms");
+        return descriptions;
     }
 
     @Override
@@ -206,7 +244,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             DescriptionTypeDTO[] theDescriptionTypes = new DescriptionTypeDTO[0];
             if (rs.next()) {
                 String resultJSON = rs.getString(1);
-                theDescriptionTypes = mapper.readValue(underScoreToCamelCaseJSON(resultJSON), DescriptionTypeDTO[].class);
+                theDescriptionTypes = mapper.readValue(underScoreToCamelCaseJSON(resultJSON), DescriptionTypeDTO[]
+                        .class);
             }
 
             if (theDescriptionTypes.length > 0) {
@@ -217,7 +256,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             }
 
             /* Se setea la lista de Tipos de descripción */
-            DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypes);
+            descTypeFactory.setDescriptionTypes(descriptionTypes);
         } catch (SQLException e) {
             String errorMsg = "Error al intentar recuperar Description Types de la BDD.";
             logger.error(errorMsg, e);
@@ -305,8 +344,10 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             call.setLong(1, description.getId());
             call.execute();
         } catch (SQLException e) {
-            logger.error("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue eliminada.", e);
-            throw new EJBException("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue eliminada.", e);
+            logger.error("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue eliminada" +
+                    ".", e);
+            throw new EJBException("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue " +
+                    "eliminada.", e);
         }
     }
 
@@ -335,24 +376,28 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             ResultSet rs = call.getResultSet();
             if (rs.next()) {
                 if (!rs.getBoolean(1)) {
-                    throw new EJBException("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue actualizada.");
+                    throw new EJBException("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " " +
+                            "no fue actualizada.");
                 }
             } else {
-                String errorMsg = "La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue actualizada.";
+                String errorMsg = "La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue " +
+                        "actualizada.";
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
             rs.close();
         } catch (SQLException e) {
-            logger.error("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue actualizada.", e);
-            throw new EJBException("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue actualizada.", e);
+            logger.error("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue actualizada" +
+                    ".", e);
+            throw new EJBException("La descripción con DESCRIPTION_ID=" + description.getDescriptionId() + " no fue " +
+                    "actualizada.", e);
         }
     }
 
     @Override
     public List<ObservationNoValid> getObservationsNoValid() {
         ConnectionBD connect = new ConnectionBD();
-        List<ObservationNoValid> observationNoValids= new ArrayList<>();
+        List<ObservationNoValid> observationNoValids = new ArrayList<>();
         String sql = "{call semantikos.get_all_not_valid_observation()}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
@@ -361,7 +406,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             while (rs.next()) {
                 Long id = rs.getLong("id");
                 String description = rs.getString("description");
-                observationNoValids.add(new ObservationNoValid(id,description));
+                observationNoValids.add(new ObservationNoValid(id, description));
             }
 
         } catch (SQLException e) {
@@ -376,7 +421,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     @Override
     public ObservationNoValid getObservationNoValidBy(Description description) {
         ConnectionBD connect = new ConnectionBD();
-        ObservationNoValid observationNoValid= null;
+        ObservationNoValid observationNoValid = null;
         String sql = "{call semantikos.get_observation_no_valid_by_description(?)}";
         try (Connection connection = connect.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
@@ -387,7 +432,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             while (rs.next()) {
                 Long id = rs.getLong("id");
                 String obsDescription = rs.getString("description");
-                observationNoValid = new ObservationNoValid(id,obsDescription);
+                observationNoValid = new ObservationNoValid(id, obsDescription);
             }
 
         } catch (SQLException e) {
@@ -471,7 +516,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             logger.debug("Búsqueda exacta descripciones con término =" + term);
             ResultSet rs = call.getResultSet();
             while (rs.next()) {
-                Description description = createDescriptionFromResultSet(rs, null);
+                Description description = createDescriptionFromResultSet(rs);
                 descriptions.add(description);
             }
 
@@ -505,7 +550,7 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
             ResultSet rs = call.getResultSet();
             while (rs.next()) {
-                Description description = createDescriptionFromResultSet(rs, null);
+                Description description = createDescriptionFromResultSet(rs);
                 descriptions.add(description);
             }
 
@@ -516,7 +561,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         }
 
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
-        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format
+                ("%.2f", (currentTimeMillis() - init) / 1000.0));
         return descriptions;
     }
 
@@ -531,17 +577,29 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         return listIDs.toArray(new Long[entities.length]);
     }
 
-    private Description createDescriptionFromResultSet(ResultSet resultSet, ConceptSMTK conceptSMTK) throws SQLException {
+    /**
+     * Este método es responsable de crear una descripción a partir de un resultset, recibiéndo además, el objeto de
+     * negocio que representa el concepto que contiene la descripción. El método verifica que la llave primaria del
+     * concepto coincida con el ID contenido en la descripción.
+     *
+     * @param resultSet   El resulset a partir del cual se construye la descripción.
+     * @param conceptSMTK El concepto asociado a la descripción, pero que no la contiene en su lista.
+     * @return El objeto de negocio descripción.
+     * @throws SQLException             Si hay un problema al manipular el resultset.
+     * @throws IllegalArgumentException Si el concepto dado como parámetro tiene un ID distinto al que se recupera
+     *                                  con la descripción.
+     */
+    private Description createDescriptionFromResultSet(@NotNull ResultSet resultSet, @NotNull ConceptSMTK
+            conceptSMTK) throws SQLException, IllegalArgumentException {
+
+        if (conceptSMTK == null){
+            throw new IllegalArgumentException("El concepto no puede ser nulo");
+        }
 
         long id = resultSet.getLong("id");
-
-        /*
-         * Try y catch ignored porque no todas las funciones de la BD que recuperan Descriptions de la BD traen esta columna.
-         * Ej: Usar la funcion semantikos.get_descriptions_by_idconcept para recueprar conceptos se cae con la excepcion:
-         * org.postgresql.util.PSQLException: The column name uses was not found in this ResultSet.
-         */
         String descriptionID = resultSet.getString("description_id");
         long idDescriptionType = resultSet.getLong("id_description_type");
+        DescriptionType descriptionType = descTypeFactory.getDescriptionTypeByID(idDescriptionType);
         String term = resultSet.getString("term");
         boolean isCaseSensitive = resultSet.getBoolean("case_sensitive");
         boolean isAutoGenerated = resultSet.getBoolean("autogenerated");
@@ -550,26 +608,43 @@ public class DescriptionDAOImpl implements DescriptionDAO {
         Timestamp validityUntil = resultSet.getTimestamp("validity_until");
         Timestamp creationDate = resultSet.getTimestamp("creation_date");
         long uses = resultSet.getLong("uses");
-
         User user = authDAO.getUserById(resultSet.getLong("id_user"));
 
+        /* Se valida la consistencia entre el concepto dado y el recuperado */
         long idConcept = resultSet.getLong("id_concept");
-
-        ConceptSMTK conceptByID;
-        if (conceptSMTK == null) {
-            conceptByID = conceptDAO.getConceptByID(idConcept);
-        } else {
-            conceptByID = conceptSMTK;
+        if (idConcept != conceptSMTK.getId()) {
+            throw new IllegalArgumentException("El concepto dado como parámetro no coincide con ID del concepto " +
+                    "asociado a la descripción recuperada desde la BD.");
         }
-        DescriptionType descriptionType = DescriptionTypeFactory.getInstance().getDescriptionTypeByID(idDescriptionType);
-        Description description = new Description(id, conceptByID, descriptionID, descriptionType, term, uses,
-                isCaseSensitive, isAutoGenerated, isPublished,
-                validityUntil, creationDate, user, isModeled);
+
+        /* Se crea la descripción y se asocia al concepto */
+        Description description = new Description(id, conceptSMTK, descriptionID, descriptionType, term, uses,
+                isCaseSensitive, isAutoGenerated, isPublished, validityUntil, creationDate, user, isModeled);
+        conceptSMTK.addDescription(description);
 
         return description;
     }
 
-    private NoValidDescription createNoValidDescriptionFromResultSet(ResultSet resultSet, ConceptSMTK conceptSMTK) throws SQLException {
+    /**
+     * Este método es responsable de crear una descripción a partir de una fila de un resultset. Este método además
+     * creará el objeto de negocio del concepto asociado a la descripción.
+     *
+     * @param resultSet El resultset a partir del cual se crea la descripción.
+     * @return Una descripción bien formada y sin datos adicionales que cargar.
+     * @throws SQLException Se arroja si hay un problema al manejar el resultset.
+     */
+    private Description createDescriptionFromResultSet(ResultSet resultSet) throws SQLException {
+
+        /* Se recupera el ID concepto y se carga el concepto */
+        long idConcept = resultSet.getLong("id_concept");
+        ConceptSMTK conceptByID = conceptDAO.getConceptByID(idConcept);
+
+        /* Ahora se recupera la descripción desde el resultset indicando el concepto */
+        return createDescriptionFromResultSet(resultSet, conceptByID);
+    }
+
+    private NoValidDescription createNoValidDescriptionFromResultSet(ResultSet resultSet, ConceptSMTK conceptSMTK)
+            throws SQLException {
 
         long id = resultSet.getLong("id");
         String descriptionID = resultSet.getString("description_id");
@@ -594,8 +669,10 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             conceptByID = conceptSMTK;
         }
 
-        DescriptionType descriptionType = DescriptionTypeFactory.getInstance().getDescriptionTypeByID(idDescriptionType);
-        Description description = new Description(id, conceptByID, descriptionID, descriptionType, term, 0, isCaseSensitive, isAutoGenerated, isPublished, validityUntil, creationDate, user, isModeled);
+        DescriptionType descriptionType = DescriptionTypeFactory.getInstance().getDescriptionTypeByID
+                (idDescriptionType);
+        Description description = new Description(id, conceptByID, descriptionID, descriptionType, term, uses,
+                isCaseSensitive, isAutoGenerated, isPublished, validityUntil, creationDate, user, isModeled);
         ObservationNoValid observationNoValid = getObservationNoValidBy(description);
         List<ConceptSMTK> suggestedConcepts = getSuggestedConceptsBy(description);
         return new NoValidDescription(description, observationNoValid, suggestedConcepts);
@@ -619,7 +696,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
      * Este método es responsable de indicar si la descripción es persistente o no.
      *
      * @param description La descripción de la que se desea determinar si es persistente.
-     *
      * @return <code>true</code> si es persistente y <code>false</code> sino.
      */
     private boolean isPersistent(Description description) {

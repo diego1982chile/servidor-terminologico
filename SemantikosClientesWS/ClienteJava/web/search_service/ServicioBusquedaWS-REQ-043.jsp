@@ -35,7 +35,8 @@
             <div id="Response">
                 <jsp:useBean id="stringer" class="cl.minsal.semantikos.ws.shared.Stringer"
                              type="cl.minsal.semantikos.ws.shared.Stringer">
-                    Conceptos: <%= HTMLer.toHTML(((RespuestaConceptosPorCategoria) request.getAttribute("serviceResponse"))) %>
+                    Conceptos: <br/>
+                    <%= HTMLer.toHTML(((RespuestaConceptosPorCategoria) request.getAttribute("serviceResponse")).getConceptos()) %>
                     <br/>
                 </jsp:useBean>
             </div>

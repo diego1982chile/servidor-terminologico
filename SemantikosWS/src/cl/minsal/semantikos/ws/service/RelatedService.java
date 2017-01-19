@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
 
 /**
- * Created by Development on 2016-11-18.
+ * @author Andrés Farías on 2016-11-18.
  *
  */
 @WebService(serviceName = "ServicioDeRelacionados")

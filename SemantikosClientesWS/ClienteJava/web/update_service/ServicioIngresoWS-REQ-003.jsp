@@ -21,8 +21,8 @@
     <form method="post" action="<%=request.getContextPath()%>/ws-req-031">
 
         <div class="form-group">
-            <label for="term">Término</label>
-            <input id="term" name="term" type="text" class="form-control" placeholder="Ingrese el término propuesto">
+            <label for="pattern">Término</label>
+            <input id="pattern" name="pattern" type="text" class="form-control" placeholder="Ingrese el término propuesto">
         </div>
 
         <div class="form-group">

@@ -2,11 +2,9 @@ package cl.minsal.semantikos.ws.service;
 
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.model.Category;
+import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.RefSet;
-import cl.minsal.semantikos.ws.component.CategoryController;
-import cl.minsal.semantikos.ws.component.ConceptController;
-import cl.minsal.semantikos.ws.component.CrossmapController;
-import cl.minsal.semantikos.ws.component.RefSetController;
+import cl.minsal.semantikos.ws.component.*;
 import cl.minsal.semantikos.ws.fault.IllegalInputFault;
 import cl.minsal.semantikos.ws.fault.NotFoundFault;
 import cl.minsal.semantikos.ws.request.*;
@@ -23,14 +21,21 @@ import javax.xml.bind.annotation.XmlElement;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
- * Created by Development on 2016-11-18.
+ * Esta clase es responsable de implementar los servicios web para el servicio de busqueda.
+ *
+ * @author Alfonso Cornejo on 2016-11-18.
  */
 @WebService(serviceName = "ServicioDeBusqueda")
 public class SearchService {
 
     @EJB
     private CrossmapController crossmapsController;
+
+    @EJB
+    private DescriptionController descriptionController;
 
     @EJB
     private ConceptController conceptController;
@@ -139,7 +144,7 @@ public class SearchService {
      *
      * @param request La petición con los parámetros de entrada.
      * @throws cl.minsal.semantikos.ws.fault.IllegalInputFault Arrojado si se solicitan cateogorías distintas a las
-     * objetivo de la búsqueda o que
+     *                                                         objetivo de la búsqueda o que
      *                                                         simplemente no existen. También se arroja si existen
      */
     private void obtenerTerminosPediblesParamValidation(RequestableConceptsRequest request) throws IllegalInputFault {
@@ -282,7 +287,7 @@ public class SearchService {
      * objeto mapeado
      * a un elemento XML.
      * @throws cl.minsal.semantikos.ws.fault.NotFoundFault Arrojada si no existe una descripción con
-     * <em>DESCRIPTION_ID</em> igual al indicado por el
+     *                                                     <em>DESCRIPTION_ID</em> igual al indicado por el
      *                                                     parámetro <code>descriptionId</code>.
      */
     @WebResult(name = "indirectCrossmaps")
@@ -300,12 +305,12 @@ public class SearchService {
      * un ID Descripción.
      *
      * @param request El valor de negocio <em>DESCRIPTION_ID</em> de la descripción cuyo concepto posee los
-     *                      crossmaps indirectos que se desea recuperar o del <em>CONCEPT ID</em>.
+     *                crossmaps indirectos que se desea recuperar o del <em>CONCEPT ID</em>.
      * @return Una lista de crossmaps <em>directos</em> del concepto asociado a la descripción encapsulada en un objeto
      * mapeado
      * a un elemento XML.
      * @throws cl.minsal.semantikos.ws.fault.NotFoundFault Arrojada si no existe una descripción con
-     * <em>DESCRIPTION_ID</em> igual al indicado por el
+     *                                                     <em>DESCRIPTION_ID</em> igual al indicado por el
      *                                                     parámetro <code>descriptionId</code>.
      */
     @WebResult(name = "crossmapSetMember")
@@ -329,4 +334,35 @@ public class SearchService {
         return this.conceptController.conceptByDescriptionId(descriptionId);
     }
 
+    /**
+     * REQ-WS-044: Búsqueda de descripciones sin importar categoría ni refsets usando busqueda exacta por patrón.
+     *
+     * @param request La petición con el patrón que se utiliza para la búsqueda.
+     * @return Una lista de descripciones en su representación XML.
+     * @throws IllegalInputFault Si ??
+     */
+    @WebResult(name = "respuestaBuscarTermino")
+    @WebMethod(operationName = "buscarDescripcionExacta")
+    public DescriptionsResponse buscarTerminoExacto(
+            @XmlElement(required = true)
+            @WebParam(name = "peticionPatron")
+                    PatternRequest request)
+            throws IllegalInputFault {
+
+        /* Se registra el inicio de la llamada */
+        long init = currentTimeMillis();
+
+        /* Se valida el parámetro de patrón */
+        String pattern = request.getPattern();
+        if (pattern == null || pattern.trim().equals("")) {
+            throw new IllegalInputFault("Debe especificar un patrón de búsqueda.");
+        }
+
+        List<Description> descriptions = this.descriptionController.searchDescriptionsByExactPattern(pattern);
+
+        logger.info("SearchService.buscarTerminoExacto(" + pattern + ") => " + descriptions.size() + " descripciones");
+        logger.debug("SearchService.buscarTerminoExacto(" + pattern + "): " + (currentTimeMillis() - init) + "ms");
+
+        return new DescriptionsResponse(descriptions);
+    }
 }

@@ -20,7 +20,6 @@ public interface DescriptionDAO {
      * Este método es responsable de recuperar una descripción desde la BDD a partir de su llave primaria.
      *
      * @param id La llave de la descripción que se desea recuperar.
-     *
      * @return Una descripción fresca desde la base de datos.
      */
     public Description getDescriptionBy(long id);
@@ -30,7 +29,6 @@ public interface DescriptionDAO {
      * <em>DESCRIPTION_ID</em>
      *
      * @param descriptionId El identificador de negocio por el cual se realiza la búsqueda.
-     *
      * @return Una descripción fresca recuperada desde la base de datos.
      */
     public Description getDescriptionByDescriptionID(String descriptionId);
@@ -39,7 +37,6 @@ public interface DescriptionDAO {
      * Este método es responsable de recuperar todas las descripciones de un concepto.
      *
      * @param conceptSMTK El Concepto cuyas descripciones se desea recuperar.
-     *
      * @return La lista de las descripciones del concepto cuyo ID fue dado.
      */
     public List<Description> getDescriptionsByConcept(ConceptSMTK conceptSMTK);
@@ -50,7 +47,6 @@ public interface DescriptionDAO {
      *
      * @param term       El término buscado.
      * @param categories Las categorías en donde se realiza la búsqueda.
-     *
      * @return Todas las descripciones que poseen exactamente el término <code>term</code>.
      */
     List<Description> searchDescriptionsByTerm(String term, List<Category> categories);
@@ -89,7 +85,6 @@ public interface DescriptionDAO {
      *                     ignoradas y ningún cambio en ellas es realizado.
      * @param conceptSMTK  El concepto al cual se asocian las descripciones que se persisten.
      * @param user         El usuario que realiza la acción.
-     *
      * @return La lista de descripciones persistidas.
      */
     public List<Description> persistNonPersistent(List<Description> descriptions, ConceptSMTK conceptSMTK, User user);
@@ -128,4 +123,13 @@ public interface DescriptionDAO {
     public ObservationNoValid getObservationNoValidBy(Description description);
 
     public List<ConceptSMTK> getSuggestedConceptsBy(Description description);
+
+    /**
+     * Este método es responsable de buscar las descripciones cuyo término coincide manera exacta con el patrón dado
+     * como parámetro.
+     *
+     * @param pattern El patrón de búsqueda.
+     * @return Una lista de descripciones que satisfacen el criterio de búsqueda.
+     */
+    List<Description> searchDescriptionsByExactTerm(String pattern);
 }

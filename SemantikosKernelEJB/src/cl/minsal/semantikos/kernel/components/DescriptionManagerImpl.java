@@ -275,16 +275,41 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
-    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories) {
-        return descriptionDAO.searchDescriptionsByTerm(term, categories);
+    public List<Description> searchDescriptionsByTerm(String pattern, List<Category> categories) {
+        long init = currentTimeMillis();
+
+        List<Description> descriptions = descriptionDAO.searchDescriptionsByTerm(pattern, categories);
+        logger.info("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+
+        return descriptions;
     }
 
     @Override
-    public List<Description> searchDescriptionsByTerm(String term, List<Category> categories, List<RefSet> refSets) {
+    public List<Description> searchDescriptionsByTerm(String pattern, List<Category> categories, List<RefSet> refSets) {
         long init = currentTimeMillis();
-        List<Description> descriptions = descriptionDAO.searchDescriptionsByTerm(term, categories, refSets);
-        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): " + descriptions);
-        logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+
+        /* Se recuperan / buscan todas las descripciones cuyo término coincide de manera exacta con el patrón */
+        List<Description> descriptions = this.searchDescriptionsByExactTermMatch(pattern);
+
+        // TODO: Filtrar por categorías
+        // TODO: Filtrar por refsets
+
+        logger.info("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + refSets + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + refSets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        return descriptions;
+    }
+
+    @Override
+    public List<Description> searchDescriptionsByExactTermMatch(String pattern) {
+        long init = currentTimeMillis();
+
+        List<Description> descriptions = descriptionDAO.searchDescriptionsByExactTerm(pattern);
+
+        logger.info("searchDescriptionsByTerm(" + pattern + "): " + descriptions);
+        logger.info("searchDescriptionsByTerm(" + pattern + "): {}s", (currentTimeMillis() - init));
+
+        /* Se recuperan / buscan todas las descripciones cuyo término coincide de manera exacta con el patrón */
         return descriptions;
     }
 

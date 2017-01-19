@@ -1,4 +1,4 @@
-package cl.minsal.semantikos.ws.busqueda;
+package cl.minsal.semantikos.ws.related;
 
 import cl.minsal.semantikos.ws.ParameterValidator;
 import cl.minsal.semantikos.ws.shared.*;
@@ -16,10 +16,10 @@ import java.util.Arrays;
 /**
  * @author Andrés Farías
  */
-@WebServlet(urlPatterns = "/ws-req-001")
-public class WebServiceReq001Servlet extends HttpServlet {
+@WebServlet(urlPatterns = "/ws-req-006")
+public class WebServiceReq006Servlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebServiceReq001Servlet.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebServiceReq006Servlet.class);
 
     /**
      * El proxy al servicio web
@@ -33,7 +33,7 @@ public class WebServiceReq001Servlet extends HttpServlet {
     /**
      * El constructror inicializa el proxy hacia el servicio.
      */
-    public WebServiceReq001Servlet() {
+    public WebServiceReq006Servlet() {
         this.servicioDeBusqueda = new ServicioDeBusqueda();
         this.parameterValidator = new ParameterValidator();
     }
@@ -43,12 +43,14 @@ public class WebServiceReq001Servlet extends HttpServlet {
         System.out.println("WebServiceReq001Servlet:doPost()");
 
         /* Se recuperan los parámetros */
-        String term = req.getParameter("pattern");
+        String term = req.getParameter("term");
         String categories = req.getParameter("categories");
         String refsets = req.getParameter("refsets");
+        String stablishmentID = req.getParameter("stablishment_id");
 
         /* Se realizan las validaciones */
         this.parameterValidator.required(term);
+        this.parameterValidator.atLeastOneRequired(categories, refsets);
 
         /* Se prepara la petición del WS */
         PeticionBuscarTerminoSimple peticion = new PeticionBuscarTerminoSimple();

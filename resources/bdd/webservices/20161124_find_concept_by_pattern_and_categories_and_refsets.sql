@@ -30,7 +30,7 @@ from semantikos.smtk_category ca
   inner join semantikos.smtk_refset_concept rc
     on rc.id_concept=c.id and rc.id_refset = any (refsets::int[])
   inner join semantikos.smtk_description d
-    on c.id = d.id_concept and unaccent(d.term) ilike all (string_to_array('%'||array_to_string(patterns,'%,%')||'%',','))
+    on c.id = d.id_concept and unaccent(d.pattern) ilike all (string_to_array('%'||array_to_string(patterns,'%,%')||'%',','))
   where c.is_modeled = modeled
   group by c.id
   order by c.id

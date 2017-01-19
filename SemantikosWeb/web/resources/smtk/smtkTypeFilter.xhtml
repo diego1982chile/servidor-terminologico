@@ -31,7 +31,7 @@
                                             converter="conceptConverter"
                                             var="concept"
                                             value="#{generalBrowserBean.conceptSMTK}"
-                                            itemLabel="#{concept.descriptionFavorite.term}"
+                                            itemLabel="#{concept.descriptionFavorite.pattern}"
                                             itemValue="#{concept}">
 
                                 <!-- Parámetros del validador -->
@@ -44,7 +44,7 @@
                                 </p:column>
 
                                 <p:column>
-                                    <h:outputText value="#{concept.descriptionFavorite.term}"/>
+                                    <h:outputText value="#{concept.descriptionFavorite.pattern}"/>
                                 </p:column>
 
                                 <p:ajax event="itemSelect"
@@ -67,7 +67,7 @@
                                        var="target"
                                        varStatus="var">
 
-                                <p:inputText disabled="true" id="itemSelected" value="#{target.descriptionFavorite.term}" />
+                                <p:inputText disabled="true" id="itemSelected" value="#{target.descriptionFavorite.pattern}" />
                                 <p:commandLink rendered="#{ not cc.attrs.targets.isEmpty() }"
                                                process="@this"
                                                update="@(.browserFilters),@(.browserTable)"

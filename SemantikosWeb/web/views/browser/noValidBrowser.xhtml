@@ -54,7 +54,7 @@
                                     </p:column>
 
                                     <p:column headerText="Término" sortBy="#{2}">
-                                        <h:outputText value="#{noValidDescription.noValidDescription.term}"/>
+                                        <h:outputText value="#{noValidDescription.noValidDescription.pattern}"/>
                                     </p:column>
 
                                     <p:column headerText="Tipo" style="width: 10%">
@@ -157,7 +157,7 @@
 
                                                 <p:outputLabel id="transLabelTerm" for="descidTransTerm" value="Termino"/>
                                                 <h:outputText id="descidTransTerm"
-                                                              value="#{noValidBrowserBean.noValidDescriptionSelected.noValidDescription.term}"/>
+                                                              value="#{noValidBrowserBean.noValidDescriptionSelected.noValidDescription.pattern}"/>
 
                                             </h:panelGrid>
 
@@ -171,7 +171,7 @@
                                                     <h:outputText value="#{noValidDescription.noValidDescription.descriptionId}"/>
                                                 </p:column>
                                                 <p:column headerText="Termino">
-                                                    <h:outputText value="#{noValidDescription.noValidDescription.term}"/>
+                                                    <h:outputText value="#{noValidDescription.noValidDescription.pattern}"/>
                                                 </p:column>
                                             </p:dataTable>
 
@@ -185,7 +185,7 @@
                                                             converter="conceptConverter" var="concept"
                                                             value="#{noValidBrowserBean.conceptSelected}"
                                                             completeMethod="#{findConceptBean.getConceptSearchInputAndCategories}"
-                                                            itemLabel="#{concept.descriptionFavorite.term}"
+                                                            itemLabel="#{concept.descriptionFavorite.pattern}"
                                                             itemValue="#{concept}"
                                                             emptyMessage="No se encontraron conceptos relacionados"
                                                             placeholder="Buscar concepto por término">
@@ -220,7 +220,7 @@
 
                                             <p:outputLabel id="transLabelCDES" for="descidTransCDES" value="Descripción"/>
                                             <h:outputText id="descidTransCDES"
-                                                          value="#{noValidBrowserBean.conceptSelected.descriptionFavorite.term}"/>
+                                                          value="#{noValidBrowserBean.conceptSelected.descriptionFavorite.pattern}"/>
 
                                             <p:outputLabel id="transLabelCC" for="descidTransCC" value="Categoría"/>
                                             <h:outputText id="descidTransCC"
