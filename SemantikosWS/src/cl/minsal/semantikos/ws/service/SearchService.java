@@ -96,7 +96,13 @@ public class SearchService {
         return categoriesResponse;
     }
 
-    // REQ-WS-004
+    /**
+     * REQ-WS-004, Realiza una busqueda Truncate Perfect
+     * @param request
+     * @return
+     * @throws IllegalInputFault
+     * @throws NotFoundFault
+     */
     @WebResult(name = "respuestaConceptos")
     @WebMethod(operationName = "buscarTruncatePerfect")
     public ConceptsResponse buscarTruncatePerfect(
@@ -105,6 +111,9 @@ public class SearchService {
                     SearchTermRequest request
     ) throws IllegalInputFault, NotFoundFault {
 
+        long init = currentTimeMillis();
+
+        /* Validacion de parámetros */
         if ((request.getCategoryNames() == null || request.getCategoryNames().isEmpty())
                 && (request.getRefSetNames() == null || request.getRefSetNames().isEmpty())) {
             throw new IllegalInputFault("Debe ingresar por lo menos una Categoría o un RefSet");
@@ -112,8 +121,13 @@ public class SearchService {
         if (request.getTerm() == null || "".equals(request.getTerm())) {
             throw new IllegalInputFault("Debe ingresar un Termino a buscar");
         }
-        return this.conceptController.searchTruncatePerfect(request.getTerm(), request.getCategoryNames(), request
-                .getRefSetNames());
+
+        ConceptsResponse conceptsResponse = this.conceptController.searchTruncatePerfect(request.getTerm(), request
+                .getCategoryNames(), request.getRefSetNames());
+
+        logger.info("ws-req-004:buscarTruncatePerfect(" + request.getTerm() + ", " + request.getCategoryNames() + " " + request.getRefSetNames() + "): " + conceptsResponse.toString());
+        logger.debug("ws-req-004:buscarTruncatePerfect(" + request.getTerm() + ", " + request.getCategoryNames() + " " + request.getRefSetNames() + "): " + (currentTimeMillis()-init) + "ms");
+        return conceptsResponse;
     }
 
     /**

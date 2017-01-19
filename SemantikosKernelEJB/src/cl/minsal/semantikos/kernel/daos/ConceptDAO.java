@@ -135,6 +135,16 @@ public interface ConceptDAO {
 
     public List<ConceptSMTK> findConceptsBy(RefSet refSet);
 
+    /**
+     * Este método es responsable de buscar conceptos cuyas descripciones hagan "truncate match" con el arreglo de
+     * patrones de búsqueda.
+     *
+     * @param arrayPattern El arreglo de patrones de búsqueda.
+     * @param isModeled
+     * @return Una lista de conceptos que satisface la búsqueda.
+     */
+    public List<ConceptSMTK> findConceptsTruncatePerfectBy(String[] arrayPattern, boolean isModeled);
+
     public List<ConceptSMTK> findModeledConceptsBy(RefSet refSet, int page, int pageSize);
 
     /**

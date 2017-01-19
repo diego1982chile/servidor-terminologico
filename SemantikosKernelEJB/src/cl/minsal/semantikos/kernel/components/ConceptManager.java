@@ -139,9 +139,11 @@ public interface ConceptManager {
      * @param termPattern El patrón de búsqueda.
      * @param categories  Las categorías a las que se quiere asociado el concepto.
      * @param refSets     Los RefSets en los que podría estar el concepto.
+     * @param isModeled
      * @return Una lista de conceptos que coinciden con el criterio de búsqueda.
      */
-    List<ConceptSMTK> findConceptTruncatePerfect(String termPattern, List<Category> categories, List<RefSet> refSets);
+    List<ConceptSMTK> findConceptTruncatePerfect(String termPattern, List<Category> categories, List<RefSet> refSets,
+                                                 boolean isModeled);
 
     /**
      * Este método es responsable de recuperar todos los conceptos que pertenecen a una categoría dada.

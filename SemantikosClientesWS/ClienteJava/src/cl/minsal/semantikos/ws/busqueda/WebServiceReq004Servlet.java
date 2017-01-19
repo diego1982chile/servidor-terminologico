@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.soap.SOAPFaultException;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -43,18 +44,18 @@ public class WebServiceReq004Servlet extends HttpServlet {
         System.out.println("WebServiceReq004Servlet:doPost()");
 
         /* Se recuperan los parámetros */
-        String term = req.getParameter("term");
+        String pattern = req.getParameter("pattern");
         String categories = req.getParameter("categories");
         String refsets = req.getParameter("refsets");
         String idStablishment = req.getParameter("idStablishment");
 
         /* Se realizan las validaciones */
-        this.parameterValidator.required(term);
+        this.parameterValidator.required(pattern);
         this.parameterValidator.required(idStablishment);
 
         /* Se prepara la petición del WS */
         PeticionBuscarTermino peticion = new PeticionBuscarTermino();
-        peticion.setTermino(term);
+        peticion.setTermino(pattern);
         peticion.setNombreCategoria(Arrays.asList(categories.split(",")));
         peticion.setNombreRefSet(Arrays.asList(refsets.split(",")));
         peticion.setIdEstablecimiento(idStablishment);
@@ -66,9 +67,9 @@ public class WebServiceReq004Servlet extends HttpServlet {
         try {
             response = this.servicioDeBusqueda.getSearchServicePort().buscarTruncatePerfect(peticion);
             logger.debug("WebServiceReq004Servlet.doPost(): Response: " + Stringer.toString(response));
-        } catch (NotFoundFault_Exception e) {
+        } catch (NotFoundFault_Exception | SOAPFaultException e) {
             logger.error("WebServiceReq002Servlet invocation error", e);
-            req.setAttribute("exception", e);
+            req.setAttribute("exception", e.getMessage());
             req.getRequestDispatcher("/search_service/ServicioBusquedaWS-REQ-004.jsp").forward(req, resp);
             return;
         } catch (IllegalInputFault_Exception e) {

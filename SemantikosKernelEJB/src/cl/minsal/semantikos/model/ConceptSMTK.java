@@ -119,6 +119,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
     public ConceptSMTK() {
         super(PersistentEntity.NON_PERSISTED_ID);
+        this.refsets = new ArrayList<>();
     }
 
     /**
@@ -149,6 +150,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
         /* La observación asociada al concepto inicialmente es vacía */
         this.observation = "";
+        this.refsets = new ArrayList<>();
     }
 
     public ConceptSMTK(Category category, @NotNull Description... descriptions) {

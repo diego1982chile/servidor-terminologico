@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.kernel.components.*;
-import cl.minsal.semantikos.kernel.daos.ConceptDAO;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
@@ -23,7 +22,6 @@ import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -255,15 +253,35 @@ public class ConceptController {
         List<RefSet> refSets = this.refSetController.findRefsets(refSetsNames);
 
         /* Se realiza la búsqueda */
-        List<ConceptSMTK> conceptSMTKS = this.conceptManager.findConceptTruncatePerfect(term, categories, refSets);
+        List<ConceptSMTK> conceptSMTKS = this.conceptManager.findConceptTruncatePerfect(term, categories, refSets,
+                true);
+
+        /* Se filtran por las categorías y refsets*/
+        List<ConceptSMTK> finalResult = new ArrayList<>(conceptSMTKS);
+        if (!categories.isEmpty()) {
+            for (ConceptSMTK conceptSMTK : conceptSMTKS) {
+                if (!categories.contains(conceptSMTK.getCategory())) {
+                    finalResult.remove(conceptSMTK);
+                }
+
+                List<RefSet> conceptRefsets = conceptSMTK.getRefsets();
+                if (!refSets.isEmpty() && !conceptRefsets.isEmpty() && !intersects(refSets, conceptRefsets)){
+                    finalResult.remove(conceptSMTK);
+                }
+            }
+        }
 
         /* Se encapsulan los conceptos retornados en un wrapper XML */
         List<ConceptResponse> conceptResponses = new ArrayList<>();
-        for (ConceptSMTK conceptSMTK : conceptSMTKS) {
+        for (ConceptSMTK conceptSMTK : finalResult) {
             conceptResponses.add(new ConceptResponse(conceptSMTK));
         }
 
         return new ConceptsResponse(conceptResponses);
+    }
+
+    private boolean intersects(List<RefSet> refSets, List<RefSet> conceptRefsets) {
+        return new ArrayList<>(refSets).removeAll(conceptRefsets);
     }
 
     public ConceptResponse conceptByDescriptionId(String descriptionId)

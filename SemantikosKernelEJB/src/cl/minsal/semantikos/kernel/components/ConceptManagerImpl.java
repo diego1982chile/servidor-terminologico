@@ -20,7 +20,7 @@ import java.text.Normalizer;
 import java.util.*;
 
 import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
-import static cl.minsal.semantikos.model.PersistentEntity.getIdArray;
+import static java.lang.System.currentTimeMillis;
 import static java.util.Collections.singletonList;
 
 /**
@@ -226,48 +226,37 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int
-            pageNumber, int pageSize) {
-        boolean isModeled = true;
-        //TODO: Actualizar esto de los estados que ya no va.
+    public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize) {
 
+        long init = currentTimeMillis();
+
+        boolean isModeled = true;
         categories = (categories == null) ? new Long[0] : categories;
         refsets = (refsets == null) ? new Long[0] : refsets;
 
         pattern = standardizationPattern(pattern);
         String[] arrayPattern = patternToArray(pattern);
 
-        return loadDecriptions(conceptDAO.findConceptsBy(arrayPattern, categories, refsets, isModeled, pageSize,
-                pageNumber));
+        List<ConceptSMTK> conceptSMTKs = loadDecriptions(conceptDAO.findConceptsBy(arrayPattern, categories, refsets,
+                isModeled, pageSize, pageNumber));
+
+        logger.debug("ConceptManager.findConceptTruncatePerfect(" + pattern + ", " + Arrays.toString(categories) + ", " + Arrays.toString(refsets) + ") => " + conceptSMTKs);
+        logger.debug("ConceptManager.findConceptTruncatePerfect(" + pattern + ", " + Arrays.toString(categories) + ", " + Arrays.toString(refsets) + ") : " + (currentTimeMillis()-init));
+        return conceptSMTKs;
     }
 
     @Override
-    public List<ConceptSMTK> findConceptTruncatePerfect(String termPattern, List<Category> categories, List<RefSet>
-            refSets) {
+    public List<ConceptSMTK> findConceptTruncatePerfect(String termPattern, List<Category> categories, List<RefSet> refSets, boolean isModeled) {
 
-        /* En esta implementación se utiliza el método
-         * findConceptTruncatePerfect(
-         *      String pattern,
-         *      Long[] categories,
-         *      Long[] refsets,
-         *      int pageNumber,
-         *      int pageSize)
-         *
-         * Se recuperan de a 1000 conceptos
-         */
-        List<ConceptSMTK> concepts = new ArrayList<>();
-        int page = 1;
-        boolean thereAreMore;
-        do {
-            List<ConceptSMTK> conceptTruncatePerfect = findConceptTruncatePerfect(termPattern, getIdArray(categories)
-                    , getIdArray(refSets), page++, 1000);
-            concepts.addAll(conceptTruncatePerfect);
+        long init = currentTimeMillis();
 
-            /* Si la busqueda retorno 1000, quizás hay más */
-            thereAreMore = conceptTruncatePerfect.size() == 1000;
-        } while (thereAreMore);
+        String[] arrayPattern = patternToArray(termPattern);
+        List<ConceptSMTK> conceptSMTKs = loadDecriptions(conceptDAO.findConceptsTruncatePerfectBy(arrayPattern, isModeled));
 
-        return loadDecriptions(concepts);
+        logger.debug("ConceptManager.findConceptTruncatePerfect(" + termPattern + ", " + categories + ", " + refSets + "): " + conceptSMTKs);
+        logger.debug("ConceptManager.findConceptTruncatePerfect(" + termPattern + ", " + categories + ", " + refSets + "): " + (currentTimeMillis() - init) + "ms");
+
+        return conceptSMTKs;
     }
 
     @Override
@@ -424,7 +413,7 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Se invalida el concepto */
         conceptSMTK.setPublished(false);
-        conceptSMTK.setValidUntil(new Timestamp(System.currentTimeMillis()));
+        conceptSMTK.setValidUntil(new Timestamp(currentTimeMillis()));
         conceptDAO.update(conceptSMTK);
 
         /* Se registra en el historial */

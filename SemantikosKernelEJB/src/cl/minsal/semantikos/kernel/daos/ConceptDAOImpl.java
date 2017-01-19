@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.System.currentTimeMillis;
@@ -280,6 +281,9 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public List<ConceptSMTK> findConceptsBy(String[] pattern, Long[] categories, Long[] refsets, boolean modeled, int
             pageSize, int pageNumber) {
+
+        long init = currentTimeMillis();
+
         List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
         ConnectionBD connect = new ConnectionBD();
 
@@ -308,6 +312,9 @@ public class ConceptDAOImpl implements ConceptDAO {
             logger.error("Se produjo un error al acceder a la BDD.", e);
             throw new EJBException(e);
         }
+
+        logger.debug("ConceptDAO.findConceptsBy(" + Arrays.toString(pattern) + ", " + Arrays.toString(categories) + ", " + Arrays.toString(refsets) + ", " + modeled + ", " + pageSize + ", " + pageNumber + ") => " + concepts);
+        logger.debug("ConceptDAO.findConceptsBy(" + Arrays.toString(pattern) + ", " + Arrays.toString(categories) + ", " + Arrays.toString(refsets) + ", " + modeled + ", " + pageSize + ", " + pageNumber + ") : " + (currentTimeMillis() - init) + "ms");
 
         return concepts;
     }
@@ -739,6 +746,32 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        return concepts;
+    }
+
+    @Override
+    public List<ConceptSMTK> findConceptsTruncatePerfectBy(String[] arrayPattern, boolean isModeled) {
+        List<ConceptSMTK> concepts = new ArrayList<ConceptSMTK>();
+        ConnectionBD connect = new ConnectionBD();
+        CallableStatement call;
+
+        try (Connection connection = connect.getConnection();) {
+            call = connection.prepareCall("{call semantikos.search_perfect_truncate_concept_by_pattern(?,?)}");
+            call.setArray(1, connection.createArrayOf("text", arrayPattern));
+            call.setBoolean(2, isModeled);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            concepts = new ArrayList<>();
+            while (rs.next()) {
+                concepts.add(createConceptSMTKFromResultSet(rs));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            logger.error("Error al invocar 'search_perfect_truncate_concept_by_pattern'", e);
         }
 
         return concepts;

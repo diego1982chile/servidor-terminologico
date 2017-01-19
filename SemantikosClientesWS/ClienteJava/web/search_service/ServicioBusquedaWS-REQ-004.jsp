@@ -1,13 +1,14 @@
 <%@ page import="cl.minsal.semantikos.ws.shared.RespuestaBuscarTerminoGenerica" %>
 <%@ page import="cl.minsal.semantikos.ws.shared.Stringer" %>
 <%@ page import="cl.minsal.semantikos.ws.shared.RespuestaConceptosPorCategoria" %>
+<%@ page import="cl.minsal.semantikos.ws.shared.HTMLer" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <header>
-    <title>Semantikos - WS-REQ-004: Buscar términos con Perfect Match</title>
+    <title>Semantikos - WS-REQ-004: Buscar términos con Truncate Perfect</title>
 
     <!-- Bootstrap -->
     <link href="<%=request.getContextPath()%>/css/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet"
@@ -19,7 +20,7 @@
 
 
 <div class="container">
-    <h4>Semantikos - WS-REQ-004: Buscar términos con Perfect Match</h4>
+    <h4>Semantikos - WS-REQ-004: Buscar términos con Truncate Perfect</h4>
 
     <form method="post" action="<%=request.getContextPath()%>/ws-req-004">
 
@@ -57,7 +58,7 @@
             <div id="Response">
                 <jsp:useBean id="stringer" class="cl.minsal.semantikos.ws.shared.Stringer"
                              type="cl.minsal.semantikos.ws.shared.Stringer">
-                    Conceptos encontrados: <%= Stringer.toString(((RespuestaConceptosPorCategoria) request.getAttribute("serviceResponse")).getConceptos()) %>
+                    Conceptos encontrados: <%= HTMLer.toHTML(((RespuestaConceptosPorCategoria) request.getAttribute("serviceResponse")).getConceptos()) %>
                     <br/>
                 </jsp:useBean>
             </div>

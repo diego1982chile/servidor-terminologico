@@ -47,4 +47,12 @@ public class ConceptsResponse implements Serializable {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString() {
+        return "ConceptsResponse{" +
+                "conceptResponses=" + conceptResponses +
+                ", quantity=" + quantity +
+                '}';
+    }
 }
