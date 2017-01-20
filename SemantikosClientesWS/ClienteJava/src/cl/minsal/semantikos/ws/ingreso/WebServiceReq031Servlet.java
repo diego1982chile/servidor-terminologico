@@ -4,6 +4,8 @@ import cl.minsal.semantikos.ws.shared.IllegalInputFault_Exception;
 import cl.minsal.semantikos.ws.shared.PeticionCodificacionDeNuevoTermino;
 import cl.minsal.semantikos.ws.shared.RespuestaCodificacionDeNuevoTermino;
 import cl.minsal.semantikos.ws.shared.ServicioDeIngreso_Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,11 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.soap.SOAPFaultException;
 import java.io.IOException;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
  * @author Andrés Farías
  */
-@WebServlet(urlPatterns = "/ws-req-031")
+@WebServlet(urlPatterns = "/ws-req-003")
 public class WebServiceReq031Servlet extends HttpServlet {
+
+    private static final Logger logger = LoggerFactory.getLogger(WebServiceReq031Servlet.class);
 
     /** El proxy al servicio web */
     private ServicioDeIngreso_Service servicioDeIngreso_service;
@@ -31,7 +37,9 @@ public class WebServiceReq031Servlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("WebServiceReq031Servlet:doPost()");
+
+        long init = currentTimeMillis();
+        logger.debug("WebServiceReq031Servlet:doPost("+ req + ")");
 
         PeticionCodificacionDeNuevoTermino peticionNuevoTermino = new PeticionCodificacionDeNuevoTermino();
         peticionNuevoTermino.setTermino(req.getParameter("term"));
@@ -46,22 +54,20 @@ public class WebServiceReq031Servlet extends HttpServlet {
         peticionNuevoTermino.setObservacion(req.getParameter("observation"));
         peticionNuevoTermino.setTipoDescripcion(req.getParameter("descriptionType"));
 
-        /* TODO: Eliminar el idConcept */
         peticionNuevoTermino.setIdConcepto("1");
-        System.out.println("Peticion: " + peticionNuevoTermino);
+        logger.debug("WebServiceReq031Servlet:doPost("+ peticionNuevoTermino + ")");
 
         RespuestaCodificacionDeNuevoTermino respuestaCodificacionDeNuevoTermino;
         try {
             respuestaCodificacionDeNuevoTermino = servicioDeIngreso_service.getServicioDeIngresoPort().codificacionDeNuevoTermino(peticionNuevoTermino);
-            System.out.println("WebServiceReq031Servlet:doPost(): " + respuestaCodificacionDeNuevoTermino.toString());
             req.setAttribute("serviceResponse", respuestaCodificacionDeNuevoTermino);
-        } catch (IllegalInputFault_Exception e) {
-            req.setAttribute("exception", e);
-        } catch (SOAPFaultException soapEx){
-            req.setAttribute("exception", soapEx);
+            logger.debug("WebServiceReq031Servlet:doPost("+ peticionNuevoTermino + ") ==> " + respuestaCodificacionDeNuevoTermino);
+        } catch (IllegalInputFault_Exception | SOAPFaultException e) {
+            req.setAttribute("exception", e.getMessage());
         }
 
 
+        logger.debug("WebServiceReq031Servlet:doPost("+ peticionNuevoTermino + "): {}ms " + (currentTimeMillis()-init));
         req.getRequestDispatcher("/update_service/ServicioIngresoWS-REQ-003.jsp").forward(req, resp);
     }
 

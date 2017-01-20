@@ -235,7 +235,7 @@ public class RefSet {
     })
     public static class Conceptos {
 
-        @XmlElement(namespace = "")
+        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
         protected List<Concepto> concepto;
 
         /**

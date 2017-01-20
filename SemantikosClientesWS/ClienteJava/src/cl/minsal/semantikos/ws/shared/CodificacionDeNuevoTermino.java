@@ -8,23 +8,6 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * javax.xml.ws.soap.SOAPFaultException: Unmarshalling Error: elemento inesperado (URI:"http://service.ws.semantikos.minsal.cl/", local:"peticionCodificacionDeNuevoTermino"). Los elementos esperados son <{}peticionCodificacionDeNuevoTermino>
- *
- * Solucion:
- *
- * public class CodificacionDeNuevoTermino {
- *
- * @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/", required = true)
- * protected PeticionCodificacionDeNuevoTermino peticionCodificacionDeNuevoTermino;
- *
- * ==>
- *
- * public class CodificacionDeNuevoTermino {
- *
- * @XmlElement(namespace = "", required = true)
- * protected PeticionCodificacionDeNuevoTermino peticionCodificacionDeNuevoTermino;
- *
- *
  * <p>Java class for codificacionDeNuevoTermino complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

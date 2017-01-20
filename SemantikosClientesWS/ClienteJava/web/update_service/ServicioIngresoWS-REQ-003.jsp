@@ -18,11 +18,11 @@
 <div class="container">
     <h4>WS-REQ-031: Proponer <em>término</em> a codificar</h4>
 
-    <form method="post" action="<%=request.getContextPath()%>/ws-req-031">
+    <form method="post" action="<%=request.getContextPath()%>/ws-req-003">
 
         <div class="form-group">
-            <label for="pattern">Término</label>
-            <input id="pattern" name="pattern" type="text" class="form-control" placeholder="Ingrese el término propuesto">
+            <label for="term">Término</label>
+            <input id="term" name="term" type="text" class="form-control" placeholder="Ingrese el término propuesto">
         </div>
 
         <div class="form-group">

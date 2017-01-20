@@ -503,6 +503,10 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     public List<Description> searchDescriptionsByTerm(String term, List<Category> categories) {
+
+        logger.debug("DescriptionDAO.searchDescriptionsByTerm(" + term + ", " + categories + ") invoked!");
+        long init = currentTimeMillis();
+
         ConnectionBD connect = new ConnectionBD();
         List<Description> descriptions = new ArrayList<>();
 
@@ -515,7 +519,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             call.setArray(2, connection.createArrayOf("bigint", convertListPersistentToListID(entities)));
             call.execute();
 
-            logger.debug("Búsqueda exacta descripciones con término =" + term);
             ResultSet rs = call.getResultSet();
             while (rs.next()) {
                 Description description = createDescriptionFromResultSet(rs);
@@ -528,6 +531,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             throw new EJBException(e);
         }
 
+        logger.info("DescriptionDAO.searchDescriptionsByTerm(" + term + ", " + categories + ") => " + descriptions);
+        logger.debug("DescriptionDAO.searchDescriptionsByTerm(" + term + ", " + categories + "): {}ms" + (currentTimeMillis() - init));
         return descriptions;
     }
 

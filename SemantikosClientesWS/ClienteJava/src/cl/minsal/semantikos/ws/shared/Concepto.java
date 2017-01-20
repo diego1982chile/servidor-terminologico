@@ -148,7 +148,7 @@ public class Concepto {
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar validoHasta;
     protected String observacion;
-    @XmlElement(namespace = "")
+    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
     protected Categoria categoria;
     protected Concepto.RefSets refSets;
     protected Concepto.Descripciones descripciones;
@@ -770,7 +770,7 @@ public class Concepto {
     })
     public static class Descripciones {
 
-        @XmlElement(namespace = "")
+        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
         protected List<Descripcion> descripcion;
 
         /**

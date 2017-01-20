@@ -26,13 +26,11 @@
   <xs:element name="respuestaCodificacionDeNuevoTermino" type="tns:RespuestaCodificacionDeNuevoTermino"/>
   <xs:element name="tablaAuxiliar" type="tns:TablaAuxiliar"/>
   <xs:element name="usuario" type="tns:Usuario"/>
-
   <xs:complexType name="codificacionDeNuevoTermino">
     <xs:sequence>
       <xs:element ref="tns:peticionCodificacionDeNuevoTermino"/>
     </xs:sequence>
   </xs:complexType>
-
   <xs:complexType name="PeticionCodificacionDeNuevoTermino">
     <xs:sequence>
       <xs:element name="establecimiento" type="xs:string"/>
@@ -250,7 +248,6 @@
   <xs:complexType name="ColumnaTablaAuxiliar">
     <xs:sequence>
       <xs:element minOccurs="0" name="nombreColumna" type="xs:string"/>
-      <xs:element minOccurs="0" name="esLlavePrimaria" type="xs:boolean"/>
       <xs:element minOccurs="0" name="esBuscable" type="xs:boolean"/>
       <xs:element minOccurs="0" name="esMostrable" type="xs:boolean"/>
     </xs:sequence>

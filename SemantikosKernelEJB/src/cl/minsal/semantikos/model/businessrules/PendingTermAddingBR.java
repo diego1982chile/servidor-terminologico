@@ -8,17 +8,26 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.Description;
 import cl.minsal.semantikos.model.PendingTerm;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import static java.lang.System.currentTimeMillis;
+import static java.util.Collections.singletonList;
 
 /**
  * @author Andrés Farías on 11/23/16.
  */
 @Singleton
 public class PendingTermAddingBR {
+
+    private static final Logger logger = LoggerFactory.getLogger(PendingTermAddingBR.class);
 
     @EJB
     ConceptDAO conceptDAO;
@@ -59,20 +68,29 @@ public class PendingTermAddingBR {
      *
      * @param pendingTerm El término que se desea agregar
      */
-    private void preCondition001(PendingTerm pendingTerm) {
+    private void preCondition001(@NotNull PendingTerm pendingTerm) {
+
+        long init = currentTimeMillis();
+        logger.info("PendingTermAddingBR(" + pendingTerm + ")!");
+
         /* La búsqueda de térimnos se realiza en la categoría del concepto especial */
         Category specialConceptCategory = conceptDAO.getPendingConcept().getCategory();
 
         /* Se obtienen descripciones similares (no hay busqueda exacta por el momento) */
         String termToAdd = pendingTerm.getTerm();
-        List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(termToAdd, Arrays.asList(specialConceptCategory));
+        List<Description> descriptions = descriptionManager.searchDescriptionsByTerm(termToAdd,
+                singletonList(specialConceptCategory));
         for (Description description : descriptions) {
 
             /* Y se compara el término con el que se desea agregar */
             if (description.getTerm().equals(termToAdd)) {
-                throw new BusinessRuleException("BR-PEND-002", "El sistema deberá guarda sólo un formulario por Término Pendiente.");
+                throw new BusinessRuleException("BR-PEND-002", "El sistema deberá guarda sólo un formulario por " +
+                        "Término Pendiente.");
             }
         }
+
+        logger.info("PendingTermAddingBR(" + pendingTerm + ") passed!");
+        logger.info("PendingTermAddingBR(" + pendingTerm + "): {}ms" + (currentTimeMillis() - init));
     }
 
     /**
@@ -94,7 +112,8 @@ public class PendingTermAddingBR {
         }
 
         /* En este punto, no se encontró el término en las descripcioens del concepto */
-        throw new BusinessRuleException("BR-PEND-001", "El término pendiente " + pendingTerm + " no fue agregado como descripción al concepto 'Pendientes'.");
+        throw new BusinessRuleException("BR-PEND-001", "El término pendiente " + pendingTerm + " no fue agregado como" +
+                " descripción al concepto 'Pendientes'.");
     }
 
     /**
@@ -107,7 +126,8 @@ public class PendingTermAddingBR {
 
         Description relatedDescription = pendingTerm.getRelatedDescription();
         if (relatedDescription == null || !relatedDescription.isPersistent()) {
-            throw new BusinessRuleException("BR-PEND-003", "El sistema registra la relación del Formulario de Solicitud con la Descripción que contiene el Término Pendiente.");
+            throw new BusinessRuleException("BR-PEND-003", "El sistema registra la relación del Formulario de " +
+                    "Solicitud con la Descripción que contiene el Término Pendiente.");
         }
     }
 }

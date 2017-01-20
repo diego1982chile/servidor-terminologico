@@ -72,8 +72,7 @@ public class Descripcion {
     protected XMLGregorianCalendar creado;
     protected Long usos;
     protected Usuario usuarioCreador;
-
-    @XmlElement(namespace = "")
+    @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
     protected Concepto concepto;
 
     /**

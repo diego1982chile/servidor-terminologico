@@ -282,13 +282,12 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
-    public List<Description> searchDescriptionsByTerm(String pattern, List<Category> categories) {
+    public List<Description> searchDescriptionsByTerm(@NotNull String pattern, List<Category> categories) {
         long init = currentTimeMillis();
 
         List<Description> descriptions = descriptionDAO.searchDescriptionsByTerm(pattern, categories);
         logger.info("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + "): " + descriptions);
-        logger.info("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + "): {}ms", (currentTimeMillis
-                () - init));
+        logger.info("searchDescriptionsByTerm(" + pattern + ", " + categories + ", " + "): {}ms", (currentTimeMillis() - init));
 
         return descriptions;
     }
