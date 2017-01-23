@@ -503,7 +503,7 @@
     <xs:sequence>
       <xs:element name="idDescripcion" type="xs:string"/>
       <xs:element name="idStablishment" type="xs:string"/>
-      <xs:element default="true" minOccurs="0" name="incluyeEstablecimientos" type="xs:boolean"/>
+      <xs:element default="true" name="incluyeEstablecimientos" type="xs:boolean"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="refSetsPorIdDescripcionResponse">
@@ -632,7 +632,7 @@
       <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreCategoria" type="xs:string"/>
       <xs:element name="idEstablecimiento" type="xs:string"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="nombreRefSet" type="xs:string"/>
-      <xs:element name="pedible" type="xs:string"/>
+      <xs:element name="pedible" type="xs:boolean"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="obtenerTerminosPediblesResponse">

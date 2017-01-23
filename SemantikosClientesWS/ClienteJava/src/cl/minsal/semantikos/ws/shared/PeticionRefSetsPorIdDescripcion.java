@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="idDescripcion" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="idStablishment" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="incluyeEstablecimientos" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="incluyeEstablecimientos" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -41,7 +41,7 @@ public class PeticionRefSetsPorIdDescripcion {
     @XmlElement(required = true)
     protected String idStablishment;
     @XmlElement(defaultValue = "true")
-    protected Boolean incluyeEstablecimientos;
+    protected boolean incluyeEstablecimientos;
 
     /**
      * Gets the value of the idDescripcion property.
@@ -94,28 +94,20 @@ public class PeticionRefSetsPorIdDescripcion {
     /**
      * Gets the value of the incluyeEstablecimientos property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
      */
-    public Boolean isIncluyeEstablecimientos() {
+    public boolean isIncluyeEstablecimientos() {
         return incluyeEstablecimientos;
     }
 
     /**
      * Sets the value of the incluyeEstablecimientos property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
      */
-    public void setIncluyeEstablecimientos(Boolean value) {
+    public void setIncluyeEstablecimientos(boolean value) {
         this.incluyeEstablecimientos = value;
     }
 
-    public Boolean getIncluyeEstablecimientos() {
-        return this.incluyeEstablecimientos;
+    public boolean getIncluyeEstablecimientos() {
+        return incluyeEstablecimientos;
     }
 }

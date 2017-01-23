@@ -164,6 +164,19 @@ public interface ConceptDAO {
      * un cierto valor <code>aBoolean</code>. Cada concepto debe encontrarse al menos en uno de los RefSets
      * especificados en el parámetro <code>refsets</code>.
      *
+     * @param aCategory                 La categoría a la cual pertenecen los objetos buscados.
+     * @param booleanBasicTypeAttribute El atributo buleano.
+     * @param aBoolean                  El valor buleano.
+     * @return Una lista de conceptos con el atributo en el valor deseado.
+     */
+    public List<ConceptSMTK> findConceptsWithBooleanBasicType(Category aCategory, RelationshipDefinition
+            booleanBasicTypeAttribute, Boolean aBoolean);
+
+    /**
+     * Este método es responsable de encontrar los conceptos de una cierta categoría que poseen un atributo buleano con
+     * un cierto valor <code>String</code>. Cada concepto debe encontrarse al menos en uno de los RefSets
+     * especificados en el parámetro <code>refsets</code>.
+     *
      * @param aCategory                La categoría a la cual pertenecen los objetos buscados.
      * @param refsets                  Los refsets en los cuales debe encontrarse cada concepto (en uno al menos).
      * @param stringBasicTypeAttribute El atributo buleano.

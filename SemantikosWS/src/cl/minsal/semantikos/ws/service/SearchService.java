@@ -146,11 +146,18 @@ public class SearchService {
                     RequestableConceptsRequest request
     ) throws IllegalInputFault {
 
+        long init = currentTimeMillis();
+        logger.debug("SearchService.obtenerTerminosPedibles(" + request + ")");
+
         /* Se hace una validación de los parámetros */
         obtenerTerminosPediblesParamValidation(request);
 
-        return conceptController.searchRequestableDescriptions(request.getCategoryNames(), request.getRefSetNames(),
-                request.getRequestable());
+        TermSearchResponse termSearchResponse = conceptController.searchRequestableDescriptions(request
+                .getCategoryNames(), request.getRefSetNames(), request.getRequestable());
+
+        logger.info("SearchService.obtenerTerminosPedibles(" + request + ") ==> " + termSearchResponse);
+        logger.debug("SearchService.obtenerTerminosPedibles(" + request + "): {}ms " + (currentTimeMillis()-init));
+        return termSearchResponse;
     }
 
     /**

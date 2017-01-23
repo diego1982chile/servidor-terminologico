@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJBException;
+import javax.ejb.Singleton;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.sql.CallableStatement;
@@ -15,10 +16,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
  * @author Andrés Farías on 9/5/16.
  */
-@Stateless
+@Singleton
 public class TagSMTKDAOImpl implements TagSMTKDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(TagSMTKDAOImpl.class);
@@ -49,6 +52,10 @@ public class TagSMTKDAOImpl implements TagSMTKDAO {
 
     @Override
     public TagSMTK findTagSMTKByID(long idTag) {
+
+        long init = currentTimeMillis();
+        logger.debug("findTagSMTKByID(): invoked!");
+
         ConnectionBD connect = new ConnectionBD();
 
         TagSMTK tagSMTK;
@@ -72,6 +79,7 @@ public class TagSMTKDAOImpl implements TagSMTKDAO {
             throw new EJBException(errorMsg, e);
         }
 
+        logger.debug("findTagSMTKByID(): {}ms", (currentTimeMillis()-init));
         return tagSMTK;
     }
 

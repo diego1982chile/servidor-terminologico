@@ -165,6 +165,17 @@ public interface ConceptManager {
      */
     public List<ConceptSMTK> findConcepts(Category aCategory, List<String> refSetNames, RelationshipDefinition requestableAttribute, String value);
 
+    /**
+     * Este método es responsable de buscar los conceptos que posean un atributo de tipo básico booleano de valor
+     * <code>value</code>.
+     * @param aCategory Las categorías a las cuales se acota la búsqueda.
+     * @param refSetNames Los refsets en los cuales deben encontrarse los conceptos.
+     * @param basicTypeAttribute El atributo (booliano)
+     * @param value El valor booleano.
+     * @return Una lista fresca de conceptos, perezosamente incializados.
+     */
+    public List<ConceptSMTK> findConcepts(Category aCategory, List<String> refSetNames, RelationshipDefinition basicTypeAttribute, Boolean value);
+
     public List<ConceptSMTK> findModeledConceptBy(Category category, int pageSize, int pageNumber);
 
     public List<ConceptSMTK> loadDecriptions(List<ConceptSMTK> concepts);

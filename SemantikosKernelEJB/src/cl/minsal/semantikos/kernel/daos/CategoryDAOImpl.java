@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Singleton;
@@ -19,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
  * @author Diego Soto
  * @author Andrés Farías
@@ -30,25 +33,33 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     static final Logger logger = LoggerFactory.getLogger(CategoryDAOImpl.class);
 
-    /** El DAO para recuperar atributos de la categoría */
+    /**
+     * El DAO para recuperar atributos de la categoría
+     */
     @EJB
     private RelationshipDefinitionDAO relationshipDefinitionDAO;
 
     @EJB
     private TagSMTKDAO tagSMTKDAO;
 
-    /** Un caché de categorías */
+    /**
+     * Un caché de categorías
+     */
     private Map<Long, Category> categoryMapByID;
+    private List<Category> categoryListCache;
+    private boolean cacheReady;
 
     public CategoryDAOImpl() {
         this.categoryMapByID = new HashMap<>();
+        this.categoryListCache = new ArrayList<>();
+        this.cacheReady = false;
     }
 
     @Override
     public Category getCategoryById(long idCategory) {
 
         /* Si está en el caché, se retorna */
-        if(categoryMapByID.containsKey(idCategory)){
+        if (categoryMapByID.containsKey(idCategory)) {
             return categoryMapByID.get(idCategory);
         }
 
@@ -67,7 +78,6 @@ public class CategoryDAOImpl implements CategoryDAO {
      * Este método es responsable de recuperar de la BDD.
      *
      * @param idCategory ID de la categoría.
-     *
      * @return La categoría desde la bdd.
      */
     private Category getCategoryByIdFromDB(long idCategory) {
@@ -99,6 +109,27 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public List<Category> getAllCategories() {
+
+        logger.debug("getAllCategories() invoked!");
+        long init = currentTimeMillis();
+
+        /* Se verifica si ya están cacheadas */
+        if (!this.cacheReady) {
+            loadCategoriesIntoCache();
+        }
+
+        logger.debug("getAllCategories(): {}ms", (currentTimeMillis() - init));
+        return this.categoryListCache;
+    }
+
+    /**
+     * Este método es responsable de cargar en los caché las categorías.
+     */
+    private void loadCategoriesIntoCache() {
+
+        logger.debug("loadCategoriesIntoCache() invoked!");
+        long init = currentTimeMillis();
+
         ConnectionBD connect = new ConnectionBD();
         List<Category> categories = new ArrayList<>();
         ;
@@ -111,6 +142,7 @@ public class CategoryDAOImpl implements CategoryDAO {
                 Category categoryFromResultSet = createCategoryFromResultSet(resultSet);
                 categories.add(categoryFromResultSet);
             }
+            logger.debug("loadCategoriesIntoCache(): {}ms after creating from resultset!", (currentTimeMillis() - init));
 
             /* Ahora se recuperan sus definiciones */
             for (Category category : categories) {
@@ -118,16 +150,17 @@ public class CategoryDAOImpl implements CategoryDAO {
                 List<RelationshipDefinition> categoryMetaData = getCategoryMetaData(id);
                 category.setRelationshipDefinitions(categoryMetaData);
 
-                if (!categoryMapByID.containsKey(id)){
-                    categoryMapByID.put(id, category);
-                }
+                this.categoryMapByID.put(id, category);
             }
-
         } catch (SQLException e) {
             throw new EJBException(e);
         }
 
-        return categories;
+        /* Se actualizan los caché  */
+        this.categoryListCache = new ArrayList<>(categoryMapByID.values());
+        this.cacheReady = true;
+
+        logger.debug("loadCategoriesIntoCache(): {}ms", (currentTimeMillis() - init));
     }
 
     @Override
@@ -136,12 +169,12 @@ public class CategoryDAOImpl implements CategoryDAO {
         logger.debug("CategoryDAO.getCategoryByName(" + categoryName + ")");
 
         /* Si no están cargadas las categorías, se cargan */
-        if (categoryMapByID.isEmpty()){
+        if (categoryMapByID.isEmpty()) {
             getAllCategories();
         }
 
         for (Category category : categoryMapByID.values()) {
-            if (category.getName().equalsIgnoreCase(categoryName)){
+            if (category.getName().equalsIgnoreCase(categoryName)) {
                 return category;
             }
         }
@@ -208,7 +241,7 @@ public class CategoryDAOImpl implements CategoryDAO {
         try (Connection connection = connect.getConnection();) {
 
             call = connection.prepareCall("{call semantikos.get_related_category(?)}");
-            call.setLong(1,category.getId());
+            call.setLong(1, category.getId());
             call.execute();
 
             ResultSet rs = call.getResultSet();

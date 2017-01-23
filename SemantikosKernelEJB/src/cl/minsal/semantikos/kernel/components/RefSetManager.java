@@ -3,6 +3,7 @@ package cl.minsal.semantikos.kernel.components;
 import cl.minsal.semantikos.model.*;
 
 import javax.ejb.Local;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,6 @@ public interface RefSetManager {
      *
      * @param name        Nombre del RefSet. Nombre corto y descriptivo de su contenido, para identificación por
      *                    humanos
-     *
      * @param institution La institución asociada.
      * @param user        El usuario que crea el RefSet.
      * @return El RefSet creado.
@@ -37,7 +37,6 @@ public interface RefSetManager {
      *
      * @param refSet El RefSet que se desea actualizar.
      * @param user   El usuario que crea el RefSet.
-     *
      * @return El RefSet creado.
      */
     public RefSet updateRefSet(RefSet refSet, User user);
@@ -94,26 +93,31 @@ public interface RefSetManager {
 
     /**
      * Busca por un REFSET con el nombre dado y lo retorna
+     *
      * @param pattern nombre del refset
      * @return REFSET con el nombre buscado o null si no lo encuentra
      */
     public RefSet getRefsetByName(String pattern);
 
     /**
-     * Entrega la lista de RefSets por la lista de nombres de refsets ingresados.
-     * @param refSetNames
-     * @return
+     * Este método es responsable de retornar los refsets asociados a una lista de nombres.
+     *
+     * @param refSetNames La lista de nombres de RefSets.
+     * @return La lista de objetos de negocio que representan los refsets.
+     * @throws IllegalArgumentException Si uno o más nombres de refsets no existen.
      */
     public List<RefSet> findRefSetsByName(List<String> refSetNames);
 
     /**
      * Carga los RefSets a los que pertenece el concepto en el atributo refsets del concepto
+     *
      * @param conceptSMTK
      */
     public void loadConceptRefSets(ConceptSMTK conceptSMTK);
 
     /**
      * Busca los RefSets a los que pertenece el concepto
+     *
      * @param conceptSMTK
      * @return
      */

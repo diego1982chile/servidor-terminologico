@@ -551,7 +551,10 @@ public class ConceptController {
      * @return La lista de Conceptos Light que satisfacen la búsqueda.
      */
     public TermSearchResponse searchRequestableDescriptions(List<String> categoryNames, List<String> refSetNames,
-                                                            String requestable) {
+                                                            Boolean requestable) {
+
+        long init = currentTimeMillis();
+        logger.debug("ConceptController.searchRequestableDescriptions(" + categoryNames + ", " + refSetNames + ", " + requestable + ") Invoked!");
 
         List<ConceptSMTK> allRequestableConcepts = new ArrayList<>();
         for (String categoryName : categoryNames) {
@@ -559,12 +562,18 @@ public class ConceptController {
 
             /* Se recupera el atributo "Pedible " */
             RelationshipDefinition requestableAttribute = getRequestableAttribute(aCategory);
+            logger.debug("searchRequestableDescriptions(): Requestable Attribute: {}", requestableAttribute);
+
             List<ConceptSMTK> requestableConcepts = conceptManager.findConcepts(aCategory, refSetNames,
                     requestableAttribute, requestable);
             allRequestableConcepts.addAll(requestableConcepts);
         }
 
-        return new TermSearchResponse(allRequestableConcepts);
+        TermSearchResponse termSearchResponse = new TermSearchResponse(allRequestableConcepts);
+        logger.info("ConceptController.searchRequestableDescriptions(" + categoryNames + ", " + refSetNames + ", " + requestable + ") ==> " + termSearchResponse);
+        logger.debug("ConceptController.searchRequestableDescriptions(" + categoryNames + ", " + refSetNames + ", " + requestable + "): {}ms", (currentTimeMillis()-init));
+
+        return termSearchResponse;
     }
 
     /**

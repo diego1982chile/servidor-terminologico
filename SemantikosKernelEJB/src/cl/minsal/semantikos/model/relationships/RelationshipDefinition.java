@@ -165,12 +165,6 @@ public class RelationshipDefinition {
     }
 
 
-    @Override
-    public String toString() {
-        return "id: " + id + ". [" + super.toString() + "]";
-    }
-
-
     public RelationshipAttributeDefinition getOrderAttributeDefinition() {
         for (RelationshipAttributeDefinition relationshipAttributeDefinition : getRelationshipAttributeDefinitions()) {
             if (relationshipAttributeDefinition.isOrderAttribute()) {
@@ -216,4 +210,19 @@ public class RelationshipDefinition {
         return this.getName().equalsIgnoreCase(SNOMEDCT);
     }
 
+    @Override
+    public String toString() {
+        return "RelationshipDefinition{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", targetDefinition=" + targetDefinition +
+                ", multiplicity=" + multiplicity +
+                ", relationshipAttributeDefinitions=" + relationshipAttributeDefinitions +
+                ", excludes=" + excludes +
+                ", idCategoryDes=" + idCategoryDes +
+                ", order='" + order + '\'' +
+                ", SNOMEDCT='" + SNOMEDCT + '\'' +
+                '}';
+    }
 }

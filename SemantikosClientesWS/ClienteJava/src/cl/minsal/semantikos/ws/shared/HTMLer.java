@@ -38,13 +38,34 @@ public class HTMLer {
         /* Luego sus refsets */
         result.append(toHTML(concepto.getRefSets()));
 
+        result.append(toHTML(concepto.getRelaciones()));
+
         return result.toString();
+    }
+
+    /**
+     * Este método imprime las relaciones de un concepto en una expresión HTML.
+     *
+     * @param relaciones Las relaciones a listar.
+     * @return La expresión HTML para las relaciones.
+     */
+    private static String toHTML(Concepto.Relaciones relaciones) {
+        if (relaciones == null || relaciones.getRelacion() == null || relaciones.getRelacion().isEmpty()) {
+            return "<em>Sin Relaciones</em>.<p/>";
+        }
+
+        StringBuilder result = new StringBuilder("Relaciones:<br />\n<ol>");
+        List<Relacion> theRelationships = relaciones.getRelacion();
+        for (Relacion aRelationship : theRelationships) {
+            result.append("<li>").append(aRelationship.getDefinicion().getName()).append("</li>");
+        }
+        return result.append("</ol>").toString();
     }
 
     private static String toHTML(Concepto.RefSets refSets) {
 
         if (refSets == null) {
-            return "<em>Sin Refsets</em>.";
+            return "<em>Sin Refsets</em>.<p/>";
         }
 
         StringBuilder result = new StringBuilder("Refsets:<br />\n<ol>");
@@ -65,7 +86,7 @@ public class HTMLer {
     private static String toHTML(Concepto.CrossmapsDirectos crossmapsDirectos) {
 
         if (crossmapsDirectos == null) {
-            return "<em>Sin crossmaps directos</em>";
+            return "<em>Sin crossmaps directos</em><p/>";
         }
 
         StringBuilder result = new StringBuilder("Crossmaps Directos:<br />\n<ol>");
@@ -129,6 +150,12 @@ public class HTMLer {
         }
     }
 
+    /**
+     * Este método es responsable de imprimir las descripciones de un concepto.
+     *
+     * @param descripciones Las descripciones a imprimir.
+     * @return Una expresión HTML con una lista ordenada de las descripciones.
+     */
     private static String toHTML(Concepto.Descripciones descripciones) {
 
         StringBuilder result = new StringBuilder("Descripciones: <br/>\n<ol>");
@@ -244,20 +271,41 @@ public class HTMLer {
 
         /* Ahora se listan los sugeridos */
         DescripcionNoValida.DescripcionesSugeridas descripcionesSugeridas = description.getDescripcionesSugeridas();
-        if (descripcionesSugeridas == null){
+        if (descripcionesSugeridas == null) {
             result.append("No hay descripciones sugeridas.");
         }
         result.append("<ul>");
         for (DescripcionAC descripcionAC : descripcionesSugeridas.getDescripcionSugerida()) {
-            result.append("<li>Concept ID=").append(descripcionAC.getConceptID()).append(". Preferida DESC ID=").append(descripcionAC.getDescriptionIDPreferida());
+            result.append("<li>Concept ID=").append(descripcionAC.getConceptID()).append(". Preferida DESC ID=")
+                    .append(descripcionAC.getDescriptionIDPreferida());
         }
         result.append("</ul>");
         return result.toString();
     }
 
     private static String toHTML(DescripcionPendiente description) {
-        StringBuilder result = new StringBuilder("<b>Pendiente para categoría '").append(description.getNombreCategoria()).append("'.");
+        StringBuilder result = new StringBuilder("<b>Pendiente para categoría '").append(description
+                .getNombreCategoria()).append("'.");
 
         return result.toString();
+    }
+
+    public static String toHTML(RespuestaBuscarTermino.Conceptos serviceResponse) {
+
+        if (serviceResponse == null){
+            return "No se encontraron conceptos.";
+        }
+
+        StringBuilder result = new StringBuilder("<ol>");
+        for (ConceptoLight conceptoLight : serviceResponse.getConcepto()) {
+            result.append("\t<li>").append(toHTML(conceptoLight)).append("</li>\n");
+        }
+        result .append("</ol>");
+
+        return result.toString();
+    }
+
+    private static String toHTML(ConceptoLight conceptoLight) {
+        return conceptoLight.getConceptID() + ": " + conceptoLight.getDescripcionPreferida() + "(" + conceptoLight.getIdDescripcionPreferida() + ") -- <em>" + conceptoLight.getCategoria() + "</em>";
     }
 }

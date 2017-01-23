@@ -12,7 +12,7 @@ import java.util.List;
 @XmlType(name = "PeticionConceptosPedibles", namespace = "http://service.ws.semantikos.minsal.cl/")
 public class RequestableConceptsRequest implements Serializable {
 
-    private String requestable;
+    private Boolean requestable;
 
     private List<String> categoryNames;
 
@@ -37,10 +37,10 @@ public class RequestableConceptsRequest implements Serializable {
     }
 
     @XmlElement(required = true, name = "pedible")
-    public String getRequestable() {
+    public Boolean getRequestable() {
         return requestable;
     }
-    public void setRequestable(String requestable) {
+    public void setRequestable(Boolean requestable) {
         this.requestable = requestable;
     }
 
@@ -50,5 +50,15 @@ public class RequestableConceptsRequest implements Serializable {
     }
     public void setIdStablishment(String idStablishment) {
         this.idStablishment = idStablishment;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestableConceptsRequest{" +
+                "requestable='" + requestable + '\'' +
+                ", categoryNames=" + categoryNames +
+                ", refSetNames=" + refSetNames +
+                ", idStablishment='" + idStablishment + '\'' +
+                '}';
     }
 }

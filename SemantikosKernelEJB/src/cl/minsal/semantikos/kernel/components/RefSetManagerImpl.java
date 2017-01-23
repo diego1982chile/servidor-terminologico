@@ -10,13 +10,11 @@ import org.slf4j.LoggerFactory;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static java.lang.System.currentTimeMillis;
 import static java.lang.System.in;
+import static java.lang.System.load;
 
 /**
  * @author Andrés Farías on 9/20/16.
@@ -32,6 +30,21 @@ public class RefSetManagerImpl implements RefSetManager {
     @EJB
     private AuditManager auditManager;
 
+    /**
+     * Indica si el caché fue cargado
+     */
+    private boolean cacheReady = false;
+
+    /**
+     * Un caché para los Refsets por su nombre
+     */
+    private Map<Long, RefSet> refsetCacheByID = new HashMap<>();
+
+    /**
+     * Un caché para los Refsets por su ID
+     */
+    private Map<String, RefSet> refsetCacheByName = new HashMap<>();
+
     @Override
     public RefSet createRefSet(RefSet refSet, User user) {
         RefSet refsetPersist = createRefSet(refSet.getName(), refSet.getInstitution(), user);
@@ -42,7 +55,24 @@ public class RefSetManagerImpl implements RefSetManager {
             refsetPersist.bindConceptTo(concept);
         }
 
+        /* Se agrega al cache */
+        addToCache(refsetPersist);
+
         return refsetPersist;
+    }
+
+    /**
+     * Este método es responsable de agregar un nuevo refset a los caché.
+     *
+     * @param refSet El RefSet que se desea agregar.
+     */
+    private void addToCache(RefSet refSet) {
+        if (!cacheReady) {
+            loadCache();
+        }
+
+        refsetCacheByID.put(refSet.getId(), refSet);
+        refsetCacheByName.put(refSet.getName(), refSet);
     }
 
     @Override
@@ -55,12 +85,11 @@ public class RefSetManagerImpl implements RefSetManager {
         RefSet refSet = new RefSet(name, institution, new Timestamp(currentTimeMillis()));
         refsetDAO.persist(refSet);
 
-        //TODO: Verificar si se debe guardar un registro
+        /* Se almacena en el cache */
+        addToCache(refSet);
+
         /* Se registra la creación */
-        //auditManager.recordRefSetCreation(refSet, user);
-
-
-        /* Se registra la creación del RefSet */
+        auditManager.recordRefSetCreation(refSet, user);
         return refSet;
     }
 
@@ -72,11 +101,10 @@ public class RefSetManagerImpl implements RefSetManager {
 
         /* Se crea el RefSet y se persiste */
         refsetDAO.update(refSet);
+        addToCache(refSet);
 
-
-        //TODO: Verificar si se debe guardar un registro
         /* Se registra la creación */
-        //auditManager.recordRefSetUpdate(refSet, user);
+        auditManager.recordRefSetUpdate(refSet, user);
 
 
         /* Se registra la creación del RefSet */
@@ -126,12 +154,15 @@ public class RefSetManagerImpl implements RefSetManager {
     @Override
     public List<RefSet> getAllRefSets() {
 
+        if (cacheReady){
+            return new ArrayList<>(refsetCacheByID.values());
+        }
+
         return refsetDAO.getReftsets();
     }
 
     @Override
     public List<RefSet> getValidRefSets() {
-
         return refsetDAO.getValidRefsets();
     }
 
@@ -163,11 +194,37 @@ public class RefSetManagerImpl implements RefSetManager {
 
     @Override
     public RefSet getRefsetByName(String pattern) {
-        List<RefSet> found = this.findRefsetsByName(pattern);
-        if (found != null && !found.isEmpty()) {
-            return found.get(0);
+
+        /* Se verifica si el caché ya fué cargado */
+        if (!this.cacheReady) {
+            loadCache();
         }
-        return null;
+
+        /* Se verifica que exista tal RefSet */
+        if (!this.refsetCacheByName.containsKey(pattern)) {
+            throw new IllegalArgumentException("No existe un RefSet de nombre " + pattern);
+        }
+
+        /* Se retorna desde el caché */
+        return refsetCacheByName.get(pattern);
+
+    }
+
+    /**
+     * Este método es responsable de cargar los refsets en los cachés.
+     */
+    private void loadCache() {
+
+        long init = currentTimeMillis();
+
+        List<RefSet> allRefSets = getAllRefSets();
+        for (RefSet aRefSet : allRefSets) {
+            this.refsetCacheByName.put(aRefSet.getName(), aRefSet);
+            this.refsetCacheByID.put(aRefSet.getId(), aRefSet);
+        }
+
+        logger.debug("loadCache(): {} refsets cargados", allRefSets.size());
+        logger.debug("loadCache(): in {}ms", currentTimeMillis() - init);
     }
 
     @Override
@@ -177,7 +234,7 @@ public class RefSetManagerImpl implements RefSetManager {
         logger.debug("RefSetManager.findRefSetsByName(" + refSetNames + ")");
 
         /* Si se utilizó el método sin refsets se retorna de inmediato */
-        if (refSetNames == null || refSetNames.isEmpty()){
+        if (refSetNames == null || refSetNames.isEmpty()) {
             logger.debug("RefSetManager.findRefSetsByName(" + refSetNames + ") --> emptyList()");
             return Collections.emptyList();
         }
@@ -186,8 +243,8 @@ public class RefSetManagerImpl implements RefSetManager {
         for (String refSetName : refSetNames) {
 
             /* Si por alguna razon el refset viene vacio se ignora */
-            if (refSetName == null || refSetName.trim().equals("")){
-                logger.debug("RefSetManager.findRefSetsByName(" + refSetNames + ")["+refSetName + "] --> ignored");
+            if (refSetName == null || refSetName.trim().equals("")) {
+                logger.debug("RefSetManager.findRefSetsByName(" + refSetNames + ")[" + refSetName + "] --> ignored");
                 continue;
             }
 

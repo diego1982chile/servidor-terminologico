@@ -53,6 +53,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
         descriptionCreationBR1.applyRules(conceptSMTK, description.getTerm(), description.getDescriptionType(), user,
                 categoryManager);
         if (!description.isPersistent()) {
+            description.setDescriptionId(generateDescriptionId());
             descriptionDAO.persist(description, user);
         }
 
@@ -71,6 +72,7 @@ public class DescriptionManagerImpl implements DescriptionManager {
 
         /* Se crea la descripción */
         Description description = new Description(concept, term, descriptionType);
+
         //TODO: AL implementar los webservices este se podria encargar de asignar el description ID
         description.setDescriptionId(generateDescriptionId());
         description.setCaseSensitive(caseSensitive);

@@ -808,6 +808,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public List<ConceptSMTK> findConceptsWithStringBasicType(Category aCategory, RelationshipDefinition
             stringBasicTypeAttribute, String aString) {
+
         ConnectionBD connect = new ConnectionBD();
         List<ConceptSMTK> conceptSMTKs = new ArrayList<>();
 
@@ -836,6 +837,46 @@ public class ConceptDAOImpl implements ConceptDAO {
         } catch (SQLException e) {
             String errorMsg = "Error al llamar la consulta find_concepts_by_attribute_string con parámetros: " +
                     aCategory.getId() + " " + stringBasicTypeAttribute.getId() + " " + stringBasicTypeAttribute.getId();
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return conceptSMTKs;
+    }
+
+    @Override
+    public List<ConceptSMTK> findConceptsWithBooleanBasicType(Category aCategory, RelationshipDefinition
+            booleanBasicTypeAttribute, Boolean aBoolean) {
+
+        logger.debug("findConceptsWithBooleanBasicType(" + aCategory + ", " + booleanBasicTypeAttribute + ", " + aBoolean + ")");
+
+        ConnectionBD connect = new ConnectionBD();
+        List<ConceptSMTK> conceptSMTKs = new ArrayList<>();
+
+        /**
+         * semantikos.find_concepts_by_attribute_boolean(?,?,?)
+         * Param 1: Category ID.
+         * Param 2: Relationship Attribute ID
+         * Param 3: String value.
+         */
+        try (Connection connection = connect.getConnection();
+             CallableStatement call = connection.prepareCall("{call semantikos.find_concepts_by_attribute_boolean(?,?,?)}")) {
+
+            call.setLong(1, aCategory.getId());
+            call.setLong(2, booleanBasicTypeAttribute.getId());
+            call.setBoolean(3, aBoolean);
+            call.execute();
+
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                ConceptSMTK aConcept = createConceptSMTKFromResultSet(rs);
+                conceptSMTKs.add(aConcept);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al llamar la consulta 'find_concepts_by_attribute_boolean' con parámetros: " +
+                    aCategory.getId() + " " + booleanBasicTypeAttribute.getId() + " " + booleanBasicTypeAttribute.getId() + ": " + e.getMessage();
             logger.error(errorMsg, e);
             throw new EJBException(errorMsg, e);
         }

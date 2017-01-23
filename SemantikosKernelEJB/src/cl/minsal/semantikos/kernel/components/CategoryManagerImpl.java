@@ -13,18 +13,35 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
+
+import static java.lang.System.currentTimeMillis;
 
 /**
+ * Este Manager es responsable de gestionar las categorías. Como son muy pocas, y estáticas, es decir, no cambian en
+ * el tiempo (o no con frecuencia), se implementa con dos Cachés: uno por su ID y otro por su Nombre.
+ *
  * @author Andrés Farías on 27-05-16.
  */
 @Stateless
 public class CategoryManagerImpl implements CategoryManager {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryManagerImpl.class);
+
+    /**
+     * Un caché por ID
+     */
+    private Map<Long, Category> categoriesByIDCache;
+
+    /**
+     * Un caché por nombre
+     */
+    private Map<String, Category> categoriesByNameCache;
+
+    /**
+     * Un indicador de si el caché fue cargado o no
+     */
+    private boolean cacheLoaded;
 
     @EJB
     private CategoryDAO categoryDAO;
@@ -34,6 +51,12 @@ public class CategoryManagerImpl implements CategoryManager {
 
     @EJB
     private DescriptionManager descriptionManager;
+
+    public CategoryManagerImpl() {
+        this.categoriesByIDCache = new HashMap<>();
+        this.categoriesByNameCache = new HashMap<>();
+        this.cacheLoaded = false;
+    }
 
     @Override
     public List<RelationshipDefinition> getCategoryMetaData(int id) {
@@ -74,7 +97,7 @@ public class CategoryManagerImpl implements CategoryManager {
 
         /* Si la búsqueda resultó con al menos un término vigente, entonces si contiene */
         for (Description description : descriptions) {
-            if (description.isValid()){
+            if (description.isValid()) {
                 return true;
             }
         }
@@ -88,16 +111,54 @@ public class CategoryManagerImpl implements CategoryManager {
 
     @Override
     public Category getCategoryByName(String name) {
-        return this.categoryDAO.getCategoryByName(name);
+        long init = currentTimeMillis();
+
+        /* If the categories have not been cached yet, they are cached now */
+        if (!cacheLoaded) { loadCaches(); }
+
+        /* Se verifica si existe */
+        if (!this.categoriesByNameCache.containsKey(name)){
+            throw new IllegalArgumentException("No existe una categoría de nombre '" + name + "'.");
+        }
+
+        /* Se retorna desde el caché */
+        Category categoryByName = this.categoriesByNameCache.get(name);
+        logger.info("getCategoryByName(" + name + "): {}ms", (currentTimeMillis() - init));
+        return categoryByName;
+    }
+
+    /**
+     * Este método es responsable de cargar los cachés de categorías.
+     */
+    private void loadCaches() {
+
+        long init = currentTimeMillis();
+        logger.debug("loadCaches(): iniciando carga de categorías en cache.");
+
+        List<Category> allCategories = categoryDAO.getAllCategories();
+        this.categoriesByIDCache = new HashMap<>();
+        this.categoriesByNameCache = new HashMap<>();
+        for (Category category : allCategories) {
+            categoriesByIDCache.put(category.getId(), category);
+            categoriesByNameCache.put(category.getName(), category);
+        }
+
+        this.cacheLoaded = true;
+        logger.info("loadCaches() ==> {} categorías en caché.", allCategories.size());
+        logger.info("loadCaches(): {}ms", (currentTimeMillis() - init));
     }
 
     @Override
     public List<Category> getCategories() {
 
-        logger.debug("Recuperando todas las categorías.");
+        long init = currentTimeMillis();
+        logger.debug("getCategories(): Recuperando todas las categorías.");
 
-        List<Category> categories = categoryDAO.getAllCategories();
-        logger.debug(categories.size() + "categorías recuperadas.");
+        /* If the categories have not been cached yet, they are cached now */
+        if (!cacheLoaded) { loadCaches(); }
+
+        ArrayList<Category> categories = new ArrayList<>(this.categoriesByIDCache.values());
+        logger.debug("getCategories(): {}ms", currentTimeMillis() - init);
 
         return categories;
     }
@@ -111,16 +172,16 @@ public class CategoryManagerImpl implements CategoryManager {
     public List<Category> findCategories(List<String> categoriesNames) {
 
         List<Category> res = new ArrayList<>();
-        for ( String categoryName : categoriesNames ) {
+        for (String categoryName : categoriesNames) {
             logger.debug("CategoryManager.findCategories: buscando '" + categoryName + "'");
 
             /* Las categorias de nombre NULL o vacias se ignoran simplemente, no generan error */
-            if(categoryName == null || categoryName.trim().equals("")){
+            if (categoryName == null || categoryName.trim().equals("")) {
                 continue;
             }
 
             Category found = this.getCategoryByName(categoryName.trim());
-            if ( found != null ) {
+            if (found != null) {
                 res.add(found);
             } else {
                 throw new IllegalArgumentException("Categoria no encontrada: " + categoryName);

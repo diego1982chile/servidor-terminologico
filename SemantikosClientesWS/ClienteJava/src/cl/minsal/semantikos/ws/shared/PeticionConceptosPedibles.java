@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="nombreCategoria" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="idEstablecimiento" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="nombreRefSet" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="pedible" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="pedible" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -44,8 +44,7 @@ public class PeticionConceptosPedibles {
     @XmlElement(required = true)
     protected String idEstablecimiento;
     protected List<String> nombreRefSet;
-    @XmlElement(required = true)
-    protected String pedible;
+    protected boolean pedible;
 
     /**
      * Gets the value of the nombreCategoria property.
@@ -132,24 +131,16 @@ public class PeticionConceptosPedibles {
     /**
      * Gets the value of the pedible property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getPedible() {
+    public boolean isPedible() {
         return pedible;
     }
 
     /**
      * Sets the value of the pedible property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setPedible(String value) {
+    public void setPedible(boolean value) {
         this.pedible = value;
     }
 
@@ -159,5 +150,9 @@ public class PeticionConceptosPedibles {
 
     public void setNombreRefSet(List<String> nombreRefSet) {
         this.nombreRefSet = nombreRefSet;
+    }
+
+    public boolean getPedible() {
+        return pedible;
     }
 }

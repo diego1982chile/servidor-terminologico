@@ -170,7 +170,7 @@ public class RespuestaBuscarTerminoGenerica {
     })
     public static class DescripcionesNoValidas {
 
-        @XmlElement(namespace = "")
+        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
         protected List<DescripcionNoValida> descripcionNoValida;
 
         /**
@@ -230,7 +230,7 @@ public class RespuestaBuscarTerminoGenerica {
     })
     public static class DescripcionesPendientes {
 
-        @XmlElement(namespace = "")
+        @XmlElement(namespace = "http://service.ws.semantikos.minsal.cl/")
         protected List<DescripcionPendiente> descripcionPendiente;
 
         /**

@@ -1,6 +1,7 @@
 <%@ page import="cl.minsal.semantikos.ws.shared.Stringer" %>
 <%@ page import="cl.minsal.semantikos.ws.shared.RespuestaConceptosPorCategoria" %>
 <%@ page import="cl.minsal.semantikos.ws.shared.RespuestaBuscarTermino" %>
+<%@ page import="cl.minsal.semantikos.ws.shared.HTMLer" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -59,7 +60,8 @@
             <div id="Response">
                 <jsp:useBean id="stringer" class="cl.minsal.semantikos.ws.shared.Stringer"
                              type="cl.minsal.semantikos.ws.shared.Stringer">
-                    Conceptos encontrados: <%= Stringer.toString(((RespuestaBuscarTermino) request.getAttribute("serviceResponse")).getConceptos()) %>
+                    Conceptos encontrados:
+                    <%= HTMLer.toHTML(((RespuestaBuscarTermino) request.getAttribute("serviceResponse")).getConceptos()) %>
                     <br/>
                 </jsp:useBean>
             </div>

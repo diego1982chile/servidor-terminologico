@@ -102,4 +102,14 @@ public class RefSet extends PersistentEntity implements AuditableEntity {
     public String toString() {
         return this.name;
     }
+
+    /**
+     * Este método es responsable de determinar si existe una intersección entre dos refsets.
+     * @param refset1 El primer refset.
+     * @param refset2 El segundo RefSet.
+     * @return <code>true</code> si hay intersección y <code>false</code> sino.
+     */
+    public static boolean intersect(List<RefSet> refset1, List<RefSet> refset2) {
+        return new ArrayList<>(refset1).removeAll(refset2);
+    }
 }

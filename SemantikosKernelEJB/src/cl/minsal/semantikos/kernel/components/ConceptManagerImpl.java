@@ -20,6 +20,7 @@ import java.text.Normalizer;
 import java.util.*;
 
 import static cl.minsal.semantikos.kernel.daos.DAO.NON_PERSISTED_ID;
+import static cl.minsal.semantikos.model.RefSet.intersect;
 import static java.lang.System.currentTimeMillis;
 import static java.util.Collections.singletonList;
 
@@ -110,11 +111,7 @@ public class ConceptManagerImpl implements ConceptManager {
             basicTypeAttribute, String value) {
 
         /* Primero se debe validar que el RelationshipDefinition es tipo Tipo Básico */
-        boolean basicType = basicTypeAttribute.getTargetDefinition().isBasicType();
-        if (!basicType) {
-            throw new IllegalArgumentException("Se consideró un tipo básico de un target que no lo es: " +
-                    basicTypeAttribute);
-        }
+        assureItIsBasicType(basicTypeAttribute);
 
         /* Luego se recuperan los refsets */
         ArrayList<RefSet> refsets = new ArrayList<>();
@@ -132,6 +129,43 @@ public class ConceptManagerImpl implements ConceptManager {
         }
 
         return loadDecriptions(concepts);
+    }
+
+    @Override
+    public List<ConceptSMTK> findConcepts(Category aCategory, List<String> refSetNames, RelationshipDefinition
+            basicTypeAttribute, Boolean value) {
+
+        long init = currentTimeMillis();
+
+       /* Primero se debe validar que el RelationshipDefinition es tipo Tipo Básico */
+        assureItIsBasicType(basicTypeAttribute);
+
+        /* Luego se recuperan los refsets */
+        List<RefSet> refsets = refSetManager.findRefSetsByName(refSetNames);
+
+        /* Por razones de eficiencia, es mejor realizar la búsqueda directamente en la base de datos */
+        List<ConceptSMTK> concepts = conceptDAO.findConceptsWithBooleanBasicType(aCategory, basicTypeAttribute, value);
+        List<ConceptSMTK> finalList = new ArrayList<>(concepts);
+        if (!refsets.isEmpty()) {
+            for (ConceptSMTK concept : concepts) {
+                /* Si ningún refset del concepto se encontraba en la lista, se elimina */
+                if (!intersect(concept.getRefsets(), refsets)) {
+                    finalList.remove(concept);
+                }
+            }
+        }
+
+        logger.info("findConcepts(" + aCategory + ", " + refSetNames + ", " + basicTypeAttribute + ", " + value+ ") => " + finalList);
+        logger.debug("findConcepts(" + aCategory + ", " + refSetNames + ", " + basicTypeAttribute + ", " + value+ "): {}ms", currentTimeMillis()-init);
+        return loadDecriptions(finalList);
+    }
+
+    private void assureItIsBasicType(RelationshipDefinition basicTypeAttribute) {
+        boolean basicType = basicTypeAttribute.getTargetDefinition().isBasicType();
+        if (!basicType) {
+            throw new IllegalArgumentException("Se consideró un tipo básico de un target que no lo es: " +
+                    basicTypeAttribute);
+        }
     }
 
     /**
@@ -226,7 +260,8 @@ public class ConceptManagerImpl implements ConceptManager {
     }
 
     @Override
-    public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int pageNumber, int pageSize) {
+    public List<ConceptSMTK> findConceptTruncatePerfect(String pattern, Long[] categories, Long[] refsets, int
+            pageNumber, int pageSize) {
 
         long init = currentTimeMillis();
 
@@ -240,21 +275,27 @@ public class ConceptManagerImpl implements ConceptManager {
         List<ConceptSMTK> conceptSMTKs = loadDecriptions(conceptDAO.findConceptsBy(arrayPattern, categories, refsets,
                 isModeled, pageSize, pageNumber));
 
-        logger.debug("ConceptManager.findConceptTruncatePerfect(" + pattern + ", " + Arrays.toString(categories) + ", " + Arrays.toString(refsets) + ") => " + conceptSMTKs);
-        logger.debug("ConceptManager.findConceptTruncatePerfect(" + pattern + ", " + Arrays.toString(categories) + ", " + Arrays.toString(refsets) + ") : " + (currentTimeMillis()-init));
+        logger.debug("ConceptManager.findConceptTruncatePerfect(" + pattern + ", " + Arrays.toString(categories) + "," +
+                " " + Arrays.toString(refsets) + ") => " + conceptSMTKs);
+        logger.debug("ConceptManager.findConceptTruncatePerfect(" + pattern + ", " + Arrays.toString(categories) + "," +
+                " " + Arrays.toString(refsets) + ") : " + (currentTimeMillis() - init));
         return conceptSMTKs;
     }
 
     @Override
-    public List<ConceptSMTK> findConceptTruncatePerfect(String termPattern, List<Category> categories, List<RefSet> refSets, boolean isModeled) {
+    public List<ConceptSMTK> findConceptTruncatePerfect(String termPattern, List<Category> categories, List<RefSet>
+            refSets, boolean isModeled) {
 
         long init = currentTimeMillis();
 
         String[] arrayPattern = patternToArray(termPattern);
-        List<ConceptSMTK> conceptSMTKs = loadDecriptions(conceptDAO.findConceptsTruncatePerfectBy(arrayPattern, isModeled));
+        List<ConceptSMTK> conceptSMTKs = loadDecriptions(conceptDAO.findConceptsTruncatePerfectBy(arrayPattern,
+                isModeled));
 
-        logger.debug("ConceptManager.findConceptTruncatePerfect(" + termPattern + ", " + categories + ", " + refSets + "): " + conceptSMTKs);
-        logger.debug("ConceptManager.findConceptTruncatePerfect(" + termPattern + ", " + categories + ", " + refSets + "): " + (currentTimeMillis() - init) + "ms");
+        logger.debug("ConceptManager.findConceptTruncatePerfect(" + termPattern + ", " + categories + ", " + refSets
+                + "): " + conceptSMTKs);
+        logger.debug("ConceptManager.findConceptTruncatePerfect(" + termPattern + ", " + categories + ", " + refSets
+                + "): " + (currentTimeMillis() - init) + "ms");
 
         return conceptSMTKs;
     }

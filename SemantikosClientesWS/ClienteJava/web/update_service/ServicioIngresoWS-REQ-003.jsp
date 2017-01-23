@@ -4,7 +4,7 @@
 
 <html>
 <header>
-    <title>Semantikos - WS-REQ-003: Proponer un término para codificación</title>
+    <title>WS-REQ-003: Proponer <em>término</em> a codificar</title>
 
     <!-- Bootstrap -->
     <link href="<%=request.getContextPath()%>/css/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet"
@@ -16,7 +16,7 @@
 
 
 <div class="container">
-    <h4>WS-REQ-031: Proponer <em>término</em> a codificar</h4>
+    <h4>WS-REQ-003: Proponer <em>término</em> a codificar</h4>
 
     <form method="post" action="<%=request.getContextPath()%>/ws-req-003">
 

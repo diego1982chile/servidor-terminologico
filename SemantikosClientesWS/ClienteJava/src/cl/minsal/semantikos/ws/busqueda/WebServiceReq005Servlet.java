@@ -59,7 +59,7 @@ public class WebServiceReq005Servlet extends HttpServlet {
 
         /* Se prepara la petición del WS */
         PeticionConceptosPedibles peticion = new PeticionConceptosPedibles();
-        peticion.setPedible(pedible);
+        peticion.setPedible(pedible.equals("Si"));
         peticion.setNombreCategoria(Arrays.asList(categories.split(",")));
         peticion.setNombreRefSet(Arrays.asList(refsets.split(",")));
         peticion.setIdEstablecimiento(idStablishment);

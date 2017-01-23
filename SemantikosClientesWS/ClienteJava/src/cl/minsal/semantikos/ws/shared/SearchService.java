@@ -93,8 +93,8 @@ public interface SearchService {
      * @param peticionBuscarTermino
      * @return
      *     returns cl.minsal.semantikos.ws.shared.RespuestaConceptosPorCategoria
-     * @throws NotFoundFault_Exception
      * @throws IllegalInputFault_Exception
+     * @throws NotFoundFault_Exception
      */
     @WebMethod
     @WebResult(name = "respuestaConceptos", targetNamespace = "")
@@ -142,8 +142,8 @@ public interface SearchService {
      * @param peticionRefSetsPorIdDescripcion
      * @return
      *     returns cl.minsal.semantikos.ws.shared.RespuestaRefSets
-     * @throws NotFoundFault_Exception
      * @throws IllegalInputFault_Exception
+     * @throws NotFoundFault_Exception
      */
     @WebMethod
     @WebResult(name = "refsetResponse", targetNamespace = "")
@@ -262,8 +262,8 @@ public interface SearchService {
      * @param peticionBuscarTermino
      * @return
      *     returns cl.minsal.semantikos.ws.shared.RespuestaBuscarTerminoGenerica
-     * @throws NotFoundFault_Exception
      * @throws IllegalInputFault_Exception
+     * @throws NotFoundFault_Exception
      */
     @WebMethod
     @WebResult(name = "respuestaBuscarTermino", targetNamespace = "")
