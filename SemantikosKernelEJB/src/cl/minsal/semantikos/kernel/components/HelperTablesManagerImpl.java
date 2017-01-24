@@ -131,4 +131,15 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
     public List<HelperTableRow> getValidTableRows(long id) {
         return dao.getValidTableRows(id);
     }
+
+    @Override
+    public List<HelperTable> getFullDatabase() {
+        List<HelperTable> tables= dao.getAllTables();
+
+        for (HelperTable table : tables) {
+            table.setRows(getTableRows(table.getId()));
+        }
+
+        return tables;
+    }
 }

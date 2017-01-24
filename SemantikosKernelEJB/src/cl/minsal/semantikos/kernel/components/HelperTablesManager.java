@@ -51,4 +51,7 @@ public interface HelperTablesManager {
 
 
     List<HelperTableRow> getValidTableRows(long id);
+
+    List<HelperTable> getFullDatabase();
+
 }

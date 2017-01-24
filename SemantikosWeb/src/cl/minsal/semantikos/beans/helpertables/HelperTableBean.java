@@ -27,7 +27,7 @@ public class HelperTableBean implements Serializable{
     private static final long serialVersionUID = 1L;
 
 
-    Map<Long,List<HelperTableRow>> tableRowsMap;
+    List<HelperTable> fullDatabase;
 
     @EJB
     HelperTablesManager manager;
@@ -49,16 +49,11 @@ public class HelperTableBean implements Serializable{
     }
 
 
-
-    public List<HelperTable> getAllHelperTables(){
-        return manager.findAll();
-    }
-
     public List<HelperTable> getAdministrableTables(){
 
         List<HelperTable> administrableTables = new ArrayList<>();
 
-        for (HelperTable table : manager.findAll()) {
+        for (HelperTable table : getFullDatabase()) {
             if(table.getId()<=17)
                 administrableTables.add(table);
         }
@@ -66,22 +61,13 @@ public class HelperTableBean implements Serializable{
         return administrableTables;
     }
 
+    private List<HelperTable> getFullDatabase() {
+        if(fullDatabase==null)
+            fullDatabase = manager.getFullDatabase();
 
-
-    public void onColumnEdit(RowEditEvent event) {
-
-        HelperTableColumn column = (HelperTableColumn) event.getObject();
-
-        HelperTableColumn newcolumn = manager.updateColumn(column);
-        column.setForeignKeyHelperTable(newcolumn.getForeignKeyHelperTable());
-        column.setForeignKeyHelperTableId(newcolumn.getForeignKeyHelperTableId());
-        column.setHelperTableDataType(newcolumn.getHelperTableDataType());
-        column.setHelperTableDataTypeId(newcolumn.getHelperTableDataTypeId());
-        column.setId(newcolumn.getId());
+        return fullDatabase;
     }
 
-    public void onColumnEditCancel(RowEditEvent event) {
-    }
 
 
     public void onRowEdit(RowEditEvent event) {
@@ -89,41 +75,19 @@ public class HelperTableBean implements Serializable{
         HelperTableRow updatedRow = manager.updateRow(row,this.authenticationBean.getUsername());
     }
 
-    public void onRowEditCancel(RowEditEvent event) {
-
-    }
-
-
-
-    public List<HelperTableDataType> getAllDataTypes(){
-
-        return manager.getAllDataTypes();
-    }
-
-
 
     public void addRow(Long tableId){
 
         HelperTableRow newRow = manager.createRow(tableId,authenticationBean.getUsername());
-        tableRowsMap.remove(newRow.getHelperTableId());
-    }
 
-
-
-    public List<HelperTableRow> getAllTableRows(long tableId) {
-
-
-        if(tableRowsMap == null)
-            tableRowsMap = new HashMap<>();
-
-
-        if(!tableRowsMap.containsKey(tableId))
-             tableRowsMap.put(tableId,manager.getTableRows(tableId));
-
-        return tableRowsMap.get(tableId);
-
+        for (HelperTable helperTable : fullDatabase) {
+                if(helperTable.getId()==tableId)
+                    helperTable.getRows().add(0,newRow);
+        }
 
     }
+
+
 
     protected void showInfo(String title, String message) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, title, message));
